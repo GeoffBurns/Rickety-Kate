@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B6981BA1564800B0EDAE /* AppDelegate.swift */; };
+		AC62B69B1BA1564800B0EDAE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = AC62B69A1BA1564800B0EDAE /* GameScene.sks */; };
+		AC62B69D1BA1564800B0EDAE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B69C1BA1564800B0EDAE /* GameScene.swift */; };
+		AC62B69F1BA1564800B0EDAE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B69E1BA1564800B0EDAE /* GameViewController.swift */; };
+		AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A01BA1564800B0EDAE /* Main.storyboard */; };
+		AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A31BA1564800B0EDAE /* Images.xcassets */; };
+		AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */; };
+		AC62B6B31BA1564900B0EDAE /* Rickety_KateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B6B21BA1564900B0EDAE /* Rickety_KateTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AC62B6AD1BA1564900B0EDAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC62B68B1BA1564800B0EDAE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC62B6921BA1564800B0EDAE;
+			remoteInfo = "Rickety Kate";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AC62B6931BA1564800B0EDAE /* Rickety Kate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rickety Kate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC62B6971BA1564800B0EDAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC62B6981BA1564800B0EDAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AC62B69A1BA1564800B0EDAE /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		AC62B69C1BA1564800B0EDAE /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		AC62B69E1BA1564800B0EDAE /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		AC62B6A11BA1564800B0EDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AC62B6A31BA1564800B0EDAE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AC62B6A61BA1564800B0EDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		AC62B6AC1BA1564900B0EDAE /* Rickety KateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rickety KateTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC62B6B11BA1564900B0EDAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC62B6B21BA1564900B0EDAE /* Rickety_KateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rickety_KateTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AC62B6901BA1564800B0EDAE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC62B6A91BA1564900B0EDAE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AC62B68A1BA1564800B0EDAE = {
+			isa = PBXGroup;
+			children = (
+				AC62B6951BA1564800B0EDAE /* Rickety Kate */,
+				AC62B6AF1BA1564900B0EDAE /* Rickety KateTests */,
+				AC62B6941BA1564800B0EDAE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AC62B6941BA1564800B0EDAE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC62B6931BA1564800B0EDAE /* Rickety Kate.app */,
+				AC62B6AC1BA1564900B0EDAE /* Rickety KateTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AC62B6951BA1564800B0EDAE /* Rickety Kate */ = {
+			isa = PBXGroup;
+			children = (
+				AC62B6981BA1564800B0EDAE /* AppDelegate.swift */,
+				AC62B69A1BA1564800B0EDAE /* GameScene.sks */,
+				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
+				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
+				AC62B6A01BA1564800B0EDAE /* Main.storyboard */,
+				AC62B6A31BA1564800B0EDAE /* Images.xcassets */,
+				AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */,
+				AC62B6961BA1564800B0EDAE /* Supporting Files */,
+			);
+			path = "Rickety Kate";
+			sourceTree = "<group>";
+		};
+		AC62B6961BA1564800B0EDAE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AC62B6971BA1564800B0EDAE /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AC62B6AF1BA1564900B0EDAE /* Rickety KateTests */ = {
+			isa = PBXGroup;
+			children = (
+				AC62B6B21BA1564900B0EDAE /* Rickety_KateTests.swift */,
+				AC62B6B01BA1564900B0EDAE /* Supporting Files */,
+			);
+			path = "Rickety KateTests";
+			sourceTree = "<group>";
+		};
+		AC62B6B01BA1564900B0EDAE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AC62B6B11BA1564900B0EDAE /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AC62B6921BA1564800B0EDAE /* Rickety Kate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC62B6B61BA1564900B0EDAE /* Build configuration list for PBXNativeTarget "Rickety Kate" */;
+			buildPhases = (
+				AC62B68F1BA1564800B0EDAE /* Sources */,
+				AC62B6901BA1564800B0EDAE /* Frameworks */,
+				AC62B6911BA1564800B0EDAE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Rickety Kate";
+			productName = "Rickety Kate";
+			productReference = AC62B6931BA1564800B0EDAE /* Rickety Kate.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AC62B6AB1BA1564900B0EDAE /* Rickety KateTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC62B6B91BA1564900B0EDAE /* Build configuration list for PBXNativeTarget "Rickety KateTests" */;
+			buildPhases = (
+				AC62B6A81BA1564900B0EDAE /* Sources */,
+				AC62B6A91BA1564900B0EDAE /* Frameworks */,
+				AC62B6AA1BA1564900B0EDAE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AC62B6AE1BA1564900B0EDAE /* PBXTargetDependency */,
+			);
+			name = "Rickety KateTests";
+			productName = "Rickety KateTests";
+			productReference = AC62B6AC1BA1564900B0EDAE /* Rickety KateTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AC62B68B1BA1564800B0EDAE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Nereids Gold";
+				TargetAttributes = {
+					AC62B6921BA1564800B0EDAE = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					AC62B6AB1BA1564900B0EDAE = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = AC62B6921BA1564800B0EDAE;
+					};
+				};
+			};
+			buildConfigurationList = AC62B68E1BA1564800B0EDAE /* Build configuration list for PBXProject "Rickety Kate" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AC62B68A1BA1564800B0EDAE;
+			productRefGroup = AC62B6941BA1564800B0EDAE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AC62B6921BA1564800B0EDAE /* Rickety Kate */,
+				AC62B6AB1BA1564900B0EDAE /* Rickety KateTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AC62B6911BA1564800B0EDAE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */,
+				AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */,
+				AC62B69B1BA1564800B0EDAE /* GameScene.sks in Resources */,
+				AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC62B6AA1BA1564900B0EDAE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AC62B68F1BA1564800B0EDAE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC62B69D1BA1564800B0EDAE /* GameScene.swift in Sources */,
+				AC62B69F1BA1564800B0EDAE /* GameViewController.swift in Sources */,
+				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC62B6A81BA1564900B0EDAE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC62B6B31BA1564900B0EDAE /* Rickety_KateTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AC62B6AE1BA1564900B0EDAE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC62B6921BA1564800B0EDAE /* Rickety Kate */;
+			targetProxy = AC62B6AD1BA1564900B0EDAE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AC62B6A01BA1564800B0EDAE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AC62B6A11BA1564800B0EDAE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AC62B6A61BA1564800B0EDAE /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AC62B6B41BA1564900B0EDAE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AC62B6B51BA1564900B0EDAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AC62B6B71BA1564900B0EDAE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Rickety Kate/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AC62B6B81BA1564900B0EDAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Rickety Kate/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AC62B6BA1BA1564900B0EDAE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Rickety KateTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Rickety Kate.app/Rickety Kate";
+			};
+			name = Debug;
+		};
+		AC62B6BB1BA1564900B0EDAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Rickety KateTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Rickety Kate.app/Rickety Kate";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AC62B68E1BA1564800B0EDAE /* Build configuration list for PBXProject "Rickety Kate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC62B6B41BA1564900B0EDAE /* Debug */,
+				AC62B6B51BA1564900B0EDAE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC62B6B61BA1564900B0EDAE /* Build configuration list for PBXNativeTarget "Rickety Kate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC62B6B71BA1564900B0EDAE /* Debug */,
+				AC62B6B81BA1564900B0EDAE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AC62B6B91BA1564900B0EDAE /* Build configuration list for PBXNativeTarget "Rickety KateTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC62B6BA1BA1564900B0EDAE /* Debug */,
+				AC62B6BB1BA1564900B0EDAE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AC62B68B1BA1564800B0EDAE /* Project object */;
+}
