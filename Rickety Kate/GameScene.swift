@@ -228,7 +228,7 @@ class GameScene: SKScene {
                     sprite.anchorPoint = CGPoint(x: 0.5, y: -1)
                     sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
                     sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
-                    sprite.zPosition = i==0 ? 100: 10
+                     sprite.zPosition = (i==0 ? 100: 10) + positionInSpread
                     sprite.color = UIColor.whiteColor()
                     sprite.colorBlendFactor = 0
                     positionInSpread++
