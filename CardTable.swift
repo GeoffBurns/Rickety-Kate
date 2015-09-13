@@ -247,6 +247,7 @@ public class CardTable
         let doneAction = nextPlayers.isEmpty ?
             (SKAction.runBlock({
                 self.tidyup.publish()
+                
                 self.trickWon()
             })) :
             

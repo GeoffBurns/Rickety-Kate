@@ -121,10 +121,14 @@ public class RandomStrategy : TrickPlayingStrategy
 // Todo finish this strategy
 public class EarlyGameLeadingStrategy : TrickPlayingStrategy
 {
-    static let sharedInstance = EarlyGameLeadingStrategy()
-    private init() { }
+    var safetyMargin = 6
+    init(margin:Int) { safetyMargin = margin }
     func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
     {
+            let earlyLeadSuites = [PlayingCard.Suite.Diamonds,PlayingCard.Suite.Clubs,PlayingCard.Suite.Hearts]
+        
+        
+        
 
             return nil
 

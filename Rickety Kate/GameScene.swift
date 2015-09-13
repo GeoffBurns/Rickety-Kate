@@ -588,13 +588,7 @@ class GameScene: SKScene {
                         {
                         let trickcard = self.table.playerOne.hand.removeAtIndex(index)
                         table.playTrickCard(self.table.playerOne, trickcard:displayedCard.card,state:table.currentStateOfPlay!,willAnimate:false)
-                    /*    table.addToTrickPile(self.table.playerOne,cardName: nodeName)
-                        
-*/
-                      
-                            
-                            
-                       // table.trickWon()
+                            table.currentStateOfPlay=nil
 
                         return;
                      }
@@ -614,26 +608,19 @@ class GameScene: SKScene {
                         table.statusInfo.publish("Wait your turn","")
                     }
                 
-                  
-                    
-                    
-                    /* if state.leadingSuite == nil
-                    {
-                    state.leadingSuite = card.suite
-                    } */
+       
                 }
                 
         
             touchedNode.zRotation = originalCardRotation
             touchedNode.position = originalCardPosition
             touchedNode.anchorPoint = originalCardAnchor
-            //  touchedNode.anch = CGPoint(x: 0.5, y: 0.5)
+        
             touchedNode.xScale = cardScale
             touchedNode.yScale = cardScale
             draggedNode=nil
             }
         }
-      //  let touchedNode = self.nodeAtPoint(positionInScene)
 
         
     }
