@@ -172,6 +172,22 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             return deck
         }
     }
+  
+    public class TestCardDeck : DeckBase
+    {
+    var deck: [PlayingCard] = [];
+        
+    public init(cards:[PlayingCard])
+        {
+            deck.extend(cards)
+        }
+    override public var orderedDeck:[PlayingCard]
+    {
+
+    return deck
+
+    }
+    }
  
 }
 
@@ -224,7 +240,7 @@ public func <=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case let (.PictureCard(la), .PictureCard(ra)): return pictureLetterToRank(la) <= pictureLetterToRank(ra)
     case (.PictureCard, _): return false
     case let (.NumberCard(la), .NumberCard(ra)): return la <= ra
-    default: return false
+    default: return true
     }
 }
 
@@ -261,7 +277,7 @@ public func < (lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case let (.PictureCard(la), .PictureCard(ra)): return pictureLetterToRank(la) < pictureLetterToRank(ra)
     case (.PictureCard, _): return false
     case let (.NumberCard(la), .NumberCard(ra)): return la < ra
-    default: return false
+    default: return true
     }
 }
 extension PlayingCard.CardValue: Comparable {
@@ -330,7 +346,7 @@ public func <(lhs: PlayingCard, rhs: PlayingCard) -> Bool
         return false
     }
     
-    return lhs.value  > rhs.value
+    return lhs.value  < rhs.value
 }
 
 extension PlayingCard: Comparable {

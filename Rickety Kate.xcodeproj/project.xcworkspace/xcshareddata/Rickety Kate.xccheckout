@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>09AC737C-8F52-4525-A47F-4A48FDCB5D1D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Rickety Kate</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F6DFC0677480DD84402C7FE2988E9D5CFE8050CF</key>
+		<string>https://github.com/GeoffBurns/Rickety-Kate.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Rickety Kate.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F6DFC0677480DD84402C7FE2988E9D5CFE8050CF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/GeoffBurns/Rickety-Kate.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F6DFC0677480DD84402C7FE2988E9D5CFE8050CF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F6DFC0677480DD84402C7FE2988E9D5CFE8050CF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Rickety%20Kate</string>
+		</dict>
+	</array>
+</dict>
+</plist>

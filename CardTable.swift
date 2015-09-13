@@ -368,7 +368,7 @@ public class CardTable
         {
             
           let sortedHand = sorted(hands[i])
-            player.newHand( sortedHand)
+            player.newHand( sortedHand.reverse())
             i++
         }
     }
