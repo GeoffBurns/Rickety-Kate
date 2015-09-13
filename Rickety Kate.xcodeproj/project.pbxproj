@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC627E891BA30766003E9A8F /* GivenADeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E881BA30766003E9A8F /* GivenADeck.swift */; };
+		AC627E8B1BA30807003E9A8F /* GivenAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */; };
+		AC627E8D1BA30840003E9A8F /* GivenACardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */; };
+		AC627E8F1BA30D80003E9A8F /* GivenTwoCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8E1BA30D80003E9A8F /* GivenTwoCards.swift */; };
 		AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B6981BA1564800B0EDAE /* AppDelegate.swift */; };
 		AC62B69B1BA1564800B0EDAE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = AC62B69A1BA1564800B0EDAE /* GameScene.sks */; };
 		AC62B69D1BA1564800B0EDAE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B69C1BA1564800B0EDAE /* GameScene.swift */; };
@@ -14,7 +18,11 @@
 		AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A01BA1564800B0EDAE /* Main.storyboard */; };
 		AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A31BA1564800B0EDAE /* Images.xcassets */; };
 		AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */; };
-		AC62B6B31BA1564900B0EDAE /* Rickety_KateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B6B21BA1564900B0EDAE /* Rickety_KateTests.swift */; };
+		AC62B6BD1BA22AD100B0EDAE /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B6BC1BA22AD100B0EDAE /* PlayingCard.swift */; };
+		AC62B6BF1BA2546800B0EDAE /* CardPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B6BE1BA2546800B0EDAE /* CardPlayer.swift */; };
+		AC62B6C11BA25F6100B0EDAE /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B6C01BA25F6100B0EDAE /* CardTable.swift */; };
+		AC9E82BA1BA4D5810064870C /* Publink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82B91BA4D5810064870C /* Publink.swift */; };
+		AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +36,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC627E881BA30766003E9A8F /* GivenADeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenADeck.swift; sourceTree = "<group>"; };
+		AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAPlayer.swift; sourceTree = "<group>"; };
+		AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenACardTable.swift; sourceTree = "<group>"; };
+		AC627E8E1BA30D80003E9A8F /* GivenTwoCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GivenTwoCards.swift; path = "../Rickety Kate/GivenTwoCards.swift"; sourceTree = "<group>"; };
 		AC62B6931BA1564800B0EDAE /* Rickety Kate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rickety Kate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC62B6971BA1564800B0EDAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC62B6981BA1564800B0EDAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,7 +51,11 @@
 		AC62B6A61BA1564800B0EDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		AC62B6AC1BA1564900B0EDAE /* Rickety KateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rickety KateTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC62B6B11BA1564900B0EDAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AC62B6B21BA1564900B0EDAE /* Rickety_KateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rickety_KateTests.swift; sourceTree = "<group>"; };
+		AC62B6BC1BA22AD100B0EDAE /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayingCard.swift; path = ../PlayingCard.swift; sourceTree = "<group>"; };
+		AC62B6BE1BA2546800B0EDAE /* CardPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardPlayer.swift; path = ../CardPlayer.swift; sourceTree = "<group>"; };
+		AC62B6C01BA25F6100B0EDAE /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardTable.swift; path = ../CardTable.swift; sourceTree = "<group>"; };
+		AC9E82B91BA4D5810064870C /* Publink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publink.swift; sourceTree = SOURCE_ROOT; };
+		AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgessTracker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,9 +97,14 @@
 		AC62B6951BA1564800B0EDAE /* Rickety Kate */ = {
 			isa = PBXGroup;
 			children = (
+				AC9E82B91BA4D5810064870C /* Publink.swift */,
+				AC62B6C01BA25F6100B0EDAE /* CardTable.swift */,
+				AC62B6BE1BA2546800B0EDAE /* CardPlayer.swift */,
+				AC62B6BC1BA22AD100B0EDAE /* PlayingCard.swift */,
 				AC62B6981BA1564800B0EDAE /* AppDelegate.swift */,
 				AC62B69A1BA1564800B0EDAE /* GameScene.sks */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
+				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
 				AC62B6A01BA1564800B0EDAE /* Main.storyboard */,
 				AC62B6A31BA1564800B0EDAE /* Images.xcassets */,
@@ -104,7 +125,10 @@
 		AC62B6AF1BA1564900B0EDAE /* Rickety KateTests */ = {
 			isa = PBXGroup;
 			children = (
-				AC62B6B21BA1564900B0EDAE /* Rickety_KateTests.swift */,
+				AC627E881BA30766003E9A8F /* GivenADeck.swift */,
+				AC627E8E1BA30D80003E9A8F /* GivenTwoCards.swift */,
+				AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */,
+				AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */,
 				AC62B6B01BA1564900B0EDAE /* Supporting Files */,
 			);
 			path = "Rickety KateTests";
@@ -167,6 +191,7 @@
 				TargetAttributes = {
 					AC62B6921BA1564800B0EDAE = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 5CUBLSA9G4;
 					};
 					AC62B6AB1BA1564900B0EDAE = {
 						CreatedOnToolsVersion = 6.4;
@@ -221,7 +246,12 @@
 			files = (
 				AC62B69D1BA1564800B0EDAE /* GameScene.swift in Sources */,
 				AC62B69F1BA1564800B0EDAE /* GameViewController.swift in Sources */,
+				AC62B6BD1BA22AD100B0EDAE /* PlayingCard.swift in Sources */,
+				AC62B6BF1BA2546800B0EDAE /* CardPlayer.swift in Sources */,
+				AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */,
+				AC62B6C11BA25F6100B0EDAE /* CardTable.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
+				AC9E82BA1BA4D5810064870C /* Publink.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,7 +259,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC62B6B31BA1564900B0EDAE /* Rickety_KateTests.swift in Sources */,
+				AC627E8F1BA30D80003E9A8F /* GivenTwoCards.swift in Sources */,
+				AC627E8D1BA30840003E9A8F /* GivenACardTable.swift in Sources */,
+				AC627E891BA30766003E9A8F /* GivenADeck.swift in Sources */,
+				AC627E8B1BA30807003E9A8F /* GivenAPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,9 +383,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -360,9 +396,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -419,6 +458,7 @@
 				AC62B6B81BA1564900B0EDAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AC62B6B91BA1564900B0EDAE /* Build configuration list for PBXNativeTarget "Rickety KateTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +467,7 @@
 				AC62B6BB1BA1564900B0EDAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

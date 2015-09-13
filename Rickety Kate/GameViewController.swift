@@ -3,7 +3,7 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 10/09/2015.
-//  Copyright (c) 2015 Nereids Gold. All rights reserved.
+//  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
 import UIKit
@@ -29,6 +29,11 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let value = UIInterfaceOrientation.LandscapeLeft.rawValue
+        UIDevice.currentDevice().setValue(value, forKey: "orientation")
+     
+        
+      
 
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
@@ -51,11 +56,11 @@ class GameViewController: UIViewController {
     }
 
     override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
-        } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
-        }
+    //    if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            return Int(UIInterfaceOrientationMask.LandscapeLeft.rawValue)
+     //   } else {
+      //      return Int(UIInterfaceOrientationMask.All.rawValue)
+      //  }
     }
 
     override func didReceiveMemoryWarning() {
