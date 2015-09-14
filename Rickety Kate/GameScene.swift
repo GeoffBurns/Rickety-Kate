@@ -480,6 +480,7 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
                 /* Setup your scene here */
      
+        self.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
 
         setupStatusArea()
         

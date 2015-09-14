@@ -122,15 +122,73 @@ public class RandomStrategy : TrickPlayingStrategy
 public class EarlyGameLeadingStrategy : TrickPlayingStrategy
 {
     var safetyMargin = 6
+    let noOfPlayers = 4
     init(margin:Int) { safetyMargin = margin }
     func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
     {
-            let earlyLeadSuites = [PlayingCard.Suite.Diamonds,PlayingCard.Suite.Clubs,PlayingCard.Suite.Hearts]
+        let earlyLeadSuites = [PlayingCard.Suite.Diamonds,PlayingCard.Suite.Clubs,PlayingCard.Suite.Hearts]
+        let unplayedCardsInTrick = noOfPlayers - table.tricksPile.count
+        var unaccountedForCards = [Int](count: 4, repeatedValue: 13)
+        
+        // remove cards in hand
+        for suite in earlyLeadSuites
+        {
+            let suiteCardsInHand = player.hand.filter { $0.suite == suite }
+            unaccountedForCards[suite.rawValue] -= suiteCardsInHand.count
+        }
+        
+        // remove cards that have been played
+        for suite in earlyLeadSuites
+        {
+            let noCardsPlayed = table.gameTracker.cardCount[suite.rawValue]
+            unaccountedForCards[suite.rawValue] -= noCardsPlayed
+        }
+        // remove suites that  been unfollowed
+        for suite in earlyLeadSuites
+        {
+            
+            // TODO allow if player does not have any spades
+            // do not use if one player does not have the suite
+            if !table.gameTracker.notFollowing.isEmpty
+            {
+                    unaccountedForCards[suite.rawValue] = -10
+            }
+        }
         
         
+        var max = -20
+        var maxSuite = PlayingCard.Suite.Spades
+        var i = 0
         
-
+        // find safest suite
+        for suite in earlyLeadSuites
+        {
+            let index = suite.rawValue
+            let missing = unaccountedForCards[index]
+            if missing > max
+            {
+                max = missing
+                maxSuite = suite
+            }
+        }
+        
+        if  maxSuite == PlayingCard.Suite.Spades
+        {
+              return nil
+        }
+        
+        if  max < safetyMargin + unplayedCardsInTrick
+        {
             return nil
+        }
+        
+        
+        let cardsInChosenSuite = player.hand.filter {$0.suite == maxSuite}
+        let orderedCards = sorted(cardsInChosenSuite,{$0.value > $1.value})
+        
+        return orderedCards.first
+        
+       
 
         
     }
@@ -216,8 +274,6 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                 
                 return orderedHand.first
            
-      
-        
         }
         
         return nil
@@ -228,7 +284,7 @@ public class ComputerPlayer :CardPlayer
 {
 
     var strategies : [TrickPlayingStrategy] = [
-  /*      EarlyGameLeadingStrategy.sharedInstance,
+  /*      EarlyGameLeadingStrategy(6),
         EarlyGameFollowingStrategy.sharedInstance,*/
         LateGameLeadingStrategy.sharedInstance,
         LateGameFollowingStrategy.sharedInstance]
