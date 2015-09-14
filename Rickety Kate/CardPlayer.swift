@@ -100,6 +100,7 @@ protocol TrickPlayingStrategy
     func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
   
 }
+// If all else fails close your eyes and pick at random
 public class RandomStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = RandomStrategy()
@@ -118,7 +119,7 @@ public class RandomStrategy : TrickPlayingStrategy
          return player.hand.randomItem
     }
 }
-// Todo finish this strategy
+// It might be okay to win the trick if its early in the hand
 public class EarlyGameLeadingStrategy : TrickPlayingStrategy
 {
     var safetyMargin = 6
@@ -126,36 +127,14 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
     init(margin:Int) { safetyMargin = margin }
     func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
     {
+       if(!table.tricksPile.isEmpty)
+        {
+          return nil
+        }
         let earlyLeadSuites = [PlayingCard.Suite.Diamonds,PlayingCard.Suite.Clubs,PlayingCard.Suite.Hearts]
-        let unplayedCardsInTrick = noOfPlayers - table.tricksPile.count
-        var unaccountedForCards = [Int](count: 4, repeatedValue: 13)
-        
-        // remove cards in hand
-        for suite in earlyLeadSuites
-        {
-            let suiteCardsInHand = player.hand.filter { $0.suite == suite }
-            unaccountedForCards[suite.rawValue] -= suiteCardsInHand.count
-        }
-        
-        // remove cards that have been played
-        for suite in earlyLeadSuites
-        {
-            let noCardsPlayed = table.gameTracker.cardCount[suite.rawValue]
-            unaccountedForCards[suite.rawValue] -= noCardsPlayed
-        }
-        // remove suites that  been unfollowed
-        for suite in earlyLeadSuites
-        {
-            
-            // TODO allow if player does not have any spades
-            // do not use if one player does not have the suite
-            if !table.gameTracker.notFollowing.isEmpty
-            {
-                    unaccountedForCards[suite.rawValue] = -10
-            }
-        }
-        
-        
+     
+
+        var maxCard : PlayingCard? = nil
         var max = -20
         var maxSuite = PlayingCard.Suite.Spades
         var i = 0
@@ -163,49 +142,99 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
         // find safest suite
         for suite in earlyLeadSuites
         {
-            let index = suite.rawValue
-            let missing = unaccountedForCards[index]
-            if missing > max
+            let (possibleCard,safety) = bestEarlyGameCardFor(suite,player,table,safetyMargin)
+            if let card = possibleCard
             {
-                max = missing
-                maxSuite = suite
+                if safety > max
+                {
+                    max = safety
+                    maxCard = card
+                }
             }
+      
         }
         
-        if  maxSuite == PlayingCard.Suite.Spades
+        if  max < 0
         {
               return nil
         }
         
-        if  max < safetyMargin + unplayedCardsInTrick
+        return maxCard
+      
+    }
+}
+// It might be okay to win the trick if its early in the hand
+func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardPlayer,table:CardTable,margin:Int) -> (PlayingCard?,Int)
+{
+    
+    let noOfPlayers = 4
+    let unplayedCardsInTrick = noOfPlayers - table.tricksPile.count
+    var unaccountedForCards = 13
+    
+    // remove cards in hand
+    
+    let suiteCardsInHand = player.hand.filter { $0.suite == suite }
+    unaccountedForCards -= suiteCardsInHand.count
+    
+    // remove cards that have been played
+    
+    let noCardsPlayed = table.gameTracker.cardCount[suite.rawValue]
+    unaccountedForCards -= noCardsPlayed
+    
+    // remove suites that  been unfollowed
+    
+    // TODO allow if player does not have any spades
+    // do not use if one player does not have the suite
+    if !table.gameTracker.notFollowing[suite.rawValue].isEmpty
+    {
+        unaccountedForCards = -10
+    }
+    
+    
+    var missing = unaccountedForCards
+
+    
+    let safety = missing - margin - unplayedCardsInTrick
+    if  safety <= 0
+    {
+        return (nil,safety)
+    }
+    
+    
+    let cardsInChosenSuite = player.hand.filter {$0.suite == suite}
+    let orderedCards = sorted(cardsInChosenSuite,{$0.value > $1.value})
+    
+    return (orderedCards.first,safety)
+}
+
+// It might be okay to win the trick if its early in the hand
+public class EarlyGameFollowingStrategy : TrickPlayingStrategy
+{
+     var safetyMargin = 6
+    let noOfPlayers = 4
+    init(margin:Int) { safetyMargin = margin }
+    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
+    {
+         if(table.tricksPile.isEmpty)
+        {
+          return nil
+        }
+
+        if let suite = stateOfPlay.leadingSuite
+        {
+   
+         // you don't want to win if its spades
+        if stateOfPlay.leadingSuite == PlayingCard.Suite.Spades
         {
             return nil
         }
-        
-        
-        let cardsInChosenSuite = player.hand.filter {$0.suite == maxSuite}
-        let orderedCards = sorted(cardsInChosenSuite,{$0.value > $1.value})
-        
-        return orderedCards.first
-        
-       
-
-        
+        return bestEarlyGameCardFor(suite,player,table,safetyMargin).0;
+      
     }
-}
-// Todo finish this strategy
-public class EarlyGameFollowingStrategy : TrickPlayingStrategy
-{
-    static let sharedInstance = LateGameFollowingStrategy()
-    private init() { }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
-    {
-        
         return nil
-        
-        
-    }
 }
+    }
+// If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
 public class LateGameLeadingStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = LateGameLeadingStrategy()
@@ -217,12 +246,10 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
           return nil
         }
         let orderedCards = sorted(player.hand,{$0.value < $1.value})
-        
         return orderedCards.first
-
     }
 }
-
+// If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
 public class LateGameFollowingStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = LateGameFollowingStrategy()
@@ -248,9 +275,24 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                 }
                 else
                 {
-                    let isLastPlayer = table.tricksPile.count >= 3
-                    if isLastPlayer
+                    if suite == PlayingCard.Suite.Spades
                     {
+                        // don't give yourself rickety kate
+                        let notRicketyKate = player.hand.filter { $0.imageName != "QS"}
+                        var reverseOrderedCards = sorted(notRicketyKate,{$0.value < $1.value})
+                        if let lowcard = reverseOrderedCards.first
+                        {
+                        return reverseOrderedCards.first
+                        }
+                        
+                        reverseOrderedCards = sorted(cardsInSuite,{$0.value < $1.value})
+                        return reverseOrderedCards.first
+                    }
+                    let isLastPlayer = table.tricksPile.count >= 3
+                    let isNoSpadesInPile = table.tricksPile.filter { $0.playedCard.suite == PlayingCard.Suite.Spades }.isEmpty
+                    if isLastPlayer && isNoSpadesInPile
+                    {
+                        
                         let orderedCards = sorted(cardsInSuite,{$0.value > $1.value})
                         return orderedCards.first
                     }
@@ -273,7 +315,6 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                 let orderedHand = sorted(player.hand,{$0.value > $1.value})
                 
                 return orderedHand.first
-           
         }
         
         return nil
@@ -282,12 +323,8 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
 }
 public class ComputerPlayer :CardPlayer
 {
-
-    var strategies : [TrickPlayingStrategy] = [
-  /*      EarlyGameLeadingStrategy(6),
-        EarlyGameFollowingStrategy.sharedInstance,*/
-        LateGameLeadingStrategy.sharedInstance,
-        LateGameFollowingStrategy.sharedInstance]
+    
+    var strategies : [TrickPlayingStrategy] = []
     
     public func playCard(stateOfPlay:StateOfPlay,table:CardTable) -> PlayingCard?
     {
@@ -300,8 +337,13 @@ public class ComputerPlayer :CardPlayer
         }
         return RandomStrategy.sharedInstance.chooseCard(stateOfPlay, player: self,table:table)
     }
-    public override init(name s: String) {
+    public init(name s: String,margin:Int) {
        super.init(name: s)
+        strategies  = [
+        EarlyGameLeadingStrategy(margin:margin),
+        EarlyGameFollowingStrategy(margin:margin),
+        LateGameLeadingStrategy.sharedInstance,
+        LateGameFollowingStrategy.sharedInstance]
     }
     
 }

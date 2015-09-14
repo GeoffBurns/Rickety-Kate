@@ -20,13 +20,13 @@ public class CardTable
 {
     var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
-    public var players: [CardPlayer] = [HumanPlayer.sharedInstance,ComputerPlayer(name:"Fred"),ComputerPlayer(name:"Molly"),ComputerPlayer(name:"Greg")]
+    public var players: [CardPlayer] = [HumanPlayer.sharedInstance,ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 5)]
     var tricksPile : [(player:CardPlayer,playedCard:PlayingCard, cardSprite: SKSpriteNode)] = []
     // if non-nil StateOfPlay is frozen awaiting user input
     var currentStateOfPlay:StateOfPlay? = nil
     var displayedCards : Dictionary<String,(sprite: SKSpriteNode, card: PlayingCard)> = [:]
     var displayedCardsIsFaceUp : Dictionary<String,Bool> = [:]
-    var cardTossDuration = Double(1.3)
+    var cardTossDuration = Double(0.7)
     var statusInfo = Publink<(String,String)>()
     // TODO replace - repeat generator does not work so great with classes
     var scoreUpdates : [Publink<Int>] = [Publink<Int>](count: 4, repeatedValue: Publink<Int>())
@@ -34,8 +34,9 @@ public class CardTable
     var newGame :  Publink<Void> =  Publink<Void>()
     var resetGame :  Publink<Void> =  Publink<Void>()
     var scores : [Int] = [Int](count: 4, repeatedValue: 0)
+    var scoresForHand : [Int] = [Int](count: 4, repeatedValue: 0)
     var gameTracker = GameProgressTracker.sharedInstance
-    
+    var hasShotTheMoon = false
     func nop() {}
  
     var startPlayerNo = 1
@@ -91,6 +92,7 @@ public class CardTable
             if(score>0)
             {
                 self.scores[winnerIndex] += score
+                self.scoresForHand[winnerIndex] += score
                 self.scoreUpdates[winnerIndex].publish(self.scores[winnerIndex])
             }
             }
@@ -144,6 +146,29 @@ public class CardTable
                 {
                    self.startPlayerNo = 0
                 }
+                var i = 0
+                self.hasShotTheMoon = false
+                for player in self.players
+                {
+                if self.scoresForHand[i] == 22
+                  {
+                  self.scores[i] = 0
+                  self.scoreUpdates[i].publish(self.scores[i])
+                  self.hasShotTheMoon = false
+                  if i == 0
+                    {
+                    self.statusInfo.publish("Congratulatons!!!","You just shot the Moon")
+                    }
+                    else
+                    {
+                    self.statusInfo.publish("Wow!!!","\(player.name) just shot the Moon")
+                    }
+                    
+                   }
+                    i++
+                }
+                    
+                
                 self.gameTracker.reset()
                 self.dealNewCardsToPlayers()
                 self.resetGame.publish()
@@ -217,6 +242,21 @@ public class CardTable
         {
             
             self.gameTracker.cardCounter.publish(displayedCard.card.suite)
+            
+            if let firstcard = tricksPile.first
+            {
+                let leadingSuite = firstcard.playedCard.suite
+                if displayedCard.card.suite != leadingSuite
+                {
+                    self.gameTracker.notFollowingTracker.publish(displayedCard.card.suite,player)
+                }
+                
+            }
+            
+            if let cardData: NSMutableDictionary  =  displayedCard.sprite.userData
+            {
+                cardData.removeAllObjects()
+            }
             tricksPile.append((player:player,playedCard:displayedCard.card, cardSprite: displayedCard.sprite))
         }
     }

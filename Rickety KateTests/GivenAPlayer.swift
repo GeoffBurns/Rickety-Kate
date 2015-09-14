@@ -11,7 +11,7 @@ import XCTest
 import Rickety_Kate
 
 class GivenAPlayer: XCTestCase {
-   var player : CardPlayer = ComputerPlayer(name:"Ken")
+    var player : CardPlayer = ComputerPlayer(name:"Ken",margin:2)
    var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance;
     override func setUp() {
         super.setUp()
