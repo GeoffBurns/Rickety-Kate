@@ -11,6 +11,7 @@
 		AC252A431BA6F25E00C0121A /* MathExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A421BA6F25E00C0121A /* MathExtention.swift */; };
 		AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */; };
 		AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */; };
+		AC252A491BA8CD9600C0121A /* TrickPlayingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A481BA8CD9600C0121A /* TrickPlayingStrategy.swift */; };
 		AC627E891BA30766003E9A8F /* GivenADeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E881BA30766003E9A8F /* GivenADeck.swift */; };
 		AC627E8B1BA30807003E9A8F /* GivenAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */; };
 		AC627E8D1BA30840003E9A8F /* GivenACardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */; };
@@ -45,6 +46,7 @@
 		AC252A421BA6F25E00C0121A /* MathExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MathExtention.swift; path = ../MathExtention.swift; sourceTree = "<group>"; };
 		AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIdeOfTable.swift; sourceTree = "<group>"; };
 		AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCardComparable.swift; sourceTree = "<group>"; };
+		AC252A481BA8CD9600C0121A /* TrickPlayingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrickPlayingStrategy.swift; path = ../TrickPlayingStrategy.swift; sourceTree = "<group>"; };
 		AC627E881BA30766003E9A8F /* GivenADeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenADeck.swift; sourceTree = "<group>"; };
 		AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAPlayer.swift; sourceTree = "<group>"; };
 		AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenACardTable.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		AC62B6951BA1564800B0EDAE /* Rickety Kate */ = {
 			isa = PBXGroup;
 			children = (
+				AC252A481BA8CD9600C0121A /* TrickPlayingStrategy.swift */,
 				AC9E82C81BA697290064870C /* Multi-Line.swift */,
 				AC252A421BA6F25E00C0121A /* MathExtention.swift */,
 				AC9E82BD1BA686C40064870C /* CardPlayer.swift */,
@@ -264,6 +267,7 @@
 				AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */,
 				AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */,
 				AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */,
+				AC252A491BA8CD9600C0121A /* TrickPlayingStrategy.swift in Sources */,
 				AC9E82C41BA686C40064870C /* CardTable.swift in Sources */,
 				AC9E82C91BA697290064870C /* Multi-Line.swift in Sources */,
 				AC252A431BA6F25E00C0121A /* MathExtention.swift in Sources */,
