@@ -91,7 +91,7 @@ public class RandomStrategy : TrickPlayingStrategy
     private init() { }
     func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
-        if let suite: PlayingCard.Suite = stateOfPlay.leadingSuite
+        if let suite: PlayingCard.Suite = gameState.leadingSuite
         {
             var validCards = player.hand.filter {$0.suite == suite}
             if let choosenCard:PlayingCard = validCards.randomItem
@@ -208,11 +208,11 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
           return nil
         }
 
-        if let suite = stateOfPlay.leadingSuite
+        if let suite = gameState.leadingSuite
         {
    
          // you don't want to win if its spades
-        if stateOfPlay.leadingSuite == PlayingCard.Suite.Spades
+        if gameState.leadingSuite == PlayingCard.Suite.Spades
         {
             return nil
         }
@@ -247,7 +247,7 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
     private init() { }
     func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
-        if let suite = stateOfPlay.leadingSuite
+        if let suite = gameState.leadingSuite
         {
             let cardsInSuite = player.hand.filter { $0.suite == suite}
             let canFollowSuite = !cardsInSuite.isEmpty

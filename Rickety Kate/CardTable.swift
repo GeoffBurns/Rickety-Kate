@@ -11,46 +11,26 @@ import SpriteKit
 
 public struct StateOfPlay
 {
-    let leadingSuite:PlayingCard.Suite?
+   // let leadingSuite:PlayingCard.Suite?
     let remainingPlayers:[CardPlayer]
   //  let table:CardTable
 }
 protocol GameState
 {
     var hasLead : Bool { get }
-
     var hasntLead : Bool { get }
-    
     var leadingSuite : PlayingCard.Suite? { get }
-    
-    
     var cardsFollowingSuite : [PlayingCard] { get }
-
-    
     var isLastPlayer : Bool { get }
-
     var isSpadesInPile : Bool { get }
     var isntSpadesInPile : Bool { get }
     var noOfPlayers : Int { get }
-    
     var playedCardsInTrick : Int { get }
-      // let unplayedCardsInTrick = noOfPlayers - table.tricksPile.count
     var unplayedCardsInTrick : Int { get }
     
     func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
-       // if !table.gameTracker.notFollowing[suite.rawValue].isEmpty
-    
-    
     func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
 
-    
- 
- 
-    
-
-
-
-    
 }
 public class CardTable : GameState
 {
@@ -108,17 +88,19 @@ public class CardTable : GameState
     // GameState Protocol
     //////////
     var noOfPlayers : Int
-        {
+    {
             return players.count
     }
+    
     var playedCardsInTrick : Int {
     return tricksPile.count
     }
+    
     var unplayedCardsInTrick : Int
     {
     return  noOfPlayers - playedCardsInTrick
     }
-        // let unplayedCardsInTrick = noOfPlayers - table.tricksPile.count
+
     func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
     {
       return gameTracker.notFollowing[suite.rawValue].isEmpty
@@ -127,6 +109,7 @@ public class CardTable : GameState
     var hasLead : Bool {
      return tricksPile.isEmpty
     }
+    
     var hasntLead : Bool {
         return !hasLead
     }
@@ -134,6 +117,7 @@ public class CardTable : GameState
     var leadingSuite : PlayingCard.Suite? {
        return tricksPile.first?.playedCard.suite
     }
+    
     var cardsFollowingSuite : [PlayingCard] {
       if  let suite = leadingSuite
       {
@@ -162,6 +146,7 @@ public class CardTable : GameState
     {
      return gameTracker.cardCount[suite.rawValue]
     }
+    
     //////////
     // internal functions
     //////////
@@ -391,7 +376,6 @@ public class CardTable : GameState
     
     func nextPlayerAction(state:StateOfPlay, currentSuite:PlayingCard.Suite?) -> SKAction
     {
-        var leadingSuite = state.leadingSuite
         var remainingPlayers = state.remainingPlayers
         remainingPlayers.removeAtIndex(0)
         let nextPlayers = remainingPlayers
@@ -405,18 +389,15 @@ public class CardTable : GameState
             (SKAction.runBlock({
                 
                 self.tidyup.publish()
-                if let newSuite = currentSuite where leadingSuite == nil
-                {
-                    leadingSuite = newSuite // trickcard.suite
-                }
-                self.playTrick(StateOfPlay(leadingSuite: leadingSuite, remainingPlayers: nextPlayers))
+             
+                self.playTrick(StateOfPlay(remainingPlayers: nextPlayers))
             }))
         
         return doneAction
     }
     func playTrickCard(playerWithTurn:CardPlayer, trickcard:PlayingCard,state:StateOfPlay, willAnimate:Bool = true)
     {
-        var leadingSuite = state.leadingSuite
+
         var remainingPlayers = state.remainingPlayers
             addToTrickPile(playerWithTurn,cardName: trickcard.imageName)
             if let displayedCard = displayedCards[trickcard.imageName]
@@ -478,7 +459,7 @@ public class CardTable : GameState
     
     func playTrick(state:StateOfPlay)
     {
-        var leadingSuite = state.leadingSuite
+
         var remainingPlayers = state.remainingPlayers
    
         if let playerWithTurn = remainingPlayers.first,
@@ -503,7 +484,7 @@ public class CardTable : GameState
         }
         else
         {
-            currentStateOfPlay = StateOfPlay(leadingSuite: leadingSuite, remainingPlayers: remainingPlayers)
+            currentStateOfPlay = StateOfPlay( remainingPlayers: remainingPlayers)
             statusInfo.publish("Your Turn","")
         }
         
@@ -516,7 +497,7 @@ public class CardTable : GameState
         var remainingPlayers = players
         var leadingSuite : PlayingCard.Suite? = nil
    
-        var state = StateOfPlay(leadingSuite: leadingSuite, remainingPlayers: remainingPlayers)
+        var state = StateOfPlay( remainingPlayers: remainingPlayers)
         playTrick(state)
         
     }
