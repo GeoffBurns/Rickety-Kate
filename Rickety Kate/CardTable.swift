@@ -15,7 +15,8 @@ public struct StateOfPlay
     let remainingPlayers:[CardPlayer]
   //  let table:CardTable
 }
-protocol GameState
+
+public protocol GameState
 {
     var hasLead : Bool { get }
     var hasntLead : Bool { get }
@@ -87,38 +88,38 @@ public class CardTable : GameState
     //////////
     // GameState Protocol
     //////////
-    var noOfPlayers : Int
+    public var noOfPlayers : Int
     {
             return players.count
     }
     
-    var playedCardsInTrick : Int {
+    public var playedCardsInTrick : Int {
     return tricksPile.count
     }
     
-    var unplayedCardsInTrick : Int
+    public var unplayedCardsInTrick : Int
     {
     return  noOfPlayers - playedCardsInTrick
     }
 
-    func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
+    public func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
     {
       return gameTracker.notFollowing[suite.rawValue].isEmpty
     }
     
-    var hasLead : Bool {
+    public var hasLead : Bool {
      return tricksPile.isEmpty
     }
     
-    var hasntLead : Bool {
+    public var hasntLead : Bool {
         return !hasLead
     }
     
-    var leadingSuite : PlayingCard.Suite? {
+    public var leadingSuite : PlayingCard.Suite? {
        return tricksPile.first?.playedCard.suite
     }
     
-    var cardsFollowingSuite : [PlayingCard] {
+    public var cardsFollowingSuite : [PlayingCard] {
       if  let suite = leadingSuite
       {
       return tricksPile
@@ -128,16 +129,16 @@ public class CardTable : GameState
         return []
     }
     
-    var isLastPlayer : Bool {
+    public var isLastPlayer : Bool {
      return tricksPile.count >= noOfPlayers - 1
     }
     
  
-    var isntSpadesInPile : Bool {
+    public var isntSpadesInPile : Bool {
       return tricksPile.filter { $0.playedCard.suite == PlayingCard.Suite.Spades }.isEmpty
     }
     
-    var isSpadesInPile : Bool {
+    public var isSpadesInPile : Bool {
         
         return !isntSpadesInPile
     }
@@ -465,7 +466,7 @@ public class CardTable : GameState
         if let playerWithTurn = remainingPlayers.first,
             computerPlayer = playerWithTurn as? ComputerPlayer
         {
-            if let card = computerPlayer.playCard(state,table: self)
+            if let card = computerPlayer.playCard( self)
             {
                 /// computerPlayer.hand.indexOf(card) // in swift 2.0
                 if let index = find(computerPlayer.hand,card)

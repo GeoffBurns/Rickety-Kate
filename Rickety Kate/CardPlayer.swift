@@ -81,7 +81,7 @@ public class HumanPlayer :CardPlayer
 
 protocol TrickPlayingStrategy
 {
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
+    func chooseCard(player:CardPlayer,gameState:GameState) -> PlayingCard?
   
 }
 // If all else fails close your eyes and pick at random
@@ -89,7 +89,7 @@ public class RandomStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = RandomStrategy()
     private init() { }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
+    func chooseCard(player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
         if let suite: PlayingCard.Suite = gameState.leadingSuite
         {
@@ -110,7 +110,7 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
     var safetyMargin = 6
     let noOfPlayers = 4
     init(margin:Int) { safetyMargin = margin }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
+    func chooseCard(player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
        if(gameState.hasntLead)
         {
@@ -201,7 +201,7 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
      var safetyMargin = 6
     let noOfPlayers = 4
     init(margin:Int) { safetyMargin = margin }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
+    func chooseCard(player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
          if(gameState.hasLead)
         {
@@ -227,7 +227,7 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = LateGameLeadingStrategy()
     private init() { }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
+    func chooseCard(player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
         if(gameState.hasntLead)
         {
@@ -245,7 +245,7 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = LateGameFollowingStrategy()
     private init() { }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
+    func chooseCard(player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
         if let suite = gameState.leadingSuite
         {
@@ -317,16 +317,16 @@ public class ComputerPlayer :CardPlayer
     
     var strategies : [TrickPlayingStrategy] = []
     
-    public func playCard(stateOfPlay:StateOfPlay,table:CardTable) -> PlayingCard?
+    public func playCard(gameState:GameState) -> PlayingCard?
     {
         for strategy in strategies
         {
-            if let card : PlayingCard = strategy.chooseCard(stateOfPlay, player: self,gameState:table)
+            if let card : PlayingCard = strategy.chooseCard( self, gameState:gameState)
             {
                 return card
             }
         }
-        return RandomStrategy.sharedInstance.chooseCard(stateOfPlay, player: self,gameState:table)
+        return RandomStrategy.sharedInstance.chooseCard(self,gameState:gameState)
     }
     public init(name s: String,margin:Int) {
        super.init(name: s)
