@@ -464,7 +464,7 @@ class GameScene: SKScene {
             2.2)
         rulesButton.position = CGPoint(x:0.0,y:self.frame.size.height)
         rulesButton.setScale(0.5)
-        rulesButton.name = "Rules text"
+        rulesButton.name = "Rules"
         
         rulesButton.zPosition = 450
         rulesButton.userInteractionEnabled = false
@@ -512,53 +512,47 @@ class GameScene: SKScene {
         setupNewGameArrangement()
     }
     
-    func PlayerOneCardSpiteAtLocation(positionInScene: CGPoint) -> SKSpriteNode?
+    func isNodeAPlayerOneCardSpite(node:SKSpriteNode) -> Bool
     {
-      // is there a node there and is it a sprite
-        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
+        // does the sprite belong to a player
+        if let cardData: NSMutableDictionary  =  node.userData
         {
-             // does the sprite belong to a player
-            if let cardData: NSMutableDictionary  =  touchedNode.userData
+            if let player: String = cardData.valueForKey("player") as? String
             {
-                if let player: String = cardData.valueForKey("player") as? String
+                // does the sprite belong to player one
+                if player == "You"
                 {
-                    // does the sprite belong to player one
-                    if player == "You"
-                    {
-                        return touchedNode
-                    }
+                    return true
                 }
             }
-         
         }
-         return nil
+        
+    return false
+
     }
-    func PlayButtonAtLocation(positionInScene: CGPoint) -> SKSpriteNode?
+    func isNodeAPlayButton(node:SKSpriteNode) -> Bool
     {
-        // is there a node there and is it a sprite
-        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
-        {
-            // does the sprite belong to a player
-            if touchedNode.name == "Play"
-            {
-             
-                        return touchedNode
-           
-            }
-            
-        }
-        return nil
+        return node.name == "Play"
     }
-  
+    func isNodeRulesButton(node:SKSpriteNode) -> Bool
+    {
+        return node.name == "Rules"
+    }
+ 
+
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         var width = self.frame.size.width
         var height = self.frame.size.height
       for touch in (touches as! Set<UITouch>)
       {
+     
+        
         
         let positionInScene = touch.locationInNode(self)
-        if let touchedPlayButton : SKSpriteNode = PlayButtonAtLocation(positionInScene)
+        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
+        {
+        if isNodeAPlayButton(touchedNode)
         {
             reverseDeal(width , height: height )
             
@@ -576,7 +570,7 @@ class GameScene: SKScene {
        
         }
         /// rules button
-        if positionInScene.x < 100 || positionInScene.y > self.frame.height - 100
+        if isNodeRulesButton(touchedNode) 
         {
             if(isRulesTextShowing)
             {
@@ -595,8 +589,7 @@ class GameScene: SKScene {
           break
             
         }
-        if let touchedNode : SKSpriteNode = PlayerOneCardSpiteAtLocation(positionInScene)
-        {
+        if isNodeAPlayerOneCardSpite(touchedNode)        {
         draggedNode = touchedNode;
         originalCardPosition  = touchedNode.position
         originalCardRotation  = touchedNode.zRotation
@@ -609,6 +602,7 @@ class GameScene: SKScene {
         touchedNode.yScale = 1.15
         }
         break
+        }
         }
     }
     
