@@ -225,8 +225,7 @@ class GameScene: SKScene {
                         let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
                   
                         let rotateAction = (SKAction.rotateToAngle(0.0, duration:(cardTossDuration*0.8)))
-                        let scaleAction =  (SKAction.scaleTo(cardScale, duration:
-                            cardTossDuration))
+                        let scaleAction =  (SKAction.scaleTo(cardScale, duration:cardTossDuration*0.8))
                         let groupAction = (SKAction.group([moveAction,rotateAction,scaleAction]))
                         sprite.runAction(groupAction)
                         
