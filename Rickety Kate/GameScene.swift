@@ -8,120 +8,6 @@
 
 import SpriteKit
 
-extension Int {
-    var degreesToRadians : CGFloat {
-        return CGFloat(self) * CGFloat(M_PI) / 180.0
-    }
-}
-
-
-extension Double {
-    var degreesToRadians : CGFloat {
-        return CGFloat(self) * CGFloat(M_PI) / 180.0
-    }
-}
-
-public enum SideOfTable:Int
-{
-   case Bottom
-   case Right
-   case Top
-   case Left
-   case Center
-    
-    func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat) -> CGPoint
-    {
-        var startheight = CGFloat(0.0)
-        var startWidth = width * 0.35
-        var fullHand = CGFloat(13)
-        var hortizonalSpacing = width * 0.3 / fullHand
-        var verticalSpacing = height * 0.2 / fullHand
-        switch self
-        {
-        // Player One
-        case .Bottom:
-            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.9)
-        // Computer Player
-        case .Right:
-            startWidth = width
-            startheight = height * 0.4
-            return CGPoint(x: startWidth+spriteHeight*1.1 ,y: startheight+verticalSpacing*positionInSpread )
-        // Computer Player
-        case .Top:
-            hortizonalSpacing = -width * 0.2 / fullHand
-            startWidth = width * 0.6
-            startheight = height
-            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.5)
-        // Computer Player
-        case .Left:
-            verticalSpacing = -verticalSpacing
-            startWidth = width
-            startheight = height * 0.6
-            return CGPoint(x: -spriteHeight*1.1 ,y: startheight+verticalSpacing*positionInSpread )
-
-        // the trick pile
-        case .Center:
-            var startheight = height * 0.5
-            var startWidth = width * 0.35
-            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.9)
-        }
-    }
-    func rotationOfCard(positionInSpread: CGFloat) -> CGFloat
-    {
-        
-    var fullHand = CGFloat(13)
-        
-        var startRotate = CGFloat(0)
-        switch self
-        {
-        // Computer Player
-        case .Right:
-            startRotate = 120.degreesToRadians
-         // Computer Player
-        case .Top:
-            startRotate = 210.degreesToRadians
-        // Computer Player
-        case .Left:
-            startRotate = -60.degreesToRadians
-        // PlayerOne of the trick pile
-        default:
-            startRotate = 30.degreesToRadians
-        }
-   
-        
-    var rotateDelta = 60.degreesToRadians / fullHand
-    
-    return   startRotate - rotateDelta * positionInSpread
-    }
-    
-    func positionOfWonCards( width: CGFloat, height: CGFloat) -> CGPoint
-    {
-    
-        switch self
-        {
-            // Player One
-        case .Bottom:
-            return CGPoint(x: width*0.5,y: -200.0)
-            // Computer Player
-        case .Right:
- 
-            return CGPoint(x: width*1.2,y: height * 0.5)
-            // Computer Player
-        case .Top:
-            return CGPoint(x: width*0.5,y: height * 1.2)
-            // Computer Player
-        case .Left:
-            return CGPoint(x: -200,y: height * 0.5)
-            
-            // the trick pile
-        case .Center:
-
-            return CGPoint(x: width*0.5,y:  height * 0.5)
-            
-            
-        }
-    }
-}
 
 class GameScene: SKScene {
     
@@ -139,9 +25,15 @@ class GameScene: SKScene {
     var scoreLabel2 = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
     var scoreLabel3 = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
     var rulesButton =  SKSpriteNode(imageNamed:"Rules1")
+    var playButton1 =  SKSpriteNode(imageNamed:"Play1")
+    var playButton2 =  SKSpriteNode(imageNamed:"Play1")
+
     var rulesText : SKMultilineLabel? = nil
     var isRulesTextShowing = false
     var cardTossDuration = 0.4
+    let cardAnchorPoint = CGPoint(x: 0.5, y: UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
+        -0.7 :
+        -1.0)
     
     func createAndDisplayCardImages(width: CGFloat , height: CGFloat )
     {
@@ -185,10 +77,8 @@ class GameScene: SKScene {
             if let sprite = table.displayedCards[trick.playedCard.imageName]?.sprite
                     {
                         sprite.setScale(cardScale*0.5)
-                        sprite.anchorPoint = CGPoint(x: 0.5, y: UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-                            -0.7 :
-                            -1.0)
-                        
+                        sprite.anchorPoint = cardAnchorPoint
+                       
                         sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
                         sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
                         sprite.zPosition = z
@@ -233,9 +123,7 @@ class GameScene: SKScene {
                         }
 
                     }
-                    sprite.anchorPoint = CGPoint(x: 0.5, y: UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-                        -0.7 :
-                        -1.0)
+                    sprite.anchorPoint = cardAnchorPoint
                     sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
                     sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
                      sprite.zPosition = (i==0 ? 100: 10) + positionInSpread
@@ -266,9 +154,7 @@ class GameScene: SKScene {
                     {
                         // PlayerOne's cards are larger
                         sprite.setScale(i==0 ? cardScale: cardScale*0.5)
-                        sprite.anchorPoint = CGPoint(x: 0.5, y: UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-                            -0.7 :
-                            -1.0)
+                        sprite.anchorPoint = cardAnchorPoint
 
                         if(i==0)
                         {
@@ -301,6 +187,61 @@ class GameScene: SKScene {
             i++
         }
     }
+    func reverseDeal(width: CGFloat , height: CGFloat )
+    {
+        var fullHand = CGFloat(13)
+        
+        var i = 0;
+        for player in table.players
+        {
+            var noCards = CGFloat(player.hand.count)
+            
+            var positionInSpread = (fullHand - noCards) * 0.5
+            if let playerSeat = SideOfTable(rawValue: i)
+            {
+                for card in player.hand
+                {
+                    if let sprite = table.displayedCards[card.imageName]?.sprite
+                    {
+                        // PlayerOne's cards are larger
+                        sprite.setScale(i==0 ? cardScale: cardScale*0.5)
+                        sprite.anchorPoint = cardAnchorPoint
+                        
+                        if(i==0)
+                        {
+                            if let isUp = table.displayedCardsIsFaceUp[card.imageName] where isUp
+                            {
+                                table.displayedCardsIsFaceUp.updateValue(false, forKey: card.imageName)
+                                sprite.texture = SKTexture(imageNamed:"Back1")
+                         
+                            }
+                            else
+                            {
+                         // don't need to do anything
+                            }
+                        }
+                        sprite.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                        let newPosition = CGPoint(x: width * CGFloat(2 * i  + 1) / 8.0,y: height*0.5)
+                        let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
+                  
+                        let rotateAction = (SKAction.rotateToAngle(0.0, duration:(cardTossDuration*0.8)))
+                        let scaleAction =  (SKAction.scaleTo(cardScale, duration:
+                            cardTossDuration))
+                        let groupAction = (SKAction.group([moveAction,rotateAction,scaleAction]))
+                        sprite.runAction(groupAction)
+                        
+                        sprite.zPosition = (i==0 ? 100: 10) + positionInSpread
+                        sprite.color = UIColor.whiteColor()
+                        sprite.colorBlendFactor = 0
+                        positionInSpread++
+                    }
+                }
+            }
+            i++
+        }
+    }
+                
+        
     func rearrange()
     {
         let width = self.frame.size.width
@@ -531,7 +472,28 @@ class GameScene: SKScene {
         self.addChild(rulesText!)
  
     }
-
+    func setupPlayButton()
+    {
+        
+        if(table.isInDemoMode)
+        {
+   
+        playButton1.position = CGPoint(x:self.frame.size.width*0.25,y:self.frame.size.height*0.5)
+  
+        playButton1.name = "Play"
+        
+        playButton1.zPosition = 200
+        playButton1.userInteractionEnabled = false
+        self.addChild(playButton1)
+            playButton2.position = CGPoint(x:self.frame.size.width*0.75,y:self.frame.size.height*0.5)
+            
+            playButton2.name = "Play"
+            
+            playButton2.zPosition = 200
+            playButton2.userInteractionEnabled = false
+            self.addChild(playButton2)
+        }
+    }
     override func didMoveToView(view: SKView) {
                 /* Setup your scene here */
      
@@ -539,6 +501,7 @@ class GameScene: SKScene {
 
         setupStatusArea()
         ruletext()
+        setupPlayButton()
         table.dealNewCardsToPlayers()
         setupScores()
         setupTidyup()
@@ -570,17 +533,48 @@ class GameScene: SKScene {
         }
          return nil
     }
-  
+    func PlayButtonAtLocation(positionInScene: CGPoint) -> SKSpriteNode?
+    {
+        // is there a node there and is it a sprite
+        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
+        {
+            // does the sprite belong to a player
+            if touchedNode.name == "Play"
+            {
+             
+                        return touchedNode
+           
+            }
+            
+        }
+        return nil
+    }
   
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
- 
+        var width = self.frame.size.width
+        var height = self.frame.size.height
       for touch in (touches as! Set<UITouch>)
       {
         
         let positionInScene = touch.locationInNode(self)
-        
-        
+        if let touchedPlayButton : SKSpriteNode = PlayButtonAtLocation(positionInScene)
+        {
+            reverseDeal(width , height: height )
+            
+            let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
+                SKAction.runBlock({
+                    let transition = SKTransition.crossFadeWithDuration(0.5)
+                    let scene = GameScene(size: self.scene!.size)
+                    scene.scaleMode = SKSceneScaleMode.AspectFill
+                    
+                    self.scene!.view!.presentScene(scene, transition: transition)
+                    
+                })]))
+            self.runAction(doneAction2)
+            
+       
+        }
         /// rules button
         if positionInScene.x < 100 || positionInScene.y > self.frame.height - 100
         {
@@ -618,7 +612,7 @@ class GameScene: SKScene {
         }
     }
     
-   override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
     let touch = (touches as! Set<UITouch>).first!
     let positionInScene = touch.locationInNode(self)
     
@@ -682,7 +676,6 @@ class GameScene: SKScene {
             touchedNode.zRotation = originalCardRotation
             touchedNode.position = originalCardPosition
             touchedNode.anchorPoint = originalCardAnchor
-        
             touchedNode.xScale = cardScale
             touchedNode.yScale = cardScale
             draggedNode=nil

@@ -10,30 +10,11 @@ import Foundation
 
 public protocol Deck
 {
-    
     var cards: [PlayingCard] {get}
-    
     func dealFor(numberOfPlayers:Int) -> [[PlayingCard]]
 }
 
-extension Array {
-    mutating func shuffleThis () {
-        for i in stride(from:self.count-1, to:0, by:-1) {
-            let ix1 = i
-            let ix2 = Int(arc4random_uniform(UInt32(i+1)))
-            (self[ix1], self[ix2]) = (self[ix2], self[ix1])
-        }
-    } }
-extension Array {
-    func shuffle () -> Array {
-        var temp = self
-        for i in stride(from:temp.count-1, to:0, by:-1) {
-            let ix1 = i
-            let ix2 = Int(arc4random_uniform(UInt32(i+1)))
-            (temp[ix1], temp[ix2]) = (temp[ix2], temp[ix1])
-        }
-        return temp
-    } }
+
 
 public func < <T: RawRepresentable where T.RawValue: Comparable>(a: T, b: T) -> Bool {
     return a.rawValue < b.rawValue

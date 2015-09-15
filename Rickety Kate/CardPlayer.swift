@@ -9,22 +9,6 @@
 import Foundation
 
 
-extension Array {
-    var randomItem: T? {
-        
-    let count = self.count
-        
-    switch self.count
-        {
-        case 0 : return nil
-        case 1 : return self.first
-        default :
-  
-            let index = Int(arc4random_uniform(UInt32(self.count)))
-            return self[index]
-        }
-    }
-}
 
 public protocol ICardPlayer
 {

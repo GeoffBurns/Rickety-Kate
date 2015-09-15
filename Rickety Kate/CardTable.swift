@@ -20,7 +20,7 @@ public class CardTable
 {
     var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
-    public var players: [CardPlayer] = [HumanPlayer.sharedInstance,ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 5)]
+    var _players: [CardPlayer] = []
     var tricksPile : [(player:CardPlayer,playedCard:PlayingCard, cardSprite: SKSpriteNode)] = []
     // if non-nil StateOfPlay is frozen awaiting user input
     var currentStateOfPlay:StateOfPlay? = nil
@@ -37,16 +37,28 @@ public class CardTable
     var scoresForHand : [Int] = [Int](count: 4, repeatedValue: 0)
     var gameTracker = GameProgressTracker.sharedInstance
     var hasShotTheMoon = false
+    var isInDemoMode = false
     func nop() {}
  
     var startPlayerNo = 1
     let cardScale = CGFloat(0.9)
     let cardScaleForSelected = CGFloat(1.05)
-    static public let sharedInstance = CardTable()
     
-    private init() {
     
-   
+    public var players : [CardPlayer] {
+        get {
+            return _players
+        }
+        
+    }
+    static public let sharedInstance = CardTable(players: [HumanPlayer.sharedInstance,ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 5)])
+    
+    static public let sharedDemoInstance = CardTable(players: [ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 5)])
+    
+    private init(players: [CardPlayer]) {
+    _players = players
+    playerOne = _players[0]
+    isInDemoMode = playerOne.name != "You"
     }
     // everyone except PlayerOne
     var otherPlayers : [CardPlayer]
@@ -314,7 +326,8 @@ public class CardTable
                 var positionInSpread = (fullHand - 4 ) * 0.5 + CGFloat(self.tricksPile.count - 1)
                 
                 let sprite = displayedCard.sprite
-                let spriteHeight = sprite.size.height
+                let isFaceUp = self.displayedCardsIsFaceUp[trickcard.imageName] ?? false
+                let spriteHeight = isFaceUp ? sprite.size.height*0.5 :  sprite.size.height
                 
                 if let scene = sprite.parent
                 {
@@ -326,7 +339,7 @@ public class CardTable
                     let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration)))
                     let rotationAngle = SideOfTable.Center.rotationOfCard(positionInSpread) //+ CGFloat(M_PI * 2.0)
                     let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:cardTossDuration))
-                 //   let scaleAction =  (SKAction.scaleTo(cardScale*0.5, duration: cardTossDuration))
+                    let scaleAction =  (SKAction.scaleTo(cardScale*0.5, duration: cardTossDuration))
                     
                     let flipAction = (SKAction.sequence([
                         SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
@@ -341,7 +354,15 @@ public class CardTable
                     
                     if(willAnimate)
                     {
-                        let moveActionWithDone = SKAction.sequence([
+                        
+                        
+                        let moveActionWithDone = isFaceUp
+                   
+                            ? SKAction.sequence([
+                                    SKAction.group([moveAction,rotateAction,scaleAction]),
+                                    SKAction.waitForDuration(cardTossDuration),
+                                    doneAction])
+                        : SKAction.sequence([
                             SKAction.group([moveAction,rotateAction,flipAction]),
                             SKAction.waitForDuration(cardTossDuration),
                             doneAction])
