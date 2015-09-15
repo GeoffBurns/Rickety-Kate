@@ -269,7 +269,7 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                     if suite == PlayingCard.Suite.Spades
                     {
                         // don't give yourself rickety kate
-                        let notRicketyKate = player.hand.filter { $0.isntRicketyKate }
+                        let notRicketyKate = cardsInSuite.filter { $0.isntRicketyKate }
                         var reverseOrderedCards = sorted(notRicketyKate,{$0.value < $1.value})
                         if let lowcard = reverseOrderedCards.first
                         {

@@ -567,10 +567,10 @@ class GameScene: SKScene {
                 })]))
             self.runAction(doneAction2)
             
-       
+        return
         }
         /// rules button
-        if isNodeRulesButton(touchedNode) 
+        if isNodeRulesButton(touchedNode)
         {
             if(isRulesTextShowing)
             {
@@ -586,7 +586,7 @@ class GameScene: SKScene {
                  rulesText!.zPosition = 400
                 isRulesTextShowing = true
             }
-          break
+          return
             
         }
         if isNodeAPlayerOneCardSpite(touchedNode)        {
