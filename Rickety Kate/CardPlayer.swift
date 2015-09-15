@@ -81,7 +81,7 @@ public class HumanPlayer :CardPlayer
 
 protocol TrickPlayingStrategy
 {
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
+    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
   
 }
 // If all else fails close your eyes and pick at random
@@ -89,7 +89,7 @@ public class RandomStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = RandomStrategy()
     private init() { }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
+    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
         if let suite: PlayingCard.Suite = stateOfPlay.leadingSuite
         {
@@ -103,15 +103,16 @@ public class RandomStrategy : TrickPlayingStrategy
          return player.hand.randomItem
     }
 }
+
 // It might be okay to win the trick if its early in the hand
 public class EarlyGameLeadingStrategy : TrickPlayingStrategy
 {
     var safetyMargin = 6
     let noOfPlayers = 4
     init(margin:Int) { safetyMargin = margin }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
+    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
-       if(!table.tricksPile.isEmpty)
+       if(gameState.hasntLead)
         {
           return nil
         }
@@ -126,7 +127,7 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
         // find safest suite
         for suite in earlyLeadSuites
         {
-            let (possibleCard,safety) = bestEarlyGameCardFor(suite,player,table,safetyMargin)
+            let (possibleCard,safety) = bestEarlyGameCardFor(suite,player,gameState,safetyMargin)
             if let card = possibleCard
             {
                 if safety > max
@@ -147,12 +148,14 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
       
     }
 }
+
+
 // It might be okay to win the trick if its early in the hand
-func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardPlayer,table:CardTable,margin:Int) -> (PlayingCard?,Int)
+func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardPlayer,gameState:GameState,margin:Int) -> (PlayingCard?,Int)
 {
     
-    let noOfPlayers = 4
-    let unplayedCardsInTrick = noOfPlayers - table.tricksPile.count
+  //  let noOfPlayers = gameState.noOfPlayers
+    let unplayedCardsInTrick = gameState.unplayedCardsInTrick
     var unaccountedForCards = 13
     
     // remove cards in hand
@@ -162,14 +165,15 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardPlayer,table:CardTa
     
     // remove cards that have been played
     
-    let noCardsPlayed = table.gameTracker.cardCount[suite.rawValue]
+    let noCardsPlayed = gameState.noCardsPlayedFor(suite)
+    
     unaccountedForCards -= noCardsPlayed
     
     // remove suites that  been unfollowed
     
     // TODO allow if player does not have any spades
     // do not use if one player does not have the suite
-    if !table.gameTracker.notFollowing[suite.rawValue].isEmpty
+    if gameState.arePlayerWithoutCardsIn(suite)
     {
         unaccountedForCards = -10
     }
@@ -197,9 +201,9 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
      var safetyMargin = 6
     let noOfPlayers = 4
     init(margin:Int) { safetyMargin = margin }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
+    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
-         if(table.tricksPile.isEmpty)
+         if(gameState.hasLead)
         {
           return nil
         }
@@ -212,7 +216,7 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
         {
             return nil
         }
-        return bestEarlyGameCardFor(suite,player,table,safetyMargin).0;
+        return bestEarlyGameCardFor(suite,player,gameState,safetyMargin).0;
       
     }
         return nil
@@ -223,9 +227,9 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = LateGameLeadingStrategy()
     private init() { }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
+    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
-        if(!table.tricksPile.isEmpty)
+        if(gameState.hasntLead)
         {
           return nil
         }
@@ -233,12 +237,15 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
         return orderedCards.first
     }
 }
+
+
+
 // If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
 public class LateGameFollowingStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = LateGameFollowingStrategy()
     private init() { }
-    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,table:CardTable) -> PlayingCard?
+    func chooseCard(stateOfPlay:StateOfPlay,player:CardPlayer,gameState:GameState) -> PlayingCard?
     {
         if let suite = stateOfPlay.leadingSuite
         {
@@ -246,11 +253,11 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
             let canFollowSuite = !cardsInSuite.isEmpty
             if(canFollowSuite)
             {
-                let pileInSuite = table.tricksPile.filter { $0.playedCard.suite == suite }
-                let orderedPile = sorted(pileInSuite,{$0.playedCard.value > $1.playedCard.value})
-                let highCard = orderedPile.first!.playedCard
+                let cardsFollowingSuite = gameState.cardsFollowingSuite
+                let orderedFollowingCards = sorted(cardsFollowingSuite,{$0.value > $1.value})
+                let highCard = orderedFollowingCards.first
                 
-                let cardsLessThanHighCard = cardsInSuite.filter { $0.value < highCard.value }
+                let cardsLessThanHighCard = cardsInSuite.filter { $0.value < highCard!.value }
                 let canGoLow = !cardsLessThanHighCard.isEmpty
                 if canGoLow
                 {
@@ -262,7 +269,7 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                     if suite == PlayingCard.Suite.Spades
                     {
                         // don't give yourself rickety kate
-                        let notRicketyKate = player.hand.filter { $0.imageName != "QS"}
+                        let notRicketyKate = player.hand.filter { $0.isntRicketyKate }
                         var reverseOrderedCards = sorted(notRicketyKate,{$0.value < $1.value})
                         if let lowcard = reverseOrderedCards.first
                         {
@@ -272,8 +279,8 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                         reverseOrderedCards = sorted(cardsInSuite,{$0.value < $1.value})
                         return reverseOrderedCards.first
                     }
-                    let isLastPlayer = table.tricksPile.count >= 3
-                    let isNoSpadesInPile = table.tricksPile.filter { $0.playedCard.suite == PlayingCard.Suite.Spades }.isEmpty
+                    let isLastPlayer = gameState.isLastPlayer
+                    let isNoSpadesInPile = gameState.isntSpadesInPile
                     if isLastPlayer && isNoSpadesInPile
                     {
                         
@@ -285,7 +292,7 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                 }
             }
        
-                let RicketyKate = player.hand.filter { $0.imageName == "QS"}
+                let RicketyKate = player.hand.filter { $0.isRicketyKate}
                 if !RicketyKate.isEmpty
                 {
                     return RicketyKate.first
@@ -314,12 +321,12 @@ public class ComputerPlayer :CardPlayer
     {
         for strategy in strategies
         {
-            if let card : PlayingCard = strategy.chooseCard(stateOfPlay, player: self,table:table)
+            if let card : PlayingCard = strategy.chooseCard(stateOfPlay, player: self,gameState:table)
             {
                 return card
             }
         }
-        return RandomStrategy.sharedInstance.chooseCard(stateOfPlay, player: self,table:table)
+        return RandomStrategy.sharedInstance.chooseCard(stateOfPlay, player: self,gameState:table)
     }
     public init(name s: String,margin:Int) {
        super.init(name: s)

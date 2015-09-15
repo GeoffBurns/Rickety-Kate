@@ -55,8 +55,8 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .AspectFill
-     //   scene.scaleMode = .AspectFit
+            scene.scaleMode = .AspectFill
+     
             scene.table = CardTable.sharedDemoInstance
             
             skView.presentScene(scene)
@@ -68,11 +68,9 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     }
 
     override func supportedInterfaceOrientations() -> Int {
-    //    if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+  
             return Int(UIInterfaceOrientationMask.LandscapeLeft.rawValue)
-     //   } else {
-      //      return Int(UIInterfaceOrientationMask.All.rawValue)
-      //  }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -89,8 +87,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
 
     func bannerViewWillLoadAd(banner: ADBannerView!) {
         
-        
-        println("sort of working1")
+
         
     }
     
@@ -99,14 +96,14 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         
         self.adBannerView.alpha = 1.0
         adBannerView.hidden = false
-        println("sort of working2")
+
         
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         
         
-        println("sort of working3")
+
         
     }
     
@@ -114,7 +111,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         
         
         
-        println("sort of working4")
+  
         return true 
     }
     

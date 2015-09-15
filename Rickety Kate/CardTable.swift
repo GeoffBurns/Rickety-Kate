@@ -15,8 +15,44 @@ public struct StateOfPlay
     let remainingPlayers:[CardPlayer]
   //  let table:CardTable
 }
+protocol GameState
+{
+    var hasLead : Bool { get }
 
-public class CardTable
+    var hasntLead : Bool { get }
+    
+    var leadingSuite : PlayingCard.Suite? { get }
+    
+    
+    var cardsFollowingSuite : [PlayingCard] { get }
+
+    
+    var isLastPlayer : Bool { get }
+
+    var isSpadesInPile : Bool { get }
+    var isntSpadesInPile : Bool { get }
+    var noOfPlayers : Int { get }
+    
+    var playedCardsInTrick : Int { get }
+      // let unplayedCardsInTrick = noOfPlayers - table.tricksPile.count
+    var unplayedCardsInTrick : Int { get }
+    
+    func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
+       // if !table.gameTracker.notFollowing[suite.rawValue].isEmpty
+    
+    
+    func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
+
+    
+ 
+ 
+    
+
+
+
+    
+}
+public class CardTable : GameState
 {
     var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
@@ -44,6 +80,7 @@ public class CardTable
     let cardScale = CGFloat(0.9)
     let cardScaleForSelected = CGFloat(1.05)
     
+ 
     
     public var players : [CardPlayer] {
         get {
@@ -66,6 +103,68 @@ public class CardTable
         return players.filter {$0 != self.playerOne}
     }
     
+    
+    //////////
+    // GameState Protocol
+    //////////
+    var noOfPlayers : Int
+        {
+            return players.count
+    }
+    var playedCardsInTrick : Int {
+    return tricksPile.count
+    }
+    var unplayedCardsInTrick : Int
+    {
+    return  noOfPlayers - playedCardsInTrick
+    }
+        // let unplayedCardsInTrick = noOfPlayers - table.tricksPile.count
+    func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
+    {
+      return gameTracker.notFollowing[suite.rawValue].isEmpty
+    }
+    
+    var hasLead : Bool {
+     return tricksPile.isEmpty
+    }
+    var hasntLead : Bool {
+        return !hasLead
+    }
+    
+    var leadingSuite : PlayingCard.Suite? {
+       return tricksPile.first?.playedCard.suite
+    }
+    var cardsFollowingSuite : [PlayingCard] {
+      if  let suite = leadingSuite
+      {
+      return tricksPile
+        .filter { $0.playedCard.suite == suite }
+        .map {$0.playedCard}
+        }
+        return []
+    }
+    
+    var isLastPlayer : Bool {
+     return tricksPile.count >= noOfPlayers - 1
+    }
+    
+ 
+    var isntSpadesInPile : Bool {
+      return tricksPile.filter { $0.playedCard.suite == PlayingCard.Suite.Spades }.isEmpty
+    }
+    
+    var isSpadesInPile : Bool {
+        
+        return !isntSpadesInPile
+    }
+    
+    public func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
+    {
+     return gameTracker.cardCount[suite.rawValue]
+    }
+    //////////
+    // internal functions
+    //////////
     func trickWon()
     {
         if let winner = self.playerThatWon()

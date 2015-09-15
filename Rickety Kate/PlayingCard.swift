@@ -50,6 +50,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case Diamonds: return "D"
             }
         }
+   
         static var standardSuites : [Suite]
             {
                 return [Spades,Hearts,Clubs,Diamonds]
@@ -103,6 +104,16 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     public var hashValue: Int
     {
             return imageName.hashValue;
+    }
+    
+    public var isRicketyKate : Bool
+    {
+        return imageName == "QS"
+    }
+    
+    public var isntRicketyKate : Bool
+    {
+        return imageName != "QS"
     }
     
     public class DeckBase : Deck
