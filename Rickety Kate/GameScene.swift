@@ -29,6 +29,7 @@ class GameScene: SKScene {
     var rulesButton =  SKSpriteNode(imageNamed:"Rules1")
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
+    var exitButton =  SKSpriteNode(imageNamed:"Exit")
     var rulesText : SKMultilineLabel? = nil
     lazy var exitScreen = SKSpriteNode(color: UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9), size: CGSize(width: 1, height: 1))
     var isRulesTextShowing = false
@@ -43,9 +44,6 @@ class GameScene: SKScene {
     func createAndDisplayCardImages(width: CGFloat , height: CGFloat )
     {
         var i = 0
-        table.tricksPile = []
-        table.gameTracker.reset()
-        table.cardsPassed = [[],[],[],[]]
         for player in table.players
         {
             player.sideOfTable = SideOfTable(rawValue: i)!
@@ -587,7 +585,7 @@ class GameScene: SKScene {
         exitScreen.addChild(noButton)
         
         self.addChild(exitScreen)
-        var exitButton =  SKSpriteNode(imageNamed:"Exit")
+    
         exitButton.setScale(0.5)
         exitButton.anchorPoint = CGPoint(x: 1.0,
             y:
@@ -690,6 +688,10 @@ class GameScene: SKScene {
         {
         if isNodeAPlayButton(touchedNode)
         {
+            
+            touchedNode.texture = SKTexture(imageNamed: "Play2")
+        
+            
             reverseDeal(width , height: height )
             
             let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
@@ -707,16 +709,19 @@ class GameScene: SKScene {
         }
         if isNodeAExitButton(touchedNode)
             {
+                touchedNode.texture = SKTexture(imageNamed: "Exit2")
                 exitScreen.alpha = 1.0
                 exitScreen.zPosition = 500
             }
         if isNodeANoButton(touchedNode)
             {
+                exitButton.texture = SKTexture(imageNamed: "Exit")
                 exitScreen.alpha = 0.0
                 exitScreen.zPosition = -10
             }
         if isNodeAYesButton(touchedNode)
             {
+                touchedNode.texture = SKTexture(imageNamed: "Yes2")
                 reverseDeal(width , height: height )
                 
                 let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),

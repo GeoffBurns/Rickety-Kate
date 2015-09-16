@@ -28,24 +28,24 @@ public enum SideOfTable:Int
         {
             // Player One
         case .Bottom:
-            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.9)
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.92)
             // Computer Player
         case .Right:
             startWidth = width
             startheight = height * 0.4
-            return CGPoint(x: startWidth+spriteHeight*1.1 ,y: startheight+verticalSpacing*positionInSpread )
+            return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             // Computer Player
         case .Top:
             hortizonalSpacing = -width * 0.2 / fullHand
             startWidth = width * 0.6
             startheight = height
-            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.5)
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .Left:
             verticalSpacing = -verticalSpacing
             startWidth = width
             startheight = height * 0.6
-            return CGPoint(x: -spriteHeight*1.1 ,y: startheight+verticalSpacing*positionInSpread )
+            return CGPoint(x: -spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             
             // the trick pile
         case .Center:
