@@ -30,6 +30,7 @@
 		AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BF1BA686C40064870C /* PlayingCard.swift */; };
 		AC9E82C61BA686C40064870C /* Publink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82C01BA686C40064870C /* Publink.swift */; };
 		AC9E82C91BA697290064870C /* Multi-Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82C81BA697290064870C /* Multi-Line.swift */; };
+		ACE6DFAF1BAA2155005B5424 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFAE1BAA2155005B5424 /* GameState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		AC9E82BF1BA686C40064870C /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		AC9E82C01BA686C40064870C /* Publink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publink.swift; sourceTree = "<group>"; };
 		AC9E82C81BA697290064870C /* Multi-Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Multi-Line.swift"; path = "../Multi-Line.swift"; sourceTree = "<group>"; };
+		ACE6DFAE1BAA2155005B5424 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69A1BA1564800B0EDAE /* GameScene.sks */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
+				ACE6DFAE1BAA2155005B5424 /* GameState.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
 				AC62B6A31BA1564800B0EDAE /* Images.xcassets */,
 				AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */,
@@ -270,6 +273,7 @@
 				AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */,
 				AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */,
 				AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */,
+				ACE6DFAF1BAA2155005B5424 /* GameState.swift in Sources */,
 				AC252A491BA8CD9600C0121A /* TrickPlayingStrategy.swift in Sources */,
 				AC9E82C41BA686C40064870C /* CardTable.swift in Sources */,
 				AC9E82C91BA697290064870C /* Multi-Line.swift in Sources */,
