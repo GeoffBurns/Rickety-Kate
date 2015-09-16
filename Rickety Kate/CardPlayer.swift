@@ -14,14 +14,12 @@ public protocol CardHolder
     func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
     var RicketyKate : PlayingCard? {get}
     var hand : [PlayingCard] { get }
-    // return player.hand.filter {$0.suite == suite}
 }
 
 
 public protocol ICardPlayer
 {
     var hand : [PlayingCard] {get set}
-    var wonCards : [PlayingCard] {get set}
     var score : Int {get set}
     var name : String {get set}
     var sideOfTable : SideOfTable {get set}
@@ -29,7 +27,6 @@ public protocol ICardPlayer
     func newHand([PlayingCard])
     func resetScore()
 }
-
 
 
 public func ==(lhs: ICardPlayer, rhs: ICardPlayer) -> Bool
@@ -53,7 +50,6 @@ public func ==(lhs: CardPlayer, rhs: CardPlayer) -> Bool
 public class CardPlayer :ICardPlayer, CardHolder, Equatable, Hashable
 {
     public var hand : [PlayingCard] = []
-    public var wonCards : [PlayingCard] = []
     public var score : Int = 0
     public var sideOfTable = SideOfTable.Bottom
     public var name : String = "Base"
@@ -88,6 +84,15 @@ public class CardPlayer :ICardPlayer, CardHolder, Equatable, Hashable
                 return RicketyKate.first
           
     }
+    public func removeFromHand(card:PlayingCard) -> PlayingCard?
+    {
+    /// hand.indexOf(card) // in swift 2.0
+    if let index = find(hand,card)
+        {
+            return hand.removeAtIndex(index)
+         }
+    return nil
+    }
 }
 
 public class HumanPlayer :CardPlayer
@@ -103,7 +108,7 @@ public class ComputerPlayer :CardPlayer
 {
     
     var strategies : [TrickPlayingStrategy] = []
-    
+    var passingStrategy = HighestCardsPassingStrategy.sharedInstance
     public func playCard(gameState:GameState) -> PlayingCard?
     {
         for strategy in strategies
@@ -115,6 +120,12 @@ public class ComputerPlayer :CardPlayer
         }
         return RandomStrategy.sharedInstance.chooseCard(self,gameState:gameState)
     }
+    public func passCards() -> [PlayingCard]
+    {
+
+        return passingStrategy.chooseWorstCards(self)
+    }
+
     public init(name s: String,margin:Int) {
        super.init(name: s)
         strategies  = [

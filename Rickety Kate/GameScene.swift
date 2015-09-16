@@ -11,7 +11,7 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    var table = CardTable.sharedInstance
+    lazy var table = CardTable.makeTable()
     
     var originalCardPosition = CGPoint()
     var originalCardRotation = CGFloat()
@@ -21,15 +21,20 @@ class GameScene: SKScene {
     var cardScaleForSelected = CGFloat(1.05)
     var noticeLabel = SKLabelNode(fontNamed:"Chalkduster")
     var noticeLabel2 = SKLabelNode(fontNamed:"Chalkduster")
+    var exitLabel = SKLabelNode(fontNamed:"Chalkduster")
+    var exitLabel2 = SKLabelNode(fontNamed:"Chalkduster")
     var scoreLabel = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
     var scoreLabel2 = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
     var scoreLabel3 = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
     var rulesButton =  SKSpriteNode(imageNamed:"Rules1")
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
-
     var rulesText : SKMultilineLabel? = nil
+    lazy var exitScreen = SKSpriteNode(color: UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9), size: CGSize(width: 1, height: 1))
     var isRulesTextShowing = false
+    var isExitScreenShowing = false
+    var arePassingCards = true
+    var isInPassingCardsPhase = true
     var cardTossDuration = 0.4
     let cardAnchorPoint = CGPoint(x: 0.5, y: UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
         -0.7 :
@@ -38,6 +43,9 @@ class GameScene: SKScene {
     func createAndDisplayCardImages(width: CGFloat , height: CGFloat )
     {
         var i = 0
+        table.tricksPile = []
+        table.gameTracker.reset()
+        table.cardsPassed = [[],[],[],[]]
         for player in table.players
         {
             player.sideOfTable = SideOfTable(rawValue: i)!
@@ -63,36 +71,79 @@ class GameScene: SKScene {
             i++
         }
     }
-    
+    func takePassedCards()
+    {
+        for previous in 0...3
+        {
+        var next = previous+1
+        if next > 3
+            {
+            next = 0
+            }
+            
+        let fromPlayersCards = table.cardsPassed[previous]
+        let toPlayer = table.players[next]
+        
+        for displayed in fromPlayersCards
+            {
+            displayed.cardSprite.userData = NSMutableDictionary?(["player":toPlayer.name] as NSMutableDictionary)
+            toPlayer.hand.append(displayed.card)
+            }
+            
+            let sortedHand = sorted(toPlayer.hand)
+            toPlayer.newHand( sortedHand.reverse())
+        }
+        table.resetPassedCards()
+    }
     func rearrangeCardImagesInTrickPile(width: CGFloat , height: CGFloat )
     {
         var fullHand = CGFloat(13)
-        var positionInSpread = (fullHand - 4 ) * 0.5
+        var positionInSpread = (fullHand - CGFloat(table.noOfPlayers) ) * 0.5
         var z = CGFloat(1)
         var count = table.tricksPile.count
         for trick in table.tricksPile
         {
             let playerSeat = SideOfTable.Center
-   
-            if let sprite = table.displayedCards[trick.playedCard.imageName]?.sprite
-                    {
-                        sprite.setScale(cardScale*0.5)
-                        sprite.anchorPoint = cardAnchorPoint
-                       
-                        sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
-                        sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
-                        sprite.zPosition = z
-                        sprite.color = UIColor.whiteColor()
-                        sprite.colorBlendFactor = 0
-                        positionInSpread++
-                        z++
-                    }
-            }
+            let sprite = trick.cardSprite
+            sprite.setScale(cardScale*0.5)
+            sprite.anchorPoint = cardAnchorPoint
+            sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
+            sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
+            sprite.zPosition = z
+            sprite.color = UIColor.whiteColor()
+            sprite.colorBlendFactor = 0
+            positionInSpread++
+            z++
+        }
     }
-
+    
+    func rearrangeCardImagesInPassPile(width: CGFloat , height: CGFloat )
+    {
+        var fullHand = CGFloat(13)
+        var positionInSpread = (fullHand - 3 ) * 0.5
+        var z = CGFloat(1)
+        var count = table.cardsPassed[0].count
+        for card in table.cardsPassed[0]
+        {
+            let playerSeat = SideOfTable.Center
+            
+            let sprite = card.cardSprite
+          
+            sprite.setScale(cardScale*0.5)
+            sprite.anchorPoint = cardAnchorPoint
+                
+            sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
+            sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
+            sprite.zPosition = z
+            sprite.color = UIColor.whiteColor()
+            sprite.colorBlendFactor = 0
+            positionInSpread++
+            z++
+        }
+    }
+    
     func rearrangeCardImagesInHands(width: CGFloat , height: CGFloat )
     {
-
         var fullHand = CGFloat(13)
         
         var i = 0;
@@ -156,18 +207,25 @@ class GameScene: SKScene {
                         sprite.setScale(i==0 ? cardScale: cardScale*0.5)
                         sprite.anchorPoint = cardAnchorPoint
 
-                        if(i==0)
-                        {
-                            if let isUp = table.displayedCardsIsFaceUp[card.imageName] where isUp
+                        
+                        if let isUp = table.displayedCardsIsFaceUp[card.imageName] where isUp
                             {
-                                // don't need to do anything
+                                if(i != 0)
+                                {
+                                    table.displayedCardsIsFaceUp.updateValue(false, forKey: card.imageName)
+                                    sprite.texture = SKTexture(imageNamed:"Back1")
+                                }
                             }
                             else
                             {
+                                if(i == 0)
+                              
+                                {
                                 table.displayedCardsIsFaceUp.updateValue(true, forKey: card.imageName)
                                 sprite.texture = SKTexture(imageNamed:card.imageName)
+                                }
                             }
-                        }
+                       
                         
                         let newPosition =  playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
                         let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
@@ -197,6 +255,14 @@ class GameScene: SKScene {
             var noCards = CGFloat(player.hand.count)
             
             var positionInSpread = (fullHand - noCards) * 0.5
+            
+            for trick in table.tricksPile
+            {
+                let moveAction = (SKAction.moveTo(CGPoint(x: -300,y:height*0.5), duration:(cardTossDuration*0.8)))
+         
+                trick.cardSprite.runAction(moveAction)
+            
+            }
             if let playerSeat = SideOfTable(rawValue: i)
             {
                 for card in player.hand
@@ -204,22 +270,15 @@ class GameScene: SKScene {
                     if let sprite = table.displayedCards[card.imageName]?.sprite
                     {
                         // PlayerOne's cards are larger
-                        sprite.setScale(i==0 ? cardScale: cardScale*0.5)
+                        //sprite.setScale(i==0 ? cardScale: cardScale*0.5)
                         sprite.anchorPoint = cardAnchorPoint
                         
-                        if(i==0)
-                        {
-                            if let isUp = table.displayedCardsIsFaceUp[card.imageName] where isUp
+                        if let isUp = table.displayedCardsIsFaceUp[card.imageName] where isUp
                             {
                                 table.displayedCardsIsFaceUp.updateValue(false, forKey: card.imageName)
                                 sprite.texture = SKTexture(imageNamed:"Back1")
-                         
-                            }
-                            else
-                            {
-                         // don't need to do anything
-                            }
-                        }
+                           }
+                 
                         sprite.anchorPoint = CGPoint(x: 0.5, y: 0.5)
                         let newPosition = CGPoint(x: width * CGFloat(2 * i  + 1) / 8.0,y: height*0.5)
                         let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
@@ -239,8 +298,7 @@ class GameScene: SKScene {
             i++
         }
     }
-                
-        
+    
     func rearrange()
     {
         let width = self.frame.size.width
@@ -267,13 +325,21 @@ class GameScene: SKScene {
         
         table.statusInfo.subscribe() { (message1: String,message2: String) in
             
-            self.noticeLabel.removeAllActions()
-            self.noticeLabel2.removeAllActions()
+        self.noticeLabel.removeAllActions()
+        self.noticeLabel2.removeAllActions()
             
-            self.noticeLabel.alpha = 1.0
-            self.noticeLabel2.alpha = 1.0
+        self.noticeLabel.alpha = 1.0
+        self.noticeLabel2.alpha = 1.0
 
-            switch (message1,message2)
+        let action = SKAction.repeatActionForever(
+                SKAction.sequence([
+                    SKAction.fadeOutWithDuration(6),
+                    SKAction.waitForDuration(10),
+                    SKAction.fadeInWithDuration(4),
+                    SKAction.waitForDuration(5),
+                    ] )
+            )
+        switch (message1,message2)
             {
             case ("","") :
                 self.noticeLabel.text = "";
@@ -281,28 +347,34 @@ class GameScene: SKScene {
             case (_,"") :
                 self.noticeLabel.text = message1;
                 self.noticeLabel2.text = "";
-                self.noticeLabel.runAction(SKAction.fadeOutWithDuration(4))
+                self.noticeLabel.runAction(action)
                 
             default :
                 self.noticeLabel2.text = message1;
                 self.noticeLabel.text = message2;
-                self.noticeLabel.runAction(SKAction.fadeOutWithDuration(4))
-                self.noticeLabel2.runAction(SKAction.fadeOutWithDuration(4))
+                self.noticeLabel.runAction(action)
+                self.noticeLabel2.runAction(action)
             }
         }
-       self.table.statusInfo.publish("Game On","")
-        
+  
+        if arePassingCards && !table.isInDemoMode
+        {
+           self.table.statusInfo.publish("Discard Your"," Three Worst Cards")
+        }
+        else
+        {
+            self.table.statusInfo.publish("Game On","")
+        }
     }
     
     func setupScoreFor(i:Int)
     {
         scoreLabel[i] = SKLabelNode(fontNamed:"Verdana")
         scoreLabel2[i] = SKLabelNode(fontNamed:"Verdana")
-        scoreLabel3[i] = SKLabelNode(fontNamed:"Verdana")
+ 
         let l = scoreLabel[i]
         let m = scoreLabel2[i]
-        let n = scoreLabel3[i]
-        
+
         table.scoreUpdates[i] = Publink<Int>()
         
         l.text = ""
@@ -310,12 +382,8 @@ class GameScene: SKScene {
         m.text = ""
         m.fontSize = 30;
         
-        n.text = ""
-        n.fontSize = 30;
-        m.color = UIColor.grayColor()
+        m.color = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
         m.colorBlendFactor = 1.0
-        n.color = UIColor.grayColor()
-        n.colorBlendFactor = 0.5
         
         if let side = SideOfTable(rawValue: i)
         {
@@ -345,16 +413,9 @@ class GameScene: SKScene {
             m.zPosition = 299
             m.zRotation = rotate
             
-            
-            n.position = CGPoint(x:position.x-2,y:position.y+2)
-            n.zPosition = 300
-            n.zRotation = rotate
-            
             self.addChild(l)
             self.addChild(m)
-            self.addChild(n)
         }
-      
      
         table.scoreUpdates[i].subscribe() { (update:Int) in
             
@@ -362,12 +423,10 @@ class GameScene: SKScene {
             
             let l = self.scoreLabel[i]
             let m = self.scoreLabel2[i]
-            let n = self.scoreLabel3[i]
             
             let message = (name == "You") ? "Your Score is \(update)" : "\(name)'s Score is \(update)"
             l.text = message
             m.text = message
-            n.text = message
             }
       
         self.table.scoreUpdates[i].publish(0)
@@ -380,6 +439,17 @@ class GameScene: SKScene {
             setupScoreFor(i)
         }
     }
+    
+    func startTrickPhase()
+    {
+        let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration*1.3),
+            SKAction.runBlock({
+                self.table.playTrickLeadBy(self.table.players[self.table.startPlayerNo])
+                
+            })]))
+        self.runAction(doneAction2)
+    }
+    
     func setupNewGameArrangement()
     {
         var width = self.frame.size.width
@@ -387,8 +457,6 @@ class GameScene: SKScene {
         
         
         table.resetGame.subscribe {
-            
-            
             if(self.table.hasShotTheMoon)
             {
             self.runAction(SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration), SKAction.runBlock({
@@ -422,61 +490,124 @@ class GameScene: SKScene {
             let doneAction =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration*0.1),
                 SKAction.runBlock({
                     self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
-                    
                 })]))
             self.runAction(doneAction)
             
-            
-            let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration*1.3),
-                SKAction.runBlock({
-                    self.table.playTrickLeadBy(self.table.players[self.table.startPlayerNo])
-                    
-                })]))
-            self.runAction(doneAction2)
-            // rearrangeCardImagesInHands(width,  height: height)
-            
+            self.isInPassingCardsPhase = self.arePassingCards && !self.table.isInDemoMode
+            if self.isInPassingCardsPhase
+            {
+              self.table.statusInfo.publish("Discard Your","Three Worst Cards")
+            }
+            else
+            {
+              self.startTrickPhase()
+            }
         }
      table.newGame.publish()
     }
+    
     func ruletext()
     {
-        
-        
-        rulesText  = SKMultilineLabel(text: "Rickety Kate is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero.", labelWidth: Int(self.frame.width * 0.88), pos: CGPoint(x:CGRectGetMidX(self.frame),y:self.frame.size.height*0.8),fontSize:30,fontColor:UIColor.whiteColor(),leading:40)
+        rulesText  = SKMultilineLabel(text: "Rickety Kate is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards.", labelWidth: Int(self.frame.width * 0.88), pos: CGPoint(x:CGRectGetMidX(self.frame),y:self.frame.size.height*0.8),fontSize:30,fontColor:UIColor.whiteColor(),leading:40)
         let sprite = SKSpriteNode(color: UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9), size: self.frame.size)
-            sprite.position = CGPoint(x:CGRectGetMidX(self.frame),y:CGRectGetMidY(self.frame))
+        sprite.position = CGPoint(x:CGRectGetMidX(self.frame),y:CGRectGetMidY(self.frame))
         
-            sprite.name = "Rules Background"
-            sprite.userInteractionEnabled = false
-          rulesText!.addChild(sprite)
-          rulesText!.zPosition = -10
+        sprite.name = "Rules Background"
+        sprite.userInteractionEnabled = false
+        rulesText!.addChild(sprite)
+        rulesText!.zPosition = -10
         
         rulesText!.name = "Rules text"
         rulesText!.userInteractionEnabled = false
-      
+        
         rulesText!.alpha = 0.0
         
+        rulesButton.setScale(0.5)
         rulesButton.anchorPoint = CGPoint(x: 0.0,
             y:
             UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
                 1.6 :
             2.2)
         rulesButton.position = CGPoint(x:0.0,y:self.frame.size.height)
-        rulesButton.setScale(0.5)
+ 
         rulesButton.name = "Rules"
         
         rulesButton.zPosition = 450
         rulesButton.userInteractionEnabled = false
         self.addChild(rulesButton)
         self.addChild(rulesText!)
+        
+    }
+
+    func setupExitScreen()
+    {
+        if table.isInDemoMode
+        {
+            return
+        }
+        exitScreen = SKSpriteNode(color: UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9), size: self.frame.size)
+        
+        exitScreen.position = CGPoint(x:CGRectGetMidX(self.frame),y:CGRectGetMidY(self.frame))
+        exitScreen.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        exitScreen.name = "ExitBackground"
+        exitScreen.userInteractionEnabled = false
+        exitScreen.zPosition = -10
+        exitScreen.alpha = 0.0
+        
+        exitLabel.text = "Are you sure"
+        exitLabel.fontSize = 65;
+        exitLabel.position = CGPoint(x:self.frame.width * 0.0, y:self.frame.size.height * 0.2);
+        
+        exitScreen.addChild(exitLabel)
+        
+        
+        exitLabel2.text = "you want to exit?"
+        exitLabel2.fontSize = 65;
+        exitLabel2.position = CGPoint(x:self.frame.width * 0.0, y:self.frame.size.height * 0.07);
+        
+        exitScreen.addChild(exitLabel2)
+        
+        var yesButton =  SKSpriteNode(imageNamed:"Yes")
+        yesButton.position = CGPoint(x:self.frame.width * -0.25,y:self.frame.height * -0.1)
+        yesButton.setScale(0.5)
+        yesButton.zPosition = 100
+        yesButton.name = "Yes"
+        yesButton.userInteractionEnabled = false
+    
+        
+        
+        var noButton =  SKSpriteNode(imageNamed:"No")
+        noButton.position = CGPoint(x:self.frame.width*0.25,y:self.frame.height * -0.1)
+        noButton.setScale(0.5)
+        noButton.zPosition = 100
+        noButton.name = "No"
+        noButton.userInteractionEnabled = false
+        
+        exitScreen.addChild(yesButton)
+        exitScreen.addChild(noButton)
+        
+        self.addChild(exitScreen)
+        var exitButton =  SKSpriteNode(imageNamed:"Exit")
+        exitButton.setScale(0.5)
+        exitButton.anchorPoint = CGPoint(x: 1.0,
+            y:
+            UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
+                1.6 :
+            2.2)
+        exitButton.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height)
+    
+        exitButton.name = "Exit"
+        
+        exitButton.zPosition = 450
+        exitButton.userInteractionEnabled = false
+        self.addChild(exitButton)
+     
  
     }
     func setupPlayButton()
     {
-        
-        if(table.isInDemoMode)
+        if table.isInDemoMode
         {
-   
         playButton1.position = CGPoint(x:self.frame.size.width*0.25,y:self.frame.size.height*0.5)
   
         playButton1.name = "Play"
@@ -500,6 +631,7 @@ class GameScene: SKScene {
 
         setupStatusArea()
         ruletext()
+        setupExitScreen()
         setupPlayButton()
         table.dealNewCardsToPlayers()
         setupScores()
@@ -525,9 +657,7 @@ class GameScene: SKScene {
                 }
             }
         }
-        
     return false
-
     }
     func isNodeAPlayButton(node:SKSpriteNode) -> Bool
     {
@@ -537,17 +667,24 @@ class GameScene: SKScene {
     {
         return node.name == "Rules"
     }
- 
-
+    func isNodeAExitButton(node:SKSpriteNode) -> Bool
+    {
+        return node.name == "Exit"
+    }
+    func isNodeAYesButton(node:SKSpriteNode) -> Bool
+    {
+        return node.name == "Yes"
+    }
+    func isNodeANoButton(node:SKSpriteNode) -> Bool
+    {
+        return node.name == "No"
+    }
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         var width = self.frame.size.width
         var height = self.frame.size.height
       for touch in (touches as! Set<UITouch>)
       {
-     
-        
-        
         let positionInScene = touch.locationInNode(self)
         if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
         {
@@ -568,6 +705,31 @@ class GameScene: SKScene {
             
         return
         }
+        if isNodeAExitButton(touchedNode)
+            {
+                exitScreen.alpha = 1.0
+                exitScreen.zPosition = 500
+            }
+        if isNodeANoButton(touchedNode)
+            {
+                exitScreen.alpha = 0.0
+                exitScreen.zPosition = -10
+            }
+        if isNodeAYesButton(touchedNode)
+            {
+                reverseDeal(width , height: height )
+                
+                let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
+                    SKAction.runBlock({
+                        let transition = SKTransition.crossFadeWithDuration(0.5)
+                        let scene = GameScene(size: self.scene!.size)
+                        scene.scaleMode = SKSceneScaleMode.AspectFill
+                        scene.table = CardTable.makeDemo()
+                        self.scene!.view!.presentScene(scene, transition: transition)
+                        
+                    })]))
+                self.runAction(doneAction2)
+            }
         /// rules button
         if isNodeRulesButton(touchedNode)
         {
@@ -618,11 +780,32 @@ class GameScene: SKScene {
     touchedNode.position = positionInScene
     }
     }
-
+    func endCardPassingPhase()
+    {
+        let width = self.frame.size.width
+        let height = self.frame.size.height
+        table.passOtherCards()
+        takePassedCards()
+        rearrangeCardImagesInHandsWithAnimation(width, height: height)
+        isInPassingCardsPhase = false
+        self.table.statusInfo.publish("","")
+        startTrickPhase()
+    }
+    
+    func restoreDraggedCard()
+    {
+        draggedNode!.zRotation = originalCardRotation
+        draggedNode!.position = originalCardPosition
+        draggedNode!.anchorPoint = originalCardAnchor
+        draggedNode!.xScale = cardScale
+        draggedNode!.yScale = cardScale
+        draggedNode=nil
+    }
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touchCount = touches.count
         let touch = touches.first as! UITouch
 
+        let width = self.frame.size.width
         let height = self.frame.size.height
         let positionInScene = touch.locationInNode(self)
         
@@ -635,7 +818,41 @@ class GameScene: SKScene {
                 if let nodeName = touchedNode.name,
                     displayedCard = table.displayedCards[nodeName]
                 {
-                    if let state = self.table.currentStateOfPlay,
+                    
+                    if isInPassingCardsPhase
+                    {
+                        if let displayedCard = table.displayedCards[nodeName]
+                        {
+                            if let discard = table.passCard(0, passedCard: displayedCard.card)
+                            {
+                                
+                            }
+                            else
+                            {
+                                restoreDraggedCard()
+                            }
+                            rearrangeCardImagesInPassPile(width, height: height)
+                            let count = table.cardsPassed[0].count
+                            if  count < 3
+                            {
+                                
+                            if count == 2
+                                {
+                                table.statusInfo.publish("Discard one more card", "Your worst card")
+                                }
+                                else
+                                {
+                                table.statusInfo.publish("Discard \(3 - count) more cards", "Your worst cards")
+                                }
+                            }
+                            else
+                            {
+                                 endCardPassingPhase()
+                            }
+                            return;
+                        }
+                    }
+                    else if let state = self.table.currentStateOfPlay,
                     currentPlayer = state.remainingPlayers.first
                     where currentPlayer.name == "You"
                 {
@@ -648,7 +865,6 @@ class GameScene: SKScene {
                         let trickcard = self.table.playerOne.hand.removeAtIndex(index)
                         table.playTrickCard(self.table.playerOne, trickcard:displayedCard.card,state:table.currentStateOfPlay!,willAnimate:false)
                             table.currentStateOfPlay=nil
-
                         return;
                      }
                     
@@ -666,13 +882,9 @@ class GameScene: SKScene {
                     }
                 }
    
-            touchedNode.zRotation = originalCardRotation
-            touchedNode.position = originalCardPosition
-            touchedNode.anchorPoint = originalCardAnchor
-            touchedNode.xScale = cardScale
-            touchedNode.yScale = cardScale
-            draggedNode=nil
+     
             }
+                   restoreDraggedCard()
         }
 
         

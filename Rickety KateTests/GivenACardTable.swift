@@ -11,7 +11,7 @@ import XCTest
 import Rickety_Kate
 
 class GivenACardTable: XCTestCase {
-    var table : CardTable = CardTable.sharedInstance
+    var table : CardTable = CardTable.makeTable()
     
     override func setUp() {
         super.setUp()

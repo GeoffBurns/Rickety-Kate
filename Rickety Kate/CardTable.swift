@@ -60,8 +60,7 @@ public class CardTable : GameState
     var startPlayerNo = 1
     let cardScale = CGFloat(0.9)
     let cardScaleForSelected = CGFloat(1.05)
-    
- 
+    var cardsPassed : [[(card:PlayingCard, cardSprite: SKSpriteNode)]] = [[],[],[],[]]
     
     public var players : [CardPlayer] {
         get {
@@ -69,22 +68,29 @@ public class CardTable : GameState
         }
         
     }
-    static public let sharedInstance = CardTable(players: [HumanPlayer.sharedInstance,ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 5)])
-    
-    static public let sharedDemoInstance = CardTable(players: [ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 5)])
-    
+    static public func makeTable() -> CardTable {
+     return CardTable(players: [HumanPlayer.sharedInstance,ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1)])
+}
+
+    static public func makeDemo() -> CardTable  {
+     return CardTable(players: [ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1)])
+    }
     private init(players: [CardPlayer]) {
     _players = players
     playerOne = _players[0]
     isInDemoMode = playerOne.name != "You"
     }
+    
     // everyone except PlayerOne
     var otherPlayers : [CardPlayer]
     {
         return players.filter {$0 != self.playerOne}
     }
     
-    
+    func resetPassedCards()
+    {
+        cardsPassed = [[],[],[],[]]
+    }
     //////////
     // GameState Protocol
     //////////
@@ -435,8 +441,6 @@ public class CardTable : GameState
                     
                     if(willAnimate)
                     {
-                        
-                        
                         let moveActionWithDone = isFaceUp
                    
                             ? SKAction.sequence([
@@ -451,12 +455,38 @@ public class CardTable : GameState
                     }
                     else
                     {
-                       // sprite.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration),doneAction]))
                         sprite.runAction(doneAction)
                     }
                 }
         }
     }
+    func passCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
+    {
+        if let displayed = displayedCards[passedCard.imageName]
+        {
+
+           if let removedCard = self.players[seatNo].removeFromHand(displayed.card)
+            {
+            self.cardsPassed[seatNo].append(card: removedCard, cardSprite: displayed.sprite)
+            return removedCard
+            }
+            
+        }
+        return nil
+    }
+    func passOtherCards()
+    {
+       for i in 0...3
+       {
+        if let player = players[i] as? ComputerPlayer
+          {
+            for card in player.passCards()
+              {
+                passCard(i, passedCard:card)
+              }
+            }
+          }
+        }
     
     func playTrick(state:StateOfPlay)
     {
@@ -468,10 +498,10 @@ public class CardTable : GameState
         {
             if let card = computerPlayer.playCard( self)
             {
-                /// computerPlayer.hand.indexOf(card) // in swift 2.0
-                if let index = find(computerPlayer.hand,card)
+          
+                if let trickcard = computerPlayer.removeFromHand(card)
                 {
-                    let trickcard = computerPlayer.hand.removeAtIndex(index)
+        
                     playTrickCard(playerWithTurn, trickcard:trickcard,state:state)
                                        return
                     
