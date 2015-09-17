@@ -285,17 +285,7 @@ class GameScene: SKScene {
         
         
         table.resetGame.subscribe {
-            if(self.table.hasShotTheMoon)
-            {
-            self.runAction(SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration), SKAction.runBlock({
-                
-                StatusDisplay.publish("New Hand" )
-            })]))
-            } else {
-                
-                StatusDisplay.publish("New Hand" )
-            }
-            
+   
             for player in self.table.players
             {
                     for card in player.hand

@@ -29,10 +29,7 @@ public class CardTable : GameStateEngine, GameState
     var tidyup :  Publink<Void> =  Publink<Void>()
     var newGame :  Publink<Void> =  Publink<Void>()
     var resetGame :  Publink<Void> =  Publink<Void>()
-    var scores : [Int] = [Int](count: 4, repeatedValue: 0)
-    var scoresForHand : [Int] = [Int](count: 4, repeatedValue: 0)
-
-    var hasShotTheMoon = false
+ 
     var isInDemoMode = false
     func nop() {}
  
@@ -58,6 +55,8 @@ public class CardTable : GameStateEngine, GameState
     _players = players
     playerOne = _players[0]
     isInDemoMode = playerOne.name != "You"
+        
+    Scorer.sharedInstance.setupScorer(_players)
     }
     
     // everyone except PlayerOne
@@ -131,28 +130,9 @@ public class CardTable : GameStateEngine, GameState
                     {
                         self.startPlayerNo = 0
                     }
-                    var i = 0
-                    self.hasShotTheMoon = false
-                    for player in self.players
-                    {
-                        if self.scoresForHand[i] == 22
-                        {
-                            self.scores[i] = 0
-                            ScoreDisplay.publish(player,score: self.scores[i])
-                            self.hasShotTheMoon = false
-                            if i == 0
-                            {
-                                StatusDisplay.publish("Congratulatons!!!",message2: "You just shot the Moon")
-                            }
-                            else
-                            {
-                                StatusDisplay.publish("Wow!!!",message2: "\(player.name) just shot the Moon")
-                            }
-                            
-                        }
-                        i++
-                    }
                     
+                    Scorer.sharedInstance.hasShotTheMoon()
+                                       
                     
                     self.gameTracker.reset()
                     self.dealNewCardsToPlayers()
@@ -197,70 +177,12 @@ public class CardTable : GameStateEngine, GameState
     }
     func trickWon()
     {
-        if let winner = self.playerThatWon()
+        if let winner = Scorer.winnerIs(self)
         {
-            let winnersName = winner.name
-            
-            if let winnerIndex = players.indexOf(winner)
-            {
-            var score = 0
-            
-            let ricketyKate = tricksPile.filter{$0.playedCard.imageName == "QS"}
-            
-            let spades = tricksPile.filter{$0.playedCard.suite == PlayingCard.Suite.Spades && $0.playedCard.imageName != "QS"}
-            if !ricketyKate.isEmpty
-            {
-                score = 10
-            }
-            score += spades.count
-            
-            if !ricketyKate.isEmpty
-            {
-                StatusDisplay.publish("\(winnersName) won Rickety Kate",message2: "Poor \(winnersName)")
-            }
-            else if spades.count == 1
-            {
-                StatusDisplay.publish("\(winnersName) won a spade",message2: "Bad Luck")
-            }
-            else if spades.count > 1
-            {
-                StatusDisplay.publish("\(winnersName) won \(spades.count) spades",message2: "Bad Luck")
-            }
-            else
-            {
-            StatusDisplay.publish("\(winnersName) won the Trick")
-            }
-            if(score>0)
-            {
-                self.scores[winnerIndex] += score
-                self.scoresForHand[winnerIndex] += score
-                ScoreDisplay.publish(winner,score: self.scores[winnerIndex])
-            }
-            }
             self.removeTricksPile(winner)
         }
     }
-     func isMoveValid(player:CardPlayer,cardName:String) -> Bool
-    {
-        if self.tricksPile.isEmpty
-        {
-          return true
-        }
-        if let trick = self.tricksPile.first
-        {
-            let leadingSuite = trick.playedCard.suite
-            let cardsInSuite = player.hand.filter { $0.suite == leadingSuite}
-            if cardsInSuite.isEmpty
-            {
-                return true
-            }
-           let displayedCard = CardSprite.register[cardName]
-      
-           return displayedCard!.card.suite == leadingSuite
-        
-        }
-        return false
-    }
+
 
     // return four players starting with the one that has the lead
     public func trickPlayersLeadBy(playerWithLead:CardPlayer) -> [CardPlayer]

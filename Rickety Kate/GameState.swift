@@ -110,6 +110,27 @@ public class GameStateEngine : GameStateBase
           //  tricksPile.append(player:player, playedCard:displayedCard.card)
         }
     }
+    func isMoveValid(player:CardPlayer,cardName:String) -> Bool
+    {
+        if self.tricksPile.isEmpty
+        {
+            return true
+        }
+        if let trick = self.tricksPile.first
+        {
+            let leadingSuite = trick.playedCard.suite
+            let cardsInSuite = player.hand.filter { $0.suite == leadingSuite}
+            if cardsInSuite.isEmpty
+            {
+                return true
+            }
+            let displayedCard = CardSprite.register[cardName]
+            
+            return displayedCard!.card.suite == leadingSuite
+            
+        }
+        return false
+    }
     
 }
 // Used for testing
