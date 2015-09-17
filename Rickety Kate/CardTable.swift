@@ -25,8 +25,7 @@ public class CardTable : GameStateEngine, GameState
     var currentStateOfPlay:StateOfPlay? = nil
     var cardTossDuration = Double(0.7)
 
-    // TODO replace - repeat generator does not work so great with classes
-    var scoreUpdates : [Publink<Int>] = [Publink<Int>](count: 4, repeatedValue: Publink<Int>())
+
     var tidyup :  Publink<Void> =  Publink<Void>()
     var newGame :  Publink<Void> =  Publink<Void>()
     var resetGame :  Publink<Void> =  Publink<Void>()
@@ -139,7 +138,7 @@ public class CardTable : GameStateEngine, GameState
                         if self.scoresForHand[i] == 22
                         {
                             self.scores[i] = 0
-                            self.scoreUpdates[i].publish(self.scores[i])
+                            ScoreDisplay.publish(player,score: self.scores[i])
                             self.hasShotTheMoon = false
                             if i == 0
                             {
@@ -235,7 +234,7 @@ public class CardTable : GameStateEngine, GameState
             {
                 self.scores[winnerIndex] += score
                 self.scoresForHand[winnerIndex] += score
-                self.scoreUpdates[winnerIndex].publish(self.scores[winnerIndex])
+                ScoreDisplay.publish(winner,score: self.scores[winnerIndex])
             }
             }
             self.removeTricksPile(winner)

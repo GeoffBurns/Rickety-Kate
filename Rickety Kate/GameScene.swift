@@ -21,8 +21,7 @@ class GameScene: SKScene {
     var cardScaleForSelected = CGFloat(1.05)
     var exitLabel = SKLabelNode(fontNamed:"Chalkduster")
     var exitLabel2 = SKLabelNode(fontNamed:"Chalkduster")
-    var scoreLabel = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
-    var scoreLabel2 = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
+
     var rulesButton =  SKSpriteNode(imageNamed:"Rules1")
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
@@ -267,81 +266,7 @@ class GameScene: SKScene {
         }
     }
     
-    func setupScoreFor(i:Int)
-    {
-        scoreLabel[i] = SKLabelNode(fontNamed:"Verdana")
-      
-        // having problems setting font color
-     //   scoreLabel2[i] = SKLabelNode(fontNamed:"Verdana")
- 
-        let l = scoreLabel[i]
-   //     let m = scoreLabel2[i]
 
-        table.scoreUpdates[i] = Publink<Int>()
-        
-        l.text = ""
-        l.fontSize = 30;
-    //    m.text = ""
-    //    m.fontSize = 30;
-        
-     //   m.color = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
-     //   m.color = UIColor.blackColor()
-     //   m.colorBlendFactor = 1.0
-        
-        if let side = SideOfTable(rawValue: i)
-        {
-            var position = CGPoint()
-            var rotate = CGFloat()
-            switch side
-            {
-            case .Right:
-                position = CGPoint(x:self.frame.size.width * 0.90, y:CGRectGetMidY(self.frame))
-                rotate = 90.degreesToRadians
-            case .Top:
-                position = CGPoint(x:CGRectGetMidX(self.frame), y:self.frame.size.height * 0.75)
-                rotate = 0.degreesToRadians
-            case .Left:
-                position = CGPoint(x:self.frame.size.width * 0.10, y:CGRectGetMidY(self.frame))
-                rotate = -90.degreesToRadians
-            default:
-                position = CGPoint(x:CGRectGetMidX(self.frame), y:self.frame.size.height * 0.35)
-                rotate = 0.degreesToRadians
-            }
-            
-            l.position = position
-            l.zPosition = 301
-            l.zRotation = rotate
-            
-      //      m.position = CGPoint(x:position.x+2,y:position.y-2)
-      //      m.zPosition = 299
-      //      m.zRotation = rotate
-            
-            self.addChild(l)
-     //       self.addChild(m)
-        }
-     
-        table.scoreUpdates[i].subscribe() { (update:Int) in
-            
-            let name = self.table.players[i].name
-            
-            let l = self.scoreLabel[i]
-   //         let m = self.scoreLabel2[i]
-            
-            let message = (name == "You") ? "Your Score is \(update)" : "\(name)'s Score is \(update)"
-            l.text = message
-        //    m.text = message
-            }
-      
-        self.table.scoreUpdates[i].publish(0)
-        
-    }
-    func setupScores()
-    {
-        for i in 0...3
-        {
-            setupScoreFor(i)
-        }
-    }
     
     func startTrickPhase()
     {
@@ -530,7 +455,7 @@ class GameScene: SKScene {
         setupExitScreen()
         setupPlayButton()
         table.dealNewCardsToPlayers()
-        setupScores()
+        ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
         setupTidyup()
         let width = self.frame.size.width
         let height = self.frame.size.height
