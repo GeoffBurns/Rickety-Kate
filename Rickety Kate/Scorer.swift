@@ -123,6 +123,15 @@ class Scorer
                 scoresForHand[i] = 0
                 ScoreDisplay.publish(player,score: self.scores[i], wins: self.wins[i])
             }
+            if winner == 0
+            {
+                StatusDisplay.publish("Congratulatons!!!",message2: "You just won the game")
+                
+            }
+            else
+            {
+                StatusDisplay.publish("Wow!!!",message2: "\(players[winner].name) just won the game")
+            }
             return hasShotMoon
         }
         if(hasShotMoon)
