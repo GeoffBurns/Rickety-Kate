@@ -49,7 +49,7 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     public func removeFromHand(card:PlayingCard) -> PlayingCard?
     {
     /// hand.indexOf(card) // in swift 2.0
-    if let index = find(hand,card)
+    if let index = hand.indexOf(card)
         {
             return hand.removeAtIndex(index)
          }

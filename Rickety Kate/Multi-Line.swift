@@ -71,8 +71,7 @@ class SKMultilineLabel: SKNode {
         let separators = NSCharacterSet.whitespaceAndNewlineCharacterSet()
         let words = text.componentsSeparatedByCharactersInSet(separators)
         
-        let len = count(text)
-        
+  
         var finalLine = false
         var wordCount = -1
         var lineCount = 0
@@ -83,7 +82,7 @@ class SKMultilineLabel: SKNode {
             var lineStringBeforeAddingWord = ""
             
             // creation of the SKLabelNode itself
-            var label = SKLabelNode(fontNamed: fontName)
+            let label = SKLabelNode(fontNamed: fontName)
             // name each label node so you can animate it if u wish
             label.name = "line\(lineCount)"
             label.horizontalAlignmentMode = alignment

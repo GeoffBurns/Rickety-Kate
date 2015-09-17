@@ -99,7 +99,7 @@ public class CardTable : GameStateEngine, GameState
     {
         
         var direction = SideOfTable.Top
-        if let index = find(players,winner), side = SideOfTable(rawValue: index)
+        if let index = players.indexOf(winner), side = SideOfTable(rawValue: index)
         {
             direction = side
             
@@ -143,11 +143,11 @@ public class CardTable : GameStateEngine, GameState
                             self.hasShotTheMoon = false
                             if i == 0
                             {
-                                self.statusInfo.publish("Congratulatons!!!","You just shot the Moon")
+                                self.statusInfo.publish(("Congratulatons!!!","You just shot the Moon"))
                             }
                             else
                             {
-                                self.statusInfo.publish("Wow!!!","\(player.name) just shot the Moon")
+                                self.statusInfo.publish(("Wow!!!","\(player.name) just shot the Moon"))
                             }
                             
                         }
@@ -191,8 +191,8 @@ public class CardTable : GameStateEngine, GameState
                 toPlayer.hand.append(card)
             }
             
-            let sortedHand = sorted(toPlayer.hand)
-            toPlayer.newHand( sortedHand.reverse())
+            let sortedHand = toPlayer.hand.sort()
+            toPlayer.newHand( Array(sortedHand.reverse()))
         }
         resetPassedCards()
     }
@@ -202,13 +202,13 @@ public class CardTable : GameStateEngine, GameState
         {
             let winnersName = winner.name
             
-            if let winnerIndex = find(players,winner)
+            if let winnerIndex = players.indexOf(winner)
             {
             var score = 0
             
-            var ricketyKate = tricksPile.filter{$0.playedCard.imageName == "QS"}
+            let ricketyKate = tricksPile.filter{$0.playedCard.imageName == "QS"}
             
-            var spades = tricksPile.filter{$0.playedCard.suite == PlayingCard.Suite.Spades && $0.playedCard.imageName != "QS"}
+            let spades = tricksPile.filter{$0.playedCard.suite == PlayingCard.Suite.Spades && $0.playedCard.imageName != "QS"}
             if !ricketyKate.isEmpty
             {
                 score = 10
@@ -217,19 +217,19 @@ public class CardTable : GameStateEngine, GameState
             
             if !ricketyKate.isEmpty
             {
-                self.statusInfo.publish("\(winnersName) won Rickety Kate","Poor \(winnersName)")
+                self.statusInfo.publish(("\(winnersName) won Rickety Kate","Poor \(winnersName)"))
             }
             else if spades.count == 1
             {
-                self.statusInfo.publish("\(winnersName) won a spade","Bad Luck")
+                self.statusInfo.publish(("\(winnersName) won a spade","Bad Luck"))
             }
             else if spades.count > 1
             {
-                self.statusInfo.publish("\(winnersName) won \(spades.count) spades","Bad Luck")
+                self.statusInfo.publish(("\(winnersName) won \(spades.count) spades","Bad Luck"))
             }
             else
             {
-            self.statusInfo.publish("\(winnersName) won the Trick","")
+            self.statusInfo.publish(("\(winnersName) won the Trick",""))
             }
             if(score>0)
             {
@@ -304,7 +304,7 @@ public class CardTable : GameStateEngine, GameState
             let leadingSuite = trick.playedCard.suite
             let followingTricks = self.tricksPile.filter { $0.playedCard.suite == leadingSuite }
             
-            let orderedTricks = sorted(followingTricks, { $0.playedCard.value > $1.playedCard.value })
+            let orderedTricks = followingTricks.sort({ $0.playedCard.value > $1.playedCard.value })
             if let highest = orderedTricks.first
             {
                 return highest.player
@@ -338,13 +338,12 @@ public class CardTable : GameStateEngine, GameState
     func playTrickCard(playerWithTurn:CardPlayer, trickcard:PlayingCard,state:StateOfPlay, willAnimate:Bool = true)
     {
 
-        var remainingPlayers = state.remainingPlayers
         addToTrickPile(playerWithTurn,cardName: trickcard.imageName)
         
         let displayedCard = CardSprite.sprite(trickcard)
         
-                var fullHand = CGFloat(13)
-                var positionInSpread = (fullHand - 4 ) * 0.5 + CGFloat(self.tricksPile.count - 1)
+                let fullHand = CGFloat(13)
+                let positionInSpread = (fullHand - 4 ) * 0.5 + CGFloat(self.tricksPile.count - 1)
                 
                 let sprite = displayedCard
                 let isFaceUp = displayedCard.isUp
@@ -425,7 +424,7 @@ public class CardTable : GameStateEngine, GameState
     func playTrick(state:StateOfPlay)
     {
 
-        var remainingPlayers = state.remainingPlayers
+        let remainingPlayers = state.remainingPlayers
    
         if let playerWithTurn = remainingPlayers.first,
             computerPlayer = playerWithTurn as? ComputerPlayer
@@ -445,12 +444,11 @@ public class CardTable : GameStateEngine, GameState
             // player has run out of cards
             let doneAction =  nextPlayerAction(state , currentSuite: nil)
             CardSprite.register["QS"]!.runAction(doneAction)
- //           remainingPlayers.removeAtIndex(0)
         }
         else
         {
             currentStateOfPlay = StateOfPlay( remainingPlayers: remainingPlayers)
-            statusInfo.publish("Your Turn","")
+            statusInfo.publish(("Your Turn",""))
         }
         
     }
@@ -459,10 +457,10 @@ public class CardTable : GameStateEngine, GameState
     func playTrickLeadBy(playerWithLead:CardPlayer)
     {
         let players = trickPlayersLeadBy(playerWithLead)
-        var remainingPlayers = players
-        var leadingSuite : PlayingCard.Suite? = nil
+        let remainingPlayers = players
+      
    
-        var state = StateOfPlay( remainingPlayers: remainingPlayers)
+        let state = StateOfPlay( remainingPlayers: remainingPlayers)
         playTrick(state)
         
     }
@@ -474,8 +472,8 @@ public class CardTable : GameStateEngine, GameState
         for player in players
         {
             
-          let sortedHand = sorted(hands[i])
-            player.newHand( sortedHand.reverse())
+          let sortedHand = hands[i].sort()
+            player.newHand( Array(sortedHand.reverse()))
             i++
         }
     }

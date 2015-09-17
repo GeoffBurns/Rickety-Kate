@@ -112,7 +112,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         
         public func dealFor(numberOfPlayers:Int ) -> [[PlayingCard]]
         {
-            var pack = cards;
+            let pack = cards;
             var hands: [[PlayingCard]] = [[PlayingCard]](count: numberOfPlayers, repeatedValue: [])
             
             var i:Int = 0
@@ -158,7 +158,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         
     public init(cards:[PlayingCard])
         {
-            deck.extend(cards)
+            deck.appendContentsOf(cards)
         }
     override public var orderedDeck:[PlayingCard]
     {

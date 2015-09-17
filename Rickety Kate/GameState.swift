@@ -148,7 +148,6 @@ public var isLastPlayer : Bool {
         {
             let playedCard : PlayingCard = cardSource[code]
             let player : CardPlayer =  HumanPlayer.sharedInstance
-            let sprite : SKSpriteNode = SKSpriteNode()
             tricksPile.append(player:player,playedCard:playedCard)
             
         }

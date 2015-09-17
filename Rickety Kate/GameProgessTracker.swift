@@ -39,7 +39,7 @@ public class GameProgressTracker
         }
         for i in 0...3
         {
-             Set<CardPlayer>()
+             notFollowing[i] = Set<CardPlayer>()
         }
         notFollowingTracker.subscribe() { (message: (PlayingCard.Suite, CardPlayer)) in
             

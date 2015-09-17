@@ -19,7 +19,7 @@ public class HighestCardsPassingStrategy : CardPassingStrategy
     private init() { }
     func chooseWorstCards(player:CardHolder) -> [PlayingCard]
     {
-        let orderedArray = sorted(player.hand,{$0.value > $1.value})
+        let orderedArray = player.hand.sort({$0.value > $1.value})
         let slice = orderedArray[0...2]
         return Array(slice)
     }

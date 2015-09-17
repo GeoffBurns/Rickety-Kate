@@ -23,7 +23,7 @@ public class RandomStrategy : TrickPlayingStrategy
     {
         if let suite: PlayingCard.Suite = gameState.leadingSuite
         {
-            var validCards = player.cardsIn( suite)
+            let validCards = player.cardsIn( suite)
             if let choosenCard:PlayingCard = validCards.randomItem
             {
                 return choosenCard
@@ -51,13 +51,11 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
         
         var maxCard : PlayingCard? = nil
         var max = -20
-        var maxSuite = PlayingCard.Suite.Spades
-        var i = 0
         
         // find safest suite
         for suite in earlyLeadSuites
         {
-            let (possibleCard,safety) = bestEarlyGameCardFor(suite,player,gameState,safetyMargin)
+            let (possibleCard,safety) = bestEarlyGameCardFor(suite,player: player,gameState: gameState,margin: safetyMargin)
             if let card = possibleCard
             {
                 if safety > max
@@ -109,7 +107,7 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardHolder,gameState:Ga
     }
     
     
-    var missing = unaccountedForCards
+    let missing = unaccountedForCards
     
     
     let safety = missing - margin - unplayedCardsInTrick
@@ -120,7 +118,7 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardHolder,gameState:Ga
     
     
     let cardsInChosenSuite = player.cardsIn( suite)
-    let orderedCards = sorted(cardsInChosenSuite,{$0.value > $1.value})
+    let orderedCards = cardsInChosenSuite.sort({$0.value > $1.value})
     
     return (orderedCards.first,safety)
 }
@@ -146,7 +144,7 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
             {
                 return nil
             }
-            return bestEarlyGameCardFor(suite,player,gameState,safetyMargin).0;
+            return bestEarlyGameCardFor(suite,player: player,gameState: gameState,margin: safetyMargin).0;
             
         }
         return nil
@@ -163,7 +161,7 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
         {
             return nil
         }
-        let orderedCards = sorted(player.hand,{$0.value < $1.value})
+        let orderedCards = player.hand.sort({$0.value < $1.value})
         return orderedCards.first
     }
 }
@@ -184,14 +182,14 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
             if(canFollowSuite)
             {
                 let cardsFollowingSuite = gameState.cardsFollowingSuite
-                let orderedFollowingCards = sorted(cardsFollowingSuite,{$0.value > $1.value})
+                let orderedFollowingCards = cardsFollowingSuite.sort({$0.value > $1.value})
                 let highCard = orderedFollowingCards.first
                 
                 let cardsLessThanHighCard = cardsInSuite.filter { $0.value < highCard!.value }
                 let canGoLow = !cardsLessThanHighCard.isEmpty
                 if canGoLow
                 {
-                    let orderedLowCards = sorted(cardsLessThanHighCard,{$0.value > $1.value})
+                    let orderedLowCards = cardsLessThanHighCard.sort({$0.value > $1.value})
                     return orderedLowCards.first
                 }
                 else
@@ -200,13 +198,13 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                     {
                         // don't give yourself rickety kate
                         let notRicketyKate = cardsInSuite.filter { $0.isntRicketyKate }
-                        var reverseOrderedCards = sorted(notRicketyKate,{$0.value < $1.value})
+                        var reverseOrderedCards = notRicketyKate.sort({$0.value < $1.value})
                         if let lowcard = reverseOrderedCards.first
                         {
-                            return reverseOrderedCards.first
+                            return lowcard
                         }
                         
-                        reverseOrderedCards = sorted(cardsInSuite,{$0.value < $1.value})
+                        reverseOrderedCards = cardsInSuite.sort({$0.value < $1.value})
                         return reverseOrderedCards.first
                     }
                     let isLastPlayer = gameState.isLastPlayer
@@ -214,10 +212,10 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                     if isLastPlayer && isNoSpadesInPile
                     {
                         
-                        let orderedCards = sorted(cardsInSuite,{$0.value > $1.value})
+                        let orderedCards = cardsInSuite.sort({$0.value > $1.value})
                         return orderedCards.first
                     }
-                    let reverseOrderedCards = sorted(cardsInSuite,{$0.value < $1.value})
+                    let reverseOrderedCards = cardsInSuite.sort({$0.value < $1.value})
                     return reverseOrderedCards.first
                 }
             }
@@ -229,10 +227,10 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
             let Spades = player.cardsIn(PlayingCard.Suite.Spades )
             if !Spades.isEmpty
             {
-                let orderedSpades = sorted(Spades,{$0.value > $1.value})
+                let orderedSpades = Spades.sort({$0.value > $1.value})
                 return orderedSpades.first
             }
-            let orderedHand = sorted(player.hand,{$0.value > $1.value})
+            let orderedHand = player.hand.sort({$0.value > $1.value})
             
             return orderedHand.first
         }

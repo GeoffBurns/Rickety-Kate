@@ -23,7 +23,7 @@ class CardSprite : SKSpriteNode
     self.card = card
         self.player = player
         
-    var back =  SKTexture(imageNamed: "Back1")
+    let back =  SKTexture(imageNamed: "Back1")
     super.init(texture: back, color: UIColor.whiteColor(), size: back.size())
       
 

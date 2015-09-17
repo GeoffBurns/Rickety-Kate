@@ -11,10 +11,8 @@ import Foundation
 
 
 extension Array {
-    var randomItem: T? {
-        
-        let count = self.count
-        
+    var randomItem: Element? {
+  
         switch self.count
         {
         case 0 : return nil
@@ -29,7 +27,7 @@ extension Array {
 
 extension Array {
     mutating func shuffleThis () {
-        for i in stride(from:self.count-1, to:0, by:-1) {
+        for i in (self.count-1).stride(to:0, by:-1) {
             let ix1 = i
             let ix2 = Int(arc4random_uniform(UInt32(i+1)))
             (self[ix1], self[ix2]) = (self[ix2], self[ix1])
@@ -38,7 +36,7 @@ extension Array {
 extension Array {
     func shuffle () -> Array {
         var temp = self
-        for i in stride(from:temp.count-1, to:0, by:-1) {
+        for i in (temp.count-1).stride(to:0, by:-1) {
             let ix1 = i
             let ix2 = Int(arc4random_uniform(UInt32(i+1)))
             (temp[ix1], temp[ix2]) = (temp[ix2], temp[ix1])

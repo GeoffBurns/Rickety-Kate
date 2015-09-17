@@ -13,8 +13,8 @@ import iAd
 extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+            let sceneData = try! NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe)
+            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
             let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
@@ -28,7 +28,7 @@ extension SKNode {
 
 class GameViewController: UIViewController , ADBannerViewDelegate {
 
-    var adBannerView: ADBannerView = ADBannerView(frame: CGRect.zeroRect)
+    var adBannerView: ADBannerView = ADBannerView(frame: CGRect.zero)
     
     func loadAds(){
         adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
@@ -67,9 +67,9 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
   
-            return Int(UIInterfaceOrientationMask.LandscapeLeft.rawValue)
+            return UIInterfaceOrientationMask.LandscapeLeft
 
     }
 

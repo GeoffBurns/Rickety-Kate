@@ -15,7 +15,7 @@ public func >>><T>(publink: Publink<T>, subscriptionBlock: T -> ()) {
 public class Publink<ParameterType> {
 
     /** A block that accepts a value as an argument */
-    typealias SubscriptionBlock = (ParameterType) -> ()
+    public typealias SubscriptionBlock = (ParameterType) -> ()
 
     /** Subscription blocks to be called with optional value on `publish(value: T)` */
     private var subscriptionBlocks: [SubscriptionBlock] {
@@ -97,7 +97,7 @@ public class Publink<ParameterType> {
         allSubscriptionBlocks = subscriptionBlocks
 
         // Add each named block
-        for (name, block) in namedSubscriptionBlocks {
+        for (_, block) in namedSubscriptionBlocks {
             allSubscriptionBlocks += [block]
         }
     }

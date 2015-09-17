@@ -21,7 +21,7 @@ public enum SideOfTable:Int
     {
         var startheight = CGFloat(0.0)
         var startWidth = width * 0.35
-        var fullHand = CGFloat(13)
+        let fullHand = CGFloat(13)
         var hortizonalSpacing = width * 0.3 / fullHand
         var verticalSpacing = height * 0.2 / fullHand
         switch self
@@ -49,15 +49,15 @@ public enum SideOfTable:Int
             
             // the trick pile
         case .Center:
-            var startheight = height * 0.5
-            var startWidth = width * 0.35
+            let startheight = height * 0.5
+            let startWidth = width * 0.35
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.9)
         }
     }
     func rotationOfCard(positionInSpread: CGFloat) -> CGFloat
     {
         
-        var fullHand = CGFloat(13)
+        let fullHand = CGFloat(13)
         
         var startRotate = CGFloat(0)
         switch self
@@ -77,7 +77,7 @@ public enum SideOfTable:Int
         }
         
         
-        var rotateDelta = 60.degreesToRadians / fullHand
+        let rotateDelta = 60.degreesToRadians / fullHand
         
         return   startRotate - rotateDelta * positionInSpread
     }
