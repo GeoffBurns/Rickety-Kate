@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol TrickPlayingStrategy
+public protocol TrickPlayingStrategy
 {
     func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     
@@ -19,7 +19,7 @@ public class RandomStrategy : TrickPlayingStrategy
 {
     static let sharedInstance = RandomStrategy()
     private init() { }
-    func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
+    public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     {
         if let suite: PlayingCard.Suite = gameState.leadingSuite
         {
@@ -39,8 +39,8 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
 {
     var safetyMargin = 6
     let noOfPlayers = 4
-    init(margin:Int) { safetyMargin = margin }
-    func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
+    public init(margin:Int) { safetyMargin = margin }
+    public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     {
         if(gameState.hasntLead)
         {
@@ -130,8 +130,8 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
 {
     var safetyMargin = 6
     let noOfPlayers = 4
-    init(margin:Int) { safetyMargin = margin }
-    func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
+    public init(margin:Int) { safetyMargin = margin }
+    public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     {
         if(gameState.hasLead)
         {
@@ -155,9 +155,9 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
 // If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
 public class LateGameLeadingStrategy : TrickPlayingStrategy
 {
-    static let sharedInstance = LateGameLeadingStrategy()
+    public static let sharedInstance = LateGameLeadingStrategy()
     private init() { }
-    func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
+    public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     {
         if(gameState.hasntLead)
         {
@@ -173,9 +173,9 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
 // If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
 public class LateGameFollowingStrategy : TrickPlayingStrategy
 {
-    static let sharedInstance = LateGameFollowingStrategy()
+    public static let sharedInstance = LateGameFollowingStrategy()
     private init() { }
-    func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
+    public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     {
         if let suite = gameState.leadingSuite
         {

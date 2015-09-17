@@ -9,37 +9,7 @@
 import Foundation
 
 
-public protocol CardHolder
-{
-    func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
-    var RicketyKate : PlayingCard? {get}
-    var hand : [PlayingCard] { get }
-}
 
-
-public protocol ICardPlayer
-{
-    var hand : [PlayingCard] {get set}
-    var score : Int {get set}
-    var name : String {get set}
-    var sideOfTable : SideOfTable {get set}
-    func clearHand()
-    func newHand([PlayingCard])
-    func resetScore()
-}
-
-
-public func ==(lhs: ICardPlayer, rhs: ICardPlayer) -> Bool
-{
-
-    return lhs.name == rhs.name
-}
-
-public func !=(lhs: ICardPlayer, rhs: ICardPlayer) -> Bool
-{
-    
-    return lhs.name != rhs.name
-}
 public func ==(lhs: CardPlayer, rhs: CardPlayer) -> Bool
 {
     
@@ -47,9 +17,10 @@ public func ==(lhs: CardPlayer, rhs: CardPlayer) -> Bool
 }
 
 
-public class CardPlayer :ICardPlayer, CardHolder, Equatable, Hashable
+
+public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
 {
-    public var hand : [PlayingCard] = []
+
     public var score : Int = 0
     public var sideOfTable = SideOfTable.Bottom
     public var name : String = "Base"
@@ -73,17 +44,8 @@ public class CardPlayer :ICardPlayer, CardHolder, Equatable, Hashable
         score = 0
     }
     
-    public func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
-    {
-    return hand.filter {$0.suite == suite}
-    }
-    public var RicketyKate : PlayingCard?
-        {
-            let RicketyKate = hand.filter { $0.isRicketyKate}
+
           
-                return RicketyKate.first
-          
-    }
     public func removeFromHand(card:PlayingCard) -> PlayingCard?
     {
     /// hand.indexOf(card) // in swift 2.0

@@ -16,7 +16,7 @@ public class GameProgressTracker
     var notFollowingTracker = Publink<(PlayingCard.Suite, CardPlayer)>()
     // TODO replace - repeat generator does not work so great with classes
     var notFollowing = [Set<CardPlayer>](count: 4, repeatedValue: Set<CardPlayer>())
-    static let sharedInstance = GameProgressTracker()
+     
     
     
     public func reset()
@@ -28,7 +28,7 @@ public class GameProgressTracker
         }
     }
     
-    private init() {
+     init() {
         
         cardCounter.subscribe() { (suite: PlayingCard.Suite) in
             

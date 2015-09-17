@@ -15,7 +15,7 @@ public struct StateOfPlay
 }
 
 
-public class CardTable : GameStateBase, GameState
+public class CardTable : GameStateEngine, GameState
 {
     var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
@@ -23,8 +23,6 @@ public class CardTable : GameStateBase, GameState
 
     // if non-nil StateOfPlay is frozen awaiting user input
     var currentStateOfPlay:StateOfPlay? = nil
-    var displayedCards : Dictionary<String,(sprite: SKSpriteNode, card: PlayingCard)> = [:]
-    var displayedCardsIsFaceUp : Dictionary<String,Bool> = [:]
     var cardTossDuration = Double(0.7)
     var statusInfo = Publink<(String,String)>()
     // TODO replace - repeat generator does not work so great with classes
@@ -42,7 +40,7 @@ public class CardTable : GameStateBase, GameState
     var startPlayerNo = 1
     let cardScale = CGFloat(0.9)
     let cardScaleForSelected = CGFloat(1.05)
-    var cardsPassed : [[(card:PlayingCard, cardSprite: SKSpriteNode)]] = [[],[],[],[]]
+    var cardsPassed : [[ PlayingCard ]] = [[],[],[],[]]
     
     public var players : [CardPlayer] {
         get {
@@ -97,6 +95,107 @@ public class CardTable : GameStateBase, GameState
     //////////
     // internal functions
     //////////
+    func removeTricksPile(winner:CardPlayer)
+    {
+        
+        var direction = SideOfTable.Top
+        if let index = find(players,winner), side = SideOfTable(rawValue: index)
+        {
+            direction = side
+            
+        }
+        
+        var parent: SKNode? = nil
+        for trick in self.tricksPile
+        {
+            let sprite =  CardSprite.sprite(trick.playedCard)
+            
+                if parent == nil{
+                    parent = sprite.parent
+                }
+                
+                let moveAction = (SKAction.moveTo(direction.positionOfWonCards( sprite.parent!.frame.width, height: sprite.parent!.frame.height), duration:(cardTossDuration)))
+          
+                let moveActionWithDone = (SKAction.sequence([SKAction.waitForDuration(cardTossDuration) ,moveAction /*, doneAction*/]))
+                sprite.runAction(moveActionWithDone)
+                
+           
+        }
+        if parent != nil
+        {
+            parent!.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration), SKAction.runBlock({
+                
+                if(self.playerOne.hand.isEmpty)
+                {
+                    self.startPlayerNo++
+                    if self.startPlayerNo > 3
+                    {
+                        self.startPlayerNo = 0
+                    }
+                    var i = 0
+                    self.hasShotTheMoon = false
+                    for player in self.players
+                    {
+                        if self.scoresForHand[i] == 22
+                        {
+                            self.scores[i] = 0
+                            self.scoreUpdates[i].publish(self.scores[i])
+                            self.hasShotTheMoon = false
+                            if i == 0
+                            {
+                                self.statusInfo.publish("Congratulatons!!!","You just shot the Moon")
+                            }
+                            else
+                            {
+                                self.statusInfo.publish("Wow!!!","\(player.name) just shot the Moon")
+                            }
+                            
+                        }
+                        i++
+                    }
+                    
+                    
+                    self.gameTracker.reset()
+                    self.dealNewCardsToPlayers()
+                    self.resetGame.publish()
+                }
+                else
+                {
+                    self.playTrickLeadBy(winner)
+                }
+                
+            })]))
+        }
+        
+        self.tricksPile = []
+    }
+    
+
+    
+    func takePassedCards()
+    {
+        for previous in 0...3
+        {
+            var next = previous+1
+            if next > 3
+            {
+                next = 0
+            }
+            
+            let fromPlayersCards = cardsPassed[previous]
+            let toPlayer = players[next]
+            
+            for card in fromPlayersCards
+            {
+                CardSprite.sprite(card).player = toPlayer
+                toPlayer.hand.append(card)
+            }
+            
+            let sortedHand = sorted(toPlayer.hand)
+            toPlayer.newHand( sortedHand.reverse())
+        }
+        resetPassedCards()
+    }
     func trickWon()
     {
         if let winner = self.playerThatWon()
@@ -142,91 +241,7 @@ public class CardTable : GameStateBase, GameState
             self.removeTricksPile(winner)
         }
     }
-    func removeTricksPile(winner:CardPlayer)
-    {
-        
-        var direction = SideOfTable.Top
-        if let index = find(players,winner), side = SideOfTable(rawValue: index)
-        {
-            direction = side
-            
-        }
-        
-        var parent: SKNode? = nil
-        for trick in self.tricksPile
-        {
-            if let displayedCard =  self.displayedCards[trick.playedCard.imageName],
-                
-                    scene = displayedCard.sprite.parent
-                   {
-                    
-                    let sprite = displayedCard.sprite
-                    if parent == nil{
-                        parent = scene
-                    }
-
-                    let moveAction = (SKAction.moveTo(direction.positionOfWonCards( scene.frame.width, height: scene.frame.height), duration:(cardTossDuration)))
-                /*    let doneAction = (SKAction.runBlock({
-                       
-                        self.displayedCards[trick.playedCard.imageName] = nil
-                        displayedCard.sprite.removeFromParent()
-                   
-                       
-                    }))*/
-               let moveActionWithDone = (SKAction.sequence([SKAction.waitForDuration(cardTossDuration) ,moveAction /*, doneAction*/]))
-               sprite.runAction(moveActionWithDone)
-
-            }
-        }
-        if parent != nil
-        {
-        parent!.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration), SKAction.runBlock({
-            
-            if(self.playerOne.hand.isEmpty)
-            {
-                self.startPlayerNo++
-                if self.startPlayerNo > 3
-                {
-                   self.startPlayerNo = 0
-                }
-                var i = 0
-                self.hasShotTheMoon = false
-                for player in self.players
-                {
-                if self.scoresForHand[i] == 22
-                  {
-                  self.scores[i] = 0
-                  self.scoreUpdates[i].publish(self.scores[i])
-                  self.hasShotTheMoon = false
-                  if i == 0
-                    {
-                    self.statusInfo.publish("Congratulatons!!!","You just shot the Moon")
-                    }
-                    else
-                    {
-                    self.statusInfo.publish("Wow!!!","\(player.name) just shot the Moon")
-                    }
-                    
-                   }
-                    i++
-                }
-                    
-                
-                self.gameTracker.reset()
-                self.dealNewCardsToPlayers()
-                self.resetGame.publish()
-            }
-            else
-            {
-            self.playTrickLeadBy(winner)
-            }
-            
-        })]))
-        }
-
-              self.tricksPile = []
-    }
-    func isMoveValid(player:CardPlayer,cardName:String) -> Bool
+     func isMoveValid(player:CardPlayer,cardName:String) -> Bool
     {
         if self.tricksPile.isEmpty
         {
@@ -240,13 +255,14 @@ public class CardTable : GameStateBase, GameState
             {
                 return true
             }
-           if let displayedCard = self.displayedCards[cardName]
-           {
-           return displayedCard.card.suite == leadingSuite
-           }
+           let displayedCard = CardSprite.register[cardName]
+      
+           return displayedCard!.card.suite == leadingSuite
+        
         }
         return false
     }
+
     // return four players starting with the one that has the lead
     public func trickPlayersLeadBy(playerWithLead:CardPlayer) -> [CardPlayer]
     {
@@ -279,30 +295,7 @@ public class CardTable : GameStateBase, GameState
         return trickPlayers
     }
     
-    func addToTrickPile(player:CardPlayer,cardName:String)
-    {
-        if let displayedCard = self.displayedCards[cardName]
-        {
-            
-            self.gameTracker.cardCounter.publish(displayedCard.card.suite)
-            
-            if let firstcard = tricksPile.first
-            {
-                let leadingSuite = firstcard.playedCard.suite
-                if displayedCard.card.suite != leadingSuite
-                {
-                    self.gameTracker.notFollowingTracker.publish(displayedCard.card.suite,player)
-                }
-                
-            }
-            
-            if let cardData: NSMutableDictionary  =  displayedCard.sprite.userData
-            {
-                cardData.removeAllObjects()
-            }
-            tricksPile.append((player:player,playedCard:displayedCard.card, cardSprite: displayedCard.sprite))
-        }
-    }
+
    
     func playerThatWon() -> CardPlayer?
     {
@@ -346,14 +339,15 @@ public class CardTable : GameStateBase, GameState
     {
 
         var remainingPlayers = state.remainingPlayers
-            addToTrickPile(playerWithTurn,cardName: trickcard.imageName)
-            if let displayedCard = displayedCards[trickcard.imageName]
-            {
+        addToTrickPile(playerWithTurn,cardName: trickcard.imageName)
+        
+        let displayedCard = CardSprite.sprite(trickcard)
+        
                 var fullHand = CGFloat(13)
                 var positionInSpread = (fullHand - 4 ) * 0.5 + CGFloat(self.tricksPile.count - 1)
                 
-                let sprite = displayedCard.sprite
-                let isFaceUp = self.displayedCardsIsFaceUp[trickcard.imageName] ?? false
+                let sprite = displayedCard
+                let isFaceUp = displayedCard.isUp
                 let spriteHeight = isFaceUp ? sprite.size.height*0.5 :  sprite.size.height
                 
                 if let scene = sprite.parent
@@ -371,8 +365,9 @@ public class CardTable : GameStateBase, GameState
                     let flipAction = (SKAction.sequence([
                         SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
                         SKAction.runBlock({
-                            self.displayedCardsIsFaceUp.updateValue(true, forKey: trickcard.imageName)
-                            sprite.texture = SKTexture(imageNamed:trickcard.imageName)
+                            
+                            let sprite = CardSprite.sprite(trickcard)
+                            sprite.flipUp()
                             }) ,
                         SKAction.scaleXTo(cardScale*0.5, duration: cardTossDuration*0.5)
                         ]))
@@ -399,19 +394,18 @@ public class CardTable : GameStateBase, GameState
                     }
                 }
         }
-    }
+    
     func passCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
     {
-        if let displayed = displayedCards[passedCard.imageName]
-        {
+    let displayed = CardSprite.sprite(passedCard)
+     
 
-           if let removedCard = self.players[seatNo].removeFromHand(displayed.card)
+           if let removedCard = players[seatNo].removeFromHand(displayed.card)
             {
-            self.cardsPassed[seatNo].append(card: removedCard, cardSprite: displayed.sprite)
+            self.cardsPassed[seatNo].append(removedCard)
             return removedCard
             }
-            
-        }
+     
         return nil
     }
     func passOtherCards()
@@ -450,7 +444,7 @@ public class CardTable : GameStateBase, GameState
             
             // player has run out of cards
             let doneAction =  nextPlayerAction(state , currentSuite: nil)
-            displayedCards["QS"]!.sprite.runAction(doneAction)
+            CardSprite.register["QS"]!.runAction(doneAction)
  //           remainingPlayers.removeAtIndex(0)
         }
         else

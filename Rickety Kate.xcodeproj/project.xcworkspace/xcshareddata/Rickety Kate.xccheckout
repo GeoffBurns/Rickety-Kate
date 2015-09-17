@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>09AC737C-8F52-4525-A47F-4A48FDCB5D1D</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Rickety Kate</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>F6DFC0677480DD84402C7FE2988E9D5CFE8050CF</key>
 		<string>https://github.com/GeoffBurns/Rickety-Kate.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Rickety Kate.xcodeproj</string>
+	<string>Rickety Kate.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>F6DFC0677480DD84402C7FE2988E9D5CFE8050CF</key>

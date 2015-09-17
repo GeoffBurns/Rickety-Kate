@@ -25,7 +25,6 @@ class GameScene: SKScene {
     var exitLabel2 = SKLabelNode(fontNamed:"Chalkduster")
     var scoreLabel = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
     var scoreLabel2 = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
-    var scoreLabel3 = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
     var rulesButton =  SKSpriteNode(imageNamed:"Rules1")
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
@@ -49,50 +48,19 @@ class GameScene: SKScene {
             player.sideOfTable = SideOfTable(rawValue: i)!
             for card in player.hand
             {
-                let sprite = SKSpriteNode(imageNamed:
-                  //  card.imageName
-                    "Back1"
-                )
+                let sprite = CardSprite(card: card, player: player)
                 
                 var pos = CGFloat(i)
                 sprite.setScale(cardScale)
                 sprite.position = CGPoint(x: width * CGFloat(2 * i  + 1) / 8.0,y: height*0.5)
                 
-                sprite.name = card.imageName
-                sprite.userData = NSMutableDictionary?(["player":player.name] as NSMutableDictionary)
-                sprite.userInteractionEnabled = false
-                table.displayedCards.updateValue((sprite: sprite, card: card), forKey: card.imageName)
-                
-                table.displayedCardsIsFaceUp.updateValue(false, forKey: card.imageName)
+    
                 self.addChild(sprite)
             }
             i++
         }
     }
-    func takePassedCards()
-    {
-        for previous in 0...3
-        {
-        var next = previous+1
-        if next > 3
-            {
-            next = 0
-            }
-            
-        let fromPlayersCards = table.cardsPassed[previous]
-        let toPlayer = table.players[next]
-        
-        for displayed in fromPlayersCards
-            {
-            displayed.cardSprite.userData = NSMutableDictionary?(["player":toPlayer.name] as NSMutableDictionary)
-            toPlayer.hand.append(displayed.card)
-            }
-            
-            let sortedHand = sorted(toPlayer.hand)
-            toPlayer.newHand( sortedHand.reverse())
-        }
-        table.resetPassedCards()
-    }
+
     func rearrangeCardImagesInTrickPile(width: CGFloat , height: CGFloat )
     {
         var fullHand = CGFloat(13)
@@ -102,7 +70,7 @@ class GameScene: SKScene {
         for trick in table.tricksPile
         {
             let playerSeat = SideOfTable.Center
-            let sprite = trick.cardSprite
+            let sprite = CardSprite.sprite(trick.playedCard)
             sprite.setScale(cardScale*0.5)
             sprite.anchorPoint = cardAnchorPoint
             sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
@@ -125,7 +93,7 @@ class GameScene: SKScene {
         {
             let playerSeat = SideOfTable.Center
             
-            let sprite = card.cardSprite
+            let sprite = CardSprite.sprite(card)
           
             sprite.setScale(cardScale*0.5)
             sprite.anchorPoint = cardAnchorPoint
@@ -154,23 +122,15 @@ class GameScene: SKScene {
             {
             for card in player.hand
               {
-                if let sprite = table.displayedCards[card.imageName]?.sprite
-                {
-                    // PlayerOne's cards are larger
-                    sprite.setScale(i==0 ? cardScale: cardScale*0.5)
+                let sprite = CardSprite.sprite(card)
+                
+                // PlayerOne's cards are larger
+                sprite.setScale(i==0 ? cardScale: cardScale*0.5)
                     
-                    if(i==0)
+                if(i==0)
                     {
-                        if let isUp = table.displayedCardsIsFaceUp[card.imageName] where isUp
-                        {
-                         // don't need to do anything
-                        }
-                        else
-                        {
-                            table.displayedCardsIsFaceUp.updateValue(true, forKey: card.imageName)
-                            sprite.texture = SKTexture(imageNamed:card.imageName)
-                        }
-
+                        sprite.flipUp()
+                    
                     }
                     sprite.anchorPoint = cardAnchorPoint
                     sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
@@ -180,7 +140,7 @@ class GameScene: SKScene {
                     sprite.colorBlendFactor = 0
                     positionInSpread++
                 }
-              }
+            
             }
             i++
         }
@@ -199,30 +159,23 @@ class GameScene: SKScene {
             {
                 for card in player.hand
                 {
-                    if let sprite = table.displayedCards[card.imageName]?.sprite
-                    {
+                    let sprite = CardSprite.sprite(card)
+                   
                         // PlayerOne's cards are larger
                         sprite.setScale(i==0 ? cardScale: cardScale*0.5)
                         sprite.anchorPoint = cardAnchorPoint
 
                         
-                        if let isUp = table.displayedCardsIsFaceUp[card.imageName] where isUp
-                            {
-                                if(i != 0)
-                                {
-                                    table.displayedCardsIsFaceUp.updateValue(false, forKey: card.imageName)
-                                    sprite.texture = SKTexture(imageNamed:"Back1")
-                                }
-                            }
-                            else
-                            {
-                                if(i == 0)
-                              
-                                {
-                                table.displayedCardsIsFaceUp.updateValue(true, forKey: card.imageName)
-                                sprite.texture = SKTexture(imageNamed:card.imageName)
-                                }
-                            }
+                        if(i==0)
+                        {
+                         sprite.flipUp()
+                                        
+                        }
+                        else
+                        {
+                         sprite.flipDown()
+                            
+                        }
                        
                         
                         let newPosition =  playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
@@ -237,7 +190,7 @@ class GameScene: SKScene {
                         sprite.color = UIColor.whiteColor()
                         sprite.colorBlendFactor = 0
                         positionInSpread++
-                    }
+                   
                 }
             }
             i++
@@ -258,25 +211,21 @@ class GameScene: SKScene {
             {
                 let moveAction = (SKAction.moveTo(CGPoint(x: -300,y:height*0.5), duration:(cardTossDuration*0.8)))
          
-                trick.cardSprite.runAction(moveAction)
+                CardSprite.sprite(trick.playedCard).runAction(moveAction)
             
             }
             if let playerSeat = SideOfTable(rawValue: i)
             {
                 for card in player.hand
                 {
-                    if let sprite = table.displayedCards[card.imageName]?.sprite
-                    {
+                    let sprite = CardSprite.sprite(card)
+                  
                         // PlayerOne's cards are larger
                         //sprite.setScale(i==0 ? cardScale: cardScale*0.5)
                         sprite.anchorPoint = cardAnchorPoint
-                        
-                        if let isUp = table.displayedCardsIsFaceUp[card.imageName] where isUp
-                            {
-                                table.displayedCardsIsFaceUp.updateValue(false, forKey: card.imageName)
-                                sprite.texture = SKTexture(imageNamed:"Back1")
-                           }
-                 
+                    
+                        sprite.flipDown()
+                
                         sprite.anchorPoint = CGPoint(x: 0.5, y: 0.5)
                         let newPosition = CGPoint(x: width * CGFloat(2 * i  + 1) / 8.0,y: height*0.5)
                         let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
@@ -290,7 +239,7 @@ class GameScene: SKScene {
                         sprite.color = UIColor.whiteColor()
                         sprite.colorBlendFactor = 0
                         positionInSpread++
-                    }
+                  
                 }
             }
             i++
@@ -470,16 +419,10 @@ class GameScene: SKScene {
             {
                     for card in player.hand
                     {
-                        self.table.displayedCardsIsFaceUp.updateValue(false, forKey: card.imageName)
-                        if let sprite  = self.table.displayedCards[card.imageName]?.sprite
-                        {
-                          sprite.texture = SKTexture(imageNamed:"Back1")
-                          if let data = sprite.userData
-                            {
-                               data.setValue(player.name, forKey: "player")
-                            }
-                        }
-                }
+                        let sprite = CardSprite.sprite(card)
+                        sprite.flipDown()
+                        sprite.player = player
+                     }
             }
             
             self.table.newGame.publish()
@@ -643,18 +586,13 @@ class GameScene: SKScene {
     
     func isNodeAPlayerOneCardSpite(node:SKSpriteNode) -> Bool
     {
-        // does the sprite belong to a player
-        if let cardData: NSMutableDictionary  =  node.userData
+    // does the sprite belong to a player
+    if let cardsprite = node as? CardSprite,
+        player = cardsprite.player
         {
-            if let player: String = cardData.valueForKey("player") as? String
-            {
-                // does the sprite belong to player one
-                if player == "You"
-                {
-                    return true
-                }
-            }
+           return player.name == "You"
         }
+
     return false
     }
     func isNodeAPlayButton(node:SKSpriteNode) -> Bool
@@ -790,7 +728,7 @@ class GameScene: SKScene {
         let width = self.frame.size.width
         let height = self.frame.size.height
         table.passOtherCards()
-        takePassedCards()
+        table.takePassedCards()
         rearrangeCardImagesInHandsWithAnimation(width, height: height)
         isInPassingCardsPhase = false
         self.table.statusInfo.publish("","")
@@ -806,6 +744,8 @@ class GameScene: SKScene {
         draggedNode!.yScale = cardScale
         draggedNode=nil
     }
+    
+    
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touchCount = touches.count
         let touch = touches.first as! UITouch
@@ -820,15 +760,13 @@ class GameScene: SKScene {
             if positionInScene.y > height * 0.3
             {
                 
-                if let nodeName = touchedNode.name,
-                    displayedCard = table.displayedCards[nodeName]
+                if let cardsprite = touchedNode as? CardSprite
                 {
                     
                     if isInPassingCardsPhase
                     {
-                        if let displayedCard = table.displayedCards[nodeName]
-                        {
-                            if let discard = table.passCard(0, passedCard: displayedCard.card)
+                    
+                            if let discard = table.passCard(0, passedCard: cardsprite.card)
                             {
                                 
                             }
@@ -855,20 +793,19 @@ class GameScene: SKScene {
                                  endCardPassingPhase()
                             }
                             return;
-                        }
+                        
                     }
                     else if let state = self.table.currentStateOfPlay,
                     currentPlayer = state.remainingPlayers.first
                     where currentPlayer.name == "You"
                 {
-                       if table.isMoveValid(self.table.playerOne,cardName: nodeName)
+                       if table.isMoveValid(self.table.playerOne,cardName: cardsprite.name!)
                        {
                     
-                     if let displayedCard = table.displayedCards[nodeName],
-                        index = find(self.table.playerOne.hand,displayedCard.card)
+                     if let  index = find(self.table.playerOne.hand,cardsprite.card)
                         {
                         let trickcard = self.table.playerOne.hand.removeAtIndex(index)
-                        table.playTrickCard(self.table.playerOne, trickcard:displayedCard.card,state:table.currentStateOfPlay!,willAnimate:false)
+                        table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card,state:table.currentStateOfPlay!,willAnimate:false)
                             table.currentStateOfPlay=nil
                         return;
                      }
@@ -876,8 +813,8 @@ class GameScene: SKScene {
                     }
                        else
                        {
-                        displayedCard.sprite.color = UIColor.redColor()
-                        displayedCard.sprite.colorBlendFactor = 0.2
+                        cardsprite.color = UIColor.redColor()
+                        cardsprite.colorBlendFactor = 0.2
                         
                         table.statusInfo.publish("Card Does Not","Follow Suite")
                         
@@ -894,7 +831,9 @@ class GameScene: SKScene {
 
         
     }
+
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
 }
+

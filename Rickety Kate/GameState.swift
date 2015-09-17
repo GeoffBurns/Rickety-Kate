@@ -30,9 +30,9 @@ public protocol GameState
 public class GameStateBase
 {
     
-    var tricksPile : [(player:CardPlayer,playedCard:PlayingCard, cardSprite: SKSpriteNode)] = []
+    var tricksPile : [(player:CardPlayer, playedCard:PlayingCard)] = []
     
-    var gameTracker = GameProgressTracker.sharedInstance
+    var gameTracker = GameProgressTracker()
     
     public var playedCardsInTrick : Int {
         return tricksPile.count
@@ -42,7 +42,7 @@ public class GameStateBase
     
     public func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
     {
-        return gameTracker.notFollowing[suite.rawValue].isEmpty
+        return !gameTracker.notFollowing[suite.rawValue].isEmpty
     }
     
     public var hasLead : Bool {
@@ -85,9 +85,41 @@ public class GameStateBase
     
     
 }
-
-public class FakeGameState : GameStateBase
+public class GameStateEngine : GameStateBase
 {
+
+
+    func addToTrickPile(player:CardPlayer,cardName:String)
+    {
+        if let displayedCard = CardSprite.register[cardName]
+        {
+            
+            self.gameTracker.cardCounter.publish(displayedCard.card.suite)
+            
+            if let firstcard = tricksPile.first
+            {
+                let leadingSuite = firstcard.playedCard.suite
+                if displayedCard.card.suite != leadingSuite
+                {
+                    self.gameTracker.notFollowingTracker.publish(displayedCard.card.suite,player)
+                }
+            }
+            displayedCard.player=player
+            let playedCard = displayedCard.card
+            tricksPile.append(player:player,playedCard:playedCard)
+          //  tricksPile.append(player:player, playedCard:displayedCard.card)
+        }
+    }
+    
+}
+// Used for testing
+public class FakeGameState : GameStateBase, GameState
+{
+    let cardSource = CardSource.sharedInstance
+
+    //////////
+    // GameState Protocol
+    //////////
 public var noOfPlayers  = 0
 
 public var unplayedCardsInTrick : Int
@@ -98,5 +130,33 @@ public var unplayedCardsInTrick : Int
 public var isLastPlayer : Bool {
     return tricksPile.count >= noOfPlayers - 1
 }
+    
+    //////////
+    // constructor
+    //////////
+    public init(noPlayers:Int)
+    {
+    noOfPlayers = noPlayers
+    }
+    
+    //////////
+    // internal functions
+    //////////
+    public func addCardsToTrickPile(cardCodes:[String])
+    {
+        for code in cardCodes
+        {
+            let playedCard : PlayingCard = cardSource[code]
+            let player : CardPlayer =  HumanPlayer.sharedInstance
+            let sprite : SKSpriteNode = SKSpriteNode()
+            tricksPile.append(player:player,playedCard:playedCard)
+            
+        }
+    }
+    public func addNotFollowed(suite:PlayingCard.Suite)
+    {
+        gameTracker.notFollowing[suite.rawValue].insert(HumanPlayer.sharedInstance)
+    }
+    
 }
  

@@ -1,5 +1,5 @@
 //
-//  GivenAEarlyLeadingStrategy.swift
+//  GivenALateLeadingStrategy.swift
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 16/09/2015.
@@ -10,17 +10,17 @@ import UIKit
 import XCTest
 import Rickety_Kate
 
-class GivenAEarlyLeadingStrategy: XCTestCase {
+class GivenALateLeadingStrategy: XCTestCase {
     var player = FakeCardHolder()
     var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance;
     var gameState = FakeGameState(noPlayers: 4)
-    var strategy = EarlyGameLeadingStrategy(margin:4)
+    var strategy = LateGameLeadingStrategy.sharedInstance
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         player.addCardsToHand(["QS","QD","5D","2C","KC","10C"])
-    
+        
         
     }
     
@@ -32,21 +32,11 @@ class GivenAEarlyLeadingStrategy: XCTestCase {
     func testCardChoice() {
         // This is an example of a functional test case.
         
-        var card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
-        XCTAssert(card?.imageName=="QD", "Pass")
         
-        gameState.addNotFollowed(PlayingCard.Suite.Diamonds)
         
-        card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
         
-        let cardname = card?.imageName
-        XCTAssert(cardname=="KC", "Pass")
-        
-        gameState.addNotFollowed(PlayingCard.Suite.Clubs)
-        
-        card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
-        XCTAssert(card == nil, "Pass")
-
+        let card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
+        XCTAssert(card?.imageName=="2C", "Pass")
     }
-    
+
 }
