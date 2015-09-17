@@ -19,8 +19,6 @@ class GameScene: SKScene {
     var draggedNode: SKSpriteNode? = nil;
     var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
-    var noticeLabel = SKLabelNode(fontNamed:"Chalkduster")
-    var noticeLabel2 = SKLabelNode(fontNamed:"Chalkduster")
     var exitLabel = SKLabelNode(fontNamed:"Chalkduster")
     var exitLabel2 = SKLabelNode(fontNamed:"Chalkduster")
     var scoreLabel = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
@@ -255,58 +253,17 @@ class GameScene: SKScene {
             self.rearrange()
         }
     }
-    func setupStatusArea()
+    func StatusAreaFirstMessage()
     {
-        noticeLabel.text = ""
-        noticeLabel.fontSize = 65;
-        noticeLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:self.frame.size.height * 0.4);
-        
-        noticeLabel2.fontSize = 65;
-        noticeLabel2.position = CGPoint(x:CGRectGetMidX(self.frame), y:self.frame.size.height * 0.68);
-        self.addChild(noticeLabel)
-        self.addChild(noticeLabel2)
-        
-        table.statusInfo.subscribe() { (message1: String,message2: String) in
-            
-        self.noticeLabel.removeAllActions()
-        self.noticeLabel2.removeAllActions()
-            
-        self.noticeLabel.alpha = 1.0
-        self.noticeLabel2.alpha = 1.0
 
-        let action = SKAction.repeatActionForever(
-                SKAction.sequence([
-                    SKAction.fadeOutWithDuration(6),
-                    SKAction.waitForDuration(10),
-                    SKAction.fadeInWithDuration(4),
-                    SKAction.waitForDuration(5),
-                    ] )
-            )
-        switch (message1,message2)
-            {
-            case ("","") :
-                self.noticeLabel.text = "";
-                self.noticeLabel2.text = "";
-            case (_,"") :
-                self.noticeLabel.text = message1;
-                self.noticeLabel2.text = "";
-                self.noticeLabel.runAction(action)
-                
-            default :
-                self.noticeLabel2.text = message1;
-                self.noticeLabel.text = message2;
-                self.noticeLabel.runAction(action)
-                self.noticeLabel2.runAction(action)
-            }
-        }
-  
+        
         if arePassingCards && !table.isInDemoMode
         {
-           self.table.statusInfo.publish(("Discard Your"," Three Worst Cards"))
+            StatusDisplay.publish("Discard Your",message2: " Three Worst Cards")
         }
         else
         {
-            self.table.statusInfo.publish(("Game On",""))
+            StatusDisplay.publish("Game On",message2: "")
         }
     }
     
@@ -407,11 +364,11 @@ class GameScene: SKScene {
             {
             self.runAction(SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration), SKAction.runBlock({
                 
-                self.table.statusInfo.publish(("New Hand","" ))
+                StatusDisplay.publish("New Hand" )
             })]))
             } else {
                 
-                self.table.statusInfo.publish(("New Hand","" ))
+                StatusDisplay.publish("New Hand" )
             }
             
             for player in self.table.players
@@ -436,7 +393,7 @@ class GameScene: SKScene {
             self.isInPassingCardsPhase = self.arePassingCards && !self.table.isInDemoMode
             if self.isInPassingCardsPhase
             {
-              self.table.statusInfo.publish(("Discard Your","Three Worst Cards"))
+              StatusDisplay.publish("Discard Your",message2: "Three Worst Cards")
             }
             else
             {
@@ -541,8 +498,6 @@ class GameScene: SKScene {
         exitButton.zPosition = 450
         exitButton.userInteractionEnabled = false
         self.addChild(exitButton)
-     
- 
     }
     func setupPlayButton()
     {
@@ -569,7 +524,8 @@ class GameScene: SKScene {
      
         self.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
 
-        setupStatusArea()
+        StatusDisplay.register(self)
+        StatusAreaFirstMessage()
         ruletext()
         setupExitScreen()
         setupPlayButton()
@@ -730,7 +686,7 @@ class GameScene: SKScene {
         table.takePassedCards()
         rearrangeCardImagesInHandsWithAnimation(width, height: height)
         isInPassingCardsPhase = false
-        self.table.statusInfo.publish(("",""))
+        StatusDisplay.publish()
         startTrickPhase()
     }
     
@@ -780,11 +736,11 @@ class GameScene: SKScene {
                                 
                             if count == 2
                                 {
-                                table.statusInfo.publish(("Discard one more card", "Your worst card"))
+                                StatusDisplay.publish("Discard one more card", message2: "Your worst card")
                                 }
                                 else
                                 {
-                                table.statusInfo.publish(("Discard \(3 - count) more cards", "Your worst cards"))
+                                StatusDisplay.publish("Discard \(3 - count) more cards", message2: "Your worst cards")
                                 }
                             }
                             else
@@ -815,11 +771,11 @@ class GameScene: SKScene {
                         cardsprite.color = UIColor.redColor()
                         cardsprite.colorBlendFactor = 0.2
                         
-                        table.statusInfo.publish(("Card Does Not","Follow Suite"))
+                        StatusDisplay.publish("Card Does Not",message2: "Follow Suite")
                         
                     }
                     } else {
-                        table.statusInfo.publish(("Wait your turn",""))
+                        StatusDisplay.publish("Wait your turn",message2: "")
                     }
                 }
    

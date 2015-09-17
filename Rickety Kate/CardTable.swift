@@ -24,7 +24,7 @@ public class CardTable : GameStateEngine, GameState
     // if non-nil StateOfPlay is frozen awaiting user input
     var currentStateOfPlay:StateOfPlay? = nil
     var cardTossDuration = Double(0.7)
-    var statusInfo = Publink<(String,String)>()
+
     // TODO replace - repeat generator does not work so great with classes
     var scoreUpdates : [Publink<Int>] = [Publink<Int>](count: 4, repeatedValue: Publink<Int>())
     var tidyup :  Publink<Void> =  Publink<Void>()
@@ -143,11 +143,11 @@ public class CardTable : GameStateEngine, GameState
                             self.hasShotTheMoon = false
                             if i == 0
                             {
-                                self.statusInfo.publish(("Congratulatons!!!","You just shot the Moon"))
+                                StatusDisplay.publish("Congratulatons!!!",message2: "You just shot the Moon")
                             }
                             else
                             {
-                                self.statusInfo.publish(("Wow!!!","\(player.name) just shot the Moon"))
+                                StatusDisplay.publish("Wow!!!",message2: "\(player.name) just shot the Moon")
                             }
                             
                         }
@@ -217,19 +217,19 @@ public class CardTable : GameStateEngine, GameState
             
             if !ricketyKate.isEmpty
             {
-                self.statusInfo.publish(("\(winnersName) won Rickety Kate","Poor \(winnersName)"))
+                StatusDisplay.publish("\(winnersName) won Rickety Kate",message2: "Poor \(winnersName)")
             }
             else if spades.count == 1
             {
-                self.statusInfo.publish(("\(winnersName) won a spade","Bad Luck"))
+                StatusDisplay.publish("\(winnersName) won a spade",message2: "Bad Luck")
             }
             else if spades.count > 1
             {
-                self.statusInfo.publish(("\(winnersName) won \(spades.count) spades","Bad Luck"))
+                StatusDisplay.publish("\(winnersName) won \(spades.count) spades",message2: "Bad Luck")
             }
             else
             {
-            self.statusInfo.publish(("\(winnersName) won the Trick",""))
+            StatusDisplay.publish("\(winnersName) won the Trick")
             }
             if(score>0)
             {
@@ -448,7 +448,7 @@ public class CardTable : GameStateEngine, GameState
         else
         {
             currentStateOfPlay = StateOfPlay( remainingPlayers: remainingPlayers)
-            statusInfo.publish(("Your Turn",""))
+            StatusDisplay.publish("Your Turn")
         }
         
     }
