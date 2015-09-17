@@ -13,6 +13,7 @@ import SpriteKit
 class Scorer
 {
     var scores : [Int] = []
+    var wins : [Int] = []
     var scoresForHand : [Int] = []
     
     var players : [CardPlayer] = []
@@ -29,6 +30,7 @@ class Scorer
     {
         scores = []
         scoresForHand  = []
+        wins  = []
         var i = 0
         self.players=players
         for player in players
@@ -36,6 +38,7 @@ class Scorer
             scores.append(0)
             
             scoresForHand.append(0)
+            wins.append(0)
             lookup.updateValue(i, forKey: player.name)
 
             i++
@@ -62,14 +65,14 @@ class Scorer
     {
     var i = 0
         
-    var has = false
+    var hasShotMoon = false
     for player in self.players
      {
      if self.scoresForHand[i] == 22
       {
       self.scores[i] = 0
-      ScoreDisplay.publish(player,score: self.scores[i])
-      has = true
+      ScoreDisplay.publish(player,score: self.scores[i], wins: self.wins[i])
+      hasShotMoon = true
        if i == 0
           {
           StatusDisplay.publish("Congratulatons!!!",message2: "You just shot the Moon")
@@ -84,7 +87,45 @@ class Scorer
      self.scoresForHand[i] = 0
      i++
      }
-        if(has)
+        
+        var lowestScore = 1000
+        var winner = -10
+        var hasWonGame = false
+        var isDraw = false
+        i = 0
+        for _ in self.players
+        {
+            if self.scores[i] < lowestScore
+            {
+                lowestScore = self.scores[i]
+                winner = i
+                isDraw = false
+            } else  if self.scores[i] == lowestScore
+            {
+               isDraw = true
+            }
+                
+            if self.scores[i] >= 100
+            {
+                hasWonGame = true
+            }
+            i++
+        }
+        
+        let isGameWon = hasWonGame && !isDraw
+        if isGameWon
+        {
+            self.wins[winner]++
+            i = 0
+            for player in players
+            {
+                scores[i] = 0
+                scoresForHand[i] = 0
+                ScoreDisplay.publish(player,score: self.scores[i], wins: self.wins[i])
+            }
+            return hasShotMoon
+        }
+        if(hasShotMoon)
         {
         //    self.runAction(SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration), SKAction.runBlock({
                 
@@ -95,7 +136,7 @@ class Scorer
             StatusDisplay.publish("New Hand" )
         }
         
-        return has
+        return hasShotMoon
     }
 
     func trickWon(gameState:GameStateBase) -> CardPlayer?
@@ -137,7 +178,7 @@ class Scorer
                 {
                     self.scores[winnerIndex] += score
                     self.scoresForHand[winnerIndex] += score
-                    ScoreDisplay.publish(winner,score: self.scores[winnerIndex])
+                    ScoreDisplay.publish(winner,score: self.scores[winnerIndex], wins:self.wins[winnerIndex])
                 }
             }
             
