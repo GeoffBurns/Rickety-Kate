@@ -115,13 +115,14 @@ class Scorer
         let isGameWon = hasWonGame && !isDraw
         if isGameWon
         {
-            self.wins[winner]++
+            self.wins[winner] = self.wins[winner] + 1
             i = 0
             for player in players
             {
                 scores[i] = 0
                 scoresForHand[i] = 0
                 ScoreDisplay.publish(player,score: self.scores[i], wins: self.wins[i])
+                i++
             }
             if winner == 0
             {
