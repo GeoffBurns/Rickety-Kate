@@ -153,37 +153,10 @@ class Scorer
     {
         if let winner = Scorer.playerThatWon(gameState)
         {
-            let winnersName = winner.name
             
             if let winnerIndex = players.indexOf(winner)
             {
-                var score = 0
-                
-                let ricketyKate = gameState.tricksPile.filter{$0.playedCard.imageName == "QS"}
-                
-                let spades = gameState.tricksPile.filter{$0.playedCard.suite == PlayingCard.Suite.Spades && $0.playedCard.imageName != "QS"}
-                if !ricketyKate.isEmpty
-                {
-                    score = 10
-                }
-                score += spades.count
-                
-                if !ricketyKate.isEmpty
-                {
-                    StatusDisplay.publish("\(winnersName) won Rickety Kate",message2: "Poor \(winnersName)")
-                }
-                else if spades.count == 1
-                {
-                    StatusDisplay.publish("\(winnersName) won a spade",message2: "Bad Luck")
-                }
-                else if spades.count > 1
-                {
-                    StatusDisplay.publish("\(winnersName) won \(spades.count) spades",message2: "Bad Luck")
-                }
-                else
-                {
-                    StatusDisplay.publish("\(winnersName) won the Trick")
-                }
+                let score = Awarder.sharedInstance.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
                 if(score>0)
                 {
                     self.scores[winnerIndex] += score

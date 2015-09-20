@@ -16,6 +16,8 @@ public enum SideOfTable:Int
     case Top
     case Left
     case Center
+    case TopMidLeft
+    case TopMidRight
     
     func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat, fullHand: CGFloat = CGFloat(13)) -> CGPoint
     {
@@ -23,7 +25,7 @@ public enum SideOfTable:Int
         var startWidth = width * 0.35
  
         var hortizonalSpacing = width * 0.25 / fullHand
-        var verticalSpacing = height * 0.2 / fullHand
+        var verticalSpacing = height * 0.18 / fullHand
         switch self
         {
             // Player One
@@ -38,6 +40,18 @@ public enum SideOfTable:Int
         case .Top:
             hortizonalSpacing = -width * 0.2 / fullHand
             startWidth = width * 0.6
+            startheight = height
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
+            // Computer Player
+        case .TopMidLeft:
+            hortizonalSpacing = -width * 0.14 / fullHand
+            startWidth = width * 0.27
+            startheight = height
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
+            // Computer Player
+        case .TopMidRight:
+            hortizonalSpacing = -width * 0.14 / fullHand
+            startWidth = width * 0.73
             startheight = height
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
@@ -66,6 +80,10 @@ public enum SideOfTable:Int
         case .Right:
             startRotate = 120.degreesToRadians
             // Computer Player
+        case .TopMidLeft:
+            fallthrough
+        case .TopMidRight:
+            fallthrough
         case .Top:
             startRotate = 210.degreesToRadians
             // Computer Player
@@ -89,17 +107,23 @@ public enum SideOfTable:Int
         {
             // Player One
         case .Bottom:
-            return CGPoint(x: width*0.5,y: -200.0)
+            return CGPoint(x: width*0.5,y: -1000.0)
             // Computer Player
         case .Right:
             
-            return CGPoint(x: width*1.2,y: height * 0.5)
+            return CGPoint(x: width*2,y: height * 0.5)
             // Computer Player
+        case .TopMidLeft:
+            
+            return CGPoint(x: width*0.1,y: height * 2)
+        case .TopMidRight:
+            
+            return CGPoint(x: width*0.9,y: height * 2)
         case .Top:
-            return CGPoint(x: width*0.5,y: height * 1.2)
+            return CGPoint(x: width*0.5,y: height * 2)
             // Computer Player
         case .Left:
-            return CGPoint(x: -200,y: height * 0.5)
+            return CGPoint(x: -500,y: height * 0.5)
             
             // the trick pile
         case .Center:

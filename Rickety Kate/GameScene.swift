@@ -516,9 +516,7 @@ class GameScene: SKScene {
                         touchedNode.yScale = 1.15
                         return
                     }
-                
                }
-           
             }
         
     
