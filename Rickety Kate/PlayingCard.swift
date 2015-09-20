@@ -221,7 +221,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     i++
                     if(i >= noOfSuites)
                     {
-                        
+                        break
                     }
                 }
                 return deck
