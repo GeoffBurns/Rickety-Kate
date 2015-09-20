@@ -35,6 +35,7 @@ class RuleScreen: Popup {
     button.texture = SKTexture(imageNamed: "Rules1")
     alpha = 0.0
     zPosition = -10
+    button.zPosition = 300
     isShowing = false
     }
     else
@@ -42,6 +43,7 @@ class RuleScreen: Popup {
     button.texture = SKTexture(imageNamed: "Rules2")
     alpha = 1.0
     zPosition = 400
+    button.zPosition = 450
     isShowing = true
     }
     }
@@ -77,7 +79,7 @@ class RuleScreen: Popup {
         
         button.name = "Rules"
         
-        button.zPosition = 450
+        button.zPosition = 300
         button.userInteractionEnabled = false
         
         scene.addChild(button)

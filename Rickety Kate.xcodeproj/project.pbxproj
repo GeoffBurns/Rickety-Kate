@@ -45,6 +45,7 @@
 		ACE6DFC51BAA46F4005B5424 /* GivenALateGameFollowingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFC41BAA46F4005B5424 /* GivenALateGameFollowingStrategy.swift */; };
 		ACE6DFC71BAA5563005B5424 /* StatusArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFC61BAA5563005B5424 /* StatusArea.swift */; };
 		ACE6DFC91BAA5FD9005B5424 /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFC81BAA5FD9005B5424 /* CardSprite.swift */; };
+		ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF58BD51BAEE652009C255A /* OptionScreen.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		ACE6DFC41BAA46F4005B5424 /* GivenALateGameFollowingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenALateGameFollowingStrategy.swift; sourceTree = "<group>"; };
 		ACE6DFC61BAA5563005B5424 /* StatusArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusArea.swift; sourceTree = "<group>"; };
 		ACE6DFC81BAA5FD9005B5424 /* CardSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSprite.swift; sourceTree = "<group>"; };
+		ACF58BD51BAEE652009C255A /* OptionScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				ACE6DFB71BAA32AB005B5424 /* MathExtention.swift */,
 				ACE6DFB81BAA32AB005B5424 /* Multi-Line.swift */,
 				ACBF9A921BAD4A0C00837EEB /* NumberRangeToggle.swift */,
+				ACF58BD51BAEE652009C255A /* OptionScreen.swift */,
 				AC9E82BF1BA686C40064870C /* PlayingCard.swift */,
 				AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */,
 				AC9E82C01BA686C40064870C /* Publink.swift */,
@@ -335,6 +338,7 @@
 				AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */,
 				AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */,
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
+				ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
 				ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */,
 				ACE6DFC71BAA5563005B5424 /* StatusArea.swift in Sources */,

@@ -10,7 +10,7 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    lazy var table = CardTable.makeTable()
+    lazy var table = CardTable.makeTable(4)
     var originalTouch = CGPoint()
     var originalCardPosition = CGPoint()
     var originalCardRotation = CGFloat()
@@ -18,14 +18,14 @@ class GameScene: SKScene {
     var draggedNode: SKSpriteNode? = nil;
     var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
-
+    var noOfSuitesInDeck = 4
 
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
 
     var rulesScreen = RuleScreen()
     var exitScreen = ExitScreen()
-    var isRulesTextShowing = false
+    var optionScreen = OptionScreen(noOfSuites: 4)
     var arePassingCards = true
     var isInPassingCardsPhase = true
     var cardTossDuration = 0.4
@@ -328,8 +328,6 @@ class GameScene: SKScene {
     func ruletext()
     {
         rulesScreen.setup(self)
-       
-        
     }
 
     func setupExitScreen()
@@ -339,6 +337,15 @@ class GameScene: SKScene {
             return
         }
        exitScreen.setup(self)
+    }
+    func setupOptionScreen()
+    {
+        if !table.isInDemoMode
+        {
+            return
+        }
+        optionScreen.noOfSuites.current = noOfSuitesInDeck
+        optionScreen.setup(self)
     }
     func setupPlayButton()
     {
@@ -369,6 +376,7 @@ class GameScene: SKScene {
         StatusAreaFirstMessage()
         ruletext()
         setupExitScreen()
+        setupOptionScreen()
         setupPlayButton()
         table.dealNewCardsToPlayers()
         ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
@@ -395,10 +403,7 @@ class GameScene: SKScene {
     {
         return node.name == "Play"
     }
-    func isNodeRulesButton(node:SKSpriteNode) -> Bool
-    {
-        return node.name == "Rules"
-    }
+
     func isNodeAExitButton(node:SKSpriteNode) -> Bool
     {
         return node.name == "Exit"
@@ -427,7 +432,8 @@ class GameScene: SKScene {
                     let transition = SKTransition.crossFadeWithDuration(0.5)
                     let scene = GameScene(size: self.scene!.size)
                     scene.scaleMode = SKSceneScaleMode.AspectFill
-                    
+                    scene.table = CardTable.makeTable(self.noOfSuitesInDeck)
+                    scene.noOfSuitesInDeck  = self.noOfSuitesInDeck
                     self.scene!.view!.presentScene(scene, transition: transition)
                     
                 })]))
@@ -442,12 +448,17 @@ class GameScene: SKScene {
                 exitScreen.zPosition = 500
             }
         /// rules button
-        if isNodeRulesButton(touchedNode)
+        if touchedNode.name == "Rules"
         {
         rulesScreen.flipButton()
         return
-            
         }
+        /// Option button
+        if touchedNode.name == "Option"
+            {
+                optionScreen.flipButton()
+                return
+            }
         if isNodeAPlayerOneCardSpite(touchedNode)        {
         draggedNode = touchedNode;
         originalTouch = positionInScene

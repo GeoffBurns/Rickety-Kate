@@ -12,21 +12,34 @@ import SpriteKit
 class NumberRangeToggle: SKNode {
     var min = 1
     var max = 10
-    var current = 1
-    var text = ""
+    var current : Int {didSet {update()}}
+    var text:String {didSet {update()}}
     
     var label = SKLabelNode(fontNamed:"Chalkduster")
     
     
-    init(min:Int, max:Int, current:Int)
+    init(min:Int, max:Int, current:Int, text: String)
     {
-     label.fontSize = 40;
-        super.init()
+    self.min = min
+    self.max = max
+    self.current = current
+    label.fontSize = 40;
+    self.text = text
+        label.userInteractionEnabled = false
+        label.text = "\(text) : \(current)"
+    super.init()
     self.addChild(label)
+    self.userInteractionEnabled = true
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    func update()
+    {
+        label.text = "\(text) : \(current)"
     }
     func touchDown()
     {
@@ -35,7 +48,7 @@ class NumberRangeToggle: SKNode {
         {
            current = min
         }
-        label.text = "\(text) : \(current)"
+        update()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -44,8 +57,6 @@ class NumberRangeToggle: SKNode {
         for touch in (touches )
         {
             
-      //  let touchPoint = touch.locationInNode(self.parent!)
-      //  if self.containsPoint(touchPoint) {
             let touchPoint = touch.locationInNode(self)
                                         if label.containsPoint(touchPoint) {
     

@@ -143,7 +143,7 @@ class ExitScreen: Popup {
                         let transition = SKTransition.crossFadeWithDuration(0.5)
                         let scene = GameScene(size: self.scene!.size)
                         scene.scaleMode = SKSceneScaleMode.AspectFill
-                        scene.table = CardTable.makeDemo()
+                        scene.table = CardTable.makeDemo(scene.noOfSuitesInDeck)
                         self.scene!.view!.presentScene(scene, transition: transition)
                         
                     })]))
