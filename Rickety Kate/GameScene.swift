@@ -11,7 +11,7 @@ import SpriteKit
 class GameScene: SKScene {
     
     lazy var table = CardTable.makeTable()
-      var originalTouch = CGPoint()
+    var originalTouch = CGPoint()
     var originalCardPosition = CGPoint()
     var originalCardRotation = CGFloat()
     var originalCardAnchor = CGPoint()
@@ -20,11 +20,10 @@ class GameScene: SKScene {
     var cardScaleForSelected = CGFloat(1.05)
 
 
-    var rulesButton =  SKSpriteNode(imageNamed:"Rules1")
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
-    var exitButton =  SKSpriteNode(imageNamed:"Exit")
-    var rulesText : SKMultilineLabel? = nil
+
+    var rulesScreen = RuleScreen()
     var exitScreen = ExitScreen()
     var isRulesTextShowing = false
     var arePassingCards = true
@@ -328,34 +327,8 @@ class GameScene: SKScene {
     
     func ruletext()
     {
-        rulesText  = SKMultilineLabel(text: "Rickety Kate is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards.", labelWidth: Int(self.frame.width * 0.88), pos: CGPoint(x:CGRectGetMidX(self.frame),y:self.frame.size.height*0.8),fontSize:30,fontColor:UIColor.whiteColor(),leading:40)
-        let sprite = SKSpriteNode(color: UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9), size: self.frame.size)
-        sprite.position = CGPoint(x:CGRectGetMidX(self.frame),y:CGRectGetMidY(self.frame))
-        
-        sprite.name = "Rules Background"
-        sprite.userInteractionEnabled = false
-        rulesText!.addChild(sprite)
-        rulesText!.zPosition = -10
-        
-        rulesText!.name = "Rules text"
-        rulesText!.userInteractionEnabled = false
-        
-        rulesText!.alpha = 0.0
-        
-        rulesButton.setScale(0.5)
-        rulesButton.anchorPoint = CGPoint(x: 0.0,
-            y:
-            UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-                1.6 :
-            2.2)
-        rulesButton.position = CGPoint(x:0.0,y:self.frame.size.height)
- 
-        rulesButton.name = "Rules"
-        
-        rulesButton.zPosition = 450
-        rulesButton.userInteractionEnabled = false
-        self.addChild(rulesButton)
-        self.addChild(rulesText!)
+        rulesScreen.setup(self)
+       
         
     }
 
@@ -471,21 +444,8 @@ class GameScene: SKScene {
         /// rules button
         if isNodeRulesButton(touchedNode)
         {
-            if(isRulesTextShowing)
-            {
-            rulesButton.texture = SKTexture(imageNamed: "Rules1")
-            rulesText!.alpha = 0.0
-            rulesText!.zPosition = -10
-            isRulesTextShowing = false
-            }
-            else
-            {
-                rulesButton.texture = SKTexture(imageNamed: "Rules2")
-                rulesText!.alpha = 1.0
-                 rulesText!.zPosition = 400
-                isRulesTextShowing = true
-            }
-          return
+        rulesScreen.flipButton()
+        return
             
         }
         if isNodeAPlayerOneCardSpite(touchedNode)        {

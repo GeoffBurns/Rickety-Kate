@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0304031BAEDE7C005263C7 /* RuleScreen.swift */; settings = {ASSET_TAGS = (); }; };
 		AC252A3F1BA6F1C400C0121A /* ArrayExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */; };
 		AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */; };
 		AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC0304031BAEDE7C005263C7 /* RuleScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuleScreen.swift; sourceTree = "<group>"; };
 		AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtentions.swift; sourceTree = "<group>"; };
 		AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIdeOfTable.swift; sourceTree = "<group>"; };
 		AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCardComparable.swift; sourceTree = "<group>"; };
@@ -141,16 +143,17 @@
 			children = (
 				AC62B6981BA1564800B0EDAE /* AppDelegate.swift */,
 				AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */,
+				ACCB13371BAD16E600196393 /* Awarder.swift */,
 				ACE6DFB41BAA32AB005B5424 /* CardHolder.swift */,
 				AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */,
 				AC9E82BD1BA686C40064870C /* CardPlayer.swift */,
 				ACE6DFBE1BAA38A9005B5424 /* CardSource.swift */,
 				ACE6DFC81BAA5FD9005B5424 /* CardSprite.swift */,
 				AC9E82BE1BA686C40064870C /* CardTable.swift */,
+				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69A1BA1564800B0EDAE /* GameScene.sks */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
-				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
 				ACE6DFB51BAA32AB005B5424 /* GameState.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
 				AC62B6A31BA1564800B0EDAE /* Images.xcassets */,
@@ -162,11 +165,11 @@
 				AC9E82BF1BA686C40064870C /* PlayingCard.swift */,
 				AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */,
 				AC9E82C01BA686C40064870C /* Publink.swift */,
-				AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */,
-				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
+				AC0304031BAEDE7C005263C7 /* RuleScreen.swift */,
 				AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */,
 				ACCB13351BAB1D5700196393 /* Scorer.swift */,
-				ACCB13371BAD16E600196393 /* Awarder.swift */,
+				AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */,
+				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 			);
@@ -330,6 +333,7 @@
 				ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */,
 				AC252A3F1BA6F1C400C0121A /* ArrayExtentions.swift in Sources */,
 				AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */,
+				AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */,
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
 				ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */,
