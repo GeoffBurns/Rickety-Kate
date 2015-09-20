@@ -117,8 +117,7 @@ class ExitScreen: Popup {
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
-        let width = self.frame.size.width
-        let height = self.frame.size.height
+
         for touch in (touches )
         {
             let positionInScene = touch.locationInNode(self)
@@ -136,18 +135,9 @@ class ExitScreen: Popup {
             if isNodeAYesButton(touchedNode)
             {
                 touchedNode.texture = SKTexture(imageNamed: "Yes2")
-                gameScene!.reverseDeal(width , height: height )
                 
-                let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(gameScene!.cardTossDuration),
-                    SKAction.runBlock({
-                        let transition = SKTransition.crossFadeWithDuration(0.5)
-                        let scene = GameScene(size: self.scene!.size)
-                        scene.scaleMode = SKSceneScaleMode.AspectFill
-                        scene.table = CardTable.makeDemo(scene.noOfSuitesInDeck)
-                        self.scene!.view!.presentScene(scene, transition: transition)
-                        
-                    })]))
-                self.runAction(doneAction2)
+                gameScene!.resetWith(CardTable.makeDemo(gameScene!.noOfSuitesInDeck))
+    
             }
 
             }

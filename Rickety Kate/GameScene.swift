@@ -408,10 +408,28 @@ class GameScene: SKScene {
     {
         return node.name == "Exit"
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
+    
+    func resetWith(table:CardTable)
+    {
         let width = self.frame.size.width
         let height = self.frame.size.height
+        reverseDeal(width , height: height )
+        
+        let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
+            SKAction.runBlock({
+                let transition = SKTransition.crossFadeWithDuration(0.5)
+                let scene = GameScene(size: self.scene!.size)
+                scene.scaleMode = SKSceneScaleMode.AspectFill
+                scene.table = table
+                scene.noOfSuitesInDeck  = self.noOfSuitesInDeck
+                self.scene!.view!.presentScene(scene, transition: transition)
+                
+            })]))
+        self.runAction(doneAction2)
+    }
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        /* Called when a touch begins */
+    
       for touch in (touches )
       {
         let positionInScene = touch.locationInNode(self)
@@ -424,20 +442,7 @@ class GameScene: SKScene {
             
             touchedNode.texture = SKTexture(imageNamed: "Play2")
         
-            
-            reverseDeal(width , height: height )
-            
-            let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
-                SKAction.runBlock({
-                    let transition = SKTransition.crossFadeWithDuration(0.5)
-                    let scene = GameScene(size: self.scene!.size)
-                    scene.scaleMode = SKSceneScaleMode.AspectFill
-                    scene.table = CardTable.makeTable(self.noOfSuitesInDeck)
-                    scene.noOfSuitesInDeck  = self.noOfSuitesInDeck
-                    self.scene!.view!.presentScene(scene, transition: transition)
-                    
-                })]))
-            self.runAction(doneAction2)
+            resetWith(CardTable.makeTable(self.noOfSuitesInDeck))
             
         return
         }

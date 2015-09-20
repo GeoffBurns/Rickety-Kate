@@ -32,8 +32,7 @@ class OptionScreen: Popup {
     {
         if(isShowing)
         {
-            let width = self.frame.size.width
-            let height = self.frame.size.height
+   
             button.texture = SKTexture(imageNamed: "Options1")
             alpha = 0.0
             zPosition = -10
@@ -41,21 +40,10 @@ class OptionScreen: Popup {
             isShowing = false
             if original != noOfSuites.current
             {
-            gameScene!.reverseDeal(width , height: height )
-                
-                let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(gameScene!.cardTossDuration),
-                    SKAction.runBlock({
-                        let transition = SKTransition.crossFadeWithDuration(0.5)
-                        let scene = GameScene(size: self.scene!.size)
-                        scene.scaleMode = SKSceneScaleMode.AspectFill
-                        scene.noOfSuitesInDeck = self.noOfSuites.current
-                        scene.table = CardTable.makeDemo(self.noOfSuites.current)
-                        self.scene!.view!.presentScene(scene, transition: transition)
-                        
-                    })]))
-                self.runAction(doneAction2)
+             gameScene!.noOfSuitesInDeck = self.noOfSuites.current
+             gameScene!.resetWith(CardTable.makeDemo(self.noOfSuites.current))
             }
-           
+            
         }
         else
         {
@@ -65,8 +53,8 @@ class OptionScreen: Popup {
             button.zPosition = 4450
             isShowing = true
         }
+        
     }
-    
     func  setup(scene:GameScene)
     {
         self.gameScene = scene
@@ -80,13 +68,10 @@ class OptionScreen: Popup {
         zPosition = -10
         
         noOfSuites.name = "NoOfSuites"
-    //    noOfSuites.text = "Number Of Suites in Deck"
         noOfSuites.alpha = 1.0
         self.addChild(noOfSuites)
         alpha = 0.0
      
-    
-        
         
         button.setScale(0.5)
         button.anchorPoint = CGPoint(x: 1.0,
