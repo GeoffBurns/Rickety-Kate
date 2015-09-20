@@ -25,6 +25,9 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         case Hearts
         case Clubs
         case Diamonds
+        case Suns
+        case Anchors
+        
         // TODO add more Suites e.g. Suns, Anchors (for 5 & 6 Suite Decks), TarotTrumps, NonSoite (for Jockers and Fools)
         var imageCode : String
         // Used to help create imagename for a card
@@ -35,6 +38,8 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case Hearts: return "H"
             case Clubs:  return "C"
             case Diamonds: return "D"
+            case Suns: return "U"
+            case Anchors: return "A"
             }
         }
    
@@ -42,12 +47,16 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             {
                 return [Spades,Hearts,Clubs,Diamonds]
         }
+        static var allSuites : [Suite]
+        {
+            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors]
+        }
 
     }
     public enum CardValue : Equatable, Comparable
     {
-        case PictureCard(String)
-        case NumberCard(Int)
+        case Court(String)
+        case Pip(Int)
         case Ace
         
         // TODO add more ValueType e.g.  TarotTrumps,  Jockers
@@ -57,8 +66,8 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         {
             switch(self)
             {
-            case PictureCard(let cardLetter): return cardLetter
-            case NumberCard(let faceValue): return faceValue.description
+            case Court(let cardLetter): return cardLetter
+            case Pip(let faceValue): return faceValue.description
             case Ace: return "A"
             }
         }
@@ -68,12 +77,12 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             var values = [Ace]
             for faceValue in 2...10
             {
-                values.append(NumberCard(faceValue))
+                values.append(Pip(faceValue))
                 
             }
             for cardLetter in ["J","Q","K"]
             {
-                values.append(PictureCard(cardLetter))
+                values.append(Court(cardLetter))
                 
             }
             return values
@@ -105,6 +114,11 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public class DeckBase : Deck
     {
+        var noInSuites = [13,13,13,13,13,13]
+        func noCardIn(suite:PlayingCard.Suite) -> Int
+        {
+            return noInSuites[suite.rawValue]
+        }
         public var cards: [PlayingCard] {
            
             return orderedDeck.shuffle();
@@ -151,7 +165,69 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             return deck
         }
     }
-  
+    public class BuiltCardDeck : DeckBase
+    {
+        var noOfSuites = 0
+        var noOfPlayers = 0
+    
+        
+        init(noOfSuites:Int,noOfPlayers:Int)
+        {
+            self.noOfPlayers = noOfPlayers
+            self.noOfSuites = noOfSuites
+        }
+        
+        
+        
+        override public var orderedDeck:[PlayingCard]
+            {
+                var deck: [PlayingCard] = [];
+                let removed = (noOfSuites * 13) % noOfPlayers
+                var removedCards = Set<PlayingCard>()
+                
+                var i = 0
+                var pip = 2
+                repeat
+                {
+                for s in PlayingCard.Suite.allSuites
+                {
+                    if i >= removed
+                    {
+                        break
+                    }
+                    if s == PlayingCard.Suite.Spades
+                    {
+                        continue
+                    }
+                    removedCards.insert(PlayingCard(suite: s, value: PlayingCard.CardValue.Pip(pip)))
+                    noInSuites[s.rawValue]  = noInSuites[s.rawValue] - 1
+                    i++
+                }
+                 pip++
+                }
+                while i < removed 
+                i = 0
+                for s in PlayingCard.Suite.allSuites
+                {
+                    for v in PlayingCard.CardValue.standardValues
+                    {
+                       let c = PlayingCard(suite: s, value: v)
+                        if removedCards.contains(c)
+                        {
+                            continue
+                        }
+                        deck.append(PlayingCard(suite: s, value: v))
+                    }
+                    i++
+                    if(i >= noOfSuites)
+                    {
+                        
+                    }
+                }
+                return deck
+        }
+    }
+    
     public class TestCardDeck : DeckBase
     {
     var deck: [PlayingCard] = [];

@@ -24,8 +24,8 @@ public func > <T: RawRepresentable where T.RawValue: Comparable>(a: T, b: T) -> 
 
 public func ==(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool {
     switch (lhs, rhs) {
-    case let (.PictureCard(la), .PictureCard(ra)): return la == ra
-    case let (.NumberCard(la), .NumberCard(ra)): return la == ra
+    case let (.Court(la), .Court(ra)): return la == ra
+    case let (.Pip(la), .Pip(ra)): return la == ra
     case (.Ace, .Ace): return true
         
     default: return false
@@ -65,9 +65,9 @@ public func <=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case (.Ace, .Ace): return true
     case (.Ace, _): return false
     case (_, .Ace): return true
-    case let (.PictureCard(la), .PictureCard(ra)): return pictureLetterToRank(la) <= pictureLetterToRank(ra)
-    case (.PictureCard, _): return false
-    case let (.NumberCard(la), .NumberCard(ra)): return la <= ra
+    case let (.Court(la), .Court(ra)): return pictureLetterToRank(la) <= pictureLetterToRank(ra)
+    case (.Court, _): return false
+    case let (.Pip(la), .Pip(ra)): return la <= ra
     default: return true
     }
 }
@@ -78,9 +78,9 @@ public func >=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case (.Ace, .Ace): return true
     case (.Ace, _): return true
     case (_, .Ace): return false
-    case let (.PictureCard(la), .PictureCard(ra)): return pictureLetterToRank(la) >= pictureLetterToRank(ra)
-    case (.PictureCard, _): return true
-    case let (.NumberCard(la), .NumberCard(ra)): return la >= ra
+    case let (.Court(la), .Court(ra)): return pictureLetterToRank(la) >= pictureLetterToRank(ra)
+    case (.Court, _): return true
+    case let (.Pip(la), .Pip(ra)): return la >= ra
     default: return false
     }
 }
@@ -90,9 +90,9 @@ public func >(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case (.Ace, .Ace): return false
     case (.Ace, _): return true
     case (_, .Ace): return false
-    case let (.PictureCard(la), .PictureCard(ra)): return pictureLetterToRank(la) > pictureLetterToRank(ra)
-    case (.PictureCard, _): return true
-    case let (.NumberCard(la), .NumberCard(ra)): return la > ra
+    case let (.Court(la), .Court(ra)): return pictureLetterToRank(la) > pictureLetterToRank(ra)
+    case (.Court, _): return true
+    case let (.Pip(la), .Pip(ra)): return la > ra
     default: return false
     }
 }
@@ -102,9 +102,9 @@ public func < (lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case (.Ace, .Ace): return false
     case (.Ace, _): return false
     case (_, .Ace): return true
-    case let (.PictureCard(la), .PictureCard(ra)): return pictureLetterToRank(la) < pictureLetterToRank(ra)
-    case (.PictureCard, _): return false
-    case let (.NumberCard(la), .NumberCard(ra)): return la < ra
+    case let (.Court(la), .Court(ra)): return pictureLetterToRank(la) < pictureLetterToRank(ra)
+    case (.Court, _): return false
+    case let (.Pip(la), .Pip(ra)): return la < ra
     default: return true
     }
 }

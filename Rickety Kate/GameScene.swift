@@ -8,28 +8,25 @@
 
 import SpriteKit
 
-
 class GameScene: SKScene {
     
     lazy var table = CardTable.makeTable()
-    
+      var originalTouch = CGPoint()
     var originalCardPosition = CGPoint()
     var originalCardRotation = CGFloat()
     var originalCardAnchor = CGPoint()
     var draggedNode: SKSpriteNode? = nil;
     var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
-    var exitLabel = SKLabelNode(fontNamed:"Chalkduster")
-    var exitLabel2 = SKLabelNode(fontNamed:"Chalkduster")
+
 
     var rulesButton =  SKSpriteNode(imageNamed:"Rules1")
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
     var exitButton =  SKSpriteNode(imageNamed:"Exit")
     var rulesText : SKMultilineLabel? = nil
-    lazy var exitScreen = SKSpriteNode(color: UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9), size: CGSize(width: 1, height: 1))
+    var exitScreen = ExitScreen()
     var isRulesTextShowing = false
-    var isExitScreenShowing = false
     var arePassingCards = true
     var isInPassingCardsPhase = true
     var cardTossDuration = 0.4
@@ -93,7 +90,7 @@ class GameScene: SKScene {
             sprite.anchorPoint = cardAnchorPoint
                 
             sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
-            sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
+            sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread, fullHand:fullHand)
             sprite.zPosition = z
             sprite.color = UIColor.whiteColor()
             sprite.colorBlendFactor = 0
@@ -104,7 +101,7 @@ class GameScene: SKScene {
     
     func rearrangeCardImagesInHands(width: CGFloat , height: CGFloat )
     {
-        let fullHand = CGFloat(13)
+        var fullHand = CGFloat(13)
         
         var i = 0;
         for player in table.players
@@ -112,8 +109,14 @@ class GameScene: SKScene {
             let noCards = CGFloat(player.hand.count)
             
             var positionInSpread = (fullHand - noCards) * 0.5
+            if fullHand < noCards
+            {
+                fullHand = noCards
+                positionInSpread = CGFloat(0)
+            }
             if let playerSeat = SideOfTable(rawValue: i)
             {
+         
             for card in player.hand
               {
                 let sprite = CardSprite.sprite(card)
@@ -127,8 +130,8 @@ class GameScene: SKScene {
                     
                     }
                     sprite.anchorPoint = cardAnchorPoint
-                    sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
-                    sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
+                sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height, fullHand:fullHand)
+                    sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread, fullHand:fullHand)
                      sprite.zPosition = (i==0 ? 100: 10) + positionInSpread
                     sprite.color = UIColor.whiteColor()
                     sprite.colorBlendFactor = 0
@@ -141,7 +144,7 @@ class GameScene: SKScene {
        }
     func rearrangeCardImagesInHandsWithAnimation(width: CGFloat , height: CGFloat )
     {
-        let fullHand = CGFloat(13)
+        var fullHand = CGFloat(13)
         
         var i = 0;
         for player in table.players
@@ -149,6 +152,11 @@ class GameScene: SKScene {
             let noCards = CGFloat(player.hand.count)
        
             var positionInSpread = (fullHand - noCards) * 0.5
+            if fullHand < noCards
+            {
+                fullHand = noCards
+                positionInSpread = CGFloat(0)
+            }
             if let playerSeat = SideOfTable(rawValue: i)
             {
                 for card in player.hand
@@ -172,9 +180,9 @@ class GameScene: SKScene {
                         }
                        
                         
-                        let newPosition =  playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
+                    let newPosition =  playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height, fullHand:fullHand)
                         let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
-                        let rotationAngle = playerSeat.rotationOfCard(positionInSpread)
+                        let rotationAngle = playerSeat.rotationOfCard(positionInSpread, fullHand:fullHand)
                         let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(cardTossDuration*0.8)))
                         
                         let groupAction = (SKAction.group([moveAction,rotateAction]))
@@ -357,62 +365,7 @@ class GameScene: SKScene {
         {
             return
         }
-        exitScreen = SKSpriteNode(color: UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9), size: self.frame.size)
-        
-        exitScreen.position = CGPoint(x:CGRectGetMidX(self.frame),y:CGRectGetMidY(self.frame))
-        exitScreen.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        exitScreen.name = "ExitBackground"
-        exitScreen.userInteractionEnabled = false
-        exitScreen.zPosition = -10
-        exitScreen.alpha = 0.0
-        
-        exitLabel.text = "Are you sure"
-        exitLabel.fontSize = 65;
-        exitLabel.position = CGPoint(x:self.frame.width * 0.0, y:self.frame.size.height * 0.2);
-        
-        exitScreen.addChild(exitLabel)
-        
-        
-        exitLabel2.text = "you want to exit?"
-        exitLabel2.fontSize = 65;
-        exitLabel2.position = CGPoint(x:self.frame.width * 0.0, y:self.frame.size.height * 0.07);
-        
-        exitScreen.addChild(exitLabel2)
-        
-        let yesButton =  SKSpriteNode(imageNamed:"Yes")
-        yesButton.position = CGPoint(x:self.frame.width * -0.25,y:self.frame.height * -0.1)
-        yesButton.setScale(0.5)
-        yesButton.zPosition = 100
-        yesButton.name = "Yes"
-        yesButton.userInteractionEnabled = false
-    
-        
-        
-        let noButton =  SKSpriteNode(imageNamed:"No")
-        noButton.position = CGPoint(x:self.frame.width*0.25,y:self.frame.height * -0.1)
-        noButton.setScale(0.5)
-        noButton.zPosition = 100
-        noButton.name = "No"
-        noButton.userInteractionEnabled = false
-        
-        exitScreen.addChild(yesButton)
-        exitScreen.addChild(noButton)
-        
-        self.addChild(exitScreen)
-    
-        exitButton.setScale(0.5)
-        exitButton.anchorPoint = CGPoint(x: 1.0,
-            y:
-            UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-                1.6 :
-            2.2)
-        exitButton.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height)
-    
-        exitButton.name = "Exit"
-        
-        exitButton.zPosition = 450
-        exitButton.userInteractionEnabled = false
-        self.addChild(exitButton)
+       exitScreen.setup(self)
     }
     func setupPlayButton()
     {
@@ -477,14 +430,6 @@ class GameScene: SKScene {
     {
         return node.name == "Exit"
     }
-    func isNodeAYesButton(node:SKSpriteNode) -> Bool
-    {
-        return node.name == "Yes"
-    }
-    func isNodeANoButton(node:SKSpriteNode) -> Bool
-    {
-        return node.name == "No"
-    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         let width = self.frame.size.width
@@ -492,6 +437,8 @@ class GameScene: SKScene {
       for touch in (touches )
       {
         let positionInScene = touch.locationInNode(self)
+        
+     //   var a = self.nodesAtPoint(positionInScene)
         if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
         {
         if isNodeAPlayButton(touchedNode)
@@ -521,28 +468,6 @@ class GameScene: SKScene {
                 exitScreen.alpha = 1.0
                 exitScreen.zPosition = 500
             }
-        if isNodeANoButton(touchedNode)
-            {
-                exitButton.texture = SKTexture(imageNamed: "Exit")
-                exitScreen.alpha = 0.0
-                exitScreen.zPosition = -10
-            }
-        if isNodeAYesButton(touchedNode)
-            {
-                touchedNode.texture = SKTexture(imageNamed: "Yes2")
-                reverseDeal(width , height: height )
-                
-                let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
-                    SKAction.runBlock({
-                        let transition = SKTransition.crossFadeWithDuration(0.5)
-                        let scene = GameScene(size: self.scene!.size)
-                        scene.scaleMode = SKSceneScaleMode.AspectFill
-                        scene.table = CardTable.makeDemo()
-                        self.scene!.view!.presentScene(scene, transition: transition)
-                        
-                    })]))
-                self.runAction(doneAction2)
-            }
         /// rules button
         if isNodeRulesButton(touchedNode)
         {
@@ -565,6 +490,7 @@ class GameScene: SKScene {
         }
         if isNodeAPlayerOneCardSpite(touchedNode)        {
         draggedNode = touchedNode;
+        originalTouch = positionInScene
         originalCardPosition  = touchedNode.position
         originalCardRotation  = touchedNode.zRotation
         originalCardAnchor  = touchedNode.anchorPoint
@@ -583,16 +509,52 @@ class GameScene: SKScene {
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
     let touch = (touches ).first!
     let positionInScene = touch.locationInNode(self)
+   
+    let deltaX = abs(originalTouch.x - positionInScene.x)
+    let deltaY = abs(originalTouch.y - positionInScene.y)
+        
+    if deltaX > (2.2 * deltaY)
+        {
+          
+           let touchedNodes = self.nodesAtPoint(positionInScene)
     
-
+            for node in touchedNodes
+                {
+                    if let touchedNode : SKSpriteNode = node as? SKSpriteNode
+                      where isNodeAPlayerOneCardSpite(touchedNode)
+                        && draggedNode != touchedNode
+                    {
+                        
+                        restoreDraggedCard()
+                        
+                        draggedNode = touchedNode;
+                        originalTouch = positionInScene
+                        originalCardPosition  = touchedNode.position
+                        originalCardRotation  = touchedNode.zRotation
+                        originalCardAnchor  = touchedNode.anchorPoint
+                        
+                        touchedNode.zRotation = 0
+                        touchedNode.position = positionInScene
+                        touchedNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                        touchedNode.xScale = 1.15
+                        touchedNode.yScale = 1.15
+                        return
+                    }
+                
+               }
+           
+            }
+        
+    
        // let touchedNode = self.nodeAtPoint(positionInScene)
      if( draggedNode != nil)
-     {
+      {
         let touchedNode = draggedNode!;
         
-    touchedNode.position = positionInScene
+      touchedNode.position = positionInScene
+      }
     }
-    }
+
     func endCardPassingPhase()
     {
         let width = self.frame.size.width

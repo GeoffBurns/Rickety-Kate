@@ -17,12 +17,12 @@ public enum SideOfTable:Int
     case Left
     case Center
     
-    func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat) -> CGPoint
+    func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat, fullHand: CGFloat = CGFloat(13)) -> CGPoint
     {
         var startheight = CGFloat(0.0)
         var startWidth = width * 0.35
-        let fullHand = CGFloat(13)
-        var hortizonalSpacing = width * 0.3 / fullHand
+ 
+        var hortizonalSpacing = width * 0.25 / fullHand
         var verticalSpacing = height * 0.2 / fullHand
         switch self
         {
@@ -54,10 +54,10 @@ public enum SideOfTable:Int
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.9)
         }
     }
-    func rotationOfCard(positionInSpread: CGFloat) -> CGFloat
+    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CGFloat(13)) -> CGFloat
     {
         
-        let fullHand = CGFloat(13)
+    
         
         var startRotate = CGFloat(0)
         switch self

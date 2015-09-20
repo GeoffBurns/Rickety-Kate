@@ -16,8 +16,6 @@ public func ==(lhs: CardPlayer, rhs: CardPlayer) -> Bool
     return lhs.name == rhs.name
 }
 
-
-
 public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
 {
 

@@ -17,7 +17,7 @@ public struct StateOfPlay
 
 public class CardTable : GameStateEngine, GameState
 {
-    var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance
+    var deck: Deck = PlayingCard.BuiltCardDeck(noOfSuites: 4, noOfPlayers: 4)
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
     var _players: [CardPlayer] = []
 
@@ -86,9 +86,6 @@ public class CardTable : GameStateEngine, GameState
     public var isLastPlayer : Bool {
      return tricksPile.count >= noOfPlayers - 1
     }
-    
- 
-
     
     //////////
     // internal functions
