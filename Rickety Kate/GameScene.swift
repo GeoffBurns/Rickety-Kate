@@ -399,15 +399,7 @@ class GameScene: SKScene {
 
     return false
     }
-    func isNodeAPlayButton(node:SKSpriteNode) -> Bool
-    {
-        return node.name == "Play"
-    }
 
-    func isNodeAExitButton(node:SKSpriteNode) -> Bool
-    {
-        return node.name == "Exit"
-    }
     
     func resetWith(table:CardTable)
     {
@@ -434,53 +426,51 @@ class GameScene: SKScene {
       {
         let positionInScene = touch.locationInNode(self)
         
-     //   var a = self.nodesAtPoint(positionInScene)
+
         if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
         {
-        if isNodeAPlayButton(touchedNode)
-        {
-            
-            touchedNode.texture = SKTexture(imageNamed: "Play2")
-        
-            resetWith(CardTable.makeTable(self.noOfSuitesInDeck))
-            
-        return
-        }
-        if isNodeAExitButton(touchedNode)
+            switch touchedNode.name!
             {
+            case "Play" :
+                touchedNode.texture = SKTexture(imageNamed: "Play2")
+                resetWith(CardTable.makeTable(self.noOfSuitesInDeck))
+                return
+        
+            case  "Exit" :
                 touchedNode.texture = SKTexture(imageNamed: "Exit2")
                 exitScreen.alpha = 1.0
                 exitScreen.zPosition = 500
-            }
+                return
         /// rules button
-        if touchedNode.name == "Rules"
-        {
-        rulesScreen.flipButton()
-        return
-        }
+            case "Rules" :
+                rulesScreen.flipButton()
+                return
+  
         /// Option button
-        if touchedNode.name == "Option"
-            {
+            case "Option" :
                 optionScreen.flipButton()
                 return
-            }
-        if isNodeAPlayerOneCardSpite(touchedNode)        {
-        draggedNode = touchedNode;
-        originalTouch = positionInScene
-        originalCardPosition  = touchedNode.position
-        originalCardRotation  = touchedNode.zRotation
-        originalCardAnchor  = touchedNode.anchorPoint
+            default :
+                if isNodeAPlayerOneCardSpite(touchedNode)        {
+                       draggedNode = touchedNode;
+                       originalTouch = positionInScene
+                       originalCardPosition  = touchedNode.position
+                       originalCardRotation  = touchedNode.zRotation
+                       originalCardAnchor  = touchedNode.anchorPoint
             
-        touchedNode.zRotation = 0
-        touchedNode.position = positionInScene
-        touchedNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        touchedNode.xScale = 1.15
-        touchedNode.yScale = 1.15
+                       touchedNode.zRotation = 0
+                       touchedNode.position = positionInScene
+                       touchedNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                       touchedNode.xScale = 1.15
+                       touchedNode.yScale = 1.15
+            
+                      return
+               }
+       
+       
+            }
         }
-        break
-        }
-        }
-    }
+        }}
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
     let touch = (touches ).first!
