@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Nereids Gold. All rights reserved.
 //
 
-import Foundation
+
 import SpriteKit
 
 class CardSprite : SKSpriteNode
@@ -55,6 +55,11 @@ class CardSprite : SKSpriteNode
             isUp = false
 
         }
+    }
+    
+    static func spriteFor(card :PlayingCard) -> CardSprite?
+    {
+        return CardSprite.register[card.imageName]
     }
     static func sprite(card :PlayingCard) -> CardSprite
     {

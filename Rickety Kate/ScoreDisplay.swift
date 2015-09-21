@@ -37,7 +37,7 @@ class ScoreDisplay
         
             // having problems setting font color
             //   scoreLabel2[i] = SKLabelNode(fontNamed:"Verdana")
-            
+            let player = players[i]
             let l = scoreLabel[i]
             //     let m = scoreLabel2[i]
             
@@ -45,7 +45,7 @@ class ScoreDisplay
             
             l.text = ""
             l.fontSize = 30;
-            l.name = "\(players[i].name)'s score label"
+            l.name = "\(player.name)'s score label"
             //    m.text = ""
             //    m.fontSize = 30;
             
@@ -53,11 +53,12 @@ class ScoreDisplay
             //   m.color = UIColor.blackColor()
             //   m.colorBlendFactor = 1.0
             
-            if let side = SideOfTable(rawValue: i)
-            {
-                var position = CGPoint()
-                var rotate = CGFloat()
-                switch side
+            
+            let side = player.sideOfTable
+            
+            var position = CGPoint()
+            var rotate = CGFloat()
+            switch side
                 {
                 case .Right:
                     position = CGPoint(x:scene.frame.size.width * 0.90, y:CGRectGetMidY(scene.frame))
@@ -65,6 +66,12 @@ class ScoreDisplay
                 case .Top:
                     position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.75)
                     rotate = 0.degreesToRadians
+                case .TopMidRight:
+                        position = CGPoint(x:scene.frame.width * 0.7, y:scene.frame.size.height * 0.75)
+                        rotate = 0.degreesToRadians
+                case .TopMidLeft:
+                        position = CGPoint(x:scene.frame.width * 0.3, y:scene.frame.size.height * 0.75)
+                        rotate = 0.degreesToRadians
                 case .Left:
                     position = CGPoint(x:scene.frame.size.width * 0.10, y:CGRectGetMidY(scene.frame))
                     rotate = -90.degreesToRadians
@@ -73,17 +80,17 @@ class ScoreDisplay
                     rotate = 0.degreesToRadians
                 }
                 
-                l.position = position
-                l.zPosition = 301
-                l.zRotation = rotate
+            l.position = position
+            l.zPosition = 301
+            l.zRotation = rotate
                 
                 //      m.position = CGPoint(x:position.x+2,y:position.y-2)
                 //      m.zPosition = 299
                 //      m.zRotation = rotate
                 
-                scene.addChild(l)
+            scene.addChild(l)
                 //       self.addChild(m)
-            }
+            
             
             scoreUpdates[i].subscribe() { (update:(Int,Int)) in
                 

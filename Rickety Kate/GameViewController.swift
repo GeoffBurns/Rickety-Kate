@@ -57,7 +57,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill
      
-            scene.table = CardTable.makeDemo(4)
+            scene.table = CardTable.makeDemo(4,noOfSuitesInDeck: 4)
             
             skView.presentScene(scene)
         }

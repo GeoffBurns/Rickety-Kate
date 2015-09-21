@@ -11,14 +11,12 @@ import SpriteKit
 
 class OptionScreen: Popup {
     var noOfSuites = NumberRangeToggle(min: 3, max: 6, current: 4, text: "Number Of Suites in Deck")
+    var noOfPlayers = NumberRangeToggle(min: 3, max: 5, current: 4, text: "Number Of Players At Table")
     var isShowing = false
-    var original = 4
+
     
-    
-    
-    init(noOfSuites:Int)
+    override init()
     {
-        original = noOfSuites
         super.init()
         button =  SKSpriteNode(imageNamed:"Options1")
     }
@@ -38,10 +36,12 @@ class OptionScreen: Popup {
             zPosition = -10
             button.zPosition = 300
             isShowing = false
-            if original != noOfSuites.current
+            if gameScene!.noOfSuitesInDeck != noOfSuites.current ||
+            gameScene!.noOfPlayersAtTable != noOfPlayers.current
             {
-             gameScene!.noOfSuitesInDeck = self.noOfSuites.current
-             gameScene!.resetWith(CardTable.makeDemo(self.noOfSuites.current))
+                gameScene!.noOfSuitesInDeck = self.noOfSuites.current
+                gameScene!.noOfPlayersAtTable = self.noOfPlayers.current
+             gameScene!.resetWith(CardTable.makeDemo(self.noOfPlayers.current,noOfSuitesInDeck: self.noOfSuites.current))
             }
             
         }
@@ -69,7 +69,15 @@ class OptionScreen: Popup {
         
         noOfSuites.name = "NoOfSuites"
         noOfSuites.alpha = 1.0
+        noOfSuites.position = CGPoint(x:0.0,y:scene.frame.height * 0.1)
+
         self.addChild(noOfSuites)
+        
+        noOfPlayers.name = "NoOfPlayers"
+        noOfPlayers.alpha = 1.0
+        
+       noOfPlayers.position = CGPoint(x:0.0,y:scene.frame.height * -0.2)
+        self.addChild(noOfPlayers)
         alpha = 0.0
      
         

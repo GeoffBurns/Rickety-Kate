@@ -130,7 +130,7 @@ class SKMultilineLabel: SKNode {
         showBorder()
     }
     func showBorder() {
-        if (!shouldShowBorder) {return}
+/*        if (!shouldShowBorder) {return}
         if let rect = self.rect {
             self.removeChildrenInArray([rect])
         }
@@ -140,7 +140,7 @@ class SKMultilineLabel: SKNode {
             rect.lineWidth = 1
             rect.position = CGPoint(x: pos.x, y: pos.y - (CGFloat(labelHeight) / 2.0))
             self.addChild(rect)
-        }
-        
+        }*/
+
     }
 }

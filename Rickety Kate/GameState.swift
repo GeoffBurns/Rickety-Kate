@@ -29,9 +29,8 @@ public protocol GameState
 
 public class GameStateBase
 {
-    
-    var tricksPile : [(player:CardPlayer, playedCard:PlayingCard)] = []
-    
+    var trickFan = CardFan()
+    var tricksPile : [(player:CardPlayer, playedCard:PlayingCard)] = [] { didSet { trickFan.cards = tricksPile.map { return $0.playedCard }}}
     var gameTracker = GameProgressTracker()
     
     public var playedCardsInTrick : Int {

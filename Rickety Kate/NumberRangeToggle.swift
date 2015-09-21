@@ -3,12 +3,13 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 19/09/2015.
-//  Copyright © 2015 Nereids Gold. All rights reserved.
+//  Copyright © 2015 Geoff Burns. All rights reserved.
 //
 
 
 import SpriteKit
 
+/// TODO add up and down arrows
 class NumberRangeToggle: SKNode {
     var min = 1
     var max = 10
@@ -56,7 +57,6 @@ class NumberRangeToggle: SKNode {
 
         for touch in (touches )
         {
-            
             let touchPoint = touch.locationInNode(self)
                                         if label.containsPoint(touchPoint) {
     

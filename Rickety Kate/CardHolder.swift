@@ -17,14 +17,15 @@ public protocol CardHolder
 
 public class CardHolderBase
 {
-    public var hand : [PlayingCard] = []
+    var _hand : CardFan = CardFan()
+    public var hand : [PlayingCard] { get { return _hand.cards } set { _hand.cards = newValue }}
     public func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
     {
-        return hand.filter {$0.suite == suite}
+        return _hand.cards.filter {$0.suite == suite}
     }
     public var RicketyKate : PlayingCard?
         {
-            let RicketyKate = hand.filter { $0.isRicketyKate}
+            let RicketyKate = _hand.cards.filter { $0.isRicketyKate}
             
             return RicketyKate.first
     }

@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
 public struct StateOfPlay
@@ -26,7 +25,6 @@ public class CardTable : GameStateEngine, GameState
     var cardTossDuration = Double(0.7)
 
     var noOfSuitesInDeck = 4
-    var tidyup :  Publink<Void> =  Publink<Void>()
     var newGame :  Publink<Void> =  Publink<Void>()
     var resetGame :  Publink<Void> =  Publink<Void>()
  
@@ -36,7 +34,8 @@ public class CardTable : GameStateEngine, GameState
     var startPlayerNo = 1
     let cardScale = CGFloat(0.9)
     let cardScaleForSelected = CGFloat(1.05)
-    var cardsPassed : [[ PlayingCard ]] = [[],[],[],[]]
+    var cardsPassed : [CardFan] = []
+    static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3)]
     
     public var players : [CardPlayer] {
         get {
@@ -44,12 +43,23 @@ public class CardTable : GameStateEngine, GameState
         }
         
     }
-    static public func makeTable(noOfSuitesInDeck:Int) -> CardTable {
-     return CardTable(players: [HumanPlayer.sharedInstance,ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1)],noOfSuitesInDeck: noOfSuitesInDeck)
+    
+    static func demoPlayers(noOfPlayers:Int) -> [CardPlayer]
+    {
+        return Array(computerPlayers[0..<noOfPlayers])
+    }
+    
+    static func gamePlayers(noOfPlayers:Int) -> [CardPlayer]
+    {
+        let noOfComputerPlayers = noOfPlayers - 1
+        return [HumanPlayer.sharedInstance] + Array(computerPlayers[0..<noOfComputerPlayers])
+    }
+    static public func makeTable(noOfPlayersAtTable:Int, noOfSuitesInDeck:Int) -> CardTable {
+     return CardTable(players: gamePlayers(noOfPlayersAtTable),noOfSuitesInDeck: noOfSuitesInDeck)
 }
 
-    static public func makeDemo(noOfSuitesInDeck:Int) -> CardTable  {
-     return CardTable(players: [ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1)],noOfSuitesInDeck: noOfSuitesInDeck)
+    static public func makeDemo(noOfPlayersAtTable:Int, noOfSuitesInDeck:Int) -> CardTable  {
+     return CardTable(players: demoPlayers(noOfPlayersAtTable),noOfSuitesInDeck: noOfSuitesInDeck)
     }
     private init(players: [CardPlayer], noOfSuitesInDeck:Int) {
     _players = players
@@ -57,6 +67,8 @@ public class CardTable : GameStateEngine, GameState
     isInDemoMode = playerOne.name != "You"
     self.noOfSuitesInDeck = noOfSuitesInDeck
     Scorer.sharedInstance.setupScorer(_players)
+    super.init()
+    setPassedCards()
     }
     
     // everyone except PlayerOne
@@ -65,9 +77,31 @@ public class CardTable : GameStateEngine, GameState
         return players.filter {$0 != self.playerOne}
     }
     
+    func setPassedCards()
+    {
+        for _ in _players
+        {
+            cardsPassed.append(CardFan())
+        }
+    }
     func resetPassedCards()
     {
-        cardsPassed = [[],[],[],[]]
+        var i = 0
+        for _ in _players
+        {
+            cardsPassed[i].cards = []
+            i++
+        }
+    }
+    func setupPassedCards(scene:SKNode)
+    {
+       for (passFan,player) in Zip2Sequence( cardsPassed, players )
+       {
+        let side = player.sideOfTable
+        let center = player.sideOfTable.center
+        passFan.setup(scene, sideOfTable: center, isUp: side == SideOfTable.Bottom, isBig: false)
+        }
+       trickFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, isBig: false)
     }
     //////////
     // GameState Protocol
@@ -93,33 +127,35 @@ public class CardTable : GameStateEngine, GameState
     func removeTricksPile(winner:CardPlayer)
     {
         
-        var direction = SideOfTable.Top
-        if let index = players.indexOf(winner), side = SideOfTable(rawValue: index)
-        {
-            direction = side
-            
-        }
-        
+       let sideOfTable = winner.sideOfTable
+      
         var parent: SKNode? = nil
         for trick in self.tricksPile
         {
-            let sprite =  CardSprite.sprite(trick.playedCard)
+            let card =  trick.playedCard
+            let sprite =  CardSprite.sprite(card)
             
                 if parent == nil{
                     parent = sprite.parent
                 }
-                
-                let moveAction = (SKAction.moveTo(direction.positionOfWonCards( sprite.parent!.frame.width, height: sprite.parent!.frame.height), duration:(cardTossDuration)))
+      /*
+            sprite.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration), SKAction.runBlock({
+                winner.wonCards.cards.append(card)
+            })]))
+            */
           
-                let moveActionWithDone = (SKAction.sequence([SKAction.waitForDuration(cardTossDuration) ,moveAction /*, doneAction*/]))
-                sprite.runAction(moveActionWithDone)
-                
-           
+            let moveAction = (SKAction.moveTo(sideOfTable.positionOfWonCards( sprite.parent!.frame.width, height: sprite.parent!.frame.height), duration:(cardTossDuration)))
+            
+            let moveActionWithDone = (SKAction.sequence([SKAction.waitForDuration(cardTossDuration) ,moveAction /*, doneAction*/]))
+            sprite.runAction(moveActionWithDone)
+         
         }
         if parent != nil
         {
+            
             parent!.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration), SKAction.runBlock({
                 
+              
                 if(self.playerOne.hand.isEmpty)
                 {
                     self.startPlayerNo++
@@ -150,16 +186,19 @@ public class CardTable : GameStateEngine, GameState
     
     func takePassedCards()
     {
-        for previous in 0...3
+        
+        let noOfPlayer = players.count
+        for (next,toPlayer) in  Zip2Sequence(0...10,players)
         {
-            var next = previous+1
-            if next > 3
+
+            var previous = next - 1
+            if previous < 0
             {
-                next = 0
+                previous = noOfPlayer - 1
             }
             
-            let fromPlayersCards = cardsPassed[previous]
-            let toPlayer = players[next]
+            let fromPlayersCards = cardsPassed[previous].cards
+           
             
             for card in fromPlayersCards
             {
@@ -188,6 +227,7 @@ public class CardTable : GameStateEngine, GameState
         
         var i = 0
         var leaderFound = false
+        let noOfplayers = players.count
         for player in players
         {
             if(!leaderFound)
@@ -203,7 +243,7 @@ public class CardTable : GameStateEngine, GameState
         }
         for player in players
         {
-            if(i>=4)
+            if(i>=noOfplayers)
             {
                 break
             }
@@ -239,15 +279,11 @@ public class CardTable : GameStateEngine, GameState
         let nextPlayers = remainingPlayers
         let doneAction = nextPlayers.isEmpty ?
             (SKAction.runBlock({
-                self.tidyup.publish()
-                
                 self.trickWon()
             })) :
             
             (SKAction.runBlock({
                 
-                self.tidyup.publish()
-             
                 self.playTrick(StateOfPlay(remainingPlayers: nextPlayers))
             }))
         
@@ -255,71 +291,25 @@ public class CardTable : GameStateEngine, GameState
     }
     func playTrickCard(playerWithTurn:CardPlayer, trickcard:PlayingCard,state:StateOfPlay, willAnimate:Bool = true)
     {
-
         addToTrickPile(playerWithTurn,cardName: trickcard.imageName)
         
         let displayedCard = CardSprite.sprite(trickcard)
         
-                let fullHand = CGFloat(13)
-                let positionInSpread = (fullHand - 4 ) * 0.5 + CGFloat(self.tricksPile.count - 1)
-                
-                let sprite = displayedCard
-                let isFaceUp = displayedCard.isUp
-                let spriteHeight = isFaceUp ? sprite.size.height*0.5 :  sprite.size.height
-                
-                if let scene = sprite.parent
-                {
-                    let width = scene.frame.width
-                    let height =  scene.frame.height
-                    
-                    
-                    let newPosition = SideOfTable.Center.positionOfCard(positionInSpread, spriteHeight: spriteHeight, width: width , height:height)
-                    let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration)))
-                    let rotationAngle = SideOfTable.Center.rotationOfCard(positionInSpread) //+ CGFloat(M_PI * 2.0)
-                    let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:cardTossDuration))
-                    let scaleAction =  (SKAction.scaleTo(cardScale*0.5, duration: cardTossDuration))
-                    
-                    let flipAction = (SKAction.sequence([
-                        SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
-                        SKAction.runBlock({
-                            
-                            let sprite = CardSprite.sprite(trickcard)
-                            sprite.flipUp()
-                            }) ,
-                        SKAction.scaleXTo(cardScale*0.5, duration: cardTossDuration*0.5)
-                        ]))
-                
-                    let doneAction =  nextPlayerAction(state , currentSuite: trickcard.suite)
-                    
-                    if(willAnimate)
-                    {
-                        let moveActionWithDone = isFaceUp
-                   
-                            ? SKAction.sequence([
-                                    SKAction.group([moveAction,rotateAction,scaleAction]),
-                                    SKAction.waitForDuration(cardTossDuration),
-                                    doneAction])
-                        : SKAction.sequence([
-                            SKAction.group([moveAction,rotateAction,flipAction]),
-                            SKAction.waitForDuration(cardTossDuration),
-                            doneAction])
-                        sprite.runAction(moveActionWithDone)
-                    }
-                    else
-                    {
-                        sprite.runAction(doneAction)
-                    }
-                }
+        let doneAction =  nextPlayerAction(state , currentSuite: trickcard.suite)
+       
+        let  moveActionWithDone = SKAction.sequence([
+                        SKAction.waitForDuration(cardTossDuration*2.0),
+                        doneAction])
+        displayedCard.runAction(moveActionWithDone)
         }
     
     func passCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
     {
     let displayed = CardSprite.sprite(passedCard)
      
-
            if let removedCard = players[seatNo].removeFromHand(displayed.card)
             {
-            self.cardsPassed[seatNo].append(removedCard)
+            self.cardsPassed[seatNo].cards.append(removedCard)
             return removedCard
             }
      
@@ -327,11 +317,11 @@ public class CardTable : GameStateEngine, GameState
     }
     func passOtherCards()
     {
-       for i in 0...3
+       for (i,player) in  Zip2Sequence(0...10,players)
        {
-        if let player = players[i] as? ComputerPlayer
+        if let compPlayer = player as? ComputerPlayer
           {
-            for card in player.passCards()
+            for card in compPlayer.passCards()
               {
                 passCard(i, passedCard:card)
               }

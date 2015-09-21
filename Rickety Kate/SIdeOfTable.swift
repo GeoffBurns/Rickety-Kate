@@ -9,6 +9,54 @@
 
 import SpriteKit
 
+public enum Direction:Int
+{
+    case Up
+    case Left
+    case Down
+    case Right
+    
+    
+    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CGFloat(13)) -> CGFloat
+    {
+        var startRotate = CGFloat(0)
+        switch self
+        {
+        case .Left:
+            startRotate = 120.degreesToRadians
+        case .Down:
+            startRotate = 210.degreesToRadians
+        case .Right:
+            startRotate = -60.degreesToRadians
+        default:
+            startRotate = 30.degreesToRadians
+        }
+        
+        let rotateDelta = 60.degreesToRadians / fullHand
+        
+        return   startRotate - rotateDelta * positionInSpread
+    }
+    func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, startWidth: CGFloat, startheight: CGFloat, hortizonalSpacing: CGFloat, verticalSpacing: CGFloat) -> CGPoint
+    {
+    
+        switch self
+        {
+        case .Up:
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.92)
+           
+        case .Left:
+            return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
+            
+        case .Down:
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
+            
+        case .Right:
+            
+            return CGPoint(x:startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
+        }
+    }
+}
+
 public enum SideOfTable:Int
 {
     case Bottom
@@ -18,7 +66,12 @@ public enum SideOfTable:Int
     case Center
     case TopMidLeft
     case TopMidRight
-    
+    case CenterRight
+    case CenterLeft
+    case CenterTop
+    case CenterTopMidRight
+    case CenterTopMidLeft
+ 
     func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat, fullHand: CGFloat = CGFloat(13)) -> CGPoint
     {
         var startheight = CGFloat(0.0)
@@ -45,19 +98,18 @@ public enum SideOfTable:Int
             // Computer Player
         case .TopMidLeft:
             hortizonalSpacing = -width * 0.14 / fullHand
-            startWidth = width * 0.27
+            startWidth = width * 0.33
             startheight = height
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .TopMidRight:
             hortizonalSpacing = -width * 0.14 / fullHand
-            startWidth = width * 0.73
+            startWidth = width * 0.75
             startheight = height
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .Left:
             verticalSpacing = -verticalSpacing
-            startWidth = width
             startheight = height * 0.6
             return CGPoint(x: -spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             
@@ -66,61 +118,123 @@ public enum SideOfTable:Int
             let startheight = height * 0.5
             let startWidth = width * 0.35
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.9)
+            
+        case .CenterRight:
+            startWidth = width * 0.8
+            startheight = height * 0.4
+            return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
+            // Computer Player
+        case .CenterTop:
+            hortizonalSpacing = -width * 0.2 / fullHand
+            startWidth = width * 0.6
+            startheight = height * 0.8
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
+            // Computer Player
+        case .CenterTopMidLeft:
+            hortizonalSpacing = -width * 0.14 / fullHand
+            startWidth = width * 0.33
+            startheight = height * 0.8
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
+            // Computer Player
+        case .CenterTopMidRight:
+            hortizonalSpacing = -width * 0.14 / fullHand
+            startWidth = width * 0.75
+            startheight = height * 0.8
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
+            // Computer Player
+        case .CenterLeft:
+            verticalSpacing = -verticalSpacing
+            startWidth = width * 0.2
+            startheight = height * 0.6
+            return CGPoint(x:startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
         }
     }
-    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CGFloat(13)) -> CGFloat
-    {
-        
     
-        
-        var startRotate = CGFloat(0)
+    var direction : Direction
+    {
         switch self
         {
-            // Computer Player
+        case .CenterRight:
+            fallthrough
         case .Right:
-            startRotate = 120.degreesToRadians
-            // Computer Player
+            return Direction.Left
+            
         case .TopMidLeft:
             fallthrough
         case .TopMidRight:
             fallthrough
+        case .CenterTop:
+            fallthrough
+        case .CenterTopMidRight:
+            fallthrough
+        case .CenterTopMidLeft:
+            fallthrough
         case .Top:
-            startRotate = 210.degreesToRadians
-            // Computer Player
+            return Direction.Down
+            
+        case .CenterLeft:
+            fallthrough
         case .Left:
-            startRotate = -60.degreesToRadians
-            // PlayerOne of the trick pile
+            
+            return Direction.Right
         default:
-            startRotate = 30.degreesToRadians
+            
+            return Direction.Up
         }
-        
-        
-        let rotateDelta = 60.degreesToRadians / fullHand
-        
-        return   startRotate - rotateDelta * positionInSpread
     }
     
+    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CGFloat(13)) -> CGFloat
+    {
+        return self.direction.rotationOfCard(positionInSpread, fullHand: fullHand)
+    }
+    
+    var center: SideOfTable
+    {
+        switch self
+        {
+            // Computer Player
+        case .Right:
+            return .CenterRight
+            // Computer Player
+        case .TopMidLeft:
+            
+            return .CenterTopMidLeft
+        case .TopMidRight:
+            
+            return .CenterTopMidRight
+        case .Top:
+            
+            return .CenterTop
+            // Computer Player
+        case .Left:
+            return .CenterLeft
+            // PlayerOne of the trick pile
+        default:
+            return .Center
+        }
+        
+    }
+
     func positionOfWonCards( width: CGFloat, height: CGFloat) -> CGPoint
     {
-        
         switch self
         {
             // Player One
         case .Bottom:
-            return CGPoint(x: width*0.5,y: -1000.0)
+            return CGPoint(x: width*0.5,y: -400.0)
             // Computer Player
         case .Right:
             
-            return CGPoint(x: width*2,y: height * 0.5)
+            return CGPoint(x: width*1.3,y: height * 0.5)
             // Computer Player
         case .TopMidLeft:
             
-            return CGPoint(x: width*0.1,y: height * 2)
+            return CGPoint(x: width*0.1,y: height * 1.3)
         case .TopMidRight:
             
-            return CGPoint(x: width*0.9,y: height * 2)
+            return CGPoint(x: width*0.9,y: height * 1.3)
         case .Top:
-            return CGPoint(x: width*0.5,y: height * 2)
+            return CGPoint(x: width*0.5,y: height * 1.3)
             // Computer Player
         case .Left:
             return CGPoint(x: -500,y: height * 0.5)
@@ -129,7 +243,8 @@ public enum SideOfTable:Int
         case .Center:
             
             return CGPoint(x: width*0.5,y:  height * 0.5)
-            
+        default:
+            return CGPoint(x: width*0.5,y: -400.0)
             
         }
     }

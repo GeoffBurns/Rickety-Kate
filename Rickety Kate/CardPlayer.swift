@@ -6,33 +6,38 @@
 //  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
-import Foundation
+import SpriteKit
 
 
 
 public func ==(lhs: CardPlayer, rhs: CardPlayer) -> Bool
 {
-    
     return lhs.name == rhs.name
 }
 
 public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
 {
-
     public var score : Int = 0
     public var sideOfTable = SideOfTable.Bottom
     public var name : String = "Base"
+    var wonCards : CardFan = CardFan()
+    
     public var hashValue: Int {
         return self.name.hashValue
     }
 
+    func setup(scene: SKNode, sideOfTable: SideOfTable)
+    {
+        self.sideOfTable = sideOfTable
+        let isUp = sideOfTable == SideOfTable.Bottom
+        _hand.setup(scene, sideOfTable: sideOfTable, isUp: isUp, isBig: isUp)
+        wonCards.setup(scene, direction: sideOfTable.direction, position: sideOfTable.positionOfWonCards(scene.frame.width, height: scene.frame.height), isUp: false, isBig: false)
+    }
+    
     init(name s: String) {
         self.name = s
     }
-    public func clearHand()
-    {
-        hand  = [];
-    }
+
     public func newHand(h: [PlayingCard]  )
     {
         hand  = h;
@@ -42,14 +47,11 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
         score = 0
     }
     
-
-          
     public func removeFromHand(card:PlayingCard) -> PlayingCard?
     {
-    /// hand.indexOf(card) // in swift 2.0
-    if let index = hand.indexOf(card)
+    if let index = _hand.cards.indexOf(card)
         {
-            return hand.removeAtIndex(index)
+            return _hand.cards.removeAtIndex(index)
          }
     return nil
     }

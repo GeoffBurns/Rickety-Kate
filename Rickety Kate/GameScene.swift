@@ -8,9 +8,32 @@
 
 import SpriteKit
 
+class Seater
+{
+    static let seatsFor3 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.Left]
+    static let seatsFor4 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.Top, SideOfTable.Left]
+    static let seatsFor5 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.TopMidRight, SideOfTable.TopMidLeft,
+        SideOfTable.Left]
+    
+    static let seatsFor6 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.TopMidRight, SideOfTable.Top, SideOfTable.TopMidLeft,
+        SideOfTable.Left]
+    
+    static func seatsFor(noOfPlayers:Int) -> [SideOfTable]
+    {
+    switch noOfPlayers
+    {
+    case 3 : return seatsFor3
+    case 4 : return seatsFor4
+    case 5 : return seatsFor5
+    case 6 : return seatsFor6
+    default : return []
+    }
+    }
+    
+}
 class GameScene: SKScene {
     
-    lazy var table = CardTable.makeTable(4)
+    lazy var table = CardTable.makeTable(4,noOfSuitesInDeck: 4)
     var originalTouch = CGPoint()
     var originalCardPosition = CGPoint()
     var originalCardRotation = CGFloat()
@@ -19,14 +42,18 @@ class GameScene: SKScene {
     var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
     var noOfSuitesInDeck = 4
+    
+    var noOfPlayersAtTable = 4
 
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
 
     var rulesScreen = RuleScreen()
     var exitScreen = ExitScreen()
-    var optionScreen = OptionScreen(noOfSuites: 4)
+    var optionScreen = OptionScreen()
+    
     var arePassingCards = true
+
     var isInPassingCardsPhase = true
     var cardTossDuration = 0.4
     let cardAnchorPoint = CGPoint(x: 0.5, y: UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
@@ -35,177 +62,51 @@ class GameScene: SKScene {
     
     func createAndDisplayCardImages(width: CGFloat , height: CGFloat )
     {
+        let seats = Seater.seatsFor(table.players.count)
         var i = 0
+        let hSpacing = CGFloat(table.players.count) * 2
         for player in table.players
         {
-            player.sideOfTable = SideOfTable(rawValue: i)!
+            table.setupPassedCards(self)
+
             for card in player.hand
             {
                 let sprite = CardSprite(card: card, player: player)
                 
-                          sprite.setScale(cardScale)
-                sprite.position = CGPoint(x: width * CGFloat(2 * i  + 1) / 8.0,y: height*0.5)
+                sprite.setScale(cardScale)
+                sprite.position = CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5)
                 
-    
                 self.addChild(sprite)
             }
-            i++
-        }
-    }
-
-    func rearrangeCardImagesInTrickPile(width: CGFloat , height: CGFloat )
-    {
-        let fullHand = CGFloat(13)
-        var positionInSpread = (fullHand - CGFloat(table.noOfPlayers) ) * 0.5
-        var z = CGFloat(1)
-        for trick in table.tricksPile
-        {
-            let playerSeat = SideOfTable.Center
-            let sprite = CardSprite.sprite(trick.playedCard)
-            sprite.setScale(cardScale*0.5)
-            sprite.anchorPoint = cardAnchorPoint
-            sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
-            sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread)
-            sprite.zPosition = z
-            sprite.color = UIColor.whiteColor()
-            sprite.colorBlendFactor = 0
-            positionInSpread++
-            z++
-        }
-    }
-    
-    func rearrangeCardImagesInPassPile(width: CGFloat , height: CGFloat )
-    {
-        let fullHand = CGFloat(13)
-        var positionInSpread = (fullHand - 3 ) * 0.5
-        var z = CGFloat(1)
-        for card in table.cardsPassed[0]
-        {
-            let playerSeat = SideOfTable.Center
-            
-            let sprite = CardSprite.sprite(card)
-          
-            sprite.setScale(cardScale*0.5)
-            sprite.anchorPoint = cardAnchorPoint
-                
-            sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height)
-            sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread, fullHand:fullHand)
-            sprite.zPosition = z
-            sprite.color = UIColor.whiteColor()
-            sprite.colorBlendFactor = 0
-            positionInSpread++
-            z++
-        }
-    }
-    
-    func rearrangeCardImagesInHands(width: CGFloat , height: CGFloat )
-    {
-        var fullHand = CGFloat(13)
-        
-        var i = 0;
-        for player in table.players
-        {
-            let noCards = CGFloat(player.hand.count)
-            
-            var positionInSpread = (fullHand - noCards) * 0.5
-            if fullHand < noCards
-            {
-                fullHand = noCards
-                positionInSpread = CGFloat(0)
-            }
-            if let playerSeat = SideOfTable(rawValue: i)
-            {
          
-            for card in player.hand
-              {
-                let sprite = CardSprite.sprite(card)
-                
-                // PlayerOne's cards are larger
-                sprite.setScale(i==0 ? cardScale: cardScale*0.5)
-                    
-                if(i==0)
-                    {
-                        sprite.flipUp()
-                    
-                    }
-                    sprite.anchorPoint = cardAnchorPoint
-                sprite.position = playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height, fullHand:fullHand)
-                    sprite.zRotation =  playerSeat.rotationOfCard(positionInSpread, fullHand:fullHand)
-                     sprite.zPosition = (i==0 ? 100: 10) + positionInSpread
-                    sprite.color = UIColor.whiteColor()
-                    sprite.colorBlendFactor = 0
-                    positionInSpread++
-                }
-            
-            }
-            i++
+           i++
         }
-       }
+        
+        for (player,seat) in Zip2Sequence(table.players,seats)
+        {
+            player.setup(self, sideOfTable: seat)
+        }
+    }
     func rearrangeCardImagesInHandsWithAnimation(width: CGFloat , height: CGFloat )
     {
-        var fullHand = CGFloat(13)
-        
-        var i = 0;
         for player in table.players
         {
-            let noCards = CGFloat(player.hand.count)
-       
-            var positionInSpread = (fullHand - noCards) * 0.5
-            if fullHand < noCards
-            {
-                fullHand = noCards
-                positionInSpread = CGFloat(0)
-            }
-            if let playerSeat = SideOfTable(rawValue: i)
-            {
-                for card in player.hand
-                {
-                    let sprite = CardSprite.sprite(card)
-                   
-                        // PlayerOne's cards are larger
-                        sprite.setScale(i==0 ? cardScale: cardScale*0.5)
-                        sprite.anchorPoint = cardAnchorPoint
-
-                        
-                        if(i==0)
-                        {
-                         sprite.flipUp()
-                                        
-                        }
-                        else
-                        {
-                         sprite.flipDown()
-                            
-                        }
-                       
-                        
-                    let newPosition =  playerSeat.positionOfCard(positionInSpread, spriteHeight: sprite.size.height, width: width, height: height, fullHand:fullHand)
-                        let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
-                        let rotationAngle = playerSeat.rotationOfCard(positionInSpread, fullHand:fullHand)
-                        let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(cardTossDuration*0.8)))
-                        
-                        let groupAction = (SKAction.group([moveAction,rotateAction]))
-                        sprite.runAction(groupAction)
-                   
-                        sprite.zPosition = (i==0 ? 100: 10) + positionInSpread
-                        sprite.color = UIColor.whiteColor()
-                        sprite.colorBlendFactor = 0
-                        positionInSpread++
-                   
-                }
-            }
-            i++
+            player._hand.update()
+            
         }
     }
+
     func reverseDeal(width: CGFloat , height: CGFloat )
     {
         let fullHand = CGFloat(13)
         
         var i = 0;
+        let hSpacing = CGFloat(table.players.count) * 2
         for player in table.players
         {
             let noCards = CGFloat(player.hand.count)
-            
+            let playerSeat = player.sideOfTable
+            let isPlayerOne = playerSeat==SideOfTable.Bottom
             var positionInSpread = (fullHand - noCards) * 0.5
             
             for trick in table.tricksPile
@@ -220,14 +121,13 @@ class GameScene: SKScene {
                 {
                     let sprite = CardSprite.sprite(card)
                   
-                        // PlayerOne's cards are larger
                 
                         sprite.anchorPoint = cardAnchorPoint
                     
                         sprite.flipDown()
                 
                         sprite.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-                        let newPosition = CGPoint(x: width * CGFloat(2 * i  + 1) / 8.0,y: height*0.5)
+                        let newPosition = CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5)
                         let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
                   
                         let rotateAction = (SKAction.rotateToAngle(0.0, duration:(cardTossDuration*0.8)))
@@ -235,34 +135,19 @@ class GameScene: SKScene {
                         let groupAction = (SKAction.group([moveAction,rotateAction,scaleAction]))
                         sprite.runAction(groupAction)
                         
-                        sprite.zPosition = (i==0 ? 100: 10) + positionInSpread
+                        sprite.zPosition = (isPlayerOne ? 100: 10) + positionInSpread
                         sprite.color = UIColor.whiteColor()
                         sprite.colorBlendFactor = 0
                         positionInSpread++
-                  
                 }
          
             i++
         }
     }
-    
-    func rearrange()
-    {
-        let width = self.frame.size.width
-        let height = self.frame.size.height
-        rearrangeCardImagesInTrickPile(width,  height: height)
-        rearrangeCardImagesInHands(width,  height: height)
-    }
-    func setupTidyup()
-    {
-        table.tidyup.subscribe {
-            self.rearrange()
-        }
-    }
+
     func StatusAreaFirstMessage()
     {
 
-        
         if arePassingCards && !table.isInDemoMode
         {
             StatusDisplay.publish("Discard Your",message2: " Three Worst Cards")
@@ -311,7 +196,7 @@ class GameScene: SKScene {
                     self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
                 })]))
             self.runAction(doneAction)
-            
+           
             self.isInPassingCardsPhase = self.arePassingCards && !self.table.isInDemoMode
             if self.isInPassingCardsPhase
             {
@@ -379,12 +264,9 @@ class GameScene: SKScene {
         setupOptionScreen()
         setupPlayButton()
         table.dealNewCardsToPlayers()
+        createAndDisplayCardImages(self.frame.size.width,  height: self.frame.size.height)
         ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
-        setupTidyup()
-        let width = self.frame.size.width
-        let height = self.frame.size.height
-    
-        createAndDisplayCardImages(width,  height: height)
+
         setupNewGameArrangement()
     }
     
@@ -414,6 +296,7 @@ class GameScene: SKScene {
                 scene.scaleMode = SKSceneScaleMode.AspectFill
                 scene.table = table
                 scene.noOfSuitesInDeck  = self.noOfSuitesInDeck
+                scene.noOfPlayersAtTable  = self.noOfPlayersAtTable
                 self.scene!.view!.presentScene(scene, transition: transition)
                 
             })]))
@@ -421,56 +304,68 @@ class GameScene: SKScene {
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
-    
+        
+      let width = self.frame.size.width
       for touch in (touches )
       {
         let positionInScene = touch.locationInNode(self)
-        
+
 
         if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
         {
             switch touchedNode.name!
             {
+            /// play button
             case "Play" :
                 touchedNode.texture = SKTexture(imageNamed: "Play2")
-                resetWith(CardTable.makeTable(self.noOfSuitesInDeck))
+                resetWith(CardTable.makeTable(self.noOfPlayersAtTable,noOfSuitesInDeck: self.noOfSuitesInDeck))
                 return
-        
+            /// exit button
             case  "Exit" :
                 touchedNode.texture = SKTexture(imageNamed: "Exit2")
                 exitScreen.alpha = 1.0
                 exitScreen.zPosition = 500
                 return
-        /// rules button
+            /// rules button
             case "Rules" :
                 rulesScreen.flipButton()
                 return
   
-        /// Option button
+            /// Option button
             case "Option" :
                 optionScreen.flipButton()
                 return
-            default :
-                if isNodeAPlayerOneCardSpite(touchedNode)        {
-                       draggedNode = touchedNode;
-                       originalTouch = positionInScene
-                       originalCardPosition  = touchedNode.position
-                       originalCardRotation  = touchedNode.zRotation
-                       originalCardAnchor  = touchedNode.anchorPoint
+            default : break
+      
+             }
+        }
+        var newX = positionInScene.x
+        if newX > width * 0.5
+                {
+                   newX = ((newX - width * 0.5) * 0.6) + width * 0.5
+                }
+        /// correct for rotation of card
+        let adjustedPosition = CGPoint(x: newX,y: positionInScene.y)
+        if let adjustedNode : SKSpriteNode = self.nodeAtPoint(adjustedPosition) as? SKSpriteNode
+        {
+            if isNodeAPlayerOneCardSpite(adjustedNode)        {
+                        draggedNode = adjustedNode;
+                        originalTouch = positionInScene
+                        originalCardPosition  = adjustedNode.position
+                        originalCardRotation  = adjustedNode.zRotation
+                        originalCardAnchor  = adjustedNode.anchorPoint
+                        
+                        adjustedNode.zRotation = 0
+                        adjustedNode.position = positionInScene
+                        adjustedNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                        adjustedNode.xScale = 1.15
+                        adjustedNode.yScale = 1.15
+                        return
+                    }
             
-                       touchedNode.zRotation = 0
-                       touchedNode.position = positionInScene
-                       touchedNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-                       touchedNode.xScale = 1.15
-                       touchedNode.yScale = 1.15
-            
-                      return
-               }
-       
-       
             }
         }
-        }}
+    }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
     let touch = (touches ).first!
@@ -478,8 +373,8 @@ class GameScene: SKScene {
    
     let deltaX = abs(originalTouch.x - positionInScene.x)
     let deltaY = abs(originalTouch.y - positionInScene.y)
-        
-    if deltaX > (2.2 * deltaY)
+    /// track position in hand
+    if deltaX > (2.2 * deltaY) && deltaX > 22
         {
           
            let touchedNodes = self.nodesAtPoint(positionInScene)
@@ -509,8 +404,6 @@ class GameScene: SKScene {
                }
             }
         
-    
-       // let touchedNode = self.nodeAtPoint(positionInScene)
      if( draggedNode != nil)
       {
         let touchedNode = draggedNode!;
@@ -521,11 +414,9 @@ class GameScene: SKScene {
 
     func endCardPassingPhase()
     {
-        let width = self.frame.size.width
-        let height = self.frame.size.height
         table.passOtherCards()
         table.takePassedCards()
-        rearrangeCardImagesInHandsWithAnimation(width, height: height)
+    //   rearrangeCardImagesInHandsWithAnimation(width, height: height)
         isInPassingCardsPhase = false
         StatusDisplay.publish()
         startTrickPhase()
@@ -541,12 +432,10 @@ class GameScene: SKScene {
         draggedNode=nil
     }
     
-    
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
        
         if let touch = touches.first
         {
-        let width = self.frame.size.width
         let height = self.frame.size.height
         let positionInScene = touch.locationInNode(self)
         
@@ -570,8 +459,8 @@ class GameScene: SKScene {
                             {
                                 restoreDraggedCard()
                             }
-                            rearrangeCardImagesInPassPile(width, height: height)
-                            let count = table.cardsPassed[0].count
+                            //rearrangeCardImagesInPassPile(width, height: height)
+                            let count = table.cardsPassed[0].cards.count
                             if  count < 3
                             {
                                 
