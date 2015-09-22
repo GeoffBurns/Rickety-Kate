@@ -46,11 +46,12 @@ class CardPile
     func append(card:PlayingCard)
     {
         cards.append(card)
-        rearrange()
+        rearrangeFor(card, positionInSpread: 0, noCards: 1, fullHand: 1)
+ 
     }
     func update()
     {
-        
+        /// if its a pile instead of a fan you don't need to rearrange the pile for every change
     }
     func clear()
     {
@@ -58,17 +59,81 @@ class CardPile
     }
     func appendContentsOf(newCards:[PlayingCard])
     {
-       
         cards.appendContentsOf(newCards)
-        rearrange()
+        
+        for card in cards
+        {
+            rearrangeFor(card, positionInSpread: 0, noCards: 1, fullHand: 1)
+        }
      
     }
     func replaceWithContentsOf(newCards:[PlayingCard])
     {
         cards = newCards
-        rearrange()
+        
+        for card in cards
+        {
+        rearrangeFor(card, positionInSpread: 0, noCards: 1, fullHand: 1)
+        }
+        
      
     }
+    
+    func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat, noCards:CGFloat,fullHand:CGFloat)
+    {
+        if let sprite = CardSprite.spriteFor(card)
+        {
+            // Stop all running animations before starting new ones
+            sprite.removeAllActions()
+            
+            // PlayerOne's cards are larger
+            sprite.setScale(isBig ? cardScale: cardScale*0.5)
+            sprite.anchorPoint = cardAnchorPoint
+            
+            var flipAction = (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
+            let newPosition =  isFanClosed ?
+                position :
+                sideOfTable.positionOfCard(positionInSpread, spriteHeight: sprite.size.height,
+                    width: scene!.frame.width, height: scene!.frame.height, fullHand:fullHand)
+            let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
+            let rotationAngle = direction.rotationOfCard(positionInSpread, fullHand:fullHand)
+            let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(cardTossDuration*0.8)))
+            let scaleAction =  (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
+            let scaleYAction =  SKAction.scaleYTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration)
+            var groupAction = SKAction.group([moveAction,rotateAction,scaleAction])
+            
+            if isUp && !sprite.isUp
+            {
+                //    sprite.flipUp()
+                flipAction = (SKAction.sequence([
+                    SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
+                    SKAction.runBlock({
+                        sprite.flipUp()
+                    }) ,
+                    SKAction.scaleXTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration*0.5)
+                    ]))
+                groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
+            }
+            else if !isUp && sprite.isUp
+            {
+                // sprite.flipDown()
+                flipAction = (SKAction.sequence([
+                    SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
+                    SKAction.runBlock({
+                        sprite.flipDown()
+                    }) ,
+                    SKAction.scaleXTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration*0.5)
+                    ]))
+                groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
+            }
+            
+            sprite.runAction(groupAction)
+            sprite.zPosition = (isBig ? 100: 10) + positionInSpread
+            sprite.color = UIColor.whiteColor()
+            sprite.colorBlendFactor = 0
+        }
+    }
+    
     func rearrange()
     {
         if(scene==nil)
@@ -90,58 +155,9 @@ class CardPile
         }
         for card in cards
         {
-            if let sprite = CardSprite.spriteFor(card)
-            {
-                // Stop all running animations before starting new ones
-                sprite.removeAllActions()
-                
-                // PlayerOne's cards are larger
-                sprite.setScale(isBig ? cardScale: cardScale*0.5)
-                sprite.anchorPoint = cardAnchorPoint
-                
-                var flipAction = (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
-                let newPosition =  isFanClosed ?
-                    position :
-                    sideOfTable.positionOfCard(positionInSpread, spriteHeight: sprite.size.height,
-                        width: scene!.frame.width, height: scene!.frame.height, fullHand:fullHand)
-                let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
-                let rotationAngle = direction.rotationOfCard(positionInSpread, fullHand:fullHand)
-                let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(cardTossDuration*0.8)))
-                let scaleAction =  (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
-                let scaleYAction =  SKAction.scaleYTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration)
-                var groupAction = SKAction.group([moveAction,rotateAction,scaleAction])
-                
-                if isUp && !sprite.isUp
-                {
-                    //    sprite.flipUp()
-                    flipAction = (SKAction.sequence([
-                        SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
-                        SKAction.runBlock({
-                            sprite.flipUp()
-                        }) ,
-                        SKAction.scaleXTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration*0.5)
-                        ]))
-                    groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
-                }
-                else if !isUp && sprite.isUp
-                {
-                    // sprite.flipDown()
-                    flipAction = (SKAction.sequence([
-                        SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
-                        SKAction.runBlock({
-                            sprite.flipDown()
-                        }) ,
-                        SKAction.scaleXTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration*0.5)
-                        ]))
-                    groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
-                }
-                
-                sprite.runAction(groupAction)
-                sprite.zPosition = (isBig ? 100: 10) + positionInSpread
-                sprite.color = UIColor.whiteColor()
-                sprite.colorBlendFactor = 0
-                positionInSpread++
-            }
+            rearrangeFor(card,positionInSpread:positionInSpread, noCards:noCards,fullHand:fullHand)
+            positionInSpread++
+           
         }
     }
     
