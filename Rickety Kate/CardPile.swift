@@ -52,7 +52,19 @@ class CardPile
     {
         
     }
-    
+    func appendContentsOf(newCards:[PlayingCard])
+    {
+       
+        cards.appendContentsOf(newCards)
+        rearrange()
+     
+    }
+    func replaceWithContentsOf(newCards:[PlayingCard])
+    {
+        cards = newCards
+        rearrange()
+     
+    }
     func rearrange()
     {
         if(scene==nil)

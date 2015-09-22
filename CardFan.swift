@@ -31,14 +31,14 @@ class CardFan : CardPile
     {
        rearrange()
     }
-    func appendContentsOf(newCards:[PlayingCard])
+    override func appendContentsOf(newCards:[PlayingCard])
     {
         var updatedCards = cards
         updatedCards.appendContentsOf(newCards)
         let sortedHand = updatedCards.sort()
         cards = ( Array(sortedHand.reverse()))
     }
-    func replaceWithContentsOf(newCards:[PlayingCard])
+    override func replaceWithContentsOf(newCards:[PlayingCard])
     {
         let updatedCards = newCards
         let sortedHand = updatedCards.sort()
