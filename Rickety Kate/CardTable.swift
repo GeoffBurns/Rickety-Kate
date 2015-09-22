@@ -16,7 +16,7 @@ public struct StateOfPlay
 
 public class CardTable : GameStateEngine, GameState
 {
-    lazy var deck: Deck = PlayingCard.BuiltCardDeck(noOfSuites: 4, noOfPlayers: 4)
+    lazy var deck: Deck = PlayingCard.BuiltCardDeck()
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
     var _players: [CardPlayer] = []
 
@@ -24,7 +24,7 @@ public class CardTable : GameStateEngine, GameState
     var currentStateOfPlay:StateOfPlay? = nil
     var cardTossDuration = Double(0.7)
 
-    var noOfSuitesInDeck = 4
+
     var newGame :  Publink<Void> =  Publink<Void>()
     var resetGame :  Publink<Void> =  Publink<Void>()
  
@@ -35,7 +35,7 @@ public class CardTable : GameStateEngine, GameState
     let cardScale = CGFloat(0.9)
     let cardScaleForSelected = CGFloat(1.05)
     var cardsPassed : [CardFan] = []
-    static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3)]
+
     
     public var players : [CardPlayer] {
         get {
@@ -44,28 +44,19 @@ public class CardTable : GameStateEngine, GameState
         
     }
     
-    static func demoPlayers(noOfPlayers:Int) -> [CardPlayer]
-    {
-        return Array(computerPlayers[0..<noOfPlayers])
-    }
-    
-    static func gamePlayers(noOfPlayers:Int) -> [CardPlayer]
-    {
-        let noOfComputerPlayers = noOfPlayers - 1
-        return [HumanPlayer.sharedInstance] + Array(computerPlayers[0..<noOfComputerPlayers])
-    }
-    static public func makeTable(noOfPlayersAtTable:Int, noOfSuitesInDeck:Int) -> CardTable {
-     return CardTable(players: gamePlayers(noOfPlayersAtTable),noOfSuitesInDeck: noOfSuitesInDeck)
+ 
+    static public func makeTable() -> CardTable {
+     return CardTable(players: CardPlayer.gamePlayers(GameSettings.sharedInstance.noOfPlayersAtTable))
 }
 
-    static public func makeDemo(noOfPlayersAtTable:Int, noOfSuitesInDeck:Int) -> CardTable  {
-     return CardTable(players: demoPlayers(noOfPlayersAtTable),noOfSuitesInDeck: noOfSuitesInDeck)
+    static public func makeDemo() -> CardTable  {
+     return CardTable(players: CardPlayer.demoPlayers(GameSettings.sharedInstance.noOfPlayersAtTable))
     }
-    private init(players: [CardPlayer], noOfSuitesInDeck:Int) {
+    private init(players: [CardPlayer]) {
     _players = players
     playerOne = _players[0]
     isInDemoMode = playerOne.name != "You"
-    self.noOfSuitesInDeck = noOfSuitesInDeck
+
     Scorer.sharedInstance.setupScorer(_players)
     super.init()
     setPassedCards()
@@ -111,7 +102,6 @@ public class CardTable : GameStateEngine, GameState
             return players.count
     }
 
-    
     public var unplayedCardsInTrick : Int
     {
     return  noOfPlayers - playedCardsInTrick
@@ -375,8 +365,7 @@ public class CardTable : GameStateEngine, GameState
 
     public func dealNewCardsToPlayers()
     {
-        
-        deck = PlayingCard.BuiltCardDeck(noOfSuites: noOfSuitesInDeck, noOfPlayers: players.count)
+        deck = PlayingCard.BuiltCardDeck()
         var hands = deck.dealFor(players.count)
         var i = 0
         for player in players

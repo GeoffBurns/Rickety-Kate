@@ -24,7 +24,7 @@ class NumberRangeToggle: SKNode {
     self.min = min
     self.max = max
     self.current = current
-    label.fontSize = 40;
+    label.fontSize = 45;
     self.text = text
         label.userInteractionEnabled = false
         label.text = "\(text) : \(current)"

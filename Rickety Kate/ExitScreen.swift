@@ -136,7 +136,7 @@ class ExitScreen: Popup {
             {
                 touchedNode.texture = SKTexture(imageNamed: "Yes2")
                 
-                gameScene!.resetWith(CardTable.makeDemo(gameScene!.noOfPlayersAtTable,noOfSuitesInDeck: gameScene!.noOfSuitesInDeck))
+                gameScene!.resetWith(CardTable.makeDemo())
     
             }
 

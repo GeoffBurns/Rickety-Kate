@@ -33,7 +33,7 @@ class Seater
 }
 class GameScene: SKScene {
     
-    lazy var table = CardTable.makeTable(4,noOfSuitesInDeck: 4)
+    lazy var table = CardTable.makeTable()
     var originalTouch = CGPoint()
     var originalCardPosition = CGPoint()
     var originalCardRotation = CGFloat()
@@ -41,9 +41,7 @@ class GameScene: SKScene {
     var draggedNode: SKSpriteNode? = nil;
     var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
-    var noOfSuitesInDeck = 4
-    
-    var noOfPlayersAtTable = 4
+ 
 
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
@@ -229,7 +227,9 @@ class GameScene: SKScene {
         {
             return
         }
-        optionScreen.noOfSuites.current = noOfSuitesInDeck
+        optionScreen.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
+                optionScreen.noOfPlayers.current = GameSettings.sharedInstance.noOfPlayersAtTable
+        optionScreen.noOfCardsInASuite.current = GameSettings.sharedInstance.noOfCardsInASuite
         optionScreen.setup(self)
     }
     func setupPlayButton()
@@ -295,8 +295,6 @@ class GameScene: SKScene {
                 let scene = GameScene(size: self.scene!.size)
                 scene.scaleMode = SKSceneScaleMode.AspectFill
                 scene.table = table
-                scene.noOfSuitesInDeck  = self.noOfSuitesInDeck
-                scene.noOfPlayersAtTable  = self.noOfPlayersAtTable
                 self.scene!.view!.presentScene(scene, transition: transition)
                 
             })]))
@@ -318,7 +316,7 @@ class GameScene: SKScene {
             /// play button
             case "Play" :
                 touchedNode.texture = SKTexture(imageNamed: "Play2")
-                resetWith(CardTable.makeTable(self.noOfPlayersAtTable,noOfSuitesInDeck: self.noOfSuitesInDeck))
+                resetWith(CardTable.makeTable())
                 return
             /// exit button
             case  "Exit" :

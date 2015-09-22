@@ -6,14 +6,13 @@
 //  Copyright © 2015 Geoff Burns. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
 
 class ScoreDisplay
 {
     var scoreLabel : [SKLabelNode] = []
-//    var scoreLabel2 = [SKLabelNode](count: 4, repeatedValue: SKLabelNode())
+    var scoreLabel2 : [SKLabelNode] = []
     var scoreUpdates : [Publink<(Int,Int)>] = []
     
     var players : [CardPlayer] = []
@@ -36,22 +35,22 @@ class ScoreDisplay
         {
         
             // having problems setting font color
-            //   scoreLabel2[i] = SKLabelNode(fontNamed:"Verdana")
+       //        scoreLabel2[i] = SKLabelNode(fontNamed:"Verdana")
             let player = players[i]
             let l = scoreLabel[i]
-            //     let m = scoreLabel2[i]
+        //        let m = scoreLabel2[i]
             
             scoreUpdates[i] = Publink<(Int,Int)>()
             
             l.text = ""
             l.fontSize = 30;
             l.name = "\(player.name)'s score label"
-            //    m.text = ""
-            //    m.fontSize = 30;
+         //       m.text = ""
+          //      m.fontSize = 30;
             
-            //   m.color = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
+         //     m.color = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
             //   m.color = UIColor.blackColor()
-            //   m.colorBlendFactor = 1.0
+         //      m.colorBlendFactor = 1.0
             
             
             let side = player.sideOfTable
@@ -67,10 +66,10 @@ class ScoreDisplay
                     position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.75)
                     rotate = 0.degreesToRadians
                 case .TopMidRight:
-                        position = CGPoint(x:scene.frame.width * 0.7, y:scene.frame.size.height * 0.75)
+                        position = CGPoint(x:scene.frame.width * 0.8, y:scene.frame.size.height * 0.75)
                         rotate = 0.degreesToRadians
                 case .TopMidLeft:
-                        position = CGPoint(x:scene.frame.width * 0.3, y:scene.frame.size.height * 0.75)
+                        position = CGPoint(x:scene.frame.width * 0.2, y:scene.frame.size.height * 0.75)
                         rotate = 0.degreesToRadians
                 case .Left:
                     position = CGPoint(x:scene.frame.size.width * 0.10, y:CGRectGetMidY(scene.frame))
@@ -84,12 +83,12 @@ class ScoreDisplay
             l.zPosition = 301
             l.zRotation = rotate
                 
-                //      m.position = CGPoint(x:position.x+2,y:position.y-2)
-                //      m.zPosition = 299
-                //      m.zRotation = rotate
+      //                m.position = CGPoint(x:position.x+2,y:position.y-2)
+      //                m.zPosition = 299
+      //                m.zRotation = rotate
                 
             scene.addChild(l)
-                //       self.addChild(m)
+       //                scene.addChild(m)
             
             
             scoreUpdates[i].subscribe() { (update:(Int,Int)) in
@@ -97,13 +96,13 @@ class ScoreDisplay
                 let name = self.players[i].name
                 
                 let l = self.scoreLabel[i]
-                //         let m = self.scoreLabel2[i]
+         //                let m = self.scoreLabel2[i]
                 let wins = update.1
                 let message = (wins==0) ?
                     ((name == "You") ? "Your Score is \(update.0)" : "\(name)'s Score is \(update.0)") :
-                    ((name == "You") ? "Your Score : \(update.0) With \(wins) Wins" : "\(name)'s Score : \(update.0) With \(wins) Wins")
+                    ((name == "You") ? "Your Score : \(update.0) With \(wins) Wins" : "\(name) : \(update.0) & \(wins) Wins")
                 l.text = message
-                //    m.text = message
+            //       m.text = message
             }
             
             scoreUpdates[i].publish((0,0))

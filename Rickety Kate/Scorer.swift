@@ -68,12 +68,14 @@ class Scorer
     var hasShotMoon = false
     for player in self.players
      {
-     if self.scoresForHand[i] == 22
+     /// Did player get all the points avalilable in his hand
+     let allPoints = 9 + GameSettings.sharedInstance.noOfCardsInASuite
+     if self.scoresForHand[i] >= allPoints
       {
       self.scores[i] = 0
       ScoreDisplay.publish(player,score: self.scores[i], wins: self.wins[i])
       hasShotMoon = true
-       if i == 0
+      if player.name == "You"
           {
           StatusDisplay.publish("Congratulatons!!!",message2: "You just shot the Moon")
           

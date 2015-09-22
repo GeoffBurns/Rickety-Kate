@@ -21,6 +21,19 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     public var sideOfTable = SideOfTable.Bottom
     public var name : String = "Base"
     var wonCards : CardFan = CardFan()
+    static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3)]
+    
+    
+    static func demoPlayers(noOfPlayers:Int) -> [CardPlayer]
+    {
+        return Array(computerPlayers[0..<noOfPlayers])
+    }
+    
+    static func gamePlayers(noOfPlayers:Int) -> [CardPlayer]
+    {
+        let noOfComputerPlayers = noOfPlayers - 1
+        return [HumanPlayer.sharedInstance] + Array(computerPlayers[0..<noOfComputerPlayers])
+    }
     
     public var hashValue: Int {
         return self.name.hashValue

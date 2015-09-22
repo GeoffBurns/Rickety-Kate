@@ -3,7 +3,7 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 16/09/2015.
-//  Copyright (c) 2015 Nereids Gold. All rights reserved.
+//  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
 import Foundation
@@ -38,7 +38,6 @@ return result
 }
 }
 */
-
 // TODO an alternative strategy is to get rid of cards form suites where your lowest card is high
 /*
 public class ProtectHighMiniumSuitePassingStrategy : CardPassingStrategy
@@ -48,7 +47,6 @@ private init() { }
 func chooseWorstCards(player:CardHolder) -> [PlayingCard]
 {
 
-return result
+//return result
 }
-}
-*/
+}*/

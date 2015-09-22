@@ -11,7 +11,8 @@ import SpriteKit
 
 class OptionScreen: Popup {
     var noOfSuites = NumberRangeToggle(min: 3, max: 6, current: 4, text: "Number Of Suites in Deck")
-    var noOfPlayers = NumberRangeToggle(min: 3, max: 5, current: 4, text: "Number Of Players At Table")
+    var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 15, current: 13, text: "Number Of Cards in Suite")
+    var noOfPlayers = NumberRangeToggle(min: 3, max: 6, current: 4, text: "Number Of Players At Table")
     var isShowing = false
 
     
@@ -36,18 +37,15 @@ class OptionScreen: Popup {
             zPosition = -10
             button.zPosition = 300
             isShowing = false
-            if gameScene!.noOfSuitesInDeck != noOfSuites.current ||
-            gameScene!.noOfPlayersAtTable != noOfPlayers.current
+            if GameSettings.changeSettings(noOfSuites.current,noOfPlayersAtTable: noOfPlayers.current,noOfCardsInASuite: noOfCardsInASuite.current)
             {
-                gameScene!.noOfSuitesInDeck = self.noOfSuites.current
-                gameScene!.noOfPlayersAtTable = self.noOfPlayers.current
-             gameScene!.resetWith(CardTable.makeDemo(self.noOfPlayers.current,noOfSuitesInDeck: self.noOfSuites.current))
+             gameScene!.resetWith(CardTable.makeDemo())
             }
             
         }
         else
         {
-            button.texture = SKTexture(imageNamed: "Options2")
+            button.texture = SKTexture(imageNamed: "X")
             alpha = 1.0
             zPosition = 400
             button.zPosition = 4450
@@ -76,9 +74,16 @@ class OptionScreen: Popup {
         noOfPlayers.name = "NoOfPlayers"
         noOfPlayers.alpha = 1.0
         
-       noOfPlayers.position = CGPoint(x:0.0,y:scene.frame.height * -0.2)
+        noOfPlayers.position = CGPoint(x:0.0,y:scene.frame.height * -0.2)
         self.addChild(noOfPlayers)
         alpha = 0.0
+        
+        
+        noOfCardsInASuite.name = "NoOfCardsInSuite"
+        noOfCardsInASuite.alpha = 1.0
+        
+        noOfCardsInASuite.position = CGPoint(x:0.0,y:scene.frame.height * -0.05)
+        self.addChild(noOfCardsInASuite)
      
         
         button.setScale(0.5)

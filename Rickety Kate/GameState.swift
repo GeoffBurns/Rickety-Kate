@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
 public protocol GameState

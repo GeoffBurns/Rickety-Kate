@@ -3,7 +3,7 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 16/09/2015.
-//  Copyright (c) 2015 Nereids Gold. All rights reserved.
+//  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
 import Foundation
@@ -24,7 +24,7 @@ public func > <T: RawRepresentable where T.RawValue: Comparable>(a: T, b: T) -> 
 
 public func ==(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool {
     switch (lhs, rhs) {
-    case let (.Court(la), .Court(ra)): return la == ra
+    case let (.CourtCard(la), .CourtCard(ra)): return la == ra
     case let (.Pip(la), .Pip(ra)): return la == ra
     case (.Ace, .Ace): return true
         
@@ -51,9 +51,10 @@ func pictureLetterToRank(letter:String) -> Int
 {
     switch letter
     {
-    case "K" : return 13
-    case "Q" : return 12
-    case "J" : return 11
+    case "K" : return 15
+    case "Q" : return 14
+    case "KN" : return 13
+    case "J" : return 12
     default: return 0
         
     }
@@ -65,8 +66,8 @@ public func <=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case (.Ace, .Ace): return true
     case (.Ace, _): return false
     case (_, .Ace): return true
-    case let (.Court(la), .Court(ra)): return pictureLetterToRank(la) <= pictureLetterToRank(ra)
-    case (.Court, _): return false
+    case let (.CourtCard(la), .CourtCard(ra)): return pictureLetterToRank(la) <= pictureLetterToRank(ra)
+    case (.CourtCard, _): return false
     case let (.Pip(la), .Pip(ra)): return la <= ra
     default: return true
     }
@@ -78,8 +79,8 @@ public func >=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case (.Ace, .Ace): return true
     case (.Ace, _): return true
     case (_, .Ace): return false
-    case let (.Court(la), .Court(ra)): return pictureLetterToRank(la) >= pictureLetterToRank(ra)
-    case (.Court, _): return true
+    case let (.CourtCard(la), .CourtCard(ra)): return pictureLetterToRank(la) >= pictureLetterToRank(ra)
+    case (.CourtCard, _): return true
     case let (.Pip(la), .Pip(ra)): return la >= ra
     default: return false
     }
@@ -90,8 +91,8 @@ public func >(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case (.Ace, .Ace): return false
     case (.Ace, _): return true
     case (_, .Ace): return false
-    case let (.Court(la), .Court(ra)): return pictureLetterToRank(la) > pictureLetterToRank(ra)
-    case (.Court, _): return true
+    case let (.CourtCard(la), .CourtCard(ra)): return pictureLetterToRank(la) > pictureLetterToRank(ra)
+    case (.CourtCard, _): return true
     case let (.Pip(la), .Pip(ra)): return la > ra
     default: return false
     }
@@ -102,8 +103,8 @@ public func < (lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
     case (.Ace, .Ace): return false
     case (.Ace, _): return false
     case (_, .Ace): return true
-    case let (.Court(la), .Court(ra)): return pictureLetterToRank(la) < pictureLetterToRank(ra)
-    case (.Court, _): return false
+    case let (.CourtCard(la), .CourtCard(ra)): return pictureLetterToRank(la) < pictureLetterToRank(ra)
+    case (.CourtCard, _): return false
     case let (.Pip(la), .Pip(ra)): return la < ra
     default: return true
     }

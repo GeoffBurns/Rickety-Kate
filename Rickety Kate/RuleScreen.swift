@@ -3,7 +3,7 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 20/09/2015.
-//  Copyright © 2015 Nereids Gold. All rights reserved.
+//  Copyright © 2015 Geoff Burns. All rights reserved.
 //
 
 import SpriteKit
@@ -40,7 +40,7 @@ class RuleScreen: Popup {
     }
     else
     {
-    button.texture = SKTexture(imageNamed: "Rules2")
+    button.texture = SKTexture(imageNamed: "X")
     alpha = 1.0
     zPosition = 400
     button.zPosition = 450

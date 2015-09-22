@@ -36,6 +36,7 @@ public enum Direction:Int
         
         return   startRotate - rotateDelta * positionInSpread
     }
+    
     func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, startWidth: CGFloat, startheight: CGFloat, hortizonalSpacing: CGFloat, verticalSpacing: CGFloat) -> CGPoint
     {
     
@@ -79,6 +80,7 @@ public enum SideOfTable:Int
  
         var hortizonalSpacing = width * 0.25 / fullHand
         var verticalSpacing = height * 0.18 / fullHand
+        let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
         switch self
         {
             // Player One
@@ -91,20 +93,20 @@ public enum SideOfTable:Int
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             // Computer Player
         case .Top:
-            hortizonalSpacing = -width * 0.2 / fullHand
-            startWidth = width * 0.6
+            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.06 : 0.2) / fullHand
+            startWidth = width * (noOfPlayers > 5 ? 0.5 : 0.6)
             startheight = height
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .TopMidLeft:
-            hortizonalSpacing = -width * 0.14 / fullHand
-            startWidth = width * 0.33
+            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.06 : 0.14) / fullHand
+            startWidth = width * (noOfPlayers > 5 ? 0.20 : 0.33)
             startheight = height
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .TopMidRight:
-            hortizonalSpacing = -width * 0.14 / fullHand
-            startWidth = width * 0.75
+            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.06 : 0.14) / fullHand
+            startWidth = width * (noOfPlayers > 5 ? 0.84 : 0.75)
             startheight = height
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
@@ -125,20 +127,20 @@ public enum SideOfTable:Int
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             // Computer Player
         case .CenterTop:
-            hortizonalSpacing = -width * 0.2 / fullHand
+            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.09 : 0.2) / fullHand
             startWidth = width * 0.6
             startheight = height * 0.8
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .CenterTopMidLeft:
-            hortizonalSpacing = -width * 0.14 / fullHand
-            startWidth = width * 0.33
+            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.09 : 0.14) / fullHand
+            startWidth = width * (noOfPlayers > 5 ? 0.25 : 0.33)
             startheight = height * 0.8
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .CenterTopMidRight:
-            hortizonalSpacing = -width * 0.14 / fullHand
-            startWidth = width * 0.75
+            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.09 : 0.14) / fullHand
+            startWidth = width * (noOfPlayers > 5 ? 0.8 : 0.75)
             startheight = height * 0.8
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player

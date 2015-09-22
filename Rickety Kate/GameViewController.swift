@@ -10,21 +10,6 @@ import UIKit
 import SpriteKit
 import iAd
 
-extension SKNode {
-    class func unarchiveFromFile(file : String) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            let sceneData = try! NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe)
-            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
-            
-            archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
-            archiver.finishDecoding()
-            return scene
-        } else {
-            return nil
-        }
-    }
-}
 
 class GameViewController: UIViewController , ADBannerViewDelegate {
 
@@ -34,6 +19,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
         adBannerView.delegate = self
         adBannerView.hidden = true
+        self.canDisplayBannerAds = true
         view.addSubview(adBannerView)
     }
 
@@ -41,13 +27,13 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         super.viewDidLoad()
         let value = UIInterfaceOrientation.LandscapeLeft.rawValue
         UIDevice.currentDevice().setValue(value, forKey: "orientation")
-     
-       if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene
-       {
+        let scene = GameScene(size: CGSize(width: 1024, height: 768))
+
+
             // Configure the view.
             let skView = self.view as! SKView
             
-     //     let scene  =  GameScene(size:skView.bounds.size)
+            //let scene  =  GameScene(size:skView.bounds.size)
             skView.showsFPS = false
             skView.showsNodeCount = false
             
@@ -57,10 +43,11 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill
      
-            scene.table = CardTable.makeDemo(4,noOfSuitesInDeck: 4)
+            scene.table = CardTable.makeDemo()
             
             skView.presentScene(scene)
-        }
+        loadAds()
+     
     }
 
     override func shouldAutorotate() -> Bool {
@@ -94,8 +81,8 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         
         
-        self.adBannerView.alpha = 1.0
-        adBannerView.hidden = false
+     //   self.adBannerView.alpha = 1.0
+     //   adBannerView.hidden = false
 
         
     }
