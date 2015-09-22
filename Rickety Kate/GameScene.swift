@@ -178,6 +178,7 @@ class GameScene: SKScene {
    
             for player in self.table.players
             {
+                player.wonCards.clear()
                     for card in player.hand
                     {
                         let sprite = CardSprite.sprite(card)

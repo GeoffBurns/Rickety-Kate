@@ -52,6 +52,10 @@ class CardPile
     {
         
     }
+    func clear()
+    {
+        cards = []
+    }
     func appendContentsOf(newCards:[PlayingCard])
     {
        
