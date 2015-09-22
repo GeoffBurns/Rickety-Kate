@@ -117,7 +117,7 @@ public class CardTable : GameStateEngine, GameState
     func removeTricksPile(winner:CardPlayer)
     {
         
-       let sideOfTable = winner.sideOfTable
+   //    let sideOfTable = winner.sideOfTable
       
         var parent: SKNode? = nil
         for trick in self.tricksPile
@@ -128,17 +128,16 @@ public class CardTable : GameStateEngine, GameState
                 if parent == nil{
                     parent = sprite.parent
                 }
-      /*
+      
             sprite.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration), SKAction.runBlock({
-                winner.wonCards.cards.append(card)
+                winner.wonCards.append(card)
             })]))
-            */
-          
+           /*
             let moveAction = (SKAction.moveTo(sideOfTable.positionOfWonCards( sprite.parent!.frame.width, height: sprite.parent!.frame.height), duration:(cardTossDuration)))
             
             let moveActionWithDone = (SKAction.sequence([SKAction.waitForDuration(cardTossDuration) ,moveAction /*, doneAction*/]))
             sprite.runAction(moveActionWithDone)
-         
+         */
         }
         if parent != nil
         {
@@ -193,11 +192,11 @@ public class CardTable : GameStateEngine, GameState
             for card in fromPlayersCards
             {
                 CardSprite.sprite(card).player = toPlayer
-                toPlayer.hand.append(card)
+  
             }
             
-            let sortedHand = toPlayer.hand.sort()
-            toPlayer.newHand( Array(sortedHand.reverse()))
+  
+            toPlayer.appendContentsToHand(fromPlayersCards)
         }
         resetPassedCards()
     }

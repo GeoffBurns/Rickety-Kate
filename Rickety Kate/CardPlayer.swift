@@ -20,7 +20,7 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     public var score : Int = 0
     public var sideOfTable = SideOfTable.Bottom
     public var name : String = "Base"
-    var wonCards : CardFan = CardFan()
+    var wonCards : CardPile = CardPile()
     static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3)]
     
     
@@ -51,10 +51,15 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
         self.name = s
     }
 
-    public func newHand(h: [PlayingCard]  )
+    public func newHand(cards: [PlayingCard]  )
     {
-        hand  = h;
+        _hand.replaceWithContentsOf(cards)
     }
+    public func appendContentsToHand(cards: [PlayingCard]  )
+    {
+        _hand.appendContentsOf(cards);
+    }
+
     public func resetScore()
     {
         score = 0

@@ -30,12 +30,50 @@ class ScoreDisplay
     {
         ScoreDisplay.sharedInstance.setupScoreArea(scene, players: players)
     }
+    
+    static func scorePosition(side:SideOfTable, scene: SKNode) -> CGPoint
+    {
+      switch side
+       {
+       case .Right:
+          return CGPoint(x:scene.frame.size.width * 0.90, y:CGRectGetMidY(scene.frame))
+       case .Top:
+          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.75)
+       case .TopMidRight:
+          return CGPoint(x:scene.frame.width * 0.8, y:scene.frame.size.height * 0.75)
+       case .TopMidLeft:
+          return CGPoint(x:scene.frame.width * 0.2, y:scene.frame.size.height * 0.75)
+       case .Left:
+          return CGPoint(x:scene.frame.size.width * 0.10, y:CGRectGetMidY(scene.frame))
+       default:
+          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.35)
+       }
+    }
+    
+    static func scoreRotation(side:SideOfTable) -> CGFloat
+    {
+        switch side
+        {
+        case .Right:
+            return 90.degreesToRadians
+        case .Top:
+            return 0.degreesToRadians
+        case .TopMidRight:
+               return  0.degreesToRadians
+        case .TopMidLeft:
+               return 0.degreesToRadians
+        case .Left:
+               return -90.degreesToRadians
+        default:
+               return  0.degreesToRadians
+        }
+    }
 
-        func setupScoreFor(scene: SKNode,i:Int)
+   func setupScoreFor(scene: SKNode,i:Int)
         {
             let player = players[i]
             let l = scoreLabel[i]
-               let m = scoreLabel2[i]
+            let m = scoreLabel2[i]
             
             scoreUpdates[i] = Publink<(Int,Int)>()
             
@@ -49,37 +87,14 @@ class ScoreDisplay
   
             let side = player.sideOfTable
             
-            var position = CGPoint()
-            var rotate = CGFloat()
-            switch side
-                {
-                case .Right:
-                    position = CGPoint(x:scene.frame.size.width * 0.90, y:CGRectGetMidY(scene.frame))
-                    rotate = 90.degreesToRadians
-                case .Top:
-                    position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.75)
-                    rotate = 0.degreesToRadians
-                case .TopMidRight:
-                        position = CGPoint(x:scene.frame.width * 0.8, y:scene.frame.size.height * 0.75)
-                        rotate = 0.degreesToRadians
-                case .TopMidLeft:
-                        position = CGPoint(x:scene.frame.width * 0.2, y:scene.frame.size.height * 0.75)
-                        rotate = 0.degreesToRadians
-                case .Left:
-                    position = CGPoint(x:scene.frame.size.width * 0.10, y:CGRectGetMidY(scene.frame))
-                    rotate = -90.degreesToRadians
-                default:
-                    position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.35)
-                    rotate = 0.degreesToRadians
-                }
-                
-            l.position = position
+   
+            l.position = ScoreDisplay.scorePosition(side, scene: scene)
             l.zPosition = 301
-            l.zRotation = rotate
+            l.zRotation = ScoreDisplay.scoreRotation(side)
                 
-            m.position = CGPoint(x:position.x+2,y:position.y-2)
+            m.position = CGPoint(x:l.position.x+2,y:l.position.y-2)
             m.zPosition = 299
-            m.zRotation = rotate
+            m.zRotation = l.zRotation
                 
             scene.addChild(l)
             scene.addChild(m)

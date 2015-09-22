@@ -15,6 +15,7 @@
 		AC3E5D4A1BAB04B700B6A3A0 /* ScoreDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */; settings = {ASSET_TAGS = (); }; };
 		AC44D7CD1BAFB1E100DA92EC /* CardFan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44D7CC1BAFB1E100DA92EC /* CardFan.swift */; settings = {ASSET_TAGS = (); }; };
 		AC44D7CF1BB10C9300DA92EC /* GameSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44D7CE1BB10C9300DA92EC /* GameSetting.swift */; settings = {ASSET_TAGS = (); }; };
+		AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44D7D01BB203AA00DA92EC /* CardPile.swift */; settings = {ASSET_TAGS = (); }; };
 		AC627E891BA30766003E9A8F /* GivenADeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E881BA30766003E9A8F /* GivenADeck.swift */; };
 		AC627E8B1BA30807003E9A8F /* GivenAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */; };
 		AC627E8D1BA30840003E9A8F /* GivenACardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */; };
@@ -68,6 +69,7 @@
 		AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreDisplay.swift; sourceTree = "<group>"; };
 		AC44D7CC1BAFB1E100DA92EC /* CardFan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardFan.swift; path = ../CardFan.swift; sourceTree = "<group>"; };
 		AC44D7CE1BB10C9300DA92EC /* GameSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameSetting.swift; path = ../GameSetting.swift; sourceTree = "<group>"; };
+		AC44D7D01BB203AA00DA92EC /* CardPile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPile.swift; sourceTree = "<group>"; };
 		AC627E881BA30766003E9A8F /* GivenADeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenADeck.swift; sourceTree = "<group>"; };
 		AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAPlayer.swift; sourceTree = "<group>"; };
 		AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenACardTable.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */,
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
 				AC44D7CC1BAFB1E100DA92EC /* CardFan.swift */,
+				AC44D7D01BB203AA00DA92EC /* CardPile.swift */,
 				ACE6DFB41BAA32AB005B5424 /* CardHolder.swift */,
 				AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */,
 				AC9E82BD1BA686C40064870C /* CardPlayer.swift */,
@@ -330,6 +333,7 @@
 				AC9E82C41BA686C40064870C /* CardTable.swift in Sources */,
 				ACBF9A931BAD4A0C00837EEB /* NumberRangeToggle.swift in Sources */,
 				ACE6DFBC1BAA32AB005B5424 /* MathExtention.swift in Sources */,
+				AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */,
 				ACE6DFBB1BAA32AB005B5424 /* TrickPlayingStrategy.swift in Sources */,
 				AC9E82C61BA686C40064870C /* Publink.swift in Sources */,
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
