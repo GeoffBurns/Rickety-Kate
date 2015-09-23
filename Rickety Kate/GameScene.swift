@@ -82,7 +82,7 @@ class GameScene: SKScene {
     
         let hSpacing = CGFloat(table.players.count) * 2
         dealtPiles = []
-        for (player,i) in Zip2Sequence(table.players,0...10)
+        for (i,player) in table.players.enumerate() 
            {
            let dealtPile = CardPile()
             dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false, isBig: false)

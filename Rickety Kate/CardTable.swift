@@ -187,7 +187,7 @@ public class CardTable : GameStateEngine, GameState
     {
         
         let noOfPlayer = players.count
-        for (next,toPlayer) in  Zip2Sequence(0...10,players)
+        for (next,toPlayer) in  players.enumerate()
         {
 
             var previous = next - 1
@@ -316,7 +316,7 @@ public class CardTable : GameStateEngine, GameState
     }
     func passOtherCards()
     {
-       for (i,player) in  Zip2Sequence(0...10,players)
+       for (i,player) in  players.enumerate()
        {
         if let compPlayer = player as? ComputerPlayer
           {
