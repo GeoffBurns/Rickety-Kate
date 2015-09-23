@@ -109,9 +109,12 @@ class CardPile
             // Stop all running animations before starting new ones
             sprite.removeAllActions()
             sprite.positionInSpread = positionInSpread
+            sprite.zPosition = positionInSpread
             // PlayerOne's cards are larger
+            
+            /// TODO fix scaling
             sprite.setScale(isBig ? cardScale: cardScale*0.5)
-            sprite.anchorPoint = cardAnchorPoint
+            sprite.updateAnchorPoint(cardAnchorPoint)
             
             var flipAction = (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
             let newPosition =  positionOfCard(positionInSpread, spriteHeight: sprite.size.height, fullHand:fullHand)

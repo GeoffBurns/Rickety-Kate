@@ -55,8 +55,11 @@ class CardSprite : SKSpriteNode
     
     func updateAnchorPoint(anchorPoint:CGPoint)
     {
-    let dx = (anchorPoint.x - self.anchorPoint.x) * self.size.width;
-    let dy = (anchorPoint.y - self.anchorPoint.y) * self.size.height;
+    let dx1 = (anchorPoint.x - self.anchorPoint.x) * self.size.width;
+    let dy1 = (anchorPoint.y - self.anchorPoint.y) * self.size.height;
+    
+    let dx = dx1 * cos(self.zRotation) - dy1 * sin(self.zRotation)
+    let dy = dx1 * sin(self.zRotation) + dy1 * cos(self.zRotation)
     self.position = CGPointMake(self.position.x+dx, self.position.y+dy);
     self.anchorPoint = anchorPoint;
     }
