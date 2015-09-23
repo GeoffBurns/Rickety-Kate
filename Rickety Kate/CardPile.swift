@@ -42,11 +42,11 @@ class CardPile
         self.isBig = isBig
         self.isFanClosed = true
     }
-    
+
     func append(card:PlayingCard)
     {
         cards.append(card)
-        rearrangeFor(card, positionInSpread: 0, noCards: 1, fullHand: 1)
+        rearrangeFor(card, positionInSpread: 0,  fullHand: 1)
  
     }
     func update()
@@ -63,7 +63,7 @@ class CardPile
         
         for card in cards
         {
-            rearrangeFor(card, positionInSpread: 0, noCards: 1, fullHand: 1)
+            rearrangeFor(card, positionInSpread: 0,  fullHand: 1)
         }
      
     }
@@ -73,13 +73,21 @@ class CardPile
         
         for card in cards
         {
-        rearrangeFor(card, positionInSpread: 0, noCards: 1, fullHand: 1)
+        rearrangeFor(card, positionInSpread: 0,  fullHand: 1)
         }
         
      
     }
-    
-    func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat, noCards:CGFloat,fullHand:CGFloat)
+    func positionOfCard(cpositionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
+    {
+        return position
+    }
+    func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
+    {
+        return direction.rotationOfCard(positionInSpread, fullHand:fullHand) - 30.degreesToRadians
+    }
+    func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat,
+        fullHand:CGFloat)
     {
         if let sprite = CardSprite.spriteFor(card)
         {
@@ -91,12 +99,9 @@ class CardPile
             sprite.anchorPoint = cardAnchorPoint
             
             var flipAction = (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
-            let newPosition =  isFanClosed ?
-                position :
-                sideOfTable.positionOfCard(positionInSpread, spriteHeight: sprite.size.height,
-                    width: scene!.frame.width, height: scene!.frame.height, fullHand:fullHand)
+            let newPosition =  positionOfCard(positionInSpread, spriteHeight: sprite.size.height, fullHand:fullHand)
             let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
-            let rotationAngle = direction.rotationOfCard(positionInSpread, fullHand:fullHand)
+            let rotationAngle = rotationOfCard(positionInSpread, fullHand:fullHand)
             let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(cardTossDuration*0.8)))
             let scaleAction =  (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
             let scaleYAction =  SKAction.scaleYTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration)
@@ -155,7 +160,7 @@ class CardPile
         }
         for card in cards
         {
-            rearrangeFor(card,positionInSpread:positionInSpread, noCards:noCards,fullHand:fullHand)
+            rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
             positionInSpread++
            
         }

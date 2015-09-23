@@ -8,29 +8,7 @@
 
 import SpriteKit
 
-class Seater
-{
-    static let seatsFor3 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.Left]
-    static let seatsFor4 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.Top, SideOfTable.Left]
-    static let seatsFor5 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.TopMidRight, SideOfTable.TopMidLeft,
-        SideOfTable.Left]
-    
-    static let seatsFor6 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.TopMidRight, SideOfTable.Top, SideOfTable.TopMidLeft,
-        SideOfTable.Left]
-    
-    static func seatsFor(noOfPlayers:Int) -> [SideOfTable]
-    {
-    switch noOfPlayers
-    {
-    case 3 : return seatsFor3
-    case 4 : return seatsFor4
-    case 5 : return seatsFor5
-    case 6 : return seatsFor6
-    default : return []
-    }
-    }
-    
-}
+
 class GameScene: SKScene {
     
     lazy var table = CardTable.makeTable()
@@ -41,7 +19,9 @@ class GameScene: SKScene {
     var draggedNode: SKSpriteNode? = nil;
     var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
- 
+    
+    var dealtPiles : [CardPile] = []
+
 
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
@@ -63,23 +43,26 @@ class GameScene: SKScene {
         let seats = Seater.seatsFor(table.players.count)
         var i = 0
         let hSpacing = CGFloat(table.players.count) * 2
+        dealtPiles = []
+        
         for player in table.players
         {
             table.setupPassedCards(self)
-
+        
             for card in player.hand
             {
                 let sprite = CardSprite(card: card, player: player)
                 
-                sprite.setScale(cardScale)
-                sprite.position = CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5)
-                
+                sprite.setScale(cardScale * 0.5)
                 self.addChild(sprite)
             }
-         
-           i++
+            let dealtPile = CardPile()
+            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false, isBig: false)
+            
+             dealtPile.appendContentsOf(player._hand.cards)
+             dealtPiles.append(dealtPile)
+            i++
         }
-        
         for (player,seat) in Zip2Sequence(table.players,seats)
         {
             player.setup(self, sideOfTable: seat)
@@ -96,53 +79,18 @@ class GameScene: SKScene {
 
     func reverseDeal(width: CGFloat , height: CGFloat )
     {
-        let fullHand = CGFloat(13)
-        
-        var i = 0;
+    
         let hSpacing = CGFloat(table.players.count) * 2
-        for player in table.players
-        {
-            let noCards = CGFloat(player.hand.count)
-            let playerSeat = player.sideOfTable
-            let isPlayerOne = playerSeat==SideOfTable.Bottom
-            var positionInSpread = (fullHand - noCards) * 0.5
-            
-            for trick in table.tricksPile
-            {
-                let moveAction = (SKAction.moveTo(CGPoint(x: -300,y:height*0.5), duration:(cardTossDuration*0.8)))
-         
-                CardSprite.sprite(trick.playedCard).runAction(moveAction)
-            
+        dealtPiles = []
+        for (player,i) in Zip2Sequence(table.players,0...10)
+           {
+           let dealtPile = CardPile()
+            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false, isBig: false)
+            dealtPile.appendContentsOf(player._hand.cards)
+            dealtPiles.append(dealtPile)
             }
-  
-                for card in player.hand
-                {
-                    let sprite = CardSprite.sprite(card)
-                  
-                
-                        sprite.anchorPoint = cardAnchorPoint
-                    
-                        sprite.flipDown()
-                
-                        sprite.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-                        let newPosition = CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5)
-                        let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
-                  
-                        let rotateAction = (SKAction.rotateToAngle(0.0, duration:(cardTossDuration*0.8)))
-                        let scaleAction =  (SKAction.scaleTo(cardScale, duration:cardTossDuration*0.8))
-                        let groupAction = (SKAction.group([moveAction,rotateAction,scaleAction]))
-                        sprite.runAction(groupAction)
-                        
-                        sprite.zPosition = (isPlayerOne ? 100: 10) + positionInSpread
-                        sprite.color = UIColor.whiteColor()
-                        sprite.colorBlendFactor = 0
-                        positionInSpread++
-                }
-         
-            i++
-        }
+            dealtPiles[0].appendContentsOf(table.tricksPile.map{ return $0.playedCard })
     }
-
     func StatusAreaFirstMessage()
     {
 
@@ -515,7 +463,7 @@ class GameScene: SKScene {
 
         }
     }
-
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }

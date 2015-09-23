@@ -67,7 +67,7 @@ class OptionScreen: Popup {
         
         noOfSuites.name = "NoOfSuites"
         noOfSuites.alpha = 1.0
-        noOfSuites.position = CGPoint(x:0.0,y:scene.frame.height * 0.1)
+        noOfSuites.position = CGPoint(x:0.0,y:scene.frame.height * 0.2)
 
         self.addChild(noOfSuites)
         
@@ -82,7 +82,7 @@ class OptionScreen: Popup {
         noOfCardsInASuite.name = "NoOfCardsInSuite"
         noOfCardsInASuite.alpha = 1.0
         
-        noOfCardsInASuite.position = CGPoint(x:0.0,y:scene.frame.height * -0.05)
+        noOfCardsInASuite.position = CGPoint(x:0.0,y:scene.frame.height * -0.0)
         self.addChild(noOfCardsInASuite)
      
         

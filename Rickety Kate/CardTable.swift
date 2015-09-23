@@ -34,7 +34,7 @@ public class CardTable : GameStateEngine, GameState
     var startPlayerNo = 1
     let cardScale = CGFloat(0.9)
     let cardScaleForSelected = CGFloat(1.05)
-    var cardsPassed : [CardFan] = []
+    var cardsPassed : [CardPile] = []
 
     
     public var players : [CardPlayer] {
@@ -70,27 +70,37 @@ public class CardTable : GameStateEngine, GameState
     
     func setPassedCards()
     {
-        for _ in _players
+        cardsPassed.append(CardFan())
+        for _ in 0..<(_players.count-1)
         {
-            cardsPassed.append(CardFan())
+            cardsPassed.append(CardPile())
         }
     }
     func resetPassedCards()
     {
-        var i = 0
-        for _ in _players
+
+        for i in 0..<(_players.count)
         {
             cardsPassed[i].cards = []
-            i++
         }
     }
     func setupPassedCards(scene:SKNode)
     {
-       for (passFan,player) in Zip2Sequence( cardsPassed, players )
+       for (passPile,player) in Zip2Sequence( cardsPassed, players )
        {
         let side = player.sideOfTable
-        let center = player.sideOfTable.center
-        passFan.setup(scene, sideOfTable: center, isUp: side == SideOfTable.Bottom, isBig: false)
+
+        if let passFan = passPile as? CardFan
+           {
+            passFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, isBig: false)
+           }
+        else
+           {
+            passPile.setup(scene,
+                direction: side.direction,
+                position: side.positionOfPassingPile( 80, width: scene.frame.width, height: scene.frame.height),
+                isUp: false, isBig: false)
+           }
         }
        trickFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, isBig: false)
     }

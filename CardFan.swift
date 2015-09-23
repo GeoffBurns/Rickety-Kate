@@ -31,6 +31,15 @@ class CardFan : CardPile
     {
        rearrange()
     }
+    override func positionOfCard(positionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
+    {
+        return sideOfTable.positionOfCard(positionInSpread, spriteHeight: spriteHeight,
+            width: scene!.frame.width, height: scene!.frame.height, fullHand:fullHand)
+    }
+    override func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
+    {
+        return direction.rotationOfCard(positionInSpread, fullHand:fullHand)
+    }
     override func appendContentsOf(newCards:[PlayingCard])
     {
         var updatedCards = cards
