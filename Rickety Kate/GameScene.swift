@@ -30,10 +30,7 @@ class GameScene: SKScene {
     
     lazy var table = CardTable.makeTable()
     var originalTouch = CGPoint()
-    var originalCardPosition = CGPoint()
-    var originalCardRotation = CGFloat()
-    var originalCardAnchor = CGPoint()
-    var draggedNode: SKSpriteNode? = nil;
+    var draggedNode: CardSprite? = nil;
     var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
     
@@ -236,11 +233,10 @@ class GameScene: SKScene {
         setupNewGameArrangement()
     }
     
-    func isNodeAPlayerOneCardSpite(node:SKSpriteNode) -> Bool
+    func isNodeAPlayerOneCardSpite(cardsprite:CardSprite) -> Bool
     {
     // does the sprite belong to a player
-    if let cardsprite = node as? CardSprite,
-        player = cardsprite.player
+    if let player = cardsprite.player
         {
            return player.name == "You"
         }
@@ -267,7 +263,7 @@ class GameScene: SKScene {
         self.runAction(doneAction2)
     }
     
-    func buttonTouched() -> Bool
+    func buttonTouched(positionInScene:CGPoint) -> Bool
     {
         if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
         {
@@ -308,7 +304,7 @@ class GameScene: SKScene {
         let positionInScene = touch.locationInNode(self)
 
 
-        if buttonTouched()
+        if buttonTouched(positionInScene)
         {
                 return
         }
@@ -320,26 +316,19 @@ class GameScene: SKScene {
                 }
         /// correct for rotation of card
         let adjustedPosition = CGPoint(x: newX,y: positionInScene.y)
-        if let adjustedNode : SKSpriteNode = self.nodeAtPoint(adjustedPosition) as? SKSpriteNode
+        if let adjustedNode = self.nodeAtPoint(adjustedPosition) as? CardSprite
         {
             if isNodeAPlayerOneCardSpite(adjustedNode)        {
-                let liftUp = SKAction.scaleTo(1.2, duration: 0.2)
-                adjustedNode.runAction(liftUp, withKey: "pickup")
+              
                         draggedNode = adjustedNode;
                         originalTouch = positionInScene
-                        originalCardPosition  = adjustedNode.position
-                        originalCardRotation  = adjustedNode.zRotation
-                        originalCardAnchor  = adjustedNode.anchorPoint
-                        
-                        adjustedNode.zRotation = 0
-                        adjustedNode.position = positionInScene
-                        adjustedNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-                        adjustedNode.xScale = 1.15
-                        adjustedNode.yScale = 1.15
+                        adjustedNode.liftUp(positionInScene)
+                
+                
                         return
                     }
-            
-            }
+        
+        }
         }
     }
     
@@ -349,32 +338,22 @@ class GameScene: SKScene {
    
     let deltaX = abs(originalTouch.x - positionInScene.x)
     let deltaY = abs(originalTouch.y - positionInScene.y)
-    /// track position in hand
+        
+    /// if swiping horizonatally then riffle through the card fan
     if deltaX > (2.2 * deltaY) && deltaX > 22
         {
-          
            let touchedNodes = self.nodesAtPoint(positionInScene)
     
-            for node in touchedNodes
+           for node in touchedNodes
                 {
-                    if let touchedNode : SKSpriteNode = node as? SKSpriteNode
+                 if let touchedNode  = node as? CardSprite
                       where isNodeAPlayerOneCardSpite(touchedNode)
                         && draggedNode != touchedNode
                     {
-                        
-                        restoreDraggedCard()
-                        
+                        draggedNode?.setdownQuick()
+                        touchedNode.liftUpQuick(positionInScene)
                         draggedNode = touchedNode;
                         originalTouch = positionInScene
-                        originalCardPosition  = touchedNode.position
-                        originalCardRotation  = touchedNode.zRotation
-                        originalCardAnchor  = touchedNode.anchorPoint
-                        
-                        touchedNode.zRotation = 0
-                        touchedNode.position = positionInScene
-                        touchedNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-                        touchedNode.xScale = 1.15
-                        touchedNode.yScale = 1.15
                         return
                     }
                }
@@ -400,29 +379,22 @@ class GameScene: SKScene {
     func restoreDraggedCard()
     {
         
-        if let cardsprite = draggedNode as? CardSprite,
-           let fan = cardsprite.fan
+        if let cardsprite = draggedNode
+    
         {
-          fan.rearrange()
+          cardsprite.setdown()
+         draggedNode=nil
         }
-        else
-        {
-          draggedNode!.zRotation = originalCardRotation
-          draggedNode!.position = originalCardPosition
-          draggedNode!.anchorPoint = originalCardAnchor
-          draggedNode!.xScale = cardScale
-          draggedNode!.yScale = cardScale
-        }
-        draggedNode=nil
+        
+    
     }
     
     
     func setDownDraggedPassingCard(positionInScene:CGPoint)
     {
         let height = self.frame.size.height
-        let touchedNode = draggedNode!;
-        if let cardsprite = touchedNode as? CardSprite
-            {
+        let cardsprite = draggedNode!;
+ 
              if let sourceFanName = cardsprite.fan?.name
                  {
                  if sourceFanName == CardPileType.Hand.description  && positionInScene.y > height * 0.3
@@ -441,11 +413,12 @@ class GameScene: SKScene {
                     }
                 }
               
-            }
+  
         restoreDraggedCard()
                     
 
     }
+    
     func checkPassingPhaseProgess()
     {
         let count = table.cardsPassed[0].cards.count
@@ -502,9 +475,7 @@ class GameScene: SKScene {
                     currentPlayer = state.remainingPlayers.first
                     where currentPlayer.name == "You"
                 {
-                    let touchedNode = draggedNode!;
-                    
-                    if let cardsprite = touchedNode as? CardSprite
+                    if let cardsprite = draggedNode
                         where positionInScene.y > height * 0.3
                         {
                         

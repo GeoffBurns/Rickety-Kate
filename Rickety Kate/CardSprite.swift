@@ -3,11 +3,18 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 17/09/2015.
-//  Copyright (c) 2015 Nereids Gold. All rights reserved.
+//  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
 
 import SpriteKit
+
+enum CardState
+{
+    case AtRest
+    case Dragged
+    case Enlarged
+}
 
 class CardSprite : SKSpriteNode
 {
@@ -18,7 +25,14 @@ class CardSprite : SKSpriteNode
     var card : PlayingCard
     var isUp = false
     var positionInSpread = CGFloat(0.0)
+    var state = CardState.AtRest
+    var originalTouch : CGPoint = CGPointZero
     
+    var originalScale = CGFloat(1.0)
+    var originalCardPosition   = CGPointZero
+    var originalCardRotation  = CGFloat(0.0)
+    var originalCardZPosition  = CGFloat(0.0)
+    var originalCardAnchor  = CGPointZero
     init(card:PlayingCard, player : CardPlayer)
     {
    
@@ -38,9 +52,75 @@ class CardSprite : SKSpriteNode
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-   
     
+    func updateAnchorPoint(anchorPoint:CGPoint)
+    {
+    let dx = (anchorPoint.x - self.anchorPoint.x) * self.size.width;
+    let dy = (anchorPoint.y - self.anchorPoint.y) * self.size.height;
+    self.position = CGPointMake(self.position.x+dx, self.position.y+dy);
+    self.anchorPoint = anchorPoint;
+    }
+    
+    func liftUp(positionInScene:CGPoint)
+    {
+        state = CardState.Dragged
+        originalScale = self.yScale
+        originalCardPosition  = self.position
+        originalCardRotation  = self.zRotation
+        originalCardZPosition  = self.zPosition
+        originalCardAnchor  = self.anchorPoint
+        updateAnchorPoint( CGPoint(x: 0.5, y: 0.5))
+        self.zPosition = 120
+      //  removeAllActions()
+        runAction(SKAction.group([
+            SKAction.scaleTo(1.2, duration: 0.3),
+            SKAction.rotateToAngle(0.0, duration: 0.3),
+            SKAction.moveTo(positionInScene, duration: 0.3)
+            ]))
+      
+    }
+    func setdown()
+    {
+        state = CardState.AtRest
+        updateAnchorPoint(originalCardAnchor)
+    //    removeAllActions()
+        runAction(SKAction.sequence([SKAction.group([
+            SKAction.scaleTo(originalScale, duration: 0.3),
+            SKAction.rotateToAngle(originalCardRotation, duration: 0.3),
+            SKAction.moveTo(originalCardPosition, duration: 0.3)
+            ]),
+            SKAction.runBlock {
+               self.zPosition = self.originalCardZPosition
+               self.fan?.rearrange()
+            }]))
+    }
+    func liftUpQuick(positionInScene:CGPoint)
+    {
+        state = CardState.Dragged
+        originalScale = self.yScale
+        originalCardPosition  = self.position
+        originalCardRotation  = self.zRotation
+        originalCardAnchor  = self.anchorPoint
+        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.zPosition = 120
+        self.position = positionInScene
+        self.zRotation = 0.0
+        self.setScale(1.2)
+        self.fan?.rearrangeCardsAtRest()
+     
+        
+    }
+    func setdownQuick()
+    {
+        state = CardState.AtRest
+        self.anchorPoint = originalCardAnchor
+        self.zPosition = originalCardZPosition
+        self.position = originalCardPosition
+        self.zRotation = originalCardRotation
+        self.setScale(originalScale)
+        
+   
+    }
     func flipUp()
     {
         if !isUp

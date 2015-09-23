@@ -49,6 +49,7 @@ class CardPile
 
     func append(card:PlayingCard)
     {
+     
         cards.append(card)
         rearrangeFor(card, positionInSpread: 0,  fullHand: 1)
  
@@ -103,6 +104,7 @@ class CardPile
         if let sprite = CardSprite.spriteFor(card)
         {
             sprite.fan = self
+            sprite.state = CardState.AtRest
             
             // Stop all running animations before starting new ones
             sprite.removeAllActions()
@@ -151,7 +153,36 @@ class CardPile
             sprite.colorBlendFactor = 0
         }
     }
-    
+    func rearrangeCardsAtRest()
+    {
+        if(scene==nil)
+        {
+            return
+        }
+        var fullHand = CGFloat(13)
+        let noCards = CGFloat(cards.count)
+        var positionInSpread = CGFloat(0)
+        
+        if isFanOpen
+        {
+            positionInSpread = (fullHand - noCards) * 0.5
+            if fullHand < noCards
+            {
+                fullHand = noCards
+                positionInSpread = CGFloat(0)
+            }
+        }
+        for card in cards
+        {
+            if let sprite = CardSprite.spriteFor(card)
+            where sprite.state == CardState.AtRest
+            {
+            rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
+            }
+            positionInSpread++
+            
+        }
+    }
     func rearrange()
     {
         if(scene==nil)
