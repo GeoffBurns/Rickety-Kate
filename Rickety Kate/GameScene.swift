@@ -8,7 +8,24 @@
 
 import SpriteKit
 
-
+enum CardPileType : CustomStringConvertible
+{
+    case Hand
+    case Passing
+    case Won
+    case Trick
+    
+    
+    var description : String {
+        switch self {
+            
+        case .Hand: return "Hand"
+        case .Passing: return "Passing"
+        case .Won: return "Won"
+        case .Trick: return "Trick"
+        }
+    }
+}
 class GameScene: SKScene {
     
     lazy var table = CardTable.makeTable()
@@ -56,7 +73,7 @@ class GameScene: SKScene {
                 sprite.setScale(cardScale * 0.5)
                 self.addChild(sprite)
             }
-            let dealtPile = CardPile()
+            let dealtPile = CardPile(name: "dealt")
             dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false, isBig: false)
             
              dealtPile.appendContentsOf(player._hand.cards)
@@ -84,7 +101,7 @@ class GameScene: SKScene {
         dealtPiles = []
         for (i,player) in table.players.enumerate() 
            {
-           let dealtPile = CardPile()
+           let dealtPile = CardPile(name: "dealt")
             dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false, isBig: false)
             dealtPile.appendContentsOf(player._hand.cards)
             dealtPiles.append(dealtPile)
@@ -249,6 +266,39 @@ class GameScene: SKScene {
             })]))
         self.runAction(doneAction2)
     }
+    
+    func buttonTouched() -> Bool
+    {
+        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
+        {
+            switch touchedNode.name!
+            {
+                /// play button
+            case "Play" :
+                touchedNode.texture = SKTexture(imageNamed: "Play2")
+                resetWith(CardTable.makeTable())
+                return true
+                /// exit button
+            case  "Exit" :
+                touchedNode.texture = SKTexture(imageNamed: "Exit2")
+                exitScreen.alpha = 1.0
+                exitScreen.zPosition = 500
+                return  true
+                /// rules button
+            case "Rules" :
+                rulesScreen.flipButton()
+                return  true
+                
+                /// Option button
+            case "Option" :
+                optionScreen.flipButton()
+                return  true
+            default : break
+                
+            }
+        }
+         return false
+    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
@@ -258,34 +308,11 @@ class GameScene: SKScene {
         let positionInScene = touch.locationInNode(self)
 
 
-        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
+        if buttonTouched()
         {
-            switch touchedNode.name!
-            {
-            /// play button
-            case "Play" :
-                touchedNode.texture = SKTexture(imageNamed: "Play2")
-                resetWith(CardTable.makeTable())
                 return
-            /// exit button
-            case  "Exit" :
-                touchedNode.texture = SKTexture(imageNamed: "Exit2")
-                exitScreen.alpha = 1.0
-                exitScreen.zPosition = 500
-                return
-            /// rules button
-            case "Rules" :
-                rulesScreen.flipButton()
-                return
-  
-            /// Option button
-            case "Option" :
-                optionScreen.flipButton()
-                return
-            default : break
-      
-             }
         }
+       
         var newX = positionInScene.x
         if newX > width * 0.5
                 {
@@ -296,6 +323,8 @@ class GameScene: SKScene {
         if let adjustedNode : SKSpriteNode = self.nodeAtPoint(adjustedPosition) as? SKSpriteNode
         {
             if isNodeAPlayerOneCardSpite(adjustedNode)        {
+                let liftUp = SKAction.scaleTo(1.2, duration: 0.2)
+                adjustedNode.runAction(liftUp, withKey: "pickup")
                         draggedNode = adjustedNode;
                         originalTouch = positionInScene
                         originalCardPosition  = adjustedNode.position
@@ -363,7 +392,6 @@ class GameScene: SKScene {
     {
         table.passOtherCards()
         table.takePassedCards()
-    //   rearrangeCardImagesInHandsWithAnimation(width, height: height)
         isInPassingCardsPhase = false
         StatusDisplay.publish()
         startTrickPhase()
@@ -371,99 +399,135 @@ class GameScene: SKScene {
     
     func restoreDraggedCard()
     {
-        draggedNode!.zRotation = originalCardRotation
-        draggedNode!.position = originalCardPosition
-        draggedNode!.anchorPoint = originalCardAnchor
-        draggedNode!.xScale = cardScale
-        draggedNode!.yScale = cardScale
+        
+        if let cardsprite = draggedNode as? CardSprite,
+           let fan = cardsprite.fan
+        {
+          fan.rearrange()
+        }
+        else
+        {
+          draggedNode!.zRotation = originalCardRotation
+          draggedNode!.position = originalCardPosition
+          draggedNode!.anchorPoint = originalCardAnchor
+          draggedNode!.xScale = cardScale
+          draggedNode!.yScale = cardScale
+        }
         draggedNode=nil
+    }
+    
+    
+    func setDownDraggedPassingCard(positionInScene:CGPoint)
+    {
+        let height = self.frame.size.height
+        let touchedNode = draggedNode!;
+        if let cardsprite = touchedNode as? CardSprite
+            {
+             if let sourceFanName = cardsprite.fan?.name
+                 {
+                 if sourceFanName == CardPileType.Hand.description  && positionInScene.y > height * 0.3
+                        {
+                            if let _ = table.passCard(0, passedCard: cardsprite.card)
+                            {
+                            return
+                            }
+                        }
+                  if sourceFanName == CardPileType.Passing.description  && positionInScene.y <= height * 0.3
+                    {
+                        if let _ = table.unpassCard(0, passedCard: cardsprite.card)
+                        {
+                            return
+                        }
+                    }
+                }
+              
+            }
+        restoreDraggedCard()
+                    
+
+    }
+    func checkPassingPhaseProgess()
+    {
+        let count = table.cardsPassed[0].cards.count
+        if  count < 3
+        {
+            
+            if count == 2
+            {
+                StatusDisplay.publish("Discard one more card", message2: "Your worst card")
+            }
+            else
+            {
+                StatusDisplay.publish("Discard \(3 - count) more cards", message2: "Your worst cards")
+            }
+        }
+        else
+        {
+            endCardPassingPhase()
+        }
+    }
+    
+    func doesNotFollowSuite(cardsprite:CardSprite)
+    {
+    cardsprite.color = UIColor.redColor()
+    cardsprite.colorBlendFactor = 0.2
+    
+    StatusDisplay.publish("Card Does Not",message2: "Follow Suite")
+    }
+    
+    func transferCardToTrickPile(cardsprite:CardSprite)
+    {
+        _ = self.table.playerOne._hand.remove(cardsprite.card)
+        table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card,state:table.currentStateOfPlay!,willAnimate:false)
+        table.currentStateOfPlay=nil
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
        
-        if let touch = touches.first
+    if let touch = touches.first
         {
         let height = self.frame.size.height
         let positionInScene = touch.locationInNode(self)
         
         if( draggedNode != nil)
-        {
-            let touchedNode = draggedNode!;
-            if positionInScene.y > height * 0.3
-            {
-                
-                if let cardsprite = touchedNode as? CardSprite
-                {
-                    
-                    if isInPassingCardsPhase
+           {
+            
+                if isInPassingCardsPhase
                     {
-                    
-                            if let _ = table.passCard(0, passedCard: cardsprite.card)
-                            {
-                                
-                            }
-                            else
-                            {
-                                restoreDraggedCard()
-                            }
-                            //rearrangeCardImagesInPassPile(width, height: height)
-                            let count = table.cardsPassed[0].cards.count
-                            if  count < 3
-                            {
-                                
-                            if count == 2
-                                {
-                                StatusDisplay.publish("Discard one more card", message2: "Your worst card")
-                                }
-                                else
-                                {
-                                StatusDisplay.publish("Discard \(3 - count) more cards", message2: "Your worst cards")
-                                }
-                            }
-                            else
-                            {
-                                 endCardPassingPhase()
-                            }
-                            return;
-                        
+                    setDownDraggedPassingCard(positionInScene)
+                    checkPassingPhaseProgess()
+                    return;
                     }
-                    else if let state = self.table.currentStateOfPlay,
+                else if let state = self.table.currentStateOfPlay,
                     currentPlayer = state.remainingPlayers.first
                     where currentPlayer.name == "You"
                 {
-                       if table.isMoveValid(self.table.playerOne,cardName: cardsprite.name!)
-                       {
+                    let touchedNode = draggedNode!;
                     
-                     if let  index = self.table.playerOne.hand.indexOf(cardsprite.card)
+                    if let cardsprite = touchedNode as? CardSprite
+                        where positionInScene.y > height * 0.3
                         {
-                        _ = self.table.playerOne.hand.removeAtIndex(index)
-                        table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card,state:table.currentStateOfPlay!,willAnimate:false)
-                            table.currentStateOfPlay=nil
-                        return;
-                     }
-                    
-                    }
+                        
+                       if table.isMoveValid(self.table.playerOne,cardName: cardsprite.name!)
+                          {
+                          transferCardToTrickPile(cardsprite)
+                          return;
+                          }
                        else
-                       {
-                        cardsprite.color = UIColor.redColor()
-                        cardsprite.colorBlendFactor = 0.2
-                        
-                        StatusDisplay.publish("Card Does Not",message2: "Follow Suite")
-                        
-                    }
-                    } else {
+                          {
+                          doesNotFollowSuite(cardsprite)
+                          }
+                         }
+                } else {
                         StatusDisplay.publish("Wait your turn",message2: "")
                     }
-                }
-   
-     
+            
+             restoreDraggedCard()
             }
-                   restoreDraggedCard()
+            
         }
 
-        }
     }
-    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }

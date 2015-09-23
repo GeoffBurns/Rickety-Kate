@@ -24,7 +24,7 @@ class CardPile
     var direction = Direction.Up
     var isFanClosed = false
     var isFanOpen :Bool { return !isFanClosed }
-    
+    var name = ""
     
     var position = CGPoint()
     
@@ -32,6 +32,10 @@ class CardPile
         return cards[index]
     }
     
+    init(name:String)
+    {
+    self.name = name
+    }
  
     func setup(scene:SKNode, direction: Direction, position: CGPoint, isUp: Bool = false, isBig: Bool = false)
     {
@@ -76,7 +80,14 @@ class CardPile
         rearrangeFor(card, positionInSpread: 0,  fullHand: 1)
         }
         
-     
+    }
+    func remove(card:PlayingCard) -> PlayingCard?
+    {
+        if let index = cards.indexOf(card)
+        {
+            return cards.removeAtIndex(index)
+        }
+        return nil
     }
     func positionOfCard(cpositionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
     {
@@ -91,9 +102,11 @@ class CardPile
     {
         if let sprite = CardSprite.spriteFor(card)
         {
+            sprite.fan = self
+            
             // Stop all running animations before starting new ones
             sprite.removeAllActions()
-            
+            sprite.positionInSpread = positionInSpread
             // PlayerOne's cards are larger
             sprite.setScale(isBig ? cardScale: cardScale*0.5)
             sprite.anchorPoint = cardAnchorPoint

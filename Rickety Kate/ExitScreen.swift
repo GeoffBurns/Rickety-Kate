@@ -114,7 +114,6 @@ class ExitScreen: Popup {
         return node.name == "No"
     }
     
-
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
 

@@ -106,16 +106,13 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardHolder,gameState:Ga
         unaccountedForCards = -10
     }
     
-    
     let missing = unaccountedForCards
-    
     
     let safety = missing - margin - unplayedCardsInTrick
     if  safety <= 0
     {
         return (nil,safety)
     }
-    
     
     let cardsInChosenSuite = player.cardsIn( suite)
     let orderedCards = cardsInChosenSuite.sort({$0.value > $1.value})

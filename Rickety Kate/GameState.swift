@@ -28,7 +28,7 @@ public protocol GameState
 
 public class GameStateBase
 {
-    var trickFan = CardFan()
+    var trickFan = CardFan(name: CardPileType.Trick.description)
     var tricksPile : [(player:CardPlayer, playedCard:PlayingCard)] = [] { didSet { trickFan.cards = tricksPile.map { return $0.playedCard }}}
     var gameTracker = GameProgressTracker()
     

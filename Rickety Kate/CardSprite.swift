@@ -13,9 +13,11 @@ class CardSprite : SKSpriteNode
 {
     static var register : Dictionary<String, CardSprite> = [:]
 
+    weak var fan : CardPile? = nil
     weak var player : CardPlayer? = nil
     var card : PlayingCard
     var isUp = false
+    var positionInSpread = CGFloat(0.0)
     
     init(card:PlayingCard, player : CardPlayer)
     {

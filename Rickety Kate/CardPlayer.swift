@@ -20,7 +20,7 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     public var score : Int = 0
     public var sideOfTable = SideOfTable.Bottom
     public var name : String = "Base"
-    var wonCards : CardPile = CardPile()
+    var wonCards : CardPile = CardPile(name: CardPileType.Won.description)
     static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3)]
     
     
@@ -67,11 +67,7 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     
     public func removeFromHand(card:PlayingCard) -> PlayingCard?
     {
-    if let index = _hand.cards.indexOf(card)
-        {
-            return _hand.cards.removeAtIndex(index)
-         }
-    return nil
+      return _hand.remove(card)
     }
 }
 

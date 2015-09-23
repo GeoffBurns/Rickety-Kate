@@ -17,7 +17,7 @@ public protocol CardHolder
 
 public class CardHolderBase
 {
-    var _hand : CardFan = CardFan()
+    var _hand : CardFan = CardFan(name: CardPileType.Hand.description)
     public var hand : [PlayingCard] { get { return _hand.cards } set { _hand.cards = newValue }}
     public func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
     {

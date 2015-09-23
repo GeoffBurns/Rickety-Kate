@@ -70,10 +70,10 @@ public class CardTable : GameStateEngine, GameState
     
     func setPassedCards()
     {
-        cardsPassed.append(CardFan())
+        cardsPassed.append(CardFan(name: CardPileType.Passing.description))
         for _ in 0..<(_players.count-1)
         {
-            cardsPassed.append(CardPile())
+            cardsPassed.append(CardPile(name: CardPileType.Passing.description))
         }
     }
     func resetPassedCards()
@@ -151,11 +151,9 @@ public class CardTable : GameStateEngine, GameState
         }
         if parent != nil
         {
-            
             parent!.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration), SKAction.runBlock({
                 
-              
-                if(self.playerOne.hand.isEmpty)
+            if(self.playerOne.hand.isEmpty)
                 {
                     self.startPlayerNo++
                     if self.startPlayerNo > 3
@@ -165,7 +163,6 @@ public class CardTable : GameStateEngine, GameState
                     
                     Scorer.sharedInstance.hasShotTheMoon()
                                        
-                    
                     self.gameTracker.reset()
                     self.dealNewCardsToPlayers()
                     self.resetGame.publish()
@@ -301,7 +298,19 @@ public class CardTable : GameStateEngine, GameState
                         doneAction])
         displayedCard.runAction(moveActionWithDone)
         }
-    
+    func unpassCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
+    {
+        let displayed = CardSprite.sprite(passedCard)
+        
+        if let removedCard = self.cardsPassed[seatNo].remove(displayed.card)
+        {
+        
+            players[seatNo]._hand.append(removedCard)
+            return removedCard
+        }
+        
+        return nil
+    }
     func passCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
     {
     let displayed = CardSprite.sprite(passedCard)
@@ -338,12 +347,10 @@ public class CardTable : GameStateEngine, GameState
         {
             if let card = computerPlayer.playCard( self)
             {
-          
                 if let trickcard = computerPlayer.removeFromHand(card)
                 {
-        
                     playTrickCard(playerWithTurn, trickcard:trickcard,state:state)
-                                       return
+                    return
                     
                 }
             }
