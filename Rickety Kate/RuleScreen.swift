@@ -8,14 +8,11 @@
 
 import SpriteKit
 
-
+// Help Screen
 class RuleScreen: Popup {
     var rulesText : SKMultilineLabel? = nil
     var isShowing = false
 
-    
-
-    
     override init()
     {
         

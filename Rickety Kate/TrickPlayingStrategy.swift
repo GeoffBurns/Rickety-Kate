@@ -8,12 +8,13 @@
 
 import Foundation
 
-
+// What cards are the computer player going to play
 public protocol TrickPlayingStrategy
 {
     func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     
 }
+
 // If all else fails close your eyes and pick at random
 public class RandomStrategy : TrickPlayingStrategy
 {
@@ -84,7 +85,9 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardHolder,gameState:Ga
     
     //  let noOfPlayers = gameState.noOfPlayers
     let unplayedCardsInTrick = gameState.unplayedCardsInTrick
-    var unaccountedForCards = 13
+    
+    /// TODO ask deck for unaccountedForCards
+    var unaccountedForCards = GameSettings.sharedInstance.noOfCardsInASuite
     
     // remove cards in hand
     

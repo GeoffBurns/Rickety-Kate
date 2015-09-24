@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Cut down version of a CardPlayer that is visible to tests
 public protocol CardHolder
 {
     func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]

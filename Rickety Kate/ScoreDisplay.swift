@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-
+// Display the score for each player
 class ScoreDisplay
 {
     var scoreLabel : [SKLabelNode] = []

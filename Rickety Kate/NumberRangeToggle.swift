@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-/// TODO add up and down arrows
+/// User input control for integers
 class NumberRangeToggle: SKNode {
     var min = 1
     var max = 10
@@ -38,15 +38,24 @@ class NumberRangeToggle: SKNode {
     up.anchorPoint = CGPoint(x: 1.0, y: 0.0)
     up.position = CGPoint(x:width*0.5,y:height*0.6)
     label.addChild(up)
-        
+     
     let down =   SKSpriteNode(imageNamed:"triangle")
     down.name = "down"
     down.xScale = 0.35
+        
+    /// This works on simulator but not on device
+    /*
     down.yScale = -0.15
     down.anchorPoint = CGPoint(x: 1.0, y: 1.0)
+    */
+    /// This works on simulator AND on device
+    down.yScale = 0.15
+    down.anchorPoint = CGPoint(x: 0.0, y: 1.0)
+    down.zRotation = 180.degreesToRadians
+    ////
+        
     down.position = CGPoint(x:width*0.5,y:-height*0.55)
     label.addChild(down)
-
     self.addChild(label)
     self.userInteractionEnabled = true
     }

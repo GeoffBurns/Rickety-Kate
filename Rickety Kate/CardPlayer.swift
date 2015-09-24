@@ -15,6 +15,7 @@ public func ==(lhs: CardPlayer, rhs: CardPlayer) -> Bool
     return lhs.name == rhs.name
 }
 
+// Models the state and behaviour of each of the players in the game
 public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
 {
     public var score : Int = 0
@@ -43,8 +44,8 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     {
         self.sideOfTable = sideOfTable
         let isUp = sideOfTable == SideOfTable.Bottom
-        _hand.setup(scene, sideOfTable: sideOfTable, isUp: isUp, isBig: isUp)
-        wonCards.setup(scene, direction: sideOfTable.direction, position: sideOfTable.positionOfWonCards(scene.frame.width, height: scene.frame.height), isUp: false, isBig: false)
+        _hand.setup(scene, sideOfTable: sideOfTable, isUp: isUp, sizeOfCards: isUp ? CardSize.Big : CardSize.Small)
+        wonCards.setup(scene, direction: sideOfTable.direction, position: sideOfTable.positionOfWonCards(scene.frame.width, height: scene.frame.height))
     }
     
     init(name s: String) {

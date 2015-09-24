@@ -8,15 +8,17 @@
 
 import SpriteKit
 
+/// How the cards are displayed in a fan
+/// Cards positions need to be calculated more frequently in a fan as opposed to a pile
 class CardFan : CardPile
 {
     
-    func setup(scene:SKNode, sideOfTable: SideOfTable, isUp: Bool, isBig: Bool)
+    func setup(scene:SKNode, sideOfTable: SideOfTable, isUp: Bool, sizeOfCards: CardSize = CardSize.Small)
     {
         self.scene = scene
         self.sideOfTable = sideOfTable
         self.isUp = isUp
-        self.isBig = isBig
+        self.sizeOfCards = sizeOfCards
         self.direction = sideOfTable.direction
     }
 

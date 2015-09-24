@@ -7,6 +7,8 @@
 //
 import SpriteKit
 
+
+// Where are the players seated
 class Seater
 {
     static let seatsFor3 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.Left]

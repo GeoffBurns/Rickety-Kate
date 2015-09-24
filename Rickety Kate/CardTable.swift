@@ -13,7 +13,7 @@ public struct StateOfPlay
     let remainingPlayers:[CardPlayer]
 }
 
-
+/// controls the flow of the game
 public class CardTable : GameStateEngine, GameState
 {
     lazy var deck: Deck = PlayingCard.BuiltCardDeck()
@@ -32,8 +32,6 @@ public class CardTable : GameStateEngine, GameState
     func nop() {}
  
     var startPlayerNo = 1
-    let cardScale = CGFloat(0.9)
-    let cardScaleForSelected = CGFloat(1.05)
     var cardsPassed : [CardPile] = []
 
     
@@ -92,17 +90,17 @@ public class CardTable : GameStateEngine, GameState
 
         if let passFan = passPile as? CardFan
            {
-            passFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, isBig: false)
+            passFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
            }
         else
            {
             passPile.setup(scene,
                 direction: side.direction,
                 position: side.positionOfPassingPile( 80, width: scene.frame.width, height: scene.frame.height),
-                isUp: false, isBig: false)
+                isUp: false)
            }
         }
-       trickFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, isBig: false)
+       trickFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
     }
     //////////
     // GameState Protocol

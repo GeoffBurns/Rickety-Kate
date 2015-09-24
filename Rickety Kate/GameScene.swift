@@ -8,24 +8,7 @@
 
 import SpriteKit
 
-enum CardPileType : CustomStringConvertible
-{
-    case Hand
-    case Passing
-    case Won
-    case Trick
-    
-    
-    var description : String {
-        switch self {
-            
-        case .Hand: return "Hand"
-        case .Passing: return "Passing"
-        case .Won: return "Won"
-        case .Trick: return "Trick"
-        }
-    }
-}
+/// How game play is displayed
 class GameScene: SKScene {
     
     lazy var table = CardTable.makeTable()
@@ -71,7 +54,7 @@ class GameScene: SKScene {
                 self.addChild(sprite)
             }
             let dealtPile = CardPile(name: "dealt")
-            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false, isBig: false)
+            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false)
             
              dealtPile.appendContentsOf(player._hand.cards)
              dealtPiles.append(dealtPile)
@@ -99,7 +82,7 @@ class GameScene: SKScene {
         for (i,player) in table.players.enumerate() 
            {
            let dealtPile = CardPile(name: "dealt")
-            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false, isBig: false)
+            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false)
             dealtPile.appendContentsOf(player._hand.cards)
             dealtPiles.append(dealtPile)
             }
@@ -336,6 +319,7 @@ class GameScene: SKScene {
     let touch = (touches ).first!
     let positionInScene = touch.locationInNode(self)
    
+    let goingRight = originalTouch.x < positionInScene.x
     let deltaX = abs(originalTouch.x - positionInScene.x)
     let deltaY = abs(originalTouch.y - positionInScene.y)
         
@@ -349,7 +333,10 @@ class GameScene: SKScene {
                  if let touchedNode  = node as? CardSprite
                       where isNodeAPlayerOneCardSpite(touchedNode)
                         && draggedNode != touchedNode
+                        && ( goingRight && draggedNode!.positionInSpread < touchedNode.positionInSpread
+                            || !goingRight && draggedNode!.positionInSpread > touchedNode.positionInSpread)
                     {
+                        
                         draggedNode?.setdownQuick()
                         touchedNode.liftUpQuick(positionInScene)
                         draggedNode = touchedNode;

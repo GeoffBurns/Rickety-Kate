@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// Calculate the score value of the cards
+/// Used by the Scorer
 class Awarder
 {
     var scores : [Int] = []

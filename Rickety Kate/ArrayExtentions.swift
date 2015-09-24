@@ -3,7 +3,7 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 14/09/2015.
-//  Copyright (c) 2015 Nereids Gold. All rights reserved.
+//  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
 import Foundation

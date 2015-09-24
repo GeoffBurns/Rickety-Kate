@@ -8,7 +8,7 @@
 
 import Foundation
 
-// Used by Computer Player for strategy
+// Used by Computer Player to calculate strategy
 public class GameProgressTracker
 {
     var cardCount = [Int](count: 6, repeatedValue: 0)

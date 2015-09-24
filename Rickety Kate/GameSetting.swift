@@ -8,12 +8,12 @@
 
 import Foundation
 
-
+/// User controlled options for the game
 class GameSettings
 {
-    var noOfSuitesInDeck = 4
-    var noOfPlayersAtTable = 4
-    var noOfCardsInASuite = 13
+    var noOfSuitesInDeck = 6
+    var noOfPlayersAtTable = 5
+    var noOfCardsInASuite = 15
     
     static let sharedInstance = GameSettings()
     private init() { }

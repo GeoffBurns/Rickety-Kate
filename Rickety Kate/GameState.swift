@@ -8,6 +8,7 @@
 
 import SpriteKit
 
+// makes visible the state of play to computer player and tests
 public protocol GameState
 {
     var hasLead : Bool { get }
@@ -105,7 +106,7 @@ public class GameStateEngine : GameStateBase
             displayedCard.player=player
             let playedCard = displayedCard.card
             tricksPile.append(player:player,playedCard:playedCard)
-          //  tricksPile.append(player:player, playedCard:displayedCard.card)
+        
         }
     }
     func isMoveValid(player:CardPlayer,cardName:String) -> Bool

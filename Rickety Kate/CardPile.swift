@@ -8,11 +8,13 @@
 
 import SpriteKit
 
+
+/// How the cards are displayed in a pile
 class CardPile
 {
     var cards : [PlayingCard] = [] { didSet { update() } }
     var isUp = false
-    var isBig = false
+    var sizeOfCards = CardSize.Small
     var scene : SKNode? = nil
     let cardScale = CGFloat(0.9)
     var cardTossDuration = 0.4
@@ -37,13 +39,13 @@ class CardPile
     self.name = name
     }
  
-    func setup(scene:SKNode, direction: Direction, position: CGPoint, isUp: Bool = false, isBig: Bool = false)
+    func setup(scene:SKNode, direction: Direction, position: CGPoint, isUp: Bool = false, sizeOfCards: CardSize = CardSize.Small)
     {
         self.scene = scene
         self.direction = direction
         self.position = position
         self.isUp = isUp
-        self.isBig = isBig
+        self.sizeOfCards = sizeOfCards
         self.isFanClosed = true
     }
 
@@ -98,31 +100,43 @@ class CardPile
     {
         return direction.rotationOfCard(positionInSpread, fullHand:fullHand) - 30.degreesToRadians
     }
+    
+    
     func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat,
         fullHand:CGFloat)
     {
         if let sprite = CardSprite.spriteFor(card)
         {
             sprite.fan = self
-            sprite.state = CardState.AtRest
+            
+            if (sprite.state != CardState.AtRest)
+            {
+                sprite.zPosition = 140
+                sprite.state = CardState.AtRest
+            }
+            
             
             // Stop all running animations before starting new ones
-            sprite.removeAllActions()
+         //   sprite.removeAllActions()
             sprite.positionInSpread = positionInSpread
-            sprite.zPosition = positionInSpread
+            
             // PlayerOne's cards are larger
             
-            /// TODO fix scaling
-            sprite.setScale(isBig ? cardScale: cardScale*0.5)
-            sprite.updateAnchorPoint(cardAnchorPoint)
+        
+            let newScale =  sizeOfCards.scale
             
-            var flipAction = (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
-            let newPosition =  positionOfCard(positionInSpread, spriteHeight: sprite.size.height, fullHand:fullHand)
+            let newHeight = newScale * sprite.size.height / sprite.yScale
+            sprite.updateAnchorPoint(cardAnchorPoint)
+            sprite.color = UIColor.whiteColor()
+            sprite.colorBlendFactor = 0
+            
+            var flipAction = (SKAction.scaleTo(sizeOfCards.scale, duration: cardTossDuration))
+            let newPosition =  positionOfCard(positionInSpread, spriteHeight: newHeight, fullHand:fullHand)
             let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
             let rotationAngle = rotationOfCard(positionInSpread, fullHand:fullHand)
             let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(cardTossDuration*0.8)))
-            let scaleAction =  (SKAction.scaleTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration))
-            let scaleYAction =  SKAction.scaleYTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration)
+            let scaleAction =  (SKAction.scaleTo(sizeOfCards.scale, duration: cardTossDuration))
+            let scaleYAction =  SKAction.scaleYTo(sizeOfCards.scale, duration: cardTossDuration)
             var groupAction = SKAction.group([moveAction,rotateAction,scaleAction])
             
             if isUp && !sprite.isUp
@@ -133,7 +147,7 @@ class CardPile
                     SKAction.runBlock({
                         sprite.flipUp()
                     }) ,
-                    SKAction.scaleXTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration*0.5)
+                    SKAction.scaleXTo(sizeOfCards.scale, duration: cardTossDuration*0.5)
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
@@ -145,15 +159,16 @@ class CardPile
                     SKAction.runBlock({
                         sprite.flipDown()
                     }) ,
-                    SKAction.scaleXTo(isBig ? cardScale : cardScale*0.5, duration: cardTossDuration*0.5)
+                    SKAction.scaleXTo(sizeOfCards.scale, duration: cardTossDuration*0.5)
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
             
-            sprite.runAction(groupAction)
-            sprite.zPosition = (isBig ? 100: 10) + positionInSpread
-            sprite.color = UIColor.whiteColor()
-            sprite.colorBlendFactor = 0
+            sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({
+                sprite.zPosition = self.sizeOfCards.zOrder + positionInSpread
+            }) ]))
+          
+      
         }
     }
     func rearrangeCardsAtRest()
@@ -178,9 +193,40 @@ class CardPile
         for card in cards
         {
             if let sprite = CardSprite.spriteFor(card)
+                where sprite.state == CardState.AtRest
+            {
+                rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
+            }
+            positionInSpread++
+            
+        }
+    }
+
+    func reaZOrderCardsAtRest()
+    {
+        if(scene==nil)
+        {
+            return
+        }
+        var fullHand = CGFloat(13)
+        let noCards = CGFloat(cards.count)
+        var positionInSpread = CGFloat(0)
+        
+        if isFanOpen
+        {
+            positionInSpread = (fullHand - noCards) * 0.5
+            if fullHand < noCards
+            {
+                fullHand = noCards
+                positionInSpread = CGFloat(0)
+            }
+        }
+        for card in cards
+        {
+            if let sprite = CardSprite.spriteFor(card)
             where sprite.state == CardState.AtRest
             {
-            rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
+            sprite.zPosition = sizeOfCards.zOrder  + positionInSpread
             }
             positionInSpread++
             

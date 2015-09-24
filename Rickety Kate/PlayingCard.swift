@@ -218,7 +218,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public class DeckBase : Deck
     {
-        var noInSuites = [13,13,13,13,13,13]
+        var noInSuites = [13,13,13,13,13,13,13]
         func noCardIn(suite:PlayingCard.Suite) -> Int
         {
             return noInSuites[suite.rawValue]

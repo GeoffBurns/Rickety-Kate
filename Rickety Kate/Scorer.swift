@@ -6,10 +6,9 @@
 //  Copyright © 2015 Geoff Burns. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
-
+/// Calculate the Result of the trick
 class Scorer
 {
     var scores : [Int] = []

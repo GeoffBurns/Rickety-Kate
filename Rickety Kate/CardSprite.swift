@@ -9,13 +9,8 @@
 
 import SpriteKit
 
-enum CardState
-{
-    case AtRest
-    case Dragged
-    case Enlarged
-}
 
+/// controls the appearance of the card on the screen
 class CardSprite : SKSpriteNode
 {
     static var register : Dictionary<String, CardSprite> = [:]
@@ -94,11 +89,12 @@ class CardSprite : SKSpriteNode
             ]),
             SKAction.runBlock {
                self.zPosition = self.originalCardZPosition
-               self.fan?.rearrange()
+                self.fan?.reaZOrderCardsAtRest()
             }]))
     }
     func liftUpQuick(positionInScene:CGPoint)
     {
+        removeAllActions()
         state = CardState.Dragged
         originalScale = self.yScale
         originalCardPosition  = self.position
@@ -109,19 +105,18 @@ class CardSprite : SKSpriteNode
         self.position = positionInScene
         self.zRotation = 0.0
         self.setScale(1.2)
-        self.fan?.rearrangeCardsAtRest()
-     
-        
+       
     }
     func setdownQuick()
     {
+        removeAllActions()
         state = CardState.AtRest
         self.anchorPoint = originalCardAnchor
         self.zPosition = originalCardZPosition
         self.position = originalCardPosition
         self.zRotation = originalCardRotation
         self.setScale(originalScale)
-        
+         self.fan?.reaZOrderCardsAtRest()
    
     }
     func flipUp()
