@@ -8,7 +8,7 @@
 
 import Foundation
 
-
+import GameplayKit
 
 extension Array {
     var randomItem: Element? {
@@ -43,3 +43,11 @@ extension Array {
         }
         return temp
     } }
+/*
+extension Array {
+    func shuffle () -> Array {
+        
+        return GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(self)
+        
+    } }
+*/

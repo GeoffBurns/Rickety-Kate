@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0304031BAEDE7C005263C7 /* RuleScreen.swift */; settings = {ASSET_TAGS = (); }; };
+		AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF69C1BB4238300001024 /* buttons.atlas */; settings = {ASSET_TAGS = (); }; };
+		AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */; settings = {ASSET_TAGS = (); }; };
+		AC1CF6A31BB4A03A00001024 /* cards_Standard.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A11BB4A03A00001024 /* cards_Standard.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC252A3F1BA6F1C400C0121A /* ArrayExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */; };
 		AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */; };
 		AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */; };
@@ -68,6 +71,9 @@
 
 /* Begin PBXFileReference section */
 		AC0304031BAEDE7C005263C7 /* RuleScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuleScreen.swift; sourceTree = "<group>"; };
+		AC1CF69C1BB4238300001024 /* buttons.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = buttons.atlas; sourceTree = "<group>"; };
+		AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Extra.atlas; sourceTree = "<group>"; };
+		AC1CF6A11BB4A03A00001024 /* cards_Standard.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Standard.atlas; sourceTree = "<group>"; };
 		AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtentions.swift; sourceTree = "<group>"; };
 		AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIdeOfTable.swift; sourceTree = "<group>"; };
 		AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCardComparable.swift; sourceTree = "<group>"; };
@@ -167,6 +173,7 @@
 				AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */,
 				AC44D7D01BB203AA00DA92EC /* CardPile.swift */,
 				AC7C9FC11BB378E60086AC02 /* CardPileType.swift */,
+				AC1CF69C1BB4238300001024 /* buttons.atlas */,
 				AC9E82BD1BA686C40064870C /* CardPlayer.swift */,
 				AC7C9FC31BB379310086AC02 /* CardSize.swift */,
 				ACE6DFBE1BAA38A9005B5424 /* CardSource.swift */,
@@ -177,6 +184,8 @@
 				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
+				AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */,
+				AC1CF6A11BB4A03A00001024 /* cards_Standard.atlas */,
 				AC7C9FC61BB380A00086AC02 /* GameSetting.swift */,
 				ACE6DFB51BAA32AB005B5424 /* GameState.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
@@ -320,6 +329,9 @@
 			files = (
 				AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */,
 				AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */,
+				AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */,
+				AC1CF6A31BB4A03A00001024 /* cards_Standard.atlas in Resources */,
+				AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */,
 				AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
