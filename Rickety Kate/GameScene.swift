@@ -42,10 +42,10 @@ class GameScene: SKScene {
         let hSpacing = CGFloat(table.players.count) * 2
         dealtPiles = []
         
+        table.setupCardPilesSoPlayersCanPassTheir3WorstCards(self)
+        
         for player in table.players
         {
-            table.setupPassedCards(self)
-        
             for card in player.hand
             {
                 let sprite = CardSprite(card: card, player: player)

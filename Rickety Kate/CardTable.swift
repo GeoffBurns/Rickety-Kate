@@ -82,7 +82,7 @@ public class CardTable : GameStateEngine, GameState
             cardsPassed[i].cards = []
         }
     }
-    func setupPassedCards(scene:SKNode)
+    func setupCardPilesSoPlayersCanPassTheir3WorstCards(scene:SKNode)
     {
        for (passPile,player) in Zip2Sequence( cardsPassed, players )
        {
