@@ -257,7 +257,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         public static let sharedInstance = Standard52CardDeck()
         override public var orderedDeck:[PlayingCard]
         {
-            var deck: [PlayingCard] = [];
+            var deck = [PlayingCard]();
 
             for s in PlayingCard.Suite.standardSuites
             {
@@ -286,7 +286,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         
         override public var orderedDeck:[PlayingCard]
             {
-                var deck: [PlayingCard] = [];
+                var deck = [PlayingCard]();
                 let toRemove = (noOfSuites * self.noOfCardsInASuite) % noOfPlayers
                 var removedCards = Set<PlayingCard>()
                 for s in PlayingCard.Suite.allSuites
@@ -335,7 +335,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public class TestCardDeck : DeckBase
     {
-    var deck: [PlayingCard] = [];
+    var deck = [PlayingCard]();
         
     public init(cards:[PlayingCard])
         {

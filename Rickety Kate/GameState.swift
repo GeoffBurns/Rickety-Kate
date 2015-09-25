@@ -30,7 +30,7 @@ public protocol GameState
 public class GameStateBase
 {
     var trickFan = CardFan(name: CardPileType.Trick.description)
-    var tricksPile : [(player:CardPlayer, playedCard:PlayingCard)] = [] { didSet { trickFan.cards = tricksPile.map { return $0.playedCard }}}
+    var tricksPile = [(player:CardPlayer, playedCard:PlayingCard)]() { didSet { trickFan.cards = tricksPile.map { return $0.playedCard }}}
     var gameTracker = GameProgressTracker()
     
     public var playedCardsInTrick : Int {
@@ -86,11 +86,13 @@ public class GameStateBase
 }
 public class GameStateEngine : GameStateBase
 {
-
+    // if non-nil StateOfPlay is frozen awaiting user input
+    var currentStateOfPlay:StateOfPlay? = nil
+    var cardTossDuration = Double(0.7)
 
     func addToTrickPile(player:CardPlayer,cardName:String)
     {
-        if let displayedCard = CardSprite.register[cardName]
+        if let displayedCard = CardSprite.spriteNamed(cardName)
         {
             
             self.gameTracker.cardCounter.publish(displayedCard.card.suite)
@@ -123,14 +125,15 @@ public class GameStateEngine : GameStateBase
             {
                 return true
             }
-            let displayedCard = CardSprite.register[cardName]
+            let displayedCard = CardSprite.spriteNamed(cardName)
             
             return displayedCard!.card.suite == leadingSuite
             
         }
         return false
     }
-    
+
+
 }
 // Used for testing
 public class FakeGameState : GameStateBase, GameState

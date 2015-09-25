@@ -13,8 +13,10 @@ import SpriteKit
 /// controls the appearance of the card on the screen
 class CardSprite : SKSpriteNode
 {
-    static var register : Dictionary<String, CardSprite> = [:]
-
+    /////////////////////////////////////////////////////
+    /// Variables
+    /////////////////////////////////////////////////////
+    weak static var currentScene : SKNode? = nil
     weak var fan : CardPile? = nil
     weak var player : CardPlayer? = nil
     var card : PlayingCard
@@ -28,26 +30,59 @@ class CardSprite : SKSpriteNode
     var originalCardRotation  = CGFloat(0.0)
     var originalCardZPosition  = CGFloat(0.0)
     var originalCardAnchor  = CGPointZero
-    init(card:PlayingCard, player : CardPlayer)
+    
+    /////////////////////////////////////////////////////
+    /// Constructors
+    /////////////////////////////////////////////////////
+    private init(card:PlayingCard, player : CardPlayer)
     {
-   
     self.card = card
-        self.player = player
+    self.player = player
         
     let back =  SKTexture(imageNamed: "Back1")
     super.init(texture: back, color: UIColor.whiteColor(), size: back.size())
       
 
     self.name = card.imageName
-    self.userInteractionEnabled = false    
-    CardSprite.register.updateValue( self, forKey: card.imageName)
-
+    self.userInteractionEnabled = false
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    static func add(card:PlayingCard, player : CardPlayer, scene:SKNode)
+    {
+        CardSprite.create(card, player: player,scene: scene)
+      
+    }
+    static func create(card:PlayingCard, player : CardPlayer, scene:SKNode) -> CardSprite
+    {
+        let sprite = CardSprite(card: card, player: player)
+        scene.addChild(sprite)
+        self.currentScene = scene
+        return sprite
+    }
+    
+    /////////////////////////////////////////////
+    /// Static Functions
+    /////////////////////////////////////////////
+    static func spriteNamed(cardname :String) -> CardSprite?
+    {
+        return (currentScene?.childNodeWithName(cardname) as? CardSprite?)!
+    }
+    static func sprite(card :PlayingCard) -> CardSprite?
+    {
+        
+        return spriteNamed(card.imageName)
+    }
+    
+    /////////////////////////////////////////////
+    /// Instance Methods
+    /////////////////////////////////////////////
+    
+    /// changing the anchorpoint is not something you can do with a SKAction
+    /// therefore changing the anchorpoint without causing the sprite to jump requires finess
     func updateAnchorPoint(anchorPoint:CGPoint)
     {
     let dx1 = (anchorPoint.x - self.anchorPoint.x) * self.size.width;
@@ -59,6 +94,7 @@ class CardSprite : SKSpriteNode
     self.anchorPoint = anchorPoint;
     }
     
+    /// the user has just started dragging the sprite
     func liftUp(positionInScene:CGPoint)
     {
         state = CardState.Dragged
@@ -77,6 +113,7 @@ class CardSprite : SKSpriteNode
             ]))
       
     }
+    /// the user has just stopped dragging the sprite
     func setdown()
     {
         state = CardState.AtRest
@@ -92,6 +129,7 @@ class CardSprite : SKSpriteNode
                 self.fan?.reaZOrderCardsAtRest()
             }]))
     }
+    /// the user has just switched which sprite they are dragging
     func liftUpQuick(positionInScene:CGPoint)
     {
         removeAllActions()
@@ -107,6 +145,8 @@ class CardSprite : SKSpriteNode
         self.setScale(1.2)
        
     }
+    
+    /// the user has just switched which sprite they are dragging
     func setdownQuick()
     {
         removeAllActions()
@@ -119,6 +159,7 @@ class CardSprite : SKSpriteNode
          self.fan?.reaZOrderCardsAtRest()
    
     }
+    /// Turn the card face up
     func flipUp()
     {
         if !isUp
@@ -127,6 +168,8 @@ class CardSprite : SKSpriteNode
             isUp = true
         }
     }
+    
+    /// Turn the card face down
     func flipDown()
     {
         if isUp
@@ -137,13 +180,8 @@ class CardSprite : SKSpriteNode
         }
     }
     
-    static func spriteFor(card :PlayingCard) -> CardSprite?
-    {
-        return CardSprite.register[card.imageName]
-    }
-    static func sprite(card :PlayingCard) -> CardSprite
-    {
-        return CardSprite.register[card.imageName]!
-    }
+    
+
+
     
 }

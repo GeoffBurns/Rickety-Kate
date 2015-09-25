@@ -11,12 +11,12 @@ import SpriteKit
 // Display the score for each player
 class ScoreDisplay
 {
-    var scoreLabel : [SKLabelNode] = []
-    var scoreLabel2 : [SKLabelNode] = []
-    var scoreUpdates : [Publink<(Int,Int)>] = []
+    var scoreLabel = [SKLabelNode]()
+    var scoreLabel2 = [SKLabelNode]()
+    var scoreUpdates = [Publink<(Int,Int)>]()
     
-    var players : [CardPlayer] = []
-    var lookup : Dictionary<String,Int> = [:]
+    var players = [CardPlayer]()
+    var lookup = Dictionary<String,Int>()
     static let sharedInstance = ScoreDisplay()
     private init() { }
     

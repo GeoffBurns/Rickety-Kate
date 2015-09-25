@@ -10,20 +10,22 @@ import SpriteKit
 
 
 
-public func ==(lhs: CardPlayer, rhs: CardPlayer) -> Bool
-{
-    return lhs.name == rhs.name
-}
 
 // Models the state and behaviour of each of the players in the game
 public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
 {
+    //////////////////////////////////////
+    /// Variables
+    //////////////////////////////////////
     public var score : Int = 0
     public var sideOfTable = SideOfTable.Bottom
     public var name : String = "Base"
     var wonCards : CardPile = CardPile(name: CardPileType.Won.description)
     static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3)]
     
+    ////////////////////////////////////////////
+    /// Static Functions
+    ///////////////////////////////////////////
     
     static func demoPlayers(noOfPlayers:Int) -> [CardPlayer]
     {
@@ -36,10 +38,20 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
         return [HumanPlayer.sharedInstance] + Array(computerPlayers[0..<noOfComputerPlayers])
     }
     
+    ///////////////////////////////////////
+    /// Hashable Protocol
+    ///////////////////////////////////////
     public var hashValue: Int {
         return self.name.hashValue
     }
 
+
+    /////////////////////////////////
+    /// Constructors and setup
+     /////////////////////////////////
+    init(name s: String) {
+        self.name = s
+    }
     func setup(scene: SKNode, sideOfTable: SideOfTable)
     {
         self.sideOfTable = sideOfTable
@@ -48,10 +60,11 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
         wonCards.setup(scene, direction: sideOfTable.direction, position: sideOfTable.positionOfWonCards(scene.frame.width, height: scene.frame.height))
     }
     
-    init(name s: String) {
-        self.name = s
-    }
-
+    
+    ///////////////////////////////////
+    /// Instance Methods
+    ///////////////////////////////////
+    
     public func newHand(cards: [PlayingCard]  )
     {
         _hand.replaceWithContentsOf(cards)
@@ -83,9 +96,29 @@ public class HumanPlayer :CardPlayer
 
 public class ComputerPlayer :CardPlayer
 {
-    
-    var strategies : [TrickPlayingStrategy] = []
+    //////////////////////////////////////
+    /// Variables
+    //////////////////////////////////////
+    var strategies = [TrickPlayingStrategy]()
     var passingStrategy = HighestCardsPassingStrategy.sharedInstance
+    
+    
+    
+    /////////////////////////////////
+    /// Constructors and setup
+    /////////////////////////////////
+    public init(name s: String,margin:Int) {
+        super.init(name: s)
+        strategies  = [
+            EarlyGameLeadingStrategy(margin:margin),
+            EarlyGameFollowingStrategy(margin:margin),
+            LateGameLeadingStrategy.sharedInstance,
+            LateGameFollowingStrategy.sharedInstance]
+    }
+    
+    ///////////////////////////////////
+    /// Instance Methods
+    ///////////////////////////////////
     public func playCard(gameState:GameState) -> PlayingCard?
     {
         for strategy in strategies
@@ -97,19 +130,21 @@ public class ComputerPlayer :CardPlayer
         }
         return RandomStrategy.sharedInstance.chooseCard(self,gameState:gameState)
     }
+    
     public func passCards() -> [PlayingCard]
     {
 
         return passingStrategy.chooseWorstCards(self)
     }
 
-    public init(name s: String,margin:Int) {
-       super.init(name: s)
-        strategies  = [
-        EarlyGameLeadingStrategy(margin:margin),
-        EarlyGameFollowingStrategy(margin:margin),
-        LateGameLeadingStrategy.sharedInstance,
-        LateGameFollowingStrategy.sharedInstance]
-    }
     
+}
+
+////////////////////////////////////////////////////////////
+/// Equatable Protocol
+///////////////////////////////////////////////////////////
+
+public func ==(lhs: CardPlayer, rhs: CardPlayer) -> Bool
+{
+    return lhs.name == rhs.name
 }

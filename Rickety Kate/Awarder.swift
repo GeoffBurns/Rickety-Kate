@@ -12,12 +12,12 @@ import Foundation
 /// Used by the Scorer
 class Awarder
 {
-    var scores : [Int] = []
-    var wins : [Int] = []
-    var scoresForHand : [Int] = []
+    var scores = [Int]()
+    var wins = [Int]()
+    var scoresForHand = [Int]()
     
-    var players : [CardPlayer] = []
-    var lookup : Dictionary<String,Int> = [:]
+    var players = [CardPlayer]()
+    var lookup = Dictionary<String,Int>()
     
     static let sharedInstance = Awarder()
     private init() { }

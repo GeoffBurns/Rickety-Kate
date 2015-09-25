@@ -11,12 +11,12 @@ import SpriteKit
 /// Calculate the Result of the trick
 class Scorer
 {
-    var scores : [Int] = []
-    var wins : [Int] = []
-    var scoresForHand : [Int] = []
+    var scores = [Int]()
+    var wins = [Int]()
+    var scoresForHand = [Int]()
     
-    var players : [CardPlayer] = []
-    var lookup : Dictionary<String,Int> = [:]
+    var players = [CardPlayer]()
+    var lookup = Dictionary<String,Int>()
     
     static let sharedInstance = Scorer()
     private init() { }
@@ -59,13 +59,11 @@ class Scorer
         }
         return nil
 }
-    
+    /// Did player get all the points avalilable in his hand
     func hasShotTheMoon() -> Bool
     {
-    var i = 0
-        
     var hasShotMoon = false
-    for player in self.players
+    for (i,player) in self.players.enumerate()
      {
      /// Did player get all the points avalilable in his hand
      let allPoints = 9 + GameSettings.sharedInstance.noOfCardsInASuite
@@ -86,15 +84,15 @@ class Scorer
     
       }
      self.scoresForHand[i] = 0
-     i++
+
      }
         
         var lowestScore = 1000
         var winner = -10
         var hasWonGame = false
         var isDraw = false
-        i = 0
-        for _ in self.players
+   
+        for i in 0..<self.players.count
         {
             if self.scores[i] < lowestScore
             {
@@ -110,20 +108,20 @@ class Scorer
             {
                 hasWonGame = true
             }
-            i++
+         
         }
         
         let isGameWon = hasWonGame && !isDraw
         if isGameWon
         {
             self.wins[winner] = self.wins[winner] + 1
-            i = 0
-            for player in players
+          
+            for (i,player) in players.enumerate()
             {
                 scores[i] = 0
                 scoresForHand[i] = 0
                 ScoreDisplay.publish(player,score: self.scores[i], wins: self.wins[i])
-                i++
+          
             }
             if winner == 0
             {

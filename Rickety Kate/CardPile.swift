@@ -12,7 +12,7 @@ import SpriteKit
 /// How the cards are displayed in a pile
 class CardPile
 {
-    var cards : [PlayingCard] = [] { didSet { update() } }
+    var cards = [PlayingCard]() { didSet { update() } }
     var isUp = false
     var sizeOfCards = CardSize.Small
     var scene : SKNode? = nil
@@ -105,7 +105,7 @@ class CardPile
     func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat,
         fullHand:CGFloat)
     {
-        if let sprite = CardSprite.spriteFor(card)
+        if let sprite = CardSprite.sprite(card)
         {
             sprite.fan = self
             
@@ -192,7 +192,7 @@ class CardPile
         }
         for card in cards
         {
-            if let sprite = CardSprite.spriteFor(card)
+            if let sprite = CardSprite.sprite(card)
                 where sprite.state == CardState.AtRest
             {
                 rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
@@ -223,7 +223,7 @@ class CardPile
         }
         for card in cards
         {
-            if let sprite = CardSprite.spriteFor(card)
+            if let sprite = CardSprite.sprite(card)
             where sprite.state == CardState.AtRest
             {
             sprite.zPosition = sizeOfCards.zOrder  + positionInSpread

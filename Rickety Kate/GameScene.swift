@@ -17,7 +17,7 @@ class GameScene: SKScene {
     var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
     
-    var dealtPiles : [CardPile] = []
+    var dealtPiles = [CardPile]()
 
 
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
@@ -35,36 +35,41 @@ class GameScene: SKScene {
         -0.7 :
         -1.0)
     
-    func createAndDisplayCardImages(width: CGFloat , height: CGFloat )
+    func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
     {
-        let seats = Seater.seatsFor(table.players.count)
-        var i = 0
-        let hSpacing = CGFloat(table.players.count) * 2
         dealtPiles = []
-        
-        table.setupCardPilesSoPlayersCanPassTheir3WorstCards(self)
-        
+        let hSpacing = CGFloat(table.players.count) * 2
+        for (i,player) in table.players.enumerate()
+        {
+            let dealtPile = CardPile(name: "dealt")
+            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
+            
+            dealtPile.appendContentsOf(player._hand.cards)
+            dealtPiles.append(dealtPile)
+        }
+    }
+    
+    func createCardSpritesForCardsInPlayersHand()
+    {
         for player in table.players
         {
             for card in player.hand
             {
-                let sprite = CardSprite(card: card, player: player)
-                
-                sprite.setScale(cardScale * 0.5)
-                self.addChild(sprite)
+                CardSprite.add(card, player: player, scene: self)
             }
-            let dealtPile = CardPile(name: "dealt")
-            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false)
-            
-             dealtPile.appendContentsOf(player._hand.cards)
-             dealtPiles.append(dealtPile)
-            i++
         }
+    }
+    func seatPlayers()
+    {
+        
+        let seats = Seater.seatsFor(table.players.count)
         for (player,seat) in Zip2Sequence(table.players,seats)
         {
             player.setup(self, sideOfTable: seat)
         }
     }
+
+    
     func rearrangeCardImagesInHandsWithAnimation(width: CGFloat , height: CGFloat )
     {
         for player in table.players
@@ -73,21 +78,16 @@ class GameScene: SKScene {
             
         }
     }
-
+    /// at end of game return sprites to start
     func reverseDeal(width: CGFloat , height: CGFloat )
     {
-    
-        let hSpacing = CGFloat(table.players.count) * 2
-        dealtPiles = []
         for (i,player) in table.players.enumerate() 
            {
-           let dealtPile = CardPile(name: "dealt")
-            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  + 1) / hSpacing,y: height*0.5), isUp: false)
-            dealtPile.appendContentsOf(player._hand.cards)
-            dealtPiles.append(dealtPile)
+            dealtPiles[i].replaceWithContentsOf(player._hand.cards)
             }
-            dealtPiles[0].appendContentsOf(table.tricksPile.map{ return $0.playedCard })
+        dealtPiles[0].appendContentsOf(table.tricksPile.map{ return $0.playedCard })
     }
+    
     func StatusAreaFirstMessage()
     {
 
@@ -126,9 +126,9 @@ class GameScene: SKScene {
                 player.wonCards.clear()
                     for card in player.hand
                     {
-                        let sprite = CardSprite.sprite(card)
+                        let sprite = CardSprite.sprite(card)!
                         sprite.flipDown()
-                        sprite.player = player
+                        sprite .player = player
                      }
             }
             
@@ -151,13 +151,8 @@ class GameScene: SKScene {
               self.startTrickPhase()
             }
         }
-     table.newGame.publish()
     }
     
-    func ruletext()
-    {
-        rulesScreen.setup(self)
-    }
 
     func setupExitScreen()
     {
@@ -198,22 +193,35 @@ class GameScene: SKScene {
             self.addChild(playButton2)
         }
     }
+    func setupPopupScreensAndButtons()
+    {
+        rulesScreen.setup(self)
+        setupExitScreen()
+        setupOptionScreen()
+        setupPlayButton()
+    }
+    func setupStatusArea()
+    {
+        StatusDisplay.register(self)
+        StatusAreaFirstMessage()
+    }
     override func didMoveToView(view: SKView) {
                 /* Setup your scene here */
      
         self.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
 
-        StatusDisplay.register(self)
-        StatusAreaFirstMessage()
-        ruletext()
-        setupExitScreen()
-        setupOptionScreen()
-        setupPlayButton()
+        setupStatusArea()
+        setupPopupScreensAndButtons()
+        seatPlayers()
+        table.setupCardPilesSoPlayersCanPassTheir3WorstCards(self)
+        createCardPilesToProvideStartPointForCardAnimation(self.frame.size.width,  height: self.frame.size.height)
         table.dealNewCardsToPlayers()
-        createAndDisplayCardImages(self.frame.size.width,  height: self.frame.size.height)
+        
+        createCardSpritesForCardsInPlayersHand()
         ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
-
         setupNewGameArrangement()
+        
+        table.newGame.publish()
     }
     
     func isNodeAPlayerOneCardSpite(cardsprite:CardSprite) -> Bool
@@ -278,40 +286,50 @@ class GameScene: SKScene {
         }
          return false
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        
-      let width = self.frame.size.width
-      for touch in (touches )
-      {
-        let positionInScene = touch.locationInNode(self)
-
-
-        if buttonTouched(positionInScene)
-        {
-                return
-        }
-       
+    
+    func cardTouched(positionInScene:CGPoint) -> Bool
+    {
+        let width = self.frame.size.width
         var newX = positionInScene.x
         if newX > width * 0.5
-                {
-                   newX = ((newX - width * 0.5) * 0.6) + width * 0.5
-                }
+        {
+            newX = ((newX - width * 0.5) * 0.6) + width * 0.5
+        }
         /// correct for rotation of card
         let adjustedPosition = CGPoint(x: newX,y: positionInScene.y)
         if let adjustedNode = self.nodeAtPoint(adjustedPosition) as? CardSprite
         {
             if isNodeAPlayerOneCardSpite(adjustedNode)        {
-              
-                        draggedNode = adjustedNode;
-                        originalTouch = positionInScene
-                        adjustedNode.liftUp(positionInScene)
+                
+                draggedNode = adjustedNode;
+                originalTouch = positionInScene
+                adjustedNode.liftUp(positionInScene)
                 
                 
-                        return
-                    }
-        
+                return true
+            }
+            
         }
+           return false
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        /* Called when a touch begins */
+        
+ 
+      for touch in (touches )
+      {
+        let positionInScene = touch.locationInNode(self)
+
+        if buttonTouched(positionInScene)
+           {
+                return
+           }
+        if cardTouched(positionInScene)
+           {
+            return
+           }
+   
         }
     }
     
@@ -324,6 +342,7 @@ class GameScene: SKScene {
     let deltaY = abs(originalTouch.y - positionInScene.y)
         
     /// if swiping horizonatally then riffle through the card fan
+    /// displaying each card in turn
     if deltaX > (2.2 * deltaY) && deltaX > 22
         {
            let touchedNodes = self.nodesAtPoint(positionInScene)
@@ -485,6 +504,11 @@ class GameScene: SKScene {
             
         }
 
+    }
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        if let touches = touches {
+            touchesEnded(touches, withEvent: event)
+        }
     }
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
