@@ -144,7 +144,7 @@ class CardPile
                 //    sprite.flipUp()
                 flipAction = (SKAction.sequence([
                     SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
-                    SKAction.runBlock({
+                    SKAction.runBlock({ [unowned sprite] in
                         sprite.flipUp()
                     }) ,
                     SKAction.scaleXTo(sizeOfCards.scale, duration: cardTossDuration*0.5)
@@ -156,7 +156,7 @@ class CardPile
                 // sprite.flipDown()
                 flipAction = (SKAction.sequence([
                     SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
-                    SKAction.runBlock({
+                    SKAction.runBlock({ [unowned sprite] in
                         sprite.flipDown()
                     }) ,
                     SKAction.scaleXTo(sizeOfCards.scale, duration: cardTossDuration*0.5)
@@ -164,7 +164,7 @@ class CardPile
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
             
-            sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({
+            sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({ [unowned sprite] in
                 sprite.zPosition = self.sizeOfCards.zOrder + positionInSpread
             }) ]))
           

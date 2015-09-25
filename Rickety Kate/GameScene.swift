@@ -106,7 +106,7 @@ class GameScene: SKScene {
     func startTrickPhase()
     {
         let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration*1.3),
-            SKAction.runBlock({
+            SKAction.runBlock({ [unowned self] in
                 self.table.playTrickLeadBy(self.table.players[self.table.startPlayerNo])
                 
             })]))
@@ -136,7 +136,7 @@ class GameScene: SKScene {
         }
         table.newGame.subscribe {
             let doneAction =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration*0.1),
-                SKAction.runBlock({
+                SKAction.runBlock({ [unowned self] in
                     self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
                 })]))
             self.runAction(doneAction)
@@ -243,7 +243,7 @@ class GameScene: SKScene {
         reverseDeal(width , height: height )
         
         let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
-            SKAction.runBlock({
+            SKAction.runBlock({ [unowned self] in
                 let transition = SKTransition.crossFadeWithDuration(0.5)
                 let scene = GameScene(size: self.scene!.size)
                 scene.scaleMode = SKSceneScaleMode.AspectFill

@@ -140,11 +140,11 @@ public class CardTable : GameStateEngine, GameState
         remainingPlayers.removeAtIndex(0)
         let nextPlayers = remainingPlayers
         let doneAction = nextPlayers.isEmpty ?
-            (SKAction.runBlock({
+            (SKAction.runBlock({ [unowned self] in
                 self.trickWon()
             })) :
             
-            (SKAction.runBlock({
+            (SKAction.runBlock({ [unowned self] in
                 
                 self.playTrick(StateOfPlay(remainingPlayers: nextPlayers))
             }))
