@@ -161,7 +161,16 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
         {
             return nil
         }
-        let orderedCards = player.hand.sort({$0.value < $1.value})
+       // Avoid Jokers if posible
+       var orderedCards = player.hand.filter { $0.suite != PlayingCard.Suite.Jokers }.sort({$0.value < $1.value})
+        
+        
+        if let lowCard = orderedCards.first
+        {
+            return lowCard
+        }
+        orderedCards = player.hand.sort({$0.value < $1.value})
+        
         return orderedCards.first
     }
 }

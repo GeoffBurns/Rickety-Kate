@@ -78,12 +78,8 @@ class ExitScreen: Popup {
         scene.addChild(self)
         
         button.setScale(0.5)
-        button.anchorPoint = CGPoint(x: 1.0,
-            y:
-            UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-                1.6 :
-            2.2)
-        button.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height)
+        button.anchorPoint = CGPoint(x: 1.0, y: GameSettings.isPad ? 1.6 : 2.2)
+        button.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height * (GameSettings.isPad ?  1.06 :  1.0))
         
         button.name = "Exit"
         

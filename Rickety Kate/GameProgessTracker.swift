@@ -11,11 +11,11 @@ import Foundation
 // Used by Computer Player to calculate strategy
 public class GameProgressTracker
 {
-    var cardCount = [Int](count: 6, repeatedValue: 0)
+    var cardCount = [Int](count: 9, repeatedValue: 0)
     var cardCounter = Publink<PlayingCard.Suite>()
     var notFollowingTracker = Publink<(PlayingCard.Suite, CardPlayer)>()
     // TODO replace - repeat generator does not work so great with classes
-    var notFollowing = [Set<CardPlayer>](count: 6, repeatedValue: Set<CardPlayer>())
+    var notFollowing = [Set<CardPlayer>](count: 9, repeatedValue: Set<CardPlayer>())
      
     
     

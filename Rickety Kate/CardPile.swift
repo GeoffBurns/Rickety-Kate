@@ -18,9 +18,7 @@ class CardPile
     var scene : SKNode? = nil
     let cardScale = CGFloat(0.9)
     var cardTossDuration = 0.4
-    let cardAnchorPoint = CGPoint(x: 0.5, y: UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-        -0.7 :
-        -1.0)
+    let cardAnchorPoint = CGPoint(x: 0.5, y:GameSettings.isPad ? -0.7 : -1.0)
     var fullHand = CGFloat(13)
     var sideOfTable = SideOfTable.Bottom
     var direction = Direction.Up

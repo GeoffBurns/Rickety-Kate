@@ -27,8 +27,11 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         case Diamonds
         case Suns
         case Anchors
+        case Stars
+        case Trumps
+        case Jokers
         
-        // TODO add more Suites e.g. Suns, Anchors (for 5 & 6 Suite Decks), TarotTrumps, NonSoite (for Jockers and Fools)
+
         var imageCode : String
         // Used to help create imagename for a card
         {
@@ -40,6 +43,10 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case Diamonds: return "D"
             case Suns: return "U"
             case Anchors: return "A"
+            case Stars : return "R"
+            case Trumps : return "T"
+            case Jokers : return "J"
+                
             }
         }
    
@@ -47,11 +54,14 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             {
                 return [Spades,Hearts,Clubs,Diamonds]
         }
+        static var normalSuites : [Suite]
+        {
+            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors,Stars]
+        }
         static var allSuites : [Suite]
         {
-            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors]
+            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors,Stars,Trumps,Jokers]
         }
-
     }
     public enum CardValue : Equatable, Comparable
     {
@@ -82,6 +92,14 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         static var courtCardExtra4Values : [String]
         {
             return ["J","KN","Q","K"]
+        }
+        static var courtCardExtra5Values : [String]
+        {
+            return ["J","KN","PS","Q","K"]
+        }
+        static var courtCardExtra6Values : [String]
+        {
+            return ["J","KN","PS","P","Q","K"]
         }
         static func valuesFor(noOfCardsInASuite:Int = 13) -> [CardValue]
         {
@@ -218,7 +236,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public class DeckBase : Deck
     {
-        var noInSuites = [13,13,13,13,13,13,13]
+        var noInSuites = [13,13,13,13,13,13,13,22,3]
         func noCardIn(suite:PlayingCard.Suite) -> Int
         {
             return noInSuites[suite.rawValue]
@@ -271,27 +289,35 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     }
     public class BuiltCardDeck : DeckBase
     {
-        var noOfSuites = 0
-        var noOfPlayers = 0
-        var noOfCardsInASuite = 0
-    
+        var gameSettings:IGameSettings = GameSettings.sharedInstance
+  
         
-        override init()
+        public init(gameSettings:IGameSettings = GameSettings.sharedInstance )
         {
-            self.noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
-            self.noOfSuites = GameSettings.sharedInstance.noOfSuitesInDeck
-            self.noOfCardsInASuite = GameSettings.sharedInstance.noOfCardsInASuite
+            self.gameSettings = gameSettings
+     
         }
         
         
         override public var orderedDeck:[PlayingCard]
             {
                 var deck = [PlayingCard]();
-                let toRemove = (noOfSuites * self.noOfCardsInASuite) % noOfPlayers
-                var removedCards = Set<PlayingCard>()
-                for s in PlayingCard.Suite.allSuites
+                var noOfPossibleCardsInDeck = (gameSettings.noOfSuitesInDeck * gameSettings.noOfCardsInASuite)
+                if gameSettings.hasTrumps
                 {
-                    noInSuites[s.rawValue]  = self.noOfCardsInASuite
+                  noOfPossibleCardsInDeck += 22
+                }
+                if gameSettings.hasJokers
+                {
+                    noOfPossibleCardsInDeck += 2
+                }
+                
+                let toRemove = noOfPossibleCardsInDeck % gameSettings.noOfPlayersAtTable
+                var removedCards = Set<PlayingCard>()
+                let suites = PlayingCard.Suite.normalSuites[0..<gameSettings.noOfSuitesInDeck]
+                for s in suites
+                {
+                    noInSuites[s.rawValue]  = gameSettings.noOfCardsInASuite
                 }
                 
                 var removedSoFar = 0
@@ -299,7 +325,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 /// Make sure than the cards divide evenly between the players by removing low value cards until the pack size is a multiple of the number of players
                 repeat
                 {
-                  for s in PlayingCard.Suite.allSuites
+                  for s in suites
                   {
                     if removedSoFar >= toRemove
                     {
@@ -317,16 +343,32 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 }
                 while removedSoFar < toRemove
              
-                for s in  PlayingCard.Suite.allSuites[0..<noOfSuites]
+                for s in suites
                 {
-                    for v in PlayingCard.CardValue.valuesFor(noOfCardsInASuite)
+                    for v in PlayingCard.CardValue.valuesFor(gameSettings.noOfCardsInASuite)
                     {
                        let c = PlayingCard(suite: s, value: v)
                         if removedCards.contains(c)
                         {
                             continue
                         }
-                        deck.append(PlayingCard(suite: s, value: v))
+                        deck.append(c)
+                    }
+                }
+                
+                if gameSettings.hasTrumps
+                {
+                    deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(0)))
+                    for v in 1...21
+                    {
+                        deck.append(PlayingCard(suite: PlayingCard.Suite.Trumps, value : PlayingCard.CardValue.Pip(v)))
+                    }
+                }
+                if gameSettings.hasJokers
+                {
+                    for v in 1...2
+                    {
+                        deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(v)))
                     }
                 }
                 return deck

@@ -38,12 +38,12 @@ public class CardTable : GameStateEngine, GameState
     }
     
  
-    static public func makeTable() -> CardTable {
-     return CardTable(players: CardPlayer.gamePlayers(GameSettings.sharedInstance.noOfPlayersAtTable))
+    static public func makeTable(gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable {
+     return CardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable))
 }
 
-    static public func makeDemo() -> CardTable  {
-     return CardTable(players: CardPlayer.demoPlayers(GameSettings.sharedInstance.noOfPlayersAtTable))
+    static public func makeDemo(gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable  {
+     return CardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable))
     }
     private init(players: [CardPlayer]) {
     _players = players

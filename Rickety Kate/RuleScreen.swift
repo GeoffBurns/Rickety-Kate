@@ -15,7 +15,6 @@ class RuleScreen: Popup {
 
     override init()
     {
-        
         super.init()
         button =  SKSpriteNode(imageNamed:"Rules1")
     }
@@ -66,12 +65,8 @@ class RuleScreen: Popup {
   
     
         button.setScale(0.5)
-        button.anchorPoint = CGPoint(x: 0.0,
-            y:
-            UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-                1.6 :
-            2.2)
-        button.position = CGPoint(x:0.0,y:self.frame.size.height)
+        button.anchorPoint = CGPoint(x: 0.0, y: GameSettings.isPad ? 1.6 : 2.2)
+        button.position = CGPoint(x:0.0,y:self.frame.size.height * (GameSettings.isPad ?  1.06 :  1.0))
         
         button.name = "Rules"
         

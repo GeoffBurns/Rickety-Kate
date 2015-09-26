@@ -40,6 +40,7 @@
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BF1BA686C40064870C /* PlayingCard.swift */; };
 		AC9E82C61BA686C40064870C /* Publink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82C01BA686C40064870C /* Publink.swift */; };
+		ACB90FA01BB685CF009B1189 /* BinaryToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */; settings = {ASSET_TAGS = (); }; };
 		ACBF9A931BAD4A0C00837EEB /* NumberRangeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBF9A921BAD4A0C00837EEB /* NumberRangeToggle.swift */; settings = {ASSET_TAGS = (); }; };
 		ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */; settings = {ASSET_TAGS = (); }; };
 		ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13351BAB1D5700196393 /* Scorer.swift */; settings = {ASSET_TAGS = (); }; };
@@ -107,6 +108,7 @@
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		AC9E82BF1BA686C40064870C /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		AC9E82C01BA686C40064870C /* Publink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publink.swift; sourceTree = "<group>"; };
+		ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryToggle.swift; sourceTree = "<group>"; };
 		ACBF9A921BAD4A0C00837EEB /* NumberRangeToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberRangeToggle.swift; sourceTree = "<group>"; };
 		ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitScreen.swift; sourceTree = "<group>"; };
 		ACCB13351BAB1D5700196393 /* Scorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scorer.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				ACE6DFB71BAA32AB005B5424 /* MathExtention.swift */,
 				ACE6DFB81BAA32AB005B5424 /* Multi-Line.swift */,
 				ACBF9A921BAD4A0C00837EEB /* NumberRangeToggle.swift */,
+				ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */,
 				ACF58BD51BAEE652009C255A /* OptionScreen.swift */,
 				AC9E82BF1BA686C40064870C /* PlayingCard.swift */,
 				AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */,
@@ -361,6 +364,7 @@
 				AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */,
 				AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */,
 				ACE6DFBD1BAA32AB005B5424 /* Multi-Line.swift in Sources */,
+				ACB90FA01BB685CF009B1189 /* BinaryToggle.swift in Sources */,
 				AC9E82C41BA686C40064870C /* CardTable.swift in Sources */,
 				ACBF9A931BAD4A0C00837EEB /* NumberRangeToggle.swift in Sources */,
 				ACE6DFBC1BAA32AB005B5424 /* MathExtention.swift in Sources */,
@@ -525,7 +529,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -540,7 +544,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -34,19 +34,27 @@ class ScoreDisplay
     static func scorePosition(side:SideOfTable, scene: SKNode) -> CGPoint
     {
       switch side
-       {
-       case .Right:
-          return CGPoint(x:scene.frame.size.width * 0.90, y:CGRectGetMidY(scene.frame))
+      {
+      case .Right:
+        return CGPoint(x:scene.frame.size.width * 0.90, y:CGRectGetMidY(scene.frame))
+      case .RightLow:
+        return CGPoint(x:scene.frame.size.width * 0.90, y:scene.frame.size.height * 0.35)
+      case .RightHigh:
+        return CGPoint(x:scene.frame.size.width * 0.90, y:scene.frame.size.height * 0.70)
        case .Top:
-          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.75)
+        return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * (GameSettings.isPad ? 0.87 : 0.75))
        case .TopMidRight:
-          return CGPoint(x:scene.frame.width * 0.8, y:scene.frame.size.height * 0.75)
+          return CGPoint(x:scene.frame.width * (GameSettings.isPad ? 0.7 : 0.8), y:scene.frame.size.height * (GameSettings.isPad ? 0.87 : 0.75))
        case .TopMidLeft:
-          return CGPoint(x:scene.frame.width * 0.2, y:scene.frame.size.height * 0.75)
+          return CGPoint(x:scene.frame.width * (GameSettings.isPad ? 0.3 : 0.2), y:scene.frame.size.height * (GameSettings.isPad ? 0.87 : 0.75))
        case .Left:
-          return CGPoint(x:scene.frame.size.width * 0.10, y:CGRectGetMidY(scene.frame))
+        return CGPoint(x:scene.frame.size.width * 0.10, y:CGRectGetMidY(scene.frame))
+      case .LeftLow:
+        return CGPoint(x:scene.frame.size.width * 0.10, y:scene.frame.size.height * 0.35)
+      case .LeftHigh:
+        return CGPoint(x:scene.frame.size.width * 0.10, y:scene.frame.size.height * 0.70)
        default:
-          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.35)
+          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * (GameSettings.isPad ? 0.27 : 0.35))
        }
     }
     
@@ -54,14 +62,22 @@ class ScoreDisplay
     {
         switch side
         {
+        case .RightHigh:
+            fallthrough
+        case .RightLow:
+            fallthrough
         case .Right:
             return 90.degreesToRadians
         case .Top:
-            return 0.degreesToRadians
+            fallthrough
         case .TopMidRight:
-               return  0.degreesToRadians
+            fallthrough
         case .TopMidLeft:
                return 0.degreesToRadians
+        case .LeftHigh:
+            fallthrough
+        case .LeftLow:
+            fallthrough
         case .Left:
                return -90.degreesToRadians
         default:
@@ -78,10 +94,10 @@ class ScoreDisplay
             scoreUpdates[i] = Publink<(Int,Int)>()
             
             l.text = ""
-            l.fontSize = 30;
+            l.fontSize = (GameSettings.isPad ?  20 : 30);
             l.name = "\(player.name)'s score label"
             m.text = ""
-            m.fontSize = 30;
+            m.fontSize = (GameSettings.isPad ?  20 : 30);
             
             m.fontColor = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
   

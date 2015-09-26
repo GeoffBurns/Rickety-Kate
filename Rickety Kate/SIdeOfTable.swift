@@ -19,7 +19,10 @@ public enum SideOfTable:Int
     case Center
     case TopMidLeft
     case TopMidRight
-
+    case RightLow
+    case RightHigh
+    case LeftLow
+    case LeftHigh
  
     func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat, fullHand: CGFloat = CGFloat(13)) -> CGPoint
     {
@@ -36,32 +39,47 @@ public enum SideOfTable:Int
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.92)
             // Computer Player
         case .Right:
-            startWidth = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
+            startWidth =  GameSettings.isPad ?
                 width*0.97 : width
-
             startheight = height * 0.4
+            return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
+            // Computer Player        
+        case .RightLow:
+            startWidth =  GameSettings.isPad ?
+                width*0.97 : width
+            
+            verticalSpacing = height * 0.12 / fullHand
+            startheight = height * 0.3
+            return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
+            // Computer Player        
+        case .RightHigh:
+            startWidth =  GameSettings.isPad ?
+                width*0.97 : width
+            
+            verticalSpacing = height * 0.12 / fullHand
+            startheight = height * 0.65
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             // Computer Player
         case .Top:
-            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.06 : 0.2) / fullHand
-            startWidth = width * (noOfPlayers > 5 ? 0.5 : 0.6)
-            startheight = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
+            hortizonalSpacing = -width * (noOfPlayers == 6 ? 0.06 : 0.2) / fullHand
+            startWidth = width * (noOfPlayers == 6 ? 0.5 : 0.6)
+            startheight = GameSettings.isPad ?
                 height*1.08 : height
             
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .TopMidLeft:
-            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.06 : 0.14) / fullHand
-            startWidth = width * (noOfPlayers > 5 ? 0.20 : 0.33)
-            startheight = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
+            hortizonalSpacing = -width * (noOfPlayers == 6  ? 0.06 : 0.14) / fullHand
+            startWidth = width * (noOfPlayers == 6 ? 0.20 : 0.33)
+            startheight =  GameSettings.isPad ?
                 height*1.07 : height
 
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .TopMidRight:
-            hortizonalSpacing = -width * (noOfPlayers > 5 ? 0.06 : 0.14) / fullHand
-            startWidth = width * (noOfPlayers > 5 ? 0.84 : 0.75)
-            startheight = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
+            hortizonalSpacing = -width * (noOfPlayers == 6 ? 0.06 : 0.14) / fullHand
+            startWidth = width * (noOfPlayers == 6 ? 0.84 : 0.75)
+            startheight =  GameSettings.isPad ?
                 height*1.07 : height
 
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
@@ -69,13 +87,23 @@ public enum SideOfTable:Int
         case .Left:
             verticalSpacing = -verticalSpacing
             startheight = height * 0.6
-            startWidth = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
+            startWidth =  GameSettings.isPad ?
                 width*0.03 : 0.0
             return CGPoint(x: startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
+        case .LeftLow:
+                verticalSpacing = -height * 0.12 / fullHand
+                startheight = height * 0.4
+                startWidth =  GameSettings.isPad ? width*0.03 : 0.0
+                return CGPoint(x: startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
+        case .LeftHigh:
+                    verticalSpacing = -height * 0.12 / fullHand
+                    startheight = height * 0.75
+                    startWidth =  GameSettings.isPad ?width*0.03 : 0.0
+                    return CGPoint(x: startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             
             // the trick pile
         case .Center:
-            let startheight = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
+            let startheight =  GameSettings.isPad ?
             height * 0.5 : height * 0.46
             
             let startWidth = width * 0.35
@@ -87,6 +115,10 @@ public enum SideOfTable:Int
     {
         switch self
         {
+        case .RightLow:
+            fallthrough
+        case .RightHigh:
+            fallthrough
         case .Right:
             return Direction.Left
         case .TopMidLeft:
@@ -95,8 +127,14 @@ public enum SideOfTable:Int
             fallthrough
         case .Top:
             return Direction.Down
+            
+        case .LeftLow:
+            fallthrough
+        case .LeftHigh:
+            fallthrough
         case .Left:
             return Direction.Right
+
         default:
             return Direction.Up
         }
@@ -116,6 +154,14 @@ public enum SideOfTable:Int
             startWidth = width * 0.8
             startheight = height * 0.4
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight)
+        case .RightLow:
+            startWidth = width * 0.8
+            startheight = height * 0.3
+            return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight)
+        case .RightHigh:
+            startWidth = width * 0.8
+            startheight = height * 0.65
+            return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight)
             // Computer Player
         case .Top:
             startWidth = width * 0.6
@@ -134,11 +180,21 @@ public enum SideOfTable:Int
             return CGPoint(x: startWidth,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .Left:
-   
+            
             startWidth = width * 0.2
             startheight = height * 0.6
             return CGPoint(x:startWidth - spriteHeight*1.4 ,y: startheight )
+        case .LeftLow:
             
+            startWidth = width * 0.2
+            startheight = height * 0.4
+            return CGPoint(x:startWidth - spriteHeight*1.4 ,y: startheight )
+        case .LeftHigh:
+            
+            startWidth = width * 0.2
+            startheight = height * 0.75
+            return CGPoint(x:startWidth - spriteHeight*1.4 ,y: startheight )
+    
             
         default:
             let startheight = height * 0.5
@@ -163,6 +219,14 @@ public enum SideOfTable:Int
             
             return CGPoint(x: width*1.3,y: height * 0.5)
             // Computer Player
+        case .RightLow:
+            
+            return CGPoint(x: width*1.3,y: height * 0.25)
+            // Computer Player
+        case .RightHigh:
+            
+            return CGPoint(x: width*1.3,y: height * 0.75)
+            // Computer Player
         case .TopMidLeft:
             
             return CGPoint(x: width*0.1,y: height * 1.3)
@@ -174,6 +238,12 @@ public enum SideOfTable:Int
             // Computer Player
         case .Left:
             return CGPoint(x: -500,y: height * 0.5)
+            
+        case .LeftLow:
+            return CGPoint(x: -500,y: height * 0.25)
+            
+        case .LeftHigh:
+            return CGPoint(x: -500,y: height * 0.75)
             
             // the trick pile
         case .Center:

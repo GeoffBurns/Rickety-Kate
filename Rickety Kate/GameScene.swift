@@ -31,9 +31,7 @@ class GameScene: SKScene {
 
     var isInPassingCardsPhase = true
     var cardTossDuration = 0.4
-    let cardAnchorPoint = CGPoint(x: 0.5, y: UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad ?
-        -0.7 :
-        -1.0)
+    let cardAnchorPoint = CGPoint(x: 0.5, y: GameSettings.isPad ? -0.7 :  -1.0)
     
     func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
     {
@@ -169,8 +167,11 @@ class GameScene: SKScene {
             return
         }
         optionScreen.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
-                optionScreen.noOfPlayers.current = GameSettings.sharedInstance.noOfPlayersAtTable
+        optionScreen.noOfPlayers.current = GameSettings.sharedInstance.noOfPlayersAtTable
         optionScreen.noOfCardsInASuite.current = GameSettings.sharedInstance.noOfCardsInASuite
+        optionScreen.hasTrumps.current = GameSettings.sharedInstance.hasTrumps
+        
+        optionScreen.hasJokers.current = GameSettings.sharedInstance.hasJokers
         optionScreen.setup(self)
     }
     func setupPlayButton()
