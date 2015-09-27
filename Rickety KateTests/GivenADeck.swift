@@ -75,32 +75,32 @@ public class GivenADeck: XCTestCase {
         XCTAssert(deckWithNoOfSuites( 4,noOfPlayersAtTable: 6, noOfCardsInASuite:14).count == 54, "Pass")
         XCTAssert(deckWithNoOfSuites( 4,noOfPlayersAtTable: 7, noOfCardsInASuite:14).count == 56, "Pass")
         
-        /// Largest possible count  70
+        /// count 70 without removed cards
         XCTAssert(deckWithNoOfSuites( 5,noOfPlayersAtTable: 4, noOfCardsInASuite:14).count == 68, "Pass")
         XCTAssert(deckWithNoOfSuites( 5,noOfPlayersAtTable: 5, noOfCardsInASuite:14).count == 70, "Pass")
         XCTAssert(deckWithNoOfSuites( 5,noOfPlayersAtTable: 6, noOfCardsInASuite:14).count == 66, "Pass")
         XCTAssert(deckWithNoOfSuites( 5,noOfPlayersAtTable: 7, noOfCardsInASuite:14).count == 70, "Pass")
         
-        // 84
+        // count 84 without removed cards
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 4, noOfCardsInASuite:14).count == 84, "Pass")
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 5, noOfCardsInASuite:14).count == 80, "Pass")
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 6, noOfCardsInASuite:14).count == 84, "Pass")
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 7, noOfCardsInASuite:14).count == 84, "Pass")
         
-        // 60
+        // count 60 without removed cards
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 4, noOfCardsInASuite:10).count == 60, "Pass")
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 5, noOfCardsInASuite:10).count == 60, "Pass")
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 6, noOfCardsInASuite:10).count == 60, "Pass")
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 7, noOfCardsInASuite:10).count == 56, "Pass")
         
-        // 105
+        // count 105 without removed cards
         XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 4, noOfCardsInASuite:15).count == 104, "Pass")
         XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 5, noOfCardsInASuite:15).count == 105, "Pass")
         XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 6, noOfCardsInASuite:15).count == 102, "Pass")
         XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 7, noOfCardsInASuite:15).count == 105, "Pass")
         
         
-        // 90
+        // count 90 without removed cards
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 4, noOfCardsInASuite:15).count == 88, "Pass")
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 5, noOfCardsInASuite:15).count == 90, "Pass")
         XCTAssert(deckWithNoOfSuites( 6,noOfPlayersAtTable: 6, noOfCardsInASuite:15).count == 90, "Pass")

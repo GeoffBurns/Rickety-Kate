@@ -953,9 +953,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "testBeCompable()"
-            landmarkType = "5">
+            endingLineNumber = "43">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -1001,9 +999,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "testBeCompable()"
-            landmarkType = "5">
+            endingLineNumber = "44">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1017,9 +1013,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "testBeCompable()"
-            landmarkType = "5">
+            endingLineNumber = "102">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

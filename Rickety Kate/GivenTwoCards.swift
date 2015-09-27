@@ -5,7 +5,7 @@
 //  Created by Geoff Burns on 11/09/2015.
 //  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
-
+/*
 import UIKit
 import XCTest
 import Rickety_Kate
@@ -151,4 +151,4 @@ public class GivenTwoCards: XCTestCase {
 
   
 
-}
+}*/
