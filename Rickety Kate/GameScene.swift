@@ -334,6 +334,13 @@ class GameScene: SKScene {
         }
     }
     
+    func isCardInTheRightDirection(touchedCardSprite:CardSprite, goingRight:Bool) -> Bool
+    {
+        let touchedCardIsToRight = draggedNode!.positionInSpread < touchedCardSprite.positionInSpread
+        return goingRight && touchedCardIsToRight
+            || !goingRight && !touchedCardIsToRight
+    }
+    
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
     let touch = (touches ).first!
     let positionInScene = touch.locationInNode(self)
@@ -351,10 +358,10 @@ class GameScene: SKScene {
            for node in touchedNodes
                 {
                  if let touchedNode  = node as? CardSprite
+                    
                       where isNodeAPlayerOneCardSpite(touchedNode)
                         && draggedNode != touchedNode
-                        && ( goingRight && draggedNode!.positionInSpread < touchedNode.positionInSpread
-                            || !goingRight && draggedNode!.positionInSpread > touchedNode.positionInSpread)
+                        && isCardInTheRightDirection(touchedNode, goingRight:goingRight)
                     {
                         
                         draggedNode?.setdownQuick()
