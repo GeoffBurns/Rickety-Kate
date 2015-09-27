@@ -467,6 +467,7 @@ class GameScene: SKScene {
         _ = self.table.playerOne._hand.remove(cardsprite.card)
         table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card,state:table.currentStateOfPlay!,willAnimate:false)
         table.currentStateOfPlay=nil
+        StatusDisplay.publish()
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
