@@ -33,6 +33,7 @@
 		AC73DDA41BB8252E00FF6114 /* cards_anchors.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA31BB8252E00FF6114 /* cards_anchors.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; settings = {ASSET_TAGS = (); }; };
+		AC73DDAA1BBB694900FF6114 /* PassYourThreeWorstCardPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC73DDA91BBB694800FF6114 /* PassYourThreeWorstCardPhase.swift */; settings = {ASSET_TAGS = (); }; };
 		AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC11BB378E60086AC02 /* CardPileType.swift */; settings = {ASSET_TAGS = (); }; };
 		AC7C9FC41BB379310086AC02 /* CardSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC31BB379310086AC02 /* CardSize.swift */; settings = {ASSET_TAGS = (); }; };
 		AC7C9FC81BB380A00086AC02 /* CardFan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC51BB380A00086AC02 /* CardFan.swift */; settings = {ASSET_TAGS = (); }; };
@@ -107,6 +108,7 @@
 		AC73DDA31BB8252E00FF6114 /* cards_anchors.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_anchors.atlas; sourceTree = "<group>"; };
 		AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs.atlas; sourceTree = "<group>"; };
 		AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot.atlas; sourceTree = "<group>"; };
+		AC73DDA91BBB694800FF6114 /* PassYourThreeWorstCardPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassYourThreeWorstCardPhase.swift; sourceTree = "<group>"; };
 		AC7C9FC11BB378E60086AC02 /* CardPileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPileType.swift; sourceTree = "<group>"; };
 		AC7C9FC31BB379310086AC02 /* CardSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSize.swift; sourceTree = "<group>"; };
 		AC7C9FC51BB380A00086AC02 /* CardFan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFan.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				ACE6DFC81BAA5FD9005B5424 /* CardSprite.swift */,
 				AC7C9FCB1BB3850A0086AC02 /* CardState.swift */,
 				AC9E82BE1BA686C40064870C /* CardTable.swift */,
+				AC73DDA91BBB694800FF6114 /* PassYourThreeWorstCardPhase.swift */,
 				AC7C9FCF1BB3886D0086AC02 /* Direction.swift */,
 				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
@@ -403,6 +406,7 @@
 				AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
 				ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */,
+				AC73DDAA1BBB694900FF6114 /* PassYourThreeWorstCardPhase.swift in Sources */,
 				ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */,
 				AC252A3F1BA6F1C400C0121A /* ArrayExtentions.swift in Sources */,
 				AC7C9FC41BB379310086AC02 /* CardSize.swift in Sources */,
@@ -553,7 +557,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -568,7 +572,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

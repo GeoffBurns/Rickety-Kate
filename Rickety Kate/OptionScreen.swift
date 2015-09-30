@@ -42,7 +42,7 @@ class OptionScreen: Popup {
             isShowing = false
             if GameSettings.changeSettings(noOfSuites.current,noOfPlayersAtTable: noOfPlayers.current,noOfCardsInASuite: noOfCardsInASuite.current, hasTrumps: hasTrumps.current,hasJokers: hasJokers.current)
             {
-             gameScene!.resetWith(CardTable.makeDemo())
+             gameScene!.resetSceneAsDemo()
             }
         }
         else

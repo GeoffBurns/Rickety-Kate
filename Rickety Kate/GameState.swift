@@ -84,57 +84,8 @@ public class GameStateBase
     
     
 }
-public class GameStateEngine : GameStateBase
-{
-    // if non-nil StateOfPlay is frozen awaiting user input
-    var currentStateOfPlay:StateOfPlay? = nil
-    var cardTossDuration = Double(0.7)
-
-    func addToTrickPile(player:CardPlayer,cardName:String)
-    {
-        if let displayedCard = CardSprite.spriteNamed(cardName)
-        {
-            
-            self.gameTracker.cardCounter.publish(displayedCard.card.suite)
-            
-            if let firstcard = tricksPile.first
-            {
-                let leadingSuite = firstcard.playedCard.suite
-                if displayedCard.card.suite != leadingSuite
-                {
-                    self.gameTracker.notFollowingTracker.publish(displayedCard.card.suite,player)
-                }
-            }
-            displayedCard.player=player
-            let playedCard = displayedCard.card
-            tricksPile.append(player:player,playedCard:playedCard)
-        
-        }
-    }
-    func isMoveValid(player:CardPlayer,cardName:String) -> Bool
-    {
-        if self.tricksPile.isEmpty
-        {
-            return true
-        }
-        if let trick = self.tricksPile.first
-        {
-            let leadingSuite = trick.playedCard.suite
-            let cardsInSuite = player.hand.filter { $0.suite == leadingSuite}
-            if cardsInSuite.isEmpty
-            {
-                return true
-            }
-            let displayedCard = CardSprite.spriteNamed(cardName)
-            
-            return displayedCard!.card.suite == leadingSuite
-            
-        }
-        return false
-    }
 
 
-}
 // Used for testing
 public class FakeGameState : GameStateBase, GameState
 {

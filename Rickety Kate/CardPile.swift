@@ -103,7 +103,7 @@ class CardPile
     func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat,
         fullHand:CGFloat)
     {
-        if let sprite = CardSprite.sprite(card)
+        if let sprite = scene!.cardSprite(card)
         {
             sprite.fan = self
             
@@ -190,7 +190,7 @@ class CardPile
         }
         for card in cards
         {
-            if let sprite = CardSprite.sprite(card)
+            if let sprite = scene!.cardSprite(card)
                 where sprite.state == CardState.AtRest
             {
                 rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
@@ -221,7 +221,7 @@ class CardPile
         }
         for card in cards
         {
-            if let sprite = CardSprite.sprite(card)
+            if let sprite = scene!.cardSprite(card)
             where sprite.state == CardState.AtRest
             {
             sprite.zPosition = sizeOfCards.zOrder  + positionInSpread

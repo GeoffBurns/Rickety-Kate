@@ -16,15 +16,85 @@ public protocol IGameSettings
     var hasTrumps  : Bool { get }
     var hasJokers : Bool { get }
 }
-
+enum GameProperties : String
+{
+    case NoOfSuitesInDeck = "NoOfSuitesInDeck"
+    case NoOfPlayersAtTable = "NoOfPlayersAtTable"
+    case NoOfCardsInASuite = "NoOfCardsInASuite"
+    case HasTrumps = "HasTrumps"
+    case HasJokers = "HasJokers"
+ 
+}
 /// User controlled options for the game
 class GameSettings : IGameSettings
 {
-    var noOfSuitesInDeck = 6
-    var noOfPlayersAtTable = 5
-    var noOfCardsInASuite = 15
-    var hasTrumps = false
-    var hasJokers = false
+  var noOfSuitesInDeck : Int {
+        
+    get {
+            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfSuitesInDeck.rawValue)
+            if result == 0
+            {
+                return 6
+            }
+            return result
+    }
+    set (newValue) {
+    NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.NoOfSuitesInDeck.rawValue)
+
+    ////  NSUserDefaults.standardUserDefaults().synchronize()
+    }
+  }
+    
+    var noOfPlayersAtTable : Int {
+        
+        get {
+            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfPlayersAtTable.rawValue)
+            if result == 0
+            {
+                return 5
+            }
+            return result
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.NoOfPlayersAtTable.rawValue)
+            
+        }
+    }
+    var noOfCardsInASuite : Int {
+        
+        get {
+            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfCardsInASuite.rawValue)
+            if result == 0
+            {
+                return 15
+            }
+            return result
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.NoOfCardsInASuite.rawValue)
+            
+        }
+    }
+
+    var hasTrumps : Bool {
+        
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.HasTrumps.rawValue)
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.HasTrumps.rawValue)
+        }
+    }
+    
+    var hasJokers : Bool {
+        
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.HasJokers.rawValue)
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.HasJokers.rawValue)
+        }
+    }
     
     static var isPad : Bool
         {

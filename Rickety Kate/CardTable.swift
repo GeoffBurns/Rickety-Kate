@@ -14,12 +14,12 @@ public struct StateOfPlay
 }
 
 /// controls the flow of the game
-public class CardTable : GameStateEngine, GameState
+public class CardTable : GameStateBase, GameState
 {
     lazy var deck: Deck = PlayingCard.BuiltCardDeck()
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
     var _players = [CardPlayer]()
-
+    var scene : SKNode? = nil
     var newGame :  Publink<Void> =  Publink<Void>()
     var resetGame :  Publink<Void> =  Publink<Void>()
  
@@ -27,8 +27,11 @@ public class CardTable : GameStateEngine, GameState
     func nop() {}
  
     var startPlayerNo = 1
-    var cardsPassed = [CardPile]()
-
+ //   var cardsPassed = [CardPile]()
+    // if non-nil StateOfPlay is frozen awaiting user input
+    var currentStateOfPlay:StateOfPlay? = nil
+    var cardTossDuration = Double(0.7)
+    
     
     public var players : [CardPlayer] {
         get {
@@ -38,21 +41,22 @@ public class CardTable : GameStateEngine, GameState
     }
     
  
-    static public func makeTable(gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable {
-     return CardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable))
+    static public func makeTable(scene:SKNode, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable {
+     return CardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
 }
 
-    static public func makeDemo(gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable  {
-     return CardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable))
+    static public func makeDemo(scene:SKNode, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable  {
+     return CardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable), scene:scene )
     }
-    private init(players: [CardPlayer]) {
+    private init(players: [CardPlayer],  scene:SKNode) {
     _players = players
     playerOne = _players[0]
     isInDemoMode = playerOne.name != "You"
+    self.scene  = scene
 
     Scorer.sharedInstance.setupScorer(_players)
     super.init()
-    setPassedCards()
+  //  setPassedCards()
     }
     
     // everyone except PlayerOne
@@ -61,43 +65,7 @@ public class CardTable : GameStateEngine, GameState
         return players.filter {$0 != self.playerOne}
     }
     
-    func setPassedCards()
-    {
-        cardsPassed.append(CardFan(name: CardPileType.Passing.description))
-        for _ in 0..<(_players.count-1)
-        {
-            cardsPassed.append(CardPile(name: CardPileType.Passing.description))
-        }
-    }
-    func resetPassedCards()
-    {
-
-        for i in 0..<(_players.count)
-        {
-            cardsPassed[i].cards = []
-        }
-    }
-    func setupCardPilesSoPlayersCanPassTheir3WorstCards(scene:SKNode)
-    {
-       for (passPile,player) in Zip2Sequence( cardsPassed, players )
-       {
-        let side = player.sideOfTable
-
-        if let passFan = passPile as? CardFan
-           {
-            passFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
-           }
-        else
-           {
-            passPile.setup(scene,
-                direction: side.direction,
-                position: side.positionOfPassingPile( 80, width: scene.frame.width, height: scene.frame.height),
-                isUp: false)
-           }
-        }
-       trickFan.setup(scene, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
-    }
-    //////////
+     //////////
     // GameState Protocol
     //////////
     public var noOfPlayers : Int
@@ -117,21 +85,63 @@ public class CardTable : GameStateEngine, GameState
     //////////
     // internal functions
     //////////
-      
 
-
+    func addToTrickPile(player:CardPlayer,cardName:String)
+    {
+        if let displayedCard = scene!.cardSpriteNamed(cardName)
+        {
+            
+            self.gameTracker.cardCounter.publish(displayedCard.card.suite)
+            
+            if let firstcard = tricksPile.first
+            {
+                let leadingSuite = firstcard.playedCard.suite
+                if displayedCard.card.suite != leadingSuite
+                {
+                    self.gameTracker.notFollowingTracker.publish(displayedCard.card.suite,player)
+                }
+            }
+            displayedCard.player=player
+            let playedCard = displayedCard.card
+            tricksPile.append(player:player,playedCard:playedCard)
+            
+        }
+    }
+    func isMoveValid(player:CardPlayer,cardName:String) -> Bool
+    {
+        if self.tricksPile.isEmpty
+        {
+            return true
+        }
+        if let trick = self.tricksPile.first
+        {
+            let leadingSuite = trick.playedCard.suite
+            let cardsInSuite = player.hand.filter { $0.suite == leadingSuite}
+            if cardsInSuite.isEmpty
+            {
+                return true
+            }
+            let displayedCard = scene!.cardSpriteNamed(cardName)
+            
+            return displayedCard!.card.suite == leadingSuite
+            
+        }
+        return false
+    }
     func playTrickCard(playerWithTurn:CardPlayer, trickcard:PlayingCard,state:StateOfPlay, willAnimate:Bool = true)
     {
         addToTrickPile(playerWithTurn,cardName: trickcard.imageName)
-        
-        let displayedCard = CardSprite.sprite(trickcard)
-        
+       
+   
         let doneAction =  nextPlayerAction(state , currentSuite: trickcard.suite)
         
-        let  moveActionWithDone = SKAction.sequence([
+        let  waitThenDo = SKAction.sequence([
             SKAction.waitForDuration(cardTossDuration*2.0),
             doneAction])
-        displayedCard!.runAction(moveActionWithDone)
+        scene!.runAction(waitThenDo)
+
+    
+        
     }
     
     func nextPlayerAction(state:StateOfPlay, currentSuite:PlayingCard.Suite?) -> SKAction
@@ -161,13 +171,11 @@ public class CardTable : GameStateEngine, GameState
     func removeTricksPile(winner:CardPlayer)
     {
         
-        //    let sideOfTable = winner.sideOfTable
-        
         var parent: SKNode? = nil
         for trick in self.tricksPile
         {
             let card =  trick.playedCard
-            let sprite =  CardSprite.sprite(card)!
+            let sprite =  scene!.cardSprite(card)!
             
             if parent == nil{
                 parent = sprite.parent
@@ -228,7 +236,7 @@ public class CardTable : GameStateEngine, GameState
             
             // player has run out of cards
             let doneAction =  nextPlayerAction(state , currentSuite: nil)
-            CardSprite.spriteNamed("QS")!.runAction(doneAction)
+           scene!.runAction(doneAction)
         }
         else
         {
@@ -287,11 +295,51 @@ public class CardTable : GameStateEngine, GameState
         }
         return nil
     }
-    
+    func setupCardPilesSoPlayersCanPlayTricks()
+    {
+       trickFan.setup(scene!, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
+    }
     //////////
     // Pass 3 worst cards phase
     //////////
-    
+    /*
+    func setPassedCards()
+    {
+        cardsPassed.append(CardFan(name: CardPileType.Passing.description))
+        for _ in 0..<(_players.count-1)
+        {
+            cardsPassed.append(CardPile(name: CardPileType.Passing.description))
+        }
+    }
+    func resetPassedCards()
+    {
+        
+        for i in 0..<(_players.count)
+        {
+            cardsPassed[i].cards = []
+        }
+    }
+    func setupCardPilesSoPlayersCanPassTheir3WorstCards()
+    {
+        for (passPile,player) in Zip2Sequence( cardsPassed, players )
+        {
+            let side = player.sideOfTable
+            
+            if let passFan = passPile as? CardFan
+            {
+                passFan.setup(scene!, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
+            }
+            else
+            {
+                passPile.setup(scene!,
+                    direction: side.direction,
+                    position: side.positionOfPassingPile( 80, width: scene!.frame.width, height: scene!.frame.height),
+                    isUp: false)
+            }
+        }
+     
+    }
+
     func takePassedCards()
     {
         
@@ -310,7 +358,7 @@ public class CardTable : GameStateEngine, GameState
             
             for card in fromPlayersCards
             {
-                CardSprite.sprite(card)!.player = toPlayer
+                scene!.cardSprite(card)!.player = toPlayer
                 
             }
             
@@ -322,9 +370,8 @@ public class CardTable : GameStateEngine, GameState
 
     func unpassCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
     {
-        let displayed = CardSprite.sprite(passedCard)!
         
-        if let removedCard = self.cardsPassed[seatNo].remove(displayed.card)
+        if let removedCard = self.cardsPassed[seatNo].remove(passedCard)
         {
         
             players[seatNo]._hand.append(removedCard)
@@ -335,9 +382,7 @@ public class CardTable : GameStateEngine, GameState
     }
     func passCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
     {
-    let displayed = CardSprite.sprite(passedCard)!
-     
-           if let removedCard = players[seatNo].removeFromHand(displayed.card)
+           if let removedCard = players[seatNo].removeFromHand(passedCard)
             {
             self.cardsPassed[seatNo].cards.append(removedCard)
             return removedCard
@@ -358,7 +403,7 @@ public class CardTable : GameStateEngine, GameState
             }
           }
         }
-
+*/
     
     // start playing a new Trick
     func playTrickLeadBy(playerWithLead:CardPlayer)

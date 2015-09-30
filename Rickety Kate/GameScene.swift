@@ -11,7 +11,7 @@ import SpriteKit
 /// How game play is displayed
 class GameScene: SKScene {
     
-    lazy var table = CardTable.makeTable()
+    var table : CardTable! {  didSet { setupTPassYourThreeWorstCardsPhase() } }
     var originalTouch = CGPoint()
     var draggedNode: CardSprite? = nil;
     var cardScale = CGFloat(0.9)
@@ -32,6 +32,12 @@ class GameScene: SKScene {
     var isInPassingCardsPhase = true
     var cardTossDuration = 0.4
     let cardAnchorPoint = CGPoint(x: 0.5, y: GameSettings.isPad ? -0.7 :  -1.0)
+    var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
+    
+    func setupTPassYourThreeWorstCardsPhase()
+    {
+        cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
+    }
     
     func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
     {
@@ -124,7 +130,7 @@ class GameScene: SKScene {
                 player.wonCards.clear()
                     for card in player.hand
                     {
-                        let sprite = CardSprite.sprite(card)!
+                        let sprite = self.cardSprite(card)!
                         sprite.flipDown()
                         sprite .player = player
                      }
@@ -214,7 +220,8 @@ class GameScene: SKScene {
         setupStatusArea()
         setupPopupScreensAndButtons()
         seatPlayers()
-        table.setupCardPilesSoPlayersCanPassTheir3WorstCards(self)
+        cardPassingPhase.setupCardPilesSoPlayersCanPassTheir3WorstCards()
+        table.setupCardPilesSoPlayersCanPlayTricks()
         createCardPilesToProvideStartPointForCardAnimation(self.frame.size.width,  height: self.frame.size.height)
         table.dealNewCardsToPlayers()
         
@@ -236,25 +243,36 @@ class GameScene: SKScene {
     return false
     }
 
-    
-    func resetWith(table:CardTable)
+    func resetSceneWithNewTableThatIsInteractive(isInteractive:Bool)
     {
         let width = self.frame.size.width
         let height = self.frame.size.height
         reverseDeal(width , height: height )
         
-        let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
+    
+        self.runAction((SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
             SKAction.runBlock({ [unowned self] in
                 let transition = SKTransition.crossFadeWithDuration(0.5)
                 let scene = GameScene(size: self.scene!.size)
+                
                 scene.scaleMode = SKSceneScaleMode.AspectFill
-                scene.table = table
+             
+                scene.table = isInteractive ?
+                    CardTable.makeTable(scene) :
+                    CardTable.makeDemo(scene)
+                    
                 self.scene!.view!.presentScene(scene, transition: transition)
                 
-            })]))
-        self.runAction(doneAction2)
+                })])))
     }
-    
+    func resetSceneWithInteractiveTable()
+    {
+       resetSceneWithNewTableThatIsInteractive(true)
+    }
+    func resetSceneAsDemo()
+    {
+        resetSceneWithNewTableThatIsInteractive(true)
+    }
     func buttonTouched(positionInScene:CGPoint) -> Bool
     {
         if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
@@ -264,7 +282,7 @@ class GameScene: SKScene {
                 /// play button
             case "Play" :
                 touchedNode.texture = SKTexture(imageNamed: "Play2")
-                resetWith(CardTable.makeTable())
+                resetSceneWithInteractiveTable()
                 return true
                 /// exit button
             case  "Exit" :
@@ -351,7 +369,7 @@ class GameScene: SKScene {
         
     /// if swiping horizonatally then riffle through the card fan
     /// displaying each card in turn
-    if deltaX > (2.2 * deltaY) && deltaX > 22
+    if deltaX > (2.2 * deltaY) && deltaX > 15
         {
            let touchedNodes = self.nodesAtPoint(positionInScene)
     
@@ -383,8 +401,8 @@ class GameScene: SKScene {
 
     func endCardPassingPhase()
     {
-        table.passOtherCards()
-        table.takePassedCards()
+        cardPassingPhase.passOtherCards()
+        cardPassingPhase.takePassedCards()
         isInPassingCardsPhase = false
         StatusDisplay.publish()
         startTrickPhase()
@@ -413,14 +431,14 @@ class GameScene: SKScene {
                  {
                  if sourceFanName == CardPileType.Hand.description  && positionInScene.y > height * 0.3
                         {
-                            if let _ = table.passCard(0, passedCard: cardsprite.card)
+                            if let _ = cardPassingPhase.passCard(0, passedCard: cardsprite.card)
                             {
                             return
                             }
                         }
                   if sourceFanName == CardPileType.Passing.description  && positionInScene.y <= height * 0.3
                     {
-                        if let _ = table.unpassCard(0, passedCard: cardsprite.card)
+                        if let _ = cardPassingPhase.unpassCard(0, passedCard: cardsprite.card)
                         {
                             return
                         }
@@ -435,7 +453,7 @@ class GameScene: SKScene {
     
     func checkPassingPhaseProgess()
     {
-        let count = table.cardsPassed[0].cards.count
+        let count = cardPassingPhase.cardsPassed[0].cards.count
         if  count < 3
         {
             

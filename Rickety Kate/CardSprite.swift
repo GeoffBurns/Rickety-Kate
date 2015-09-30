@@ -64,19 +64,7 @@ class CardSprite : SKSpriteNode
         return sprite
     }
     
-    /////////////////////////////////////////////
-    /// Static Functions
-    /////////////////////////////////////////////
-    static func spriteNamed(cardname :String) -> CardSprite?
-    {
-        return (currentScene?.childNodeWithName(cardname) as? CardSprite?)!
-    }
-    static func sprite(card :PlayingCard) -> CardSprite?
-    {
-        
-        return spriteNamed(card.imageName)
-    }
-    
+
     /////////////////////////////////////////////
     /// Instance Methods
     /////////////////////////////////////////////
@@ -85,13 +73,13 @@ class CardSprite : SKSpriteNode
     /// therefore changing the anchorpoint without causing the sprite to jump requires finess
     func updateAnchorPoint(anchorPoint:CGPoint)
     {
-    let dx1 = (anchorPoint.x - self.anchorPoint.x) * self.size.width;
-    let dy1 = (anchorPoint.y - self.anchorPoint.y) * self.size.height;
+    let dx1 = (anchorPoint.x - self.anchorPoint.x) * self.size.width
+    let dy1 = (anchorPoint.y - self.anchorPoint.y) * self.size.height
     
     let dx = dx1 * cos(self.zRotation) - dy1 * sin(self.zRotation)
     let dy = dx1 * sin(self.zRotation) + dy1 * cos(self.zRotation)
-    self.position = CGPointMake(self.position.x+dx, self.position.y+dy);
-    self.anchorPoint = anchorPoint;
+    self.position = CGPointMake(self.position.x+dx, self.position.y+dy)
+    self.anchorPoint = anchorPoint
     }
     
     /// the user has just started dragging the sprite
@@ -179,9 +167,17 @@ class CardSprite : SKSpriteNode
 
         }
     }
-    
-    
+}
 
 
-    
+extension SKNode
+{
+ func cardSpriteNamed(cardname :String) -> CardSprite?
+    {
+    return (self.childNodeWithName(cardname) as? CardSprite?)!
+    }
+func cardSprite(card :PlayingCard) -> CardSprite?
+    {
+    return self.cardSpriteNamed(card.imageName)
+    }
 }
