@@ -24,7 +24,7 @@ public enum SideOfTable:Int
     case LeftLow
     case LeftHigh
  
-    func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat, fullHand: CGFloat = CGFloat(13)) -> CGPoint
+    func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat, fullHand: CGFloat = CardPile.defaultSpread) -> CGPoint
     {
         var startheight = CGFloat(0.0)
         var startWidth = width * 0.35
@@ -202,7 +202,7 @@ public enum SideOfTable:Int
             return CGPoint(x: startWidth,y: startheight-spriteHeight*0.9)
         }
     }
-    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CGFloat(13)) -> CGFloat
+    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CardPile.defaultSpread) -> CGFloat
     {
         return self.direction.rotationOfCard(positionInSpread, fullHand: fullHand)
     }

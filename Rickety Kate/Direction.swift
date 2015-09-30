@@ -19,7 +19,7 @@ public enum Direction:Int
     case Right
     
     
-    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CGFloat(13)) -> CGFloat
+    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CardPile.defaultSpread) -> CGFloat
     {
         var startRotate = CGFloat(0)
         switch self

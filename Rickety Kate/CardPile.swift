@@ -12,6 +12,7 @@ import SpriteKit
 /// How the cards are displayed in a pile
 class CardPile
 {
+    static let defaultSpread = CGFloat(10)
     var cards = [PlayingCard]() { didSet { update() } }
     var isUp = false
     var sizeOfCards = CardSize.Small
@@ -19,7 +20,7 @@ class CardPile
     let cardScale = CGFloat(0.9)
     var cardTossDuration = 0.4
     let cardAnchorPoint = CGPoint(x: 0.5, y:GameSettings.isPad ? -0.7 : -1.0)
-    var fullHand = CGFloat(13)
+    var fullHand = defaultSpread
     var sideOfTable = SideOfTable.Bottom
     var direction = Direction.Up
     var isFanClosed = false
@@ -175,7 +176,7 @@ class CardPile
         {
             return
         }
-        var fullHand = CGFloat(13)
+        var fullHand = CardPile.defaultSpread
         let noCards = CGFloat(cards.count)
         var positionInSpread = CGFloat(0)
         
@@ -206,7 +207,7 @@ class CardPile
         {
             return
         }
-        var fullHand = CGFloat(13)
+        var fullHand = CardPile.defaultSpread
         let noCards = CGFloat(cards.count)
         var positionInSpread = CGFloat(0)
         
@@ -236,7 +237,7 @@ class CardPile
         {
             return
         }
-        var fullHand = CGFloat(13)
+        var fullHand = CardPile.defaultSpread
         let noCards = CGFloat(cards.count)
         var positionInSpread = CGFloat(0)
         
