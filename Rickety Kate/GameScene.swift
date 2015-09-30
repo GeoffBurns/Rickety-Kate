@@ -29,7 +29,7 @@ class GameScene: SKScene {
     
     var arePassingCards = true
 
-    var isInPassingCardsPhase = true
+   
     var cardTossDuration = 0.4
     let cardAnchorPoint = CGPoint(x: 0.5, y: GameSettings.isPad ? -0.7 :  -1.0)
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
@@ -145,8 +145,8 @@ class GameScene: SKScene {
                 })]))
             self.runAction(doneAction)
            
-            self.isInPassingCardsPhase = self.arePassingCards && !self.table.isInDemoMode
-            if self.isInPassingCardsPhase
+            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
+            if self.cardPassingPhase.isCurrentlyActive
             {
               StatusDisplay.publish("Discard Your",message2: "Three Worst Cards")
             }
@@ -399,14 +399,7 @@ class GameScene: SKScene {
       }
     }
 
-    func endCardPassingPhase()
-    {
-        cardPassingPhase.passOtherCards()
-        cardPassingPhase.takePassedCards()
-        isInPassingCardsPhase = false
-        StatusDisplay.publish()
-        startTrickPhase()
-    }
+ 
     
     func restoreDraggedCard()
     {
@@ -427,48 +420,25 @@ class GameScene: SKScene {
         let height = self.frame.size.height
         let cardsprite = draggedNode!;
  
-             if let sourceFanName = cardsprite.fan?.name
-                 {
-                 if sourceFanName == CardPileType.Hand.description  && positionInScene.y > height * 0.3
-                        {
-                            if let _ = cardPassingPhase.passCard(0, passedCard: cardsprite.card)
-                            {
-                            return
-                            }
-                        }
-                  if sourceFanName == CardPileType.Passing.description  && positionInScene.y <= height * 0.3
-                    {
-                        if let _ = cardPassingPhase.unpassCard(0, passedCard: cardsprite.card)
-                        {
-                            return
-                        }
-                    }
-                }
-              
+        let isTargetHand = positionInScene.y > height * 0.3
+        if cardPassingPhase.transferCardSprite(cardsprite, isTargetHand:isTargetHand)
+            {
+            return
+            }
   
         restoreDraggedCard()
-                    
-
     }
     
     func checkPassingPhaseProgess()
     {
-        let count = cardPassingPhase.cardsPassed[0].cards.count
-        if  count < 3
+        if  cardPassingPhase.isPassingPhaseContinuing()
         {
-            
-            if count == 2
-            {
-                StatusDisplay.publish("Discard one more card", message2: "Your worst card")
-            }
-            else
-            {
-                StatusDisplay.publish("Discard \(3 - count) more cards", message2: "Your worst cards")
-            }
+            // continue
         }
         else
         {
-            endCardPassingPhase()
+            // stop
+            startTrickPhase()
         }
     }
     
@@ -498,7 +468,7 @@ class GameScene: SKScene {
         if( draggedNode != nil)
            {
             
-                if isInPassingCardsPhase
+                if self.cardPassingPhase.isCurrentlyActive
                     {
                     setDownDraggedPassingCard(positionInScene)
                     checkPassingPhaseProgess()
