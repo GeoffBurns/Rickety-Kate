@@ -10,4 +10,4 @@ I am using a multiline label class by craig grummitt that can be found at https:
 
 Rules for rickety-kate can be found at http://australiancardgames.com.au/rickety-kate/
 
-However I haven't implemented the card passing yet and the scoring of this app is based on my families rules 10 points for Queen of Spaces and 1 point for other spades
+However the scoring of this app is based on my families rules - 10 points for Queen of Spaces and 1 point for other spades
