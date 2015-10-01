@@ -11,3 +11,5 @@ I am using a multiline label class by craig grummitt that can be found at https:
 Rules for rickety-kate can be found at http://australiancardgames.com.au/rickety-kate/
 
 However the scoring of this app is based on my families rules - 10 points for Queen of Spaces and 1 point for other spades
+
+This is distributed under a Creative Commons Atribution licence http://creativecommons.org/licenses/by/3.0/
