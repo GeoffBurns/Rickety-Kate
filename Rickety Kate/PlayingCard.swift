@@ -110,6 +110,8 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case 12: return values12CardInASuite
                 case 14: return values14CardInASuite
                 case 15: return values15CardInASuite
+                case 16: return values16CardInASuite
+                case 17: return values17CardInASuite
                 default: return standardValues
             }
         }
@@ -203,6 +205,38 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 
             }
             for cardLetter in courtCardExtra4Values
+            {
+                values.append(CourtCard(cardLetter))
+                
+            }
+            return values
+        }
+        static var values16CardInASuite : [CardValue]
+        {
+            
+            var values = [Ace]
+            for faceValue in 2...11
+            {
+                values.append(Pip(faceValue))
+                
+            }
+            for cardLetter in courtCardExtra5Values
+            {
+                values.append(CourtCard(cardLetter))
+                
+            }
+            return values
+        }
+        static var values17CardInASuite : [CardValue]
+        {
+            
+            var values = [Ace]
+            for faceValue in 2...11
+            {
+                values.append(Pip(faceValue))
+                
+            }
+            for cardLetter in courtCardExtra6Values
             {
                 values.append(CourtCard(cardLetter))
                 

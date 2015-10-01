@@ -271,7 +271,7 @@ class GameScene: SKScene {
     }
     func resetSceneAsDemo()
     {
-        resetSceneWithNewTableThatIsInteractive(true)
+        resetSceneWithNewTableThatIsInteractive(false)
     }
     func buttonTouched(positionInScene:CGPoint) -> Bool
     {

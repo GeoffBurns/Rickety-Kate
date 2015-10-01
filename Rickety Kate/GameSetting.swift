@@ -66,7 +66,7 @@ class GameSettings : IGameSettings
             let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfCardsInASuite.rawValue)
             if result == 0
             {
-                return 15
+                return 16
             }
             return result
         }
