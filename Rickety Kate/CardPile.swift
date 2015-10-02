@@ -27,8 +27,7 @@ class CardPile
     var isFanOpen :Bool { return !isFanClosed }
     var name = ""
     
-    var position = CGPoint()
-    
+    var position = CGPointZero
     subscript(index: Int) -> PlayingCard {
         return cards[index]
     }

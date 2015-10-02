@@ -10,71 +10,38 @@ import SpriteKit
 
 // Help Screen
 class RuleScreen: Popup {
+    
     var rulesText : SKMultilineLabel? = nil
-    var isShowing = false
 
-    override init()
-    {
-        super.init()
-        button =  SKSpriteNode(imageNamed:"Rules1")
-    }
-    
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func flipButton()
-    {
-    if(isShowing)
-    {
-    button.texture = SKTexture(imageNamed: "Rules1")
-    alpha = 0.0
-    zPosition = -10
-    button.zPosition = 300
-    isShowing = false
-    }
-    else
-    {
-    button.texture = SKTexture(imageNamed: "X")
-    alpha = 1.0
-    zPosition = 400
-    button.zPosition = 450
-    isShowing = true
-    }
-    }
-    
-    func  setup(scene:GameScene)
+    override func setup(scene:SKNode)
     {
         self.gameScene = scene
         color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
         size = scene.frame.size
-        position = CGPoint(x:CGRectGetMidX(scene.frame),y:CGRectGetMidY(scene.frame))
-        anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        
-        rulesText  = SKMultilineLabel(text: "Rickety Kate is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards.", labelWidth: Int(scene.frame.width * 0.88), pos: CGPoint(x:0.0,y:scene.frame.size.height*0.3),fontSize:30,fontColor:UIColor.whiteColor(),leading:40)
+        position = CGPointZero
+        anchorPoint = CGPointZero
+   
+        rulesText  = SKMultilineLabel(text: "Rickety Kate is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards.", labelWidth: Int(scene.frame.width * 0.88), pos: CGPoint(x:CGRectGetMidX(scene.frame),y:scene.frame.size.height*0.8),fontSize:30,fontColor:UIColor.whiteColor(),leading:40)
       
         name = "Rules Background"
-        zPosition = -10
-        
-        self.addChild(rulesText!)
-        alpha = 0.0
-        
-        rulesText!.name = "Rules text"
-        rulesText!.userInteractionEnabled = false
   
-    
-        button.setScale(0.5)
-        button.anchorPoint = CGPoint(x: 0.0, y: GameSettings.isPad ? 1.6 : 2.2)
-        button.position = CGPoint(x:0.0,y:self.frame.size.height * (GameSettings.isPad ?  1.06 :  1.0))
+        self.addChild(rulesText!)
+   
+        rulesText!.name = "RulesText"
+        rulesText!.userInteractionEnabled = false
+ 
         
-        button.name = "Rules"
+        Navigate.setupCardDisplayButton(self)
+  /*      moreButton.setScale(0.5)
+        moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
+        moreButton.position = CGPoint(x:self.frame.size.width,y:0.0)
         
-        button.zPosition = 300
-        button.userInteractionEnabled = false
+        moreButton.name = "More"
         
-        scene.addChild(button)
-        scene.addChild(self)
+        moreButton.zPosition = 300
+        moreButton.userInteractionEnabled = false
         
+        self.addChild(moreButton)*/
     }
 }

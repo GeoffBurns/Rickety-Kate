@@ -11,9 +11,13 @@ import SpriteKit
 // Popup screen for user input
 class Popup: SKSpriteNode {
     
-    var gameScene : GameScene? = nil
-    var button =  SKSpriteNode(imageNamed:"Exit")
+    weak var gameScene : SKNode? = nil
+    weak var button :  PopupButton? = nil
     
+    func setup(gameScene : SKNode)
+    {
+        self.gameScene = gameScene
+    }
     
     init()
     {
@@ -23,4 +27,16 @@ class Popup: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    func onEnter()
+    {
+        
+    }
+    
+    func onExit()
+    {
+        self.removeAllChildren()
+    }
+    
 }

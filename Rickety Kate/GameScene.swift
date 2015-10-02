@@ -19,21 +19,15 @@ class GameScene: SKScene {
     
     var dealtPiles = [CardPile]()
 
-
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
 
-    var rulesScreen = RuleScreen()
-    var exitScreen = ExitScreen()
-    var optionScreen = OptionScreen()
     
     var arePassingCards = true
 
-   
     var cardTossDuration = 0.4
     let cardAnchorPoint = CGPoint(x: 0.5, y: GameSettings.isPad ? -0.7 :  -1.0)
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
-    
     func setupTPassYourThreeWorstCardsPhase()
     {
         cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
@@ -156,30 +150,9 @@ class GameScene: SKScene {
             }
         }
     }
-    
 
-    func setupExitScreen()
-    {
-        if table.isInDemoMode
-        {
-            return
-        }
-       exitScreen.setup(self)
-    }
-    func setupOptionScreen()
-    {
-        if !table.isInDemoMode
-        {
-            return
-        }
-        optionScreen.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
-        optionScreen.noOfPlayers.current = GameSettings.sharedInstance.noOfPlayersAtTable
-        optionScreen.noOfCardsInASuite.current = GameSettings.sharedInstance.noOfCardsInASuite
-        optionScreen.hasTrumps.current = GameSettings.sharedInstance.hasTrumps
-        
-        optionScreen.hasJokers.current = GameSettings.sharedInstance.hasJokers
-        optionScreen.setup(self)
-    }
+
+ 
     func setupPlayButton()
     {
         if table.isInDemoMode
@@ -202,9 +175,17 @@ class GameScene: SKScene {
     }
     func setupPopupScreensAndButtons()
     {
-        rulesScreen.setup(self)
-        setupExitScreen()
-        setupOptionScreen()
+
+        Navigate.setupRulesButton(self)
+        if table.isInDemoMode
+        {
+            Navigate.setupOptionButton(self)
+        }
+        else
+        {
+           Navigate.setupExitButton(self)
+        }
+        
         setupPlayButton()
     }
     func setupStatusArea()
@@ -284,21 +265,9 @@ class GameScene: SKScene {
                 touchedNode.texture = SKTexture(imageNamed: "Play2")
                 resetSceneWithInteractiveTable()
                 return true
-                /// exit button
-            case  "Exit" :
-                touchedNode.texture = SKTexture(imageNamed: "Exit2")
-                exitScreen.alpha = 1.0
-                exitScreen.zPosition = 500
-                return  true
-                /// rules button
-            case "Rules" :
-                rulesScreen.flipButton()
-                return  true
-                
-                /// Option button
-            case "Option" :
-                optionScreen.flipButton()
-                return  true
+    
+            
+
             default : break
                 
             }

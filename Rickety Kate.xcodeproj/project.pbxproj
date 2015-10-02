@@ -35,6 +35,10 @@
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */; settings = {ASSET_TAGS = (); }; };
 		AC73DDAE1BBC10C200FF6114 /* cards_star.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDAD1BBC10C200FF6114 /* cards_star.atlas */; settings = {ASSET_TAGS = (); }; };
+		AC73DDB01BBD4AC300FF6114 /* CardSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC73DDAF1BBD4AC300FF6114 /* CardSlide.swift */; settings = {ASSET_TAGS = (); }; };
+		AC74F0421BBE4D4A0051DF03 /* PopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0411BBE4D4A0051DF03 /* PopupButton.swift */; settings = {ASSET_TAGS = (); }; };
+		AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0431BBEBA550051DF03 /* Navigator.swift */; settings = {ASSET_TAGS = (); }; };
+		AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */; settings = {ASSET_TAGS = (); }; };
 		AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC11BB378E60086AC02 /* CardPileType.swift */; settings = {ASSET_TAGS = (); }; };
 		AC7C9FC41BB379310086AC02 /* CardSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC31BB379310086AC02 /* CardSize.swift */; settings = {ASSET_TAGS = (); }; };
 		AC7C9FC81BB380A00086AC02 /* CardFan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC51BB380A00086AC02 /* CardFan.swift */; settings = {ASSET_TAGS = (); }; };
@@ -111,6 +115,10 @@
 		AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot.atlas; sourceTree = "<group>"; };
 		AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassYourThreeWorstCardsPhase.swift; sourceTree = "<group>"; };
 		AC73DDAD1BBC10C200FF6114 /* cards_star.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_star.atlas; sourceTree = "<group>"; };
+		AC73DDAF1BBD4AC300FF6114 /* CardSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSlide.swift; path = ../CardSlide.swift; sourceTree = "<group>"; };
+		AC74F0411BBE4D4A0051DF03 /* PopupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopupButton.swift; path = ../PopupButton.swift; sourceTree = "<group>"; };
+		AC74F0431BBEBA550051DF03 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDisplayScreen.swift; sourceTree = "<group>"; };
 		AC7C9FC11BB378E60086AC02 /* CardPileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPileType.swift; sourceTree = "<group>"; };
 		AC7C9FC31BB379310086AC02 /* CardSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSize.swift; sourceTree = "<group>"; };
 		AC7C9FC51BB380A00086AC02 /* CardFan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFan.swift; sourceTree = "<group>"; };
@@ -183,6 +191,8 @@
 		AC62B6951BA1564800B0EDAE /* Rickety Kate */ = {
 			isa = PBXGroup;
 			children = (
+				AC74F0411BBE4D4A0051DF03 /* PopupButton.swift */,
+				AC73DDAF1BBD4AC300FF6114 /* CardSlide.swift */,
 				AC62B6981BA1564800B0EDAE /* AppDelegate.swift */,
 				AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */,
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
@@ -212,6 +222,7 @@
 				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
+				AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */,
 				AC7C9FC61BB380A00086AC02 /* GameSetting.swift */,
 				ACE6DFB51BAA32AB005B5424 /* GameState.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
@@ -228,6 +239,7 @@
 				AC7C9FCD1BB385CA0086AC02 /* Popup.swift */,
 				AC9E82C01BA686C40064870C /* Publink.swift */,
 				AC0304031BAEDE7C005263C7 /* RuleScreen.swift */,
+				AC74F0431BBEBA550051DF03 /* Navigator.swift */,
 				AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */,
 				ACCB13351BAB1D5700196393 /* Scorer.swift */,
 				AC7C9FC71BB380A00086AC02 /* Seater.swift */,
@@ -389,6 +401,7 @@
 				AC62B69F1BA1564800B0EDAE /* GameViewController.swift in Sources */,
 				ACE6DFBF1BAA38A9005B5424 /* CardSource.swift in Sources */,
 				AC7C9FC91BB380A00086AC02 /* GameSetting.swift in Sources */,
+				AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */,
 				AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */,
 				ACE6DFC91BAA5FD9005B5424 /* CardSprite.swift in Sources */,
 				AC7C9FCE1BB385CA0086AC02 /* Popup.swift in Sources */,
@@ -407,16 +420,19 @@
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
 				AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */,
 				AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */,
+				AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */,
 				AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */,
 				AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
 				ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */,
 				ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */,
+				AC74F0421BBE4D4A0051DF03 /* PopupButton.swift in Sources */,
 				AC252A3F1BA6F1C400C0121A /* ArrayExtentions.swift in Sources */,
 				AC7C9FC41BB379310086AC02 /* CardSize.swift in Sources */,
 				AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */,
 				AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */,
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
+				AC73DDB01BBD4AC300FF6114 /* CardSlide.swift in Sources */,
 				ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
 				ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */,
@@ -561,7 +577,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -576,7 +592,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
