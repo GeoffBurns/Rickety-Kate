@@ -131,7 +131,17 @@ public class GivenADeck: XCTestCase {
         XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 6, noOfCardsInASuite:15, hasTrumps: true,  hasJokers:true).count == 126, "Pass")
         XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 7, noOfCardsInASuite:15, hasTrumps: true,  hasJokers:true).count == 126, "Pass")
         
-
+        // 136
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 4, noOfCardsInASuite:16, hasTrumps: true,  hasJokers:true).count == 136, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 5, noOfCardsInASuite:16, hasTrumps: true,  hasJokers:true).count == 135, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 6, noOfCardsInASuite:16, hasTrumps: true,  hasJokers:true).count == 132, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 7, noOfCardsInASuite:16, hasTrumps: true,  hasJokers:true).count == 133, "Pass")
+        
+        // 143
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 4, noOfCardsInASuite:17, hasTrumps: true,  hasJokers:true).count == 140, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 5, noOfCardsInASuite:17, hasTrumps: true,  hasJokers:true).count == 140, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 6, noOfCardsInASuite:17, hasTrumps: true,  hasJokers:true).count == 138, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 7, noOfCardsInASuite:17, hasTrumps: true,  hasJokers:true).count == 140, "Pass")
         
     }
  
