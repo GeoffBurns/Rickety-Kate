@@ -34,7 +34,7 @@ class CardSprite : SKSpriteNode
     /////////////////////////////////////////////////////
     /// Constructors
     /////////////////////////////////////////////////////
-    private init(card:PlayingCard, player : CardPlayer)
+    private init(card:PlayingCard, player : CardPlayer?)
     {
     self.card = card
     self.player = player
@@ -51,12 +51,12 @@ class CardSprite : SKSpriteNode
         fatalError("init(coder:) has not been implemented")
     }
     
-    static func add(card:PlayingCard, player : CardPlayer, scene:SKNode)
+    static func add(card:PlayingCard, player : CardPlayer?, scene:SKNode)
     {
         CardSprite.create(card, player: player,scene: scene)
       
     }
-    static func create(card:PlayingCard, player : CardPlayer, scene:SKNode) -> CardSprite
+    static func create(card:PlayingCard, player : CardPlayer?, scene:SKNode) -> CardSprite
     {
         let sprite = CardSprite(card: card, player: player)
         scene.addChild(sprite)

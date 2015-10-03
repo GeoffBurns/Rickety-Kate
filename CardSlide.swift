@@ -15,7 +15,7 @@ class CardSlide : CardPile
     
     var slideWidth = CGFloat()
     
-    func setup(scene:SKNode, slideWidth: CGFloat, sizeOfCards: CardSize = CardSize.Big)
+    func setup(scene:SKNode, slideWidth: CGFloat, sizeOfCards: CardSize = CardSize.Medium)
     {
         self.scene = scene
         self.sideOfTable = SideOfTable.Bottom
@@ -38,7 +38,8 @@ class CardSlide : CardPile
     }
     override func positionOfCard(positionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
     {
-        return CGPoint(x:position.x+positionInSpread/CGFloat(cards.count), y:position.y)
+        let seperation = max (CardPile.defaultSpread , CGFloat(cards.count))
+        return CGPoint(x:position.x+slideWidth*positionInSpread/seperation, y:position.y)
     }
     override func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
     {
@@ -57,5 +58,24 @@ class CardSlide : CardPile
         let sortedHand = updatedCards.sort()
         cards = ( Array(sortedHand.reverse()))
     }
+    override func rearrange()
+    {
+        if(scene==nil)
+        {
+            return
+        }
+      
+        let noCards = CGFloat(cards.count)
+        var positionInSpread = CGFloat(0)
+      
+    
+        for card in cards
+        {
+            rearrangeFor(card,positionInSpread:positionInSpread, fullHand:noCards)
+            positionInSpread++
+            
+        }
+    }
+
 }
 

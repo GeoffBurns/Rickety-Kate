@@ -51,8 +51,10 @@ func pictureLetterToRank(letter:String) -> Int
 {
     switch letter
     {
-    case "K" : return 15
-    case "Q" : return 14
+    case "K" : return 17
+    case "Q" : return 16
+    case "PR" : return 15
+    case "PS" : return 14
     case "KN" : return 13
     case "J" : return 12
     default: return 0

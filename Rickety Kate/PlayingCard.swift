@@ -30,6 +30,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         case Stars
         case Trumps
         case Jokers
+        case None
         
 
         var imageCode : String
@@ -46,7 +47,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case Stars : return "R"
             case Trumps : return "T"
             case Jokers : return "J"
-                
+            case None : return ""
             }
         }
    
@@ -99,7 +100,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         }
         static var courtCardExtra6Values : [String]
         {
-            return ["J","KN","PS","P","Q","K"]
+            return ["J","KN","PS","PR","Q","K"]
         }
         static func valuesFor(noOfCardsInASuite:Int = 13) -> [CardValue]
         {

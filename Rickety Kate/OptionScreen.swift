@@ -20,8 +20,6 @@ class OptionScreen: Popup {
     var hasTrumps = BinaryToggle(current: false, text: "Include Tarot Trumps?" )
 
     
-
-    
     override func onEnter() {
         self.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
         self.noOfPlayers.current = GameSettings.sharedInstance.noOfPlayersAtTable

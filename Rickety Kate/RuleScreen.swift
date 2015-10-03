@@ -33,15 +33,6 @@ class RuleScreen: Popup {
  
         
         Navigate.setupCardDisplayButton(self)
-  /*      moreButton.setScale(0.5)
-        moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
-        moreButton.position = CGPoint(x:self.frame.size.width,y:0.0)
-        
-        moreButton.name = "More"
-        
-        moreButton.zPosition = 300
-        moreButton.userInteractionEnabled = false
-        
-        self.addChild(moreButton)*/
+
     }
 }

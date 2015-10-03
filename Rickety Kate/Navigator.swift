@@ -14,8 +14,7 @@ class Navigate {
    
     static func setupCardDisplayButton(scene:SKNode)
     {
-        
-        let cardDisplayButton = PopupButton(imageNamed:"More1", altNamed:"X",popup:CardDisplayScreen())
+        let cardDisplayButton = PopupButton(imageNamed:"More1", altNamed:"Rules1",popup:CardDisplayScreen())
         cardDisplayButton.setScale(0.5)
         cardDisplayButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
         cardDisplayButton.position = CGPoint(x:scene.frame.size.width,y:0.0)
