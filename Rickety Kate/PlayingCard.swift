@@ -100,7 +100,11 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         }
         static var courtCardExtra6Values : [String]
         {
-            return ["J","KN","PS","PR","Q","K"]
+            return ["J","KN","AR","PS","Q","K"]
+        }
+        static var courtCardExtra7Values : [String]
+        {
+            return ["J","KN","AR","PS","PR","Q","K"]
         }
         static func valuesFor(noOfCardsInASuite:Int = 13) -> [CardValue]
         {
@@ -325,12 +329,10 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     public class BuiltCardDeck : DeckBase
     {
         var gameSettings:IGameSettings = GameSettings.sharedInstance
-  
-        
+        var suitesInDeck : [PlayingCard.Suite] = []
         public init(gameSettings:IGameSettings = GameSettings.sharedInstance )
         {
             self.gameSettings = gameSettings
-     
         }
         
         
@@ -350,6 +352,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 let toRemove = noOfPossibleCardsInDeck % gameSettings.noOfPlayersAtTable
                 var removedCards = Set<PlayingCard>()
                 let suites = PlayingCard.Suite.normalSuites[0..<gameSettings.noOfSuitesInDeck]
+                suitesInDeck.appendContentsOf(suites)
                 for s in suites
                 {
                     noInSuites[s.rawValue]  = gameSettings.noOfCardsInASuite
@@ -394,6 +397,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 if gameSettings.hasTrumps
                 {
                     deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(0)))
+                    suitesInDeck.append(PlayingCard.Suite.Trumps)
                     for v in 1...21
                     {
                         deck.append(PlayingCard(suite: PlayingCard.Suite.Trumps, value : PlayingCard.CardValue.Pip(v)))
@@ -401,6 +405,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 }
                 if gameSettings.hasJokers
                 {
+                    suitesInDeck.append(PlayingCard.Suite.Jokers)
                     for v in 1...2
                     {
                         deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(v)))

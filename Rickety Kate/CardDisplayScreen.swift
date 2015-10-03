@@ -18,7 +18,7 @@ class CardDisplayScreen: Popup {
     var discard = CardSlide(name: "slide")
     lazy var deck = PlayingCard.BuiltCardDeck()
     var moreButton = SKSpriteNode(imageNamed: "More1")
-    var backButton = SKSpriteNode(imageNamed: "Back1")
+    var backButton = SKSpriteNode(imageNamed: "Back")
     var suiteStart = 0
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
@@ -91,15 +91,30 @@ class CardDisplayScreen: Popup {
         moreButton.userInteractionEnabled = false
         
         self.addChild(moreButton)
+        
+        backButton.setScale(0.5)
+        backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
+        backButton.position = CGPoint(x:0.0,y:0.0)
+        
+        backButton.name = "Back"
+        
+        backButton.zPosition = 300
+        backButton.userInteractionEnabled = false
+        backButton.alpha = 0.0
+        self.addChild(backButton)
     }
     func displayCards()
     {
        
         let separationOfSlides = GameSettings.isPad ? 0.25 : 0.5
         
+        
+       
         for (i,slide) in slides.enumerate()
         {
-            let suite = cards.filter { $0.suite == PlayingCard.Suite(rawValue: i+suiteStart)}
+            if  i+suiteStart < deck.suitesInDeck.count
+            {
+            let suite = cards.filter { $0.suite == deck.suitesInDeck[i+suiteStart]}
             
             if suite.count > 0
             {
@@ -119,17 +134,37 @@ class CardDisplayScreen: Popup {
             self.addChild(l)
             self.addChild(m)
             
-            discard.appendContentsOf(slide.cards)
+            discard.replaceWithContentsOf(slide.cards)
             slide.replaceWithContentsOf(suite)
             slide.update()
             }
-            else
-            {
+                continue
+            }
+           
             discard.replaceWithContentsOf(slide.cards)
             slide.clear()
             slide.update()
-            }
+           
         }
+    }
+    
+    func newPage()
+    {
+        var l = self.childNodeWithName("label")
+        while l != nil
+        {
+            l!.removeFromParent()
+            l = self.childNodeWithName("label")
+        }
+        
+        displayCards()
+        
+        let nextStart = suiteStart +  (GameSettings.isPad ? 3 : 2)
+        
+        moreButton.alpha = nextStart >= PlayingCard.Suite.None.rawValue
+            ? 0.0 : 1.0
+        backButton.alpha = suiteStart == 0
+            ? 0.0 : 1.0
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
@@ -138,29 +173,28 @@ class CardDisplayScreen: Popup {
         {
             let touchPoint = touch.locationInNode(self)
             if let touchedNode : SKSpriteNode = self.nodeAtPoint(touchPoint) as? SKSpriteNode
-                where touchedNode.name == "More"
+                
             {
-                suiteStart += GameSettings.isPad ? 3 : 2
-               // self.removeAllChildren()
-               // displayPage()
-                var l = self.childNodeWithName("label")
-               while l != nil
+                switch  touchedNode.name!
                 {
-                l!.removeFromParent()
-                l = self.childNodeWithName("label")
-                }
+                case "More" :
+                    self.suiteStart += GameSettings.isPad ? 3 : 2
+                    newPage()
+                  
+                case "Back" :
+            
+                    self.suiteStart -= GameSettings.isPad ? 3 : 2
                 
-                   displayCards()
-                
-                let nextStart = suiteStart +  (GameSettings.isPad ? 3 : 2)
-                if nextStart >= PlayingCard.Suite.None.rawValue
-                {
-                    moreButton.removeFromParent()
+                    if self.suiteStart < 0
+                    {
+                      self.suiteStart = 0
+                    }
+                    newPage()
+                default:
+                    continue
+               
                 }
             }
-            
-            
-          
         }
     }
 }
