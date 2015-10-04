@@ -22,6 +22,9 @@ class CardDisplayScreen: Popup {
     var suiteStart = 0
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
+    let  noOfSlides = GameSettings.isPad ? 3 : 2
+    let separationOfSlides = GameSettings.isPad ? 0.25 : 0.4
+    let slideStart : CGFloat = GameSettings.isPad ? 0.72 : 0.7
     
     override func onEnter() {
 
@@ -32,10 +35,6 @@ class CardDisplayScreen: Popup {
     }
     override func setup(scene:SKNode)
     {
-        let numOfSlides = GameSettings.isPad ? 3 : 2
-        
-        let separationOfSlides = GameSettings.isPad ? 0.25 : 0.5
-        
         if !isSetup
         {
         self.gameScene = scene
@@ -47,21 +46,18 @@ class CardDisplayScreen: Popup {
         cards = deck.orderedDeck
    
 
-        for i in 0..<numOfSlides
+        for i in 0..<noOfSlides
         {
             let slide = CardSlide(name: "slide")
             slide.setup(self, slideWidth: size.width * 0.9)
-            slide.position = CGPointMake(size.width * 0.10, size.height * (0.5 - ( CGFloat(i) * CGFloat(separationOfSlides))))
+            slide.position = CGPointMake(size.width * 0.10, size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
             slides.append(slide)
         }
         discard.setup(self, slideWidth: size.width * 0.9)
 
         }
         isSetup = true
-        for (i,slide) in slides.enumerate()
-        {
-                slide.position = CGPointMake(size.width * 0.10, size.height * (0.5 - ( CGFloat(i) * CGFloat(separationOfSlides))))
-        }
+
         discard.position = CGPointMake(size.width * 0.10, size.height * -0.5 )
         for card in cards {
             let cs = CardSprite.create(card, player: nil, scene: self)
@@ -105,11 +101,6 @@ class CardDisplayScreen: Popup {
     }
     func displayCards()
     {
-       
-        let separationOfSlides = GameSettings.isPad ? 0.25 : 0.5
-        
-        
-       
         for (i,slide) in slides.enumerate()
         {
             if  i+suiteStart < deck.suitesInDeck.count
@@ -159,12 +150,10 @@ class CardDisplayScreen: Popup {
         
         displayCards()
         
-        let nextStart = suiteStart +  (GameSettings.isPad ? 3 : 2)
+        let nextStart = suiteStart +  noOfSlides
         
-        moreButton.alpha = nextStart >= PlayingCard.Suite.None.rawValue
-            ? 0.0 : 1.0
-        backButton.alpha = suiteStart == 0
-            ? 0.0 : 1.0
+        moreButton.alpha = nextStart >= deck.suitesInDeck.count ? 0.0 : 1.0
+        backButton.alpha = suiteStart == 0 ? 0.0 : 1.0
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
@@ -172,18 +161,18 @@ class CardDisplayScreen: Popup {
         for touch in (touches )
         {
             let touchPoint = touch.locationInNode(self)
-            if let touchedNode : SKSpriteNode = self.nodeAtPoint(touchPoint) as? SKSpriteNode
-                
+            if let touchedNode : SKSpriteNode = self.nodeAtPoint(touchPoint) as? SKSpriteNode,
+               nodeName =  touchedNode.name
             {
-                switch  touchedNode.name!
+                switch nodeName
                 {
                 case "More" :
-                    self.suiteStart += GameSettings.isPad ? 3 : 2
+                    self.suiteStart += noOfSlides
                     newPage()
                   
                 case "Back" :
             
-                    self.suiteStart -= GameSettings.isPad ? 3 : 2
+                    self.suiteStart -= noOfSlides
                 
                     if self.suiteStart < 0
                     {

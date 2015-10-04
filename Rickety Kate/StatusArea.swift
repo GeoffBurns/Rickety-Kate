@@ -41,7 +41,7 @@ class StatusDisplay
     }
     noticeLabel.text = ""
     noticeLabel.fontSize = 65;
-    noticeLabel.position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.4);
+    noticeLabel.position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.33);
     
     noticeLabel2.fontSize = 65;
     noticeLabel2.position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.68);

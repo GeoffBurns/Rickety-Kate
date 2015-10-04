@@ -18,8 +18,6 @@ class CardPile
     var sizeOfCards = CardSize.Small
     var scene : SKNode? = nil
     let cardScale = CGFloat(0.9)
-    var cardTossDuration = 0.4
-    let cardAnchorPoint = CGPoint(x: 0.5, y:GameSettings.isPad ? -0.7 : -1.0)
     var fullHand = defaultSpread
     var sideOfTable = SideOfTable.Bottom
     var direction = Direction.Up
@@ -28,6 +26,13 @@ class CardPile
     var name = ""
     
     var position = CGPointZero
+    
+    static let straightAnchorPoint = CGPoint(x: 0.5,y: 0.5)
+    
+    var cardAnchorPoint : CGPoint { get { return CardPile.straightAnchorPoint }}
+    
+   
+
     subscript(index: Int) -> PlayingCard {
         return cards[index]
     }
@@ -128,24 +133,24 @@ class CardPile
             sprite.color = UIColor.whiteColor()
             sprite.colorBlendFactor = 0
             
-            var flipAction = (SKAction.scaleTo(sizeOfCards.scale, duration: cardTossDuration))
+            var flipAction = (SKAction.scaleTo(sizeOfCards.scale, duration: CardSprite.tossDuration))
             let newPosition =  positionOfCard(positionInSpread, spriteHeight: newHeight, fullHand:fullHand)
-            let moveAction = (SKAction.moveTo(newPosition, duration:(cardTossDuration*0.8)))
+            let moveAction = (SKAction.moveTo(newPosition, duration:(CardSprite.tossDuration*0.8)))
             let rotationAngle = rotationOfCard(positionInSpread, fullHand:fullHand)
-            let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(cardTossDuration*0.8)))
-            let scaleAction =  (SKAction.scaleTo(sizeOfCards.scale, duration: cardTossDuration))
-            let scaleYAction =  SKAction.scaleYTo(sizeOfCards.scale, duration: cardTossDuration)
+            let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(CardSprite.tossDuration*0.8)))
+            let scaleAction =  (SKAction.scaleTo(sizeOfCards.scale, duration: CardSprite.tossDuration))
+            let scaleYAction =  SKAction.scaleYTo(sizeOfCards.scale, duration: CardSprite.tossDuration)
             var groupAction = SKAction.group([moveAction,rotateAction,scaleAction])
             
             if isUp && !sprite.isUp
             {
                 //    sprite.flipUp()
                 flipAction = (SKAction.sequence([
-                    SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
+                    SKAction.scaleXTo(0.0, duration: CardSprite.tossDuration*0.5),
                     SKAction.runBlock({ [unowned sprite] in
                         sprite.flipUp()
                     }) ,
-                    SKAction.scaleXTo(sizeOfCards.scale, duration: cardTossDuration*0.5)
+                    SKAction.scaleXTo(sizeOfCards.scale, duration: CardSprite.tossDuration*0.5)
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
@@ -153,11 +158,11 @@ class CardPile
             {
                 // sprite.flipDown()
                 flipAction = (SKAction.sequence([
-                    SKAction.scaleXTo(0.0, duration: cardTossDuration*0.5),
+                    SKAction.scaleXTo(0.0, duration: CardSprite.tossDuration*0.5),
                     SKAction.runBlock({ [unowned sprite] in
                         sprite.flipDown()
                     }) ,
-                    SKAction.scaleXTo(sizeOfCards.scale, duration: cardTossDuration*0.5)
+                    SKAction.scaleXTo(sizeOfCards.scale, duration: CardSprite.tossDuration*0.5)
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }

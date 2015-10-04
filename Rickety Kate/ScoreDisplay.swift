@@ -33,28 +33,30 @@ class ScoreDisplay
     
     static func scorePosition(side:SideOfTable, scene: SKNode) -> CGPoint
     {
+        
+        let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
       switch side
       {
       case .Right:
-        return CGPoint(x:scene.frame.size.width * 0.90, y:CGRectGetMidY(scene.frame))
+        return CGPoint(x:scene.frame.size.width * 0.93, y:CGRectGetMidY(scene.frame))
       case .RightLow:
-        return CGPoint(x:scene.frame.size.width * 0.90, y:scene.frame.size.height * 0.35)
+        return CGPoint(x:scene.frame.size.width * 0.93, y:scene.frame.size.height * 0.35)
       case .RightHigh:
-        return CGPoint(x:scene.frame.size.width * 0.90, y:scene.frame.size.height * 0.70)
+        return CGPoint(x:scene.frame.size.width * 0.93, y:scene.frame.size.height * 0.70)
        case .Top:
-        return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * (GameSettings.isPad ? 0.87 : 0.75))
+        return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height *  0.87 )
        case .TopMidRight:
-          return CGPoint(x:scene.frame.width * (GameSettings.isPad ? 0.7 : 0.8), y:scene.frame.size.height * (GameSettings.isPad ? 0.87 : 0.75))
+        return CGPoint(x:scene.frame.width * ( noOfPlayers == 6 ? 0.8 : 0.7), y:scene.frame.size.height *  0.87 )
        case .TopMidLeft:
-          return CGPoint(x:scene.frame.width * (GameSettings.isPad ? 0.3 : 0.2), y:scene.frame.size.height * (GameSettings.isPad ? 0.87 : 0.75))
+          return CGPoint(x:scene.frame.width *  ( noOfPlayers == 6 ? 0.2 : 0.3), y:scene.frame.size.height *  0.87)
        case .Left:
-        return CGPoint(x:scene.frame.size.width * 0.10, y:CGRectGetMidY(scene.frame))
+        return CGPoint(x:scene.frame.size.width * 0.07, y:CGRectGetMidY(scene.frame))
       case .LeftLow:
-        return CGPoint(x:scene.frame.size.width * 0.10, y:scene.frame.size.height * 0.35)
+        return CGPoint(x:scene.frame.size.width * 0.07, y:scene.frame.size.height * 0.35)
       case .LeftHigh:
-        return CGPoint(x:scene.frame.size.width * 0.10, y:scene.frame.size.height * 0.70)
+        return CGPoint(x:scene.frame.size.width * 0.07, y:scene.frame.size.height * 0.70)
        default:
-          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * (GameSettings.isPad ? 0.27 : 0.35))
+          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height *  0.27)
        }
     }
     
@@ -94,10 +96,10 @@ class ScoreDisplay
             scoreUpdates[i] = Publink<(Int,Int)>()
             
             l.text = ""
-            l.fontSize = (GameSettings.isPad ?  20 : 30);
+            l.fontSize = (GameSettings.isPad ?  20 : 28);
             l.name = "\(player.name)'s score label"
             m.text = ""
-            m.fontSize = (GameSettings.isPad ?  20 : 30);
+            m.fontSize = (GameSettings.isPad ?  20 : 28);
             
             m.fontColor = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
   

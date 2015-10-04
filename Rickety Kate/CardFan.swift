@@ -13,6 +13,10 @@ import SpriteKit
 class CardFan : CardPile
 {
     
+     static let fanAnchorPoint = CGPoint(x: 0.5,y: -0.7)
+     override var cardAnchorPoint : CGPoint { get { return CardFan.fanAnchorPoint }}
+    
+    
     func setup(scene:SKNode, sideOfTable: SideOfTable, isUp: Bool, sizeOfCards: CardSize = CardSize.Small)
     {
         self.scene = scene

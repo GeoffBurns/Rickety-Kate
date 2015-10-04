@@ -31,6 +31,11 @@ class CardSprite : SKSpriteNode
     var originalCardZPosition  = CGFloat(0.0)
     var originalCardAnchor  = CGPointZero
     
+    
+    static let tossDuration = 0.4
+    // static let anchorOffset = -0.7
+ 
+    
     /////////////////////////////////////////////////////
     /// Constructors
     /////////////////////////////////////////////////////

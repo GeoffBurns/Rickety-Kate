@@ -27,7 +27,15 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         super.viewDidLoad()
         let value = UIInterfaceOrientation.LandscapeLeft.rawValue
         UIDevice.currentDevice().setValue(value, forKey: "orientation")
-        let scene = GameScene(size: CGSize(width: 1024, height: 768))
+        
+        // Detect the screensize
+        let sizeRect = UIScreen.mainScreen().applicationFrame
+        let width = sizeRect.size.width * UIScreen.mainScreen().scale
+        let height = sizeRect.size.height * UIScreen.mainScreen().scale
+        
+        // Scene should be shown in fullscreen mode
+        let scene = GameScene(size: CGSizeMake(width, height))
+    //    let scene = GameScene(size: CGSize(width: 1024, height: 768))
 
 
             // Configure the view.

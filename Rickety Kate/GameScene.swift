@@ -25,8 +25,8 @@ class GameScene: SKScene {
     
     var arePassingCards = true
 
-    var cardTossDuration = 0.4
-    let cardAnchorPoint = CGPoint(x: 0.5, y: GameSettings.isPad ? -0.7 :  -1.0)
+
+   
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
     func setupTPassYourThreeWorstCardsPhase()
     {
@@ -103,7 +103,7 @@ class GameScene: SKScene {
     
     func startTrickPhase()
     {
-        let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration*1.3),
+        let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration*1.3),
             SKAction.runBlock({ [unowned self] in
                 self.table.playTrickLeadBy(self.table.players[self.table.startPlayerNo])
                 
@@ -133,7 +133,7 @@ class GameScene: SKScene {
             self.table.newGame.publish()
         }
         table.newGame.subscribe {
-            let doneAction =  (SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration*0.1),
+            let doneAction =  (SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration*0.1),
                 SKAction.runBlock({ [unowned self] in
                     self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
                 })]))
@@ -231,7 +231,7 @@ class GameScene: SKScene {
         reverseDeal(width , height: height )
         
     
-        self.runAction((SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration),
+        self.runAction((SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration),
             SKAction.runBlock({ [unowned self] in
                 let transition = SKTransition.crossFadeWithDuration(0.5)
                 let scene = GameScene(size: self.scene!.size)

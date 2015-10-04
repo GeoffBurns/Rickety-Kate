@@ -36,25 +36,23 @@ public enum SideOfTable:Int
         {
             // Player One
         case .Bottom:
-            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.92)
+            let heightfactor : CGFloat = GameSettings.isPad ? 0.92 : 1.05
+            return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread, y: startheight-spriteHeight * heightfactor )
             // Computer Player
         case .Right:
-            startWidth =  GameSettings.isPad ?
-                width*0.97 : width
+            startWidth =  width*0.97
             startheight = height * 0.4
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             // Computer Player        
         case .RightLow:
-            startWidth =  GameSettings.isPad ?
-                width*0.97 : width
+            startWidth = width*0.97
             
             verticalSpacing = height * 0.12 / fullHand
             startheight = height * 0.3
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             // Computer Player        
         case .RightHigh:
-            startWidth =  GameSettings.isPad ?
-                width*0.97 : width
+            startWidth = width*0.97
             
             verticalSpacing = height * 0.12 / fullHand
             startheight = height * 0.65
@@ -63,37 +61,37 @@ public enum SideOfTable:Int
         case .Top:
             hortizonalSpacing = -width * (noOfPlayers == 6 ? 0.06 : 0.2) / fullHand
             startWidth = width * (noOfPlayers == 6 ? 0.5 : 0.6)
-            startheight = GameSettings.isPad ?
-                height*1.08 : height
+            startheight =
+                height*1.09
             
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .TopMidLeft:
             hortizonalSpacing = -width * (noOfPlayers == 6  ? 0.06 : 0.14) / fullHand
             startWidth = width * (noOfPlayers == 6 ? 0.20 : 0.33)
-            startheight =  GameSettings.isPad ?
-                height*1.07 : height
+            startheight =
+                height*1.09
 
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .TopMidRight:
             hortizonalSpacing = -width * (noOfPlayers == 6 ? 0.06 : 0.14) / fullHand
             startWidth = width * (noOfPlayers == 6 ? 0.84 : 0.75)
-            startheight =  GameSettings.isPad ?
-                height*1.07 : height
+            startheight =
+                height*1.09
 
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .Left:
             verticalSpacing = -verticalSpacing
             startheight = height * 0.6
-            startWidth =  GameSettings.isPad ?
-                width*0.03 : 0.0
+            startWidth =
+                width*0.03
             return CGPoint(x: startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
         case .LeftLow:
                 verticalSpacing = -height * 0.12 / fullHand
                 startheight = height * 0.4
-                startWidth =  GameSettings.isPad ? width*0.03 : 0.0
+                startWidth =   width*0.03
                 return CGPoint(x: startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
         case .LeftHigh:
                     verticalSpacing = -height * 0.12 / fullHand
