@@ -50,7 +50,25 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case None : return ""
             }
         }
-   
+        
+        var description : String
+            // Used to help create imagename for a card
+            {
+                switch(self)
+                {
+                case Spades: return "Spades"
+                case Hearts: return "Hearts"
+                case Clubs:  return "Clubs"
+                case Diamonds: return "Diamonds"
+                case Suns: return "Suns"
+                case Anchors: return "Anchors"
+                case Stars : return "Stars"
+                case Trumps : return "Trumps"
+                case Jokers : return "Jokers"
+                case None : return "None"
+                }
+        }
+
         static var standardSuites : [Suite]
             {
                 return [Spades,Hearts,Clubs,Diamonds]
@@ -70,7 +88,6 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         case Pip(Int)
         case Ace
         
-        // TODO add more ValueType e.g.  TarotTrumps,  Jockers
         
        var imageCode : String
         // Used to help create imagename for a card
@@ -80,6 +97,53 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case CourtCard(let cardLetter): return cardLetter
             case Pip(let faceValue): return faceValue.description
             case Ace: return "A"
+            }
+        }
+        
+        var description : String
+        // Used to help create imagename for a card
+            {
+                switch(self)
+                {
+                case CourtCard(let cardLetter):
+                    
+                    switch cardLetter
+                    {
+                    case "J" : return "Jack"
+                    case "KN" : return "Knight"
+                    case "AR" : return "Archer"
+                    case "PS" : return "Princess"
+                    case "PR" : return "Prince"
+                    case "Q" : return "Queen"
+                    case "K" : return "King"
+                    default : return "Page"
+                    }
+                case Pip(let faceValue): return faceValue.description
+                case Ace: return "Ace"
+                }
+        }
+        
+        
+        var rank : Int
+        {
+            switch(self)
+            {
+            case CourtCard(let cardLetter):
+                
+                switch cardLetter
+                {
+                case "K" : return 18
+                case "Q" : return 17
+                case "PR" : return 16
+                case "PS" : return 15
+                case "AR" : return 14
+                case "KN" : return 13
+                case "J" : return 12
+                default: return 0
+                }
+                
+            case Pip(let faceValue): return faceValue
+            case Ace: return 19
             }
         }
         static var courtCard2Values : [String]
@@ -258,6 +322,24 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     {
         return value.imageCode +  suite.imageCode
     }
+    public var description : String
+    // create description for a card
+    {
+       if suite == PlayingCard.Suite.Jokers
+       {
+        switch value.rank
+         {
+         case 0 : return "The Fool"
+         case 1 : return "Joker (1)"
+         case 2 : return "Joker (2)"
+         default:
+            return value.description + " of " +  suite.description
+         }
+       }
+       return value.description + " of " +  suite.description
+    }
+    
+   
     public var hashValue: Int
     {
             return imageName.hashValue;

@@ -1677,11 +1677,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465531175.498199"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "376"
-            endingLineNumber = "376"
+            startingLineNumber = "424"
+            endingLineNumber = "424"
             landmarkName = "BuiltCardDeck"
             landmarkType = "3">
          </BreakpointContent>
@@ -1693,11 +1693,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465531175.498199"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
             landmarkName = "BuiltCardDeck"
             landmarkType = "3">
          </BreakpointContent>
@@ -1835,11 +1835,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465531175.498199"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "valuesFor(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1851,11 +1851,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465531175.498199"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "valuesFor(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2089,11 +2089,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465517757.307632"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "PlayingCard"
             landmarkType = "3">
          </BreakpointContent>
@@ -2105,11 +2105,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465531175.498199"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
             landmarkName = "BuiltCardDeck"
             landmarkType = "3">
          </BreakpointContent>
@@ -2121,11 +2121,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465531175.498199"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "387"
+            endingLineNumber = "387"
             landmarkName = "BuiltCardDeck"
             landmarkType = "3">
          </BreakpointContent>
@@ -2137,11 +2137,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465531175.498199"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
             landmarkName = "BuiltCardDeck"
             landmarkType = "3">
          </BreakpointContent>
@@ -2407,11 +2407,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "465531175.498199"
+            timestampString = "465645279.868781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
             landmarkName = "BuiltCardDeck"
             landmarkType = "3">
          </BreakpointContent>
