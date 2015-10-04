@@ -17,7 +17,6 @@ class CardPile
     var isUp = false
     var sizeOfCards = CardSize.Small
     var scene : SKNode? = nil
-    let cardScale = CGFloat(0.9)
     var fullHand = defaultSpread
     var sideOfTable = SideOfTable.Bottom
     var direction = Direction.Up

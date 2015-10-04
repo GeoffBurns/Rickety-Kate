@@ -19,11 +19,12 @@ enum CardSize
         {
             switch self
             {
-            case .Big : return CGFloat(0.9)
-            case .Medium : return CGFloat(0.6)
-            case .Small : return CGFloat(0.45)
+            case .Big : return GameSettings.isPhone6Plus ?  CGFloat(1.35) : CGFloat(0.9)
+            case .Medium : return GameSettings.isPhone6Plus ?  CGFloat(0.9) : CGFloat(0.6)
+            case .Small : return GameSettings.isPhone6Plus ?  CGFloat(0.675) : CGFloat(0.45)
             }
     }
+    
     var zOrder : CGFloat
         {
             switch self
@@ -31,6 +32,21 @@ enum CardSize
             case .Big : return 100.0
             case .Medium : return 50.0
             case .Small : return 10.0
+            }
+    }
+}
+
+enum ButtonSize
+{
+    case Small   // e.g. other players hand
+    case Big     // e.g. in your hand
+    
+    var scale : CGFloat
+        {
+            switch self
+            {
+            case .Big : return GameSettings.isPhone6Plus ?  CGFloat(1.5) : CGFloat(1.0)
+            case .Small : return GameSettings.isPhone6Plus ?  CGFloat(0.75) : CGFloat(0.5) 
             }
     }
 }

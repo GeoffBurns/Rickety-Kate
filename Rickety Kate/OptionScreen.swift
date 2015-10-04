@@ -55,10 +55,11 @@ class OptionScreen: Popup {
         let midWidth = CGRectGetMidX(scene.frame)
         name = "Option Background"
 
+        let isBigDevice = GameSettings.isPad || GameSettings.isPhone6Plus
         
         noOfSuites.name = "NoOfSuites"
  
-        noOfSuites.position = CGPoint(x:midWidth,y:scene.frame.height * (GameSettings.isPad ? 0.77 : 0.7))
+        noOfSuites.position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.77 : 0.7))
 
         self.addChild(noOfSuites)
         
@@ -67,16 +68,16 @@ class OptionScreen: Popup {
         noOfCardsInASuite.name = "NoOfCardsInSuite"
   
         
-        noOfCardsInASuite.position = CGPoint(x:midWidth,y:scene.frame.height * (GameSettings.isPad ? 0.62 : 0.5))
+        noOfCardsInASuite.position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.62 : 0.5))
         self.addChild(noOfCardsInASuite)
         
         noOfPlayers.name = "NoOfPlayers"
 
         
-        noOfPlayers.position = CGPoint(x:midWidth,y:scene.frame.height * (GameSettings.isPad ? 0.47 : 0.3))
+        noOfPlayers.position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.47 : 0.3))
         self.addChild(noOfPlayers)
         
-        if(GameSettings.isPad)
+        if(isBigDevice)
         {
         hasTrumps.name = "hasTrumps"
 

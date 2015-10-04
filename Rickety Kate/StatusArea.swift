@@ -29,7 +29,7 @@ class StatusDisplay
     }
     func setupStatusArea(scene: SKNode)
 {
-    
+      let fontsize : CGFloat = GameSettings.isPad ?  55 : (GameSettings.isPhone6Plus ? 90 : 65)
     if noticeLabel.parent != nil
     {
         noticeLabel.removeFromParent()
@@ -40,23 +40,23 @@ class StatusDisplay
         noticeLabel2.removeFromParent()
     }
     noticeLabel.text = ""
-    noticeLabel.fontSize = 65;
+    noticeLabel.fontSize = fontsize;
     noticeLabel.position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.33);
     
-    noticeLabel2.fontSize = 65;
+    noticeLabel2.fontSize = fontsize;
     noticeLabel2.position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.68);
     scene.addChild(noticeLabel)
     scene.addChild(noticeLabel2)
     
     statusInfo.subscribe() { (message1: String,message2: String) in
         
-        self.noticeLabel.removeAllActions()
-        self.noticeLabel2.removeAllActions()
+    self.noticeLabel.removeAllActions()
+    self.noticeLabel2.removeAllActions()
         
-        self.noticeLabel.alpha = 1.0
-        self.noticeLabel2.alpha = 1.0
+    self.noticeLabel.alpha = 1.0
+    self.noticeLabel2.alpha = 1.0
         
-        let action = SKAction.repeatActionForever(
+    let action = SKAction.repeatActionForever(
             SKAction.sequence([
                 SKAction.fadeOutWithDuration(6),
                 SKAction.waitForDuration(10),

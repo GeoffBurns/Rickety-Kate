@@ -70,14 +70,15 @@ class CardDisplayScreen: Popup {
     
     func displayPage()
     {
+        let fontsize : CGFloat = GameSettings.isPad ?  25 : (GameSettings.isPhone6Plus ? 40 : 30)
         let title = SKLabelNode(fontNamed:"Verdana")
-        title.fontSize = 30
+        title.fontSize = fontsize
         title.position = CGPointMake(size.width * 0.50, size.height * 0.92 )
         title.text = "Card Rankings"
         self.addChild(title)
         displayCards()
         
-        moreButton.setScale(0.5)
+        moreButton.setScale(ButtonSize.Small.scale)
         moreButton.anchorPoint = CGPoint(x: 2.0, y: 0.0)
         moreButton.position = CGPoint(x:self.frame.size.width,y:0.0)
         
@@ -88,7 +89,7 @@ class CardDisplayScreen: Popup {
         
         self.addChild(moreButton)
         
-        backButton.setScale(0.5)
+        backButton.setScale(ButtonSize.Small.scale)
         backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
         backButton.position = CGPoint(x:0.0,y:0.0)
         
@@ -101,6 +102,8 @@ class CardDisplayScreen: Popup {
     }
     func displayCards()
     {
+        
+        let fontsize : CGFloat = GameSettings.isPad ?  18 : (GameSettings.isPhone6Plus ? 30 : 20)
         for (i,slide) in slides.enumerate()
         {
             if  i+suiteStart < deck.suitesInDeck.count
@@ -110,13 +113,13 @@ class CardDisplayScreen: Popup {
             if suite.count > 0
             {
             let l = SKLabelNode(fontNamed:"Verdana")
-            l.fontSize = 20
+            l.fontSize = fontsize
             l.position = CGPointMake(size.width * 0.10, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
             l.text = "High Cards"
             l.name = "label"
             
             let m = SKLabelNode(fontNamed:"Verdana")
-            m.fontSize = 20
+            m.fontSize = fontsize
             m.position = CGPointMake(size.width * 0.93, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
             m.text = "Low Cards"
             

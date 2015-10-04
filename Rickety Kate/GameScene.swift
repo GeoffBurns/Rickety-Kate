@@ -14,7 +14,6 @@ class GameScene: SKScene {
     var table : CardTable! {  didSet { setupTPassYourThreeWorstCardsPhase() } }
     var originalTouch = CGPoint()
     var draggedNode: CardSprite? = nil;
-    var cardScale = CGFloat(0.9)
     var cardScaleForSelected = CGFloat(1.05)
     
     var dealtPiles = [CardPile]()
@@ -160,17 +159,17 @@ class GameScene: SKScene {
         playButton1.position = CGPoint(x:self.frame.size.width*0.25,y:self.frame.size.height*0.5)
   
         playButton1.name = "Play"
-        
+        playButton1.setScale(ButtonSize.Big.scale)
         playButton1.zPosition = 200
         playButton1.userInteractionEnabled = false
         self.addChild(playButton1)
-            playButton2.position = CGPoint(x:self.frame.size.width*0.75,y:self.frame.size.height*0.5)
+        playButton2.position = CGPoint(x:self.frame.size.width*0.75,y:self.frame.size.height*0.5)
             
-            playButton2.name = "Play"
-            
-            playButton2.zPosition = 200
-            playButton2.userInteractionEnabled = false
-            self.addChild(playButton2)
+        playButton2.name = "Play"
+        playButton2.setScale(ButtonSize.Big.scale)
+        playButton2.zPosition = 200
+        playButton2.userInteractionEnabled = false
+        self.addChild(playButton2)
         }
     }
     func setupPopupScreensAndButtons()

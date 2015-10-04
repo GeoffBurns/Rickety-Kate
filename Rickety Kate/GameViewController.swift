@@ -35,26 +35,25 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         
         // Scene should be shown in fullscreen mode
         let scene = GameScene(size: CGSizeMake(width, height))
-    //    let scene = GameScene(size: CGSize(width: 1024, height: 768))
 
 
-            // Configure the view.
-            let skView = self.view as! SKView
+        // Configure the view.
+        let skView = self.view as! SKView
             
-            //let scene  =  GameScene(size:skView.bounds.size)
-            skView.showsFPS = false
-            skView.showsNodeCount = false
+        //let scene  =  GameScene(size:skView.bounds.size)
+        skView.showsFPS = false
+        skView.showsNodeCount = false
             
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            skView.ignoresSiblingOrder = true
+        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        skView.ignoresSiblingOrder = true
             
-            /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+        /* Set the scale mode to scale to fit the window */
+        scene.scaleMode = .AspectFill
      
-            scene.table = CardTable.makeDemo(scene)
+        scene.table = CardTable.makeDemo(scene)
             
-            skView.presentScene(scene)
-        loadAds()
+        skView.presentScene(scene)
+      //  loadAds()
      
     }
 

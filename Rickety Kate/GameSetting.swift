@@ -101,6 +101,11 @@ class GameSettings : IGameSettings
         return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
         }
     
+    static var isPhone6Plus : Bool
+    {
+        return   UIScreen.mainScreen().nativeScale > 2.5
+    }
+  
     static let sharedInstance = GameSettings()
     private init() { }
     

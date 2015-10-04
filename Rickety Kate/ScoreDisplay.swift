@@ -89,6 +89,8 @@ class ScoreDisplay
 
    func setupScoreFor(scene: SKNode,i:Int)
         {
+            
+            let fontsize : CGFloat = GameSettings.isPad ?  20 : (GameSettings.isPhone6Plus ? 42 : 28)
             let player = players[i]
             let l = scoreLabel[i]
             let m = scoreLabel2[i]
@@ -96,10 +98,10 @@ class ScoreDisplay
             scoreUpdates[i] = Publink<(Int,Int)>()
             
             l.text = ""
-            l.fontSize = (GameSettings.isPad ?  20 : 28);
+            l.fontSize = fontsize
             l.name = "\(player.name)'s score label"
             m.text = ""
-            m.fontSize = (GameSettings.isPad ?  20 : 28);
+            m.fontSize = fontsize
             
             m.fontColor = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
   
