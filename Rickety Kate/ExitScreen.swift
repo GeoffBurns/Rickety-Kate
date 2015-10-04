@@ -30,7 +30,7 @@ class ExitScreen: Popup {
     override func setup(scene:SKNode)
     {
         button!.zPosition = 350
-  
+        let fontsize : CGFloat = GameSettings.isPad ?  55 : (GameSettings.isPhone6Plus ? 90 : 65)
         self.gameScene = scene
         color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
         size = scene.frame.size
@@ -42,21 +42,21 @@ class ExitScreen: Popup {
         let midWidth = CGRectGetMidX(scene.frame)
         
         exitLabel.text = "Are you sure"
-        exitLabel.fontSize = 65;
+        exitLabel.fontSize = fontsize;
         exitLabel.position = CGPoint(x:midWidth, y:self.frame.size.height * 0.7);
         
         self.addChild(exitLabel)
         
         
         exitLabel2.text = "you want to exit?"
-        exitLabel2.fontSize = 65;
+        exitLabel2.fontSize = fontsize;
         exitLabel2.position = CGPoint(x:midWidth, y:self.frame.size.height * 0.57);
         
         self.addChild(exitLabel2)
         
         let yesButton =  SKSpriteNode(imageNamed:"Yes")
         yesButton.position = CGPoint(x:self.frame.width * 0.25,y:self.frame.height * 0.4)
-        yesButton.setScale(0.5)
+        yesButton.setScale(ButtonSize.Small.scale)
         yesButton.zPosition = 100
         yesButton.name = "Yes"
         yesButton.userInteractionEnabled = false
@@ -65,7 +65,7 @@ class ExitScreen: Popup {
         
         let noButton =  SKSpriteNode(imageNamed:"No")
         noButton.position = CGPoint(x:self.frame.width*0.75,y:self.frame.height * 0.4)
-        noButton.setScale(0.5)
+        noButton.setScale(ButtonSize.Small.scale)
         noButton.zPosition = 100
         noButton.name = "No"
         noButton.userInteractionEnabled = false

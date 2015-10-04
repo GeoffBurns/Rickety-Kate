@@ -14,14 +14,15 @@ enum CardSize
     case Small   // e.g. other players hand
     case Medium  // e.g. in the trick pile
     case Big     // e.g. in your hand
-    
+    case Huge    // e.g. being dragged
     var scale : CGFloat
         {
             switch self
             {
-            case .Big : return GameSettings.isPhone6Plus ?  CGFloat(1.35) : CGFloat(0.9)
-            case .Medium : return GameSettings.isPhone6Plus ?  CGFloat(0.9) : CGFloat(0.6)
-            case .Small : return GameSettings.isPhone6Plus ?  CGFloat(0.675) : CGFloat(0.45)
+            case .Huge : return GameSettings.isPhone6Plus ?  CGFloat(2.4) : CGFloat(1.2)
+            case .Big : return GameSettings.isPhone6Plus ?  CGFloat(1.8) : CGFloat(0.9)
+            case .Medium : return GameSettings.isPhone6Plus ?  CGFloat(1.2) : CGFloat(0.6)
+            case .Small : return GameSettings.isPhone6Plus ?  CGFloat(0.9) : CGFloat(0.45)
             }
     }
     
@@ -29,6 +30,7 @@ enum CardSize
         {
             switch self
             {
+            case .Huge : return 150.0
             case .Big : return 100.0
             case .Medium : return 50.0
             case .Small : return 10.0

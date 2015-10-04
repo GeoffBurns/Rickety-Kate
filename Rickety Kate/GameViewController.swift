@@ -53,7 +53,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         scene.table = CardTable.makeDemo(scene)
             
         skView.presentScene(scene)
-      //  loadAds()
+        loadAds()
      
     }
 

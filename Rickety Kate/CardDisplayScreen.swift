@@ -22,7 +22,7 @@ class CardDisplayScreen: Popup {
     var suiteStart = 0
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
-    let  noOfSlides = GameSettings.isPad ? 3 : 2
+    let noOfSlides = GameSettings.isPad ? 3 : 2
     let separationOfSlides = GameSettings.isPad ? 0.25 : 0.4
     let slideStart : CGFloat = GameSettings.isPad ? 0.72 : 0.7
     

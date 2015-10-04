@@ -100,7 +100,7 @@ class CardSprite : SKSpriteNode
         self.zPosition = 120
       //  removeAllActions()
         runAction(SKAction.group([
-            SKAction.scaleTo(1.2, duration: 0.3),
+            SKAction.scaleTo(CardSize.Huge.scale, duration: 0.3),
             SKAction.rotateToAngle(0.0, duration: 0.3),
             SKAction.moveTo(positionInScene, duration: 0.3)
             ]))
@@ -135,7 +135,7 @@ class CardSprite : SKSpriteNode
         self.zPosition = 120
         self.position = positionInScene
         self.zRotation = 0.0
-        self.setScale(1.2)
+        self.setScale(CardSize.Huge.scale)
        
     }
     
