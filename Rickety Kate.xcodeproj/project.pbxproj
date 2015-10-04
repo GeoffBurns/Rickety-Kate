@@ -26,6 +26,7 @@
 		AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A01BA1564800B0EDAE /* Main.storyboard */; };
 		AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A31BA1564800B0EDAE /* Images.xcassets */; };
 		AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */; };
+		AC6463EB1BC12A66000AEB7E /* ButtonSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6463EA1BC12A66000AEB7E /* ButtonSize.swift */; settings = {ASSET_TAGS = (); }; };
 		AC73DD9C1BB81A7300FF6114 /* cards_spades.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9D1BB81E9B00FF6114 /* cards_diamonds.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DDA01BB8218E00FF6114 /* cards_hearts.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9F1BB8218E00FF6114 /* cards_hearts.atlas */; settings = {ASSET_TAGS = (); }; };
@@ -106,6 +107,7 @@
 		AC62B6A61BA1564800B0EDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		AC62B6AC1BA1564900B0EDAE /* Rickety KateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rickety KateTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC62B6B11BA1564900B0EDAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC6463EA1BC12A66000AEB7E /* ButtonSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonSize.swift; sourceTree = "<group>"; };
 		AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_spades.atlas; sourceTree = "<group>"; };
 		AC73DD9D1BB81E9B00FF6114 /* cards_diamonds.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_diamonds.atlas; sourceTree = "<group>"; };
 		AC73DD9F1BB8218E00FF6114 /* cards_hearts.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_hearts.atlas; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
 				ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */,
 				AC1CF69C1BB4238300001024 /* buttons.atlas */,
+				AC6463EA1BC12A66000AEB7E /* ButtonSize.swift */,
 				AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */,
 				AC7C9FC51BB380A00086AC02 /* CardFan.swift */,
 				ACE6DFB41BAA32AB005B5424 /* CardHolder.swift */,
@@ -435,6 +438,7 @@
 				AC73DDB01BBD4AC300FF6114 /* CardSlide.swift in Sources */,
 				ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
+				AC6463EB1BC12A66000AEB7E /* ButtonSize.swift in Sources */,
 				ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */,
 				ACE6DFC71BAA5563005B5424 /* StatusArea.swift in Sources */,
 				AC7C9FD01BB3886D0086AC02 /* Direction.swift in Sources */,
