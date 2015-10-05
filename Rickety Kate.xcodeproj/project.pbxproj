@@ -36,8 +36,6 @@
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */; settings = {ASSET_TAGS = (); }; };
 		AC73DDAE1BBC10C200FF6114 /* cards_star.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDAD1BBC10C200FF6114 /* cards_star.atlas */; settings = {ASSET_TAGS = (); }; };
-		AC73DDB01BBD4AC300FF6114 /* CardSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC73DDAF1BBD4AC300FF6114 /* CardSlide.swift */; settings = {ASSET_TAGS = (); }; };
-		AC74F0421BBE4D4A0051DF03 /* PopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0411BBE4D4A0051DF03 /* PopupButton.swift */; settings = {ASSET_TAGS = (); }; };
 		AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0431BBEBA550051DF03 /* Navigator.swift */; settings = {ASSET_TAGS = (); }; };
 		AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */; settings = {ASSET_TAGS = (); }; };
 		AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC11BB378E60086AC02 /* CardPileType.swift */; settings = {ASSET_TAGS = (); }; };
@@ -53,6 +51,8 @@
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BF1BA686C40064870C /* PlayingCard.swift */; };
 		AC9E82C61BA686C40064870C /* Publink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82C01BA686C40064870C /* Publink.swift */; };
+		ACB33B971BC2003B0019DC7C /* CardSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B951BC2003B0019DC7C /* CardSlide.swift */; settings = {ASSET_TAGS = (); }; };
+		ACB33B981BC2003B0019DC7C /* PopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B961BC2003B0019DC7C /* PopupButton.swift */; settings = {ASSET_TAGS = (); }; };
 		ACB90FA01BB685CF009B1189 /* BinaryToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */; settings = {ASSET_TAGS = (); }; };
 		ACBF9A931BAD4A0C00837EEB /* NumberRangeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBF9A921BAD4A0C00837EEB /* NumberRangeToggle.swift */; settings = {ASSET_TAGS = (); }; };
 		ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */; settings = {ASSET_TAGS = (); }; };
@@ -117,8 +117,6 @@
 		AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot.atlas; sourceTree = "<group>"; };
 		AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassYourThreeWorstCardsPhase.swift; sourceTree = "<group>"; };
 		AC73DDAD1BBC10C200FF6114 /* cards_star.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_star.atlas; sourceTree = "<group>"; };
-		AC73DDAF1BBD4AC300FF6114 /* CardSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSlide.swift; path = ../CardSlide.swift; sourceTree = "<group>"; };
-		AC74F0411BBE4D4A0051DF03 /* PopupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopupButton.swift; path = ../PopupButton.swift; sourceTree = "<group>"; };
 		AC74F0431BBEBA550051DF03 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDisplayScreen.swift; sourceTree = "<group>"; };
 		AC7C9FC11BB378E60086AC02 /* CardPileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPileType.swift; sourceTree = "<group>"; };
@@ -134,6 +132,8 @@
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		AC9E82BF1BA686C40064870C /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		AC9E82C01BA686C40064870C /* Publink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publink.swift; sourceTree = "<group>"; };
+		ACB33B951BC2003B0019DC7C /* CardSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSlide.swift; sourceTree = "<group>"; };
+		ACB33B961BC2003B0019DC7C /* PopupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupButton.swift; sourceTree = "<group>"; };
 		ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryToggle.swift; sourceTree = "<group>"; };
 		ACBF9A921BAD4A0C00837EEB /* NumberRangeToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberRangeToggle.swift; sourceTree = "<group>"; };
 		ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitScreen.swift; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 				AC73DDA11BB823DE00FF6114 /* cards_suns.atlas */,
 				AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */,
 				AC7C9FC31BB379310086AC02 /* CardSize.swift */,
-				AC73DDAF1BBD4AC300FF6114 /* CardSlide.swift */,
+				ACB33B951BC2003B0019DC7C /* CardSlide.swift */,
 				ACE6DFBE1BAA38A9005B5424 /* CardSource.swift */,
 				ACE6DFC81BAA5FD9005B5424 /* CardSprite.swift */,
 				AC7C9FCB1BB3850A0086AC02 /* CardState.swift */,
@@ -240,7 +240,7 @@
 				AC9E82BF1BA686C40064870C /* PlayingCard.swift */,
 				AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */,
 				AC7C9FCD1BB385CA0086AC02 /* Popup.swift */,
-				AC74F0411BBE4D4A0051DF03 /* PopupButton.swift */,
+				ACB33B961BC2003B0019DC7C /* PopupButton.swift */,
 				AC9E82C01BA686C40064870C /* Publink.swift */,
 				AC0304031BAEDE7C005263C7 /* RuleScreen.swift */,
 				AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */,
@@ -248,8 +248,8 @@
 				AC7C9FC71BB380A00086AC02 /* Seater.swift */,
 				AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */,
 				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
-				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
+				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 			);
 			path = "Rickety Kate";
 			sourceTree = "<group>";
@@ -414,6 +414,7 @@
 				ACB90FA01BB685CF009B1189 /* BinaryToggle.swift in Sources */,
 				AC9E82C41BA686C40064870C /* CardTable.swift in Sources */,
 				ACBF9A931BAD4A0C00837EEB /* NumberRangeToggle.swift in Sources */,
+				ACB33B971BC2003B0019DC7C /* CardSlide.swift in Sources */,
 				ACE6DFBC1BAA32AB005B5424 /* MathExtention.swift in Sources */,
 				AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */,
 				ACE6DFBB1BAA32AB005B5424 /* TrickPlayingStrategy.swift in Sources */,
@@ -429,13 +430,12 @@
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
 				ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */,
 				ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */,
-				AC74F0421BBE4D4A0051DF03 /* PopupButton.swift in Sources */,
 				AC252A3F1BA6F1C400C0121A /* ArrayExtentions.swift in Sources */,
 				AC7C9FC41BB379310086AC02 /* CardSize.swift in Sources */,
+				ACB33B981BC2003B0019DC7C /* PopupButton.swift in Sources */,
 				AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */,
 				AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */,
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
-				AC73DDB01BBD4AC300FF6114 /* CardSlide.swift in Sources */,
 				ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
 				AC6463EB1BC12A66000AEB7E /* ButtonSize.swift in Sources */,
