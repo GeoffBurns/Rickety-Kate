@@ -8,8 +8,10 @@
 
 import SpriteKit
 
-/// How the cards are displayed in a fan
-/// Cards positions need to be calculated more frequently in a fan as opposed to a pile
+/// How the cards are displayed in a slide
+/// Cards positions need to be calculated more frequently in a slide as opposed to a pile
+/// No rotation is needed unlike a fan
+
 class CardSlide : CardPile
 {
     

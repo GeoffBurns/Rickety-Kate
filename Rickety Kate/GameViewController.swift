@@ -30,12 +30,18 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         
         // Detect the screensize
         let sizeRect = UIScreen.mainScreen().applicationFrame
-        let width = sizeRect.size.width * UIScreen.mainScreen().scale
-        let height = sizeRect.size.height * UIScreen.mainScreen().scale
+        var width = sizeRect.size.width * UIScreen.mainScreen().scale
+        var height = sizeRect.size.height * UIScreen.mainScreen().scale
         
+        if width < height  // not needed on simulator but needed on real device
+        {
+            let temp = height
+            height = width
+            width = temp
+        }
         // Scene should be shown in fullscreen mode
         let scene = GameScene(size: CGSizeMake(width, height))
-
+       //let scene = GameScene(size: CGSizeMake(2048, 1536))
 
         // Configure the view.
         let skView = self.view as! SKView

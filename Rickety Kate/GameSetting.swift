@@ -103,7 +103,11 @@ class GameSettings : IGameSettings
     
     static var isPhone6Plus : Bool
     {
-        return   UIScreen.mainScreen().nativeScale > 2.5
+      //  if #available(iOS 8.0, *) {
+            return   UIScreen.mainScreen().nativeScale > 2.5
+    //    } else {
+    //        return UIScreen.mainScreen().bounds.size.height > 735.0
+    //    }
     }
   
     static let sharedInstance = GameSettings()
