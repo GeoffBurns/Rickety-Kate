@@ -9,16 +9,21 @@
 import SpriteKit
 import ReactiveCocoa
 
+
+struct Score
+{
+    var currentScore = 0
+    var totalWins = 0
+    
+}
 // Display the score for each player
 class ScoreDisplay
 {
     var scoreLabel = [SKLabelNode]()
-    var scoreLabel2 = [SKLabelNode]()
-    var scoreUpdates = [Signal<(Int,Int),NoError>]()
-    var scoreSinks : [(Event<(Int,Int), NoError>)->()] = []
+    var scoreUpdates = [Signal<Score,NoError>]()
+    var scoreSinks : [(Event<Score, NoError>)->()] = []
     var players = [CardPlayer]()
     lazy var lookup = Dictionary<String,Int>()
-    let (scoreSignal, scoreSink) = Signal<Int, NoError>.pipe()
     static let sharedInstance = ScoreDisplay()
     private init() { }
     
@@ -30,7 +35,7 @@ class ScoreDisplay
         
       let sinks = ScoreDisplay.sharedInstance.scoreSinks
       let sink = sinks[i ?? 0]
-      sendNext(sink,(score,wins))
+      sendNext(sink,Score(currentScore: score, totalWins: wins))
     }
     
     static func register(scene: SKNode, players: [CardPlayer])
@@ -100,16 +105,13 @@ class ScoreDisplay
             let fontsize : CGFloat = GameSettings.isPad ?  20 : (GameSettings.isPhone6Plus ? 42 : 28)
             let player = players[i]
             let l = scoreLabel[i]
-            let m = scoreLabel2[i]
+ 
             
             
             l.text = ""
             l.fontSize = fontsize
             l.name = "\(player.name)'s score label"
-            m.text = ""
-            m.fontSize = fontsize
-            
-            m.fontColor = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
+  
   
             let side = player.sideOfTable
             
@@ -118,12 +120,9 @@ class ScoreDisplay
             l.zPosition = 301
             l.zRotation = ScoreDisplay.scoreRotation(side)
                 
-            m.position = CGPoint(x:l.position.x+2,y:l.position.y-2)
-            m.zPosition = 299
-            m.zRotation = l.zRotation
-                
+         
             scene.addChild(l)
-            scene.addChild(m)
+            
             
             
             scoreUpdates[i].observeNext { next in
@@ -131,17 +130,16 @@ class ScoreDisplay
             let name = self.players[i].name
                 
             let l = self.scoreLabel[i]
-            let m = self.scoreLabel2[i]
-            let wins = next.1
+
+            let wins = next.totalWins
+            let score = next.currentScore
             let message = (wins==0) ?
-                    ((name == "You") ? "Your Score is \(next.0)" : "\(name)'s Score is \(next.0)") :
-                    ((name == "You") ? "Your Score : \(next.0) With \(wins) Wins" : "\(name) : \(next.0) & \(wins) Wins")
+                    ((name == "You") ? "Your Score is \(score)" : "\(name)'s Score is \(score)") :
+                    ((name == "You") ? "Your Score : \(score) With \(wins) Wins" : "\(name) : \(score) & \(wins) Wins")
             l.text = message
-            m.text = message
+
             }
-            
-            
-            sendNext(scoreSinks[i],(0,0))
+               sendNext(scoreSinks[i],Score())
         }
     
   
@@ -149,17 +147,17 @@ func setupScoreArea(scene: SKNode, players: [CardPlayer])
 {
     scoreUpdates = []
     scoreLabel  = []
-    scoreLabel2  = []
+
     var i = 0
     self.players=players
     for player in players
     {
-        let (scoreSignal, scoreSink) = Signal<(Int,Int), NoError>.pipe()
+        let (scoreSignal, scoreSink) = Signal<Score, NoError>.pipe()
         scoreUpdates.append(scoreSignal)
         
         scoreSinks.append(scoreSink)
-        scoreLabel.append(SKLabelNode(fontNamed:"Verdana"))
-        scoreLabel2.append(SKLabelNode(fontNamed:"Verdana"))
+        scoreLabel.append(LabelWithShadow(fontNamed:"Verdana"))
+
         lookup.updateValue(i, forKey: player.name)
         setupScoreFor(scene,i:i)
         i++
