@@ -14,7 +14,6 @@
 		AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */; };
 		AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */; };
 		AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */; };
-		AC3309531BC3D50A00A41706 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B991BC210160019DC7C /* Box.framework */; };
 		AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
 		AC3309551BC3D51000A41706 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
 		AC3E5D4A1BAB04B700B6A3A0 /* ScoreDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */; settings = {ASSET_TAGS = (); }; };
@@ -56,7 +55,6 @@
 		AC9E82C61BA686C40064870C /* Publink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82C01BA686C40064870C /* Publink.swift */; };
 		ACB33B971BC2003B0019DC7C /* CardSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B951BC2003B0019DC7C /* CardSlide.swift */; settings = {ASSET_TAGS = (); }; };
 		ACB33B981BC2003B0019DC7C /* PopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B961BC2003B0019DC7C /* PopupButton.swift */; settings = {ASSET_TAGS = (); }; };
-		ACB33B9A1BC210160019DC7C /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B991BC210160019DC7C /* Box.framework */; };
 		ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
 		ACB33B9E1BC210240019DC7C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
 		ACB90FA01BB685CF009B1189 /* BinaryToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */; settings = {ASSET_TAGS = (); }; };
@@ -140,7 +138,6 @@
 		AC9E82C01BA686C40064870C /* Publink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publink.swift; sourceTree = "<group>"; };
 		ACB33B951BC2003B0019DC7C /* CardSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSlide.swift; sourceTree = "<group>"; };
 		ACB33B961BC2003B0019DC7C /* PopupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupButton.swift; sourceTree = "<group>"; };
-		ACB33B991BC210160019DC7C /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
 		ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		ACB33B9D1BC210240019DC7C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryToggle.swift; sourceTree = "<group>"; };
@@ -169,7 +166,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */,
-				ACB33B9A1BC210160019DC7C /* Box.framework in Frameworks */,
 				ACB33B9E1BC210240019DC7C /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,7 +175,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */,
-				AC3309531BC3D50A00A41706 /* Box.framework in Frameworks */,
 				AC3309551BC3D51000A41706 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,7 +187,6 @@
 			children = (
 				ACB33B9D1BC210240019DC7C /* Result.framework */,
 				ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */,
-				ACB33B991BC210160019DC7C /* Box.framework */,
 				AC62B6951BA1564800B0EDAE /* Rickety Kate */,
 				AC62B6AF1BA1564900B0EDAE /* Rickety KateTests */,
 				AC62B6941BA1564800B0EDAE /* Products */,
@@ -421,7 +415,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Box.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 			);
@@ -437,7 +430,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Box.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 			);
