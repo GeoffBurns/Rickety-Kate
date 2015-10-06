@@ -7,23 +7,30 @@
 //
 
 import SpriteKit
+import ReactiveCocoa
 
 // Display the score for each player
 class ScoreDisplay
 {
     var scoreLabel = [SKLabelNode]()
     var scoreLabel2 = [SKLabelNode]()
-    var scoreUpdates = [Publink<(Int,Int)>]()
-    
+    var scoreUpdates = [Signal<(Int,Int),NoError>]()
+    var scoreSinks : [(Event<(Int,Int), NoError>)->()] = []
     var players = [CardPlayer]()
-    var lookup = Dictionary<String,Int>()
+    lazy var lookup = Dictionary<String,Int>()
+    let (scoreSignal, scoreSink) = Signal<Int, NoError>.pipe()
     static let sharedInstance = ScoreDisplay()
     private init() { }
     
     static func publish(player:CardPlayer,score:Int,wins:Int=0)
     {
-        let i = ScoreDisplay.sharedInstance.lookup[player.name]
-        ScoreDisplay.sharedInstance.scoreUpdates[i!].publish(score,wins)
+       let i = ScoreDisplay.sharedInstance.lookup[player.name]
+     //   let (signal, sink) = Signal<Int, NoError>.pipe()
+//         ScoreDisplay.sharedInstance.scoreUpdates[i!].
+        
+      let sinks = ScoreDisplay.sharedInstance.scoreSinks
+      let sink = sinks[i ?? 0]
+      sendNext(sink,(score,wins))
     }
     
     static func register(scene: SKNode, players: [CardPlayer])
@@ -95,7 +102,6 @@ class ScoreDisplay
             let l = scoreLabel[i]
             let m = scoreLabel2[i]
             
-            scoreUpdates[i] = Publink<(Int,Int)>()
             
             l.text = ""
             l.fontSize = fontsize
@@ -120,22 +126,22 @@ class ScoreDisplay
             scene.addChild(m)
             
             
-            scoreUpdates[i].subscribe() { (update:(Int,Int)) in
+            scoreUpdates[i].observeNext { next in
                 
             let name = self.players[i].name
                 
             let l = self.scoreLabel[i]
             let m = self.scoreLabel2[i]
-            let wins = update.1
+            let wins = next.1
             let message = (wins==0) ?
-                    ((name == "You") ? "Your Score is \(update.0)" : "\(name)'s Score is \(update.0)") :
-                    ((name == "You") ? "Your Score : \(update.0) With \(wins) Wins" : "\(name) : \(update.0) & \(wins) Wins")
+                    ((name == "You") ? "Your Score is \(next.0)" : "\(name)'s Score is \(next.0)") :
+                    ((name == "You") ? "Your Score : \(next.0) With \(wins) Wins" : "\(name) : \(next.0) & \(wins) Wins")
             l.text = message
             m.text = message
             }
             
-            scoreUpdates[i].publish((0,0))
             
+            sendNext(scoreSinks[i],(0,0))
         }
     
   
@@ -148,7 +154,10 @@ func setupScoreArea(scene: SKNode, players: [CardPlayer])
     self.players=players
     for player in players
     {
-        scoreUpdates.append(Publink<(Int,Int)>())
+        let (scoreSignal, scoreSink) = Signal<(Int,Int), NoError>.pipe()
+        scoreUpdates.append(scoreSignal)
+        
+        scoreSinks.append(scoreSink)
         scoreLabel.append(SKLabelNode(fontNamed:"Verdana"))
         scoreLabel2.append(SKLabelNode(fontNamed:"Verdana"))
         lookup.updateValue(i, forKey: player.name)
