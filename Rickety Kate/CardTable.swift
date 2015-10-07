@@ -20,8 +20,6 @@ public class CardTable : GameStateBase, GameState
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
     var _players = [CardPlayer]()
     var scene : SKNode? = nil
-    var newGame :  Publink<Void> =  Publink<Void>()
-    var resetGame :  Publink<Void> =  Publink<Void>()
  
     var isInDemoMode = false
     func nop() {}
@@ -203,7 +201,7 @@ public class CardTable : GameStateBase, GameState
                     
                     self.gameTracker.reset()
                     self.dealNewCardsToPlayers()
-                    self.resetGame.publish()
+                    Bus.sharedInstance.send(GameEvent.NewHand)
                 }
                 else
                 {

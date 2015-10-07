@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-enum GameEvent
+public enum GameEvent : Equatable
 {
     case WinTrick(String)
     case WinGame(String)
@@ -20,11 +20,11 @@ enum GameEvent
     case WaitYourTurn
     case YourTurn
     case NewGame
-    case ResetGame
+    case StartHand
     case NotYourTurn
     case DiscardWorstCards(Int)
     
-    var description : String
+    var description : String?
         {
         switch self
             {
@@ -45,13 +45,13 @@ enum GameEvent
                     ? name + " won a spade\nBad Luck"
                     : name + " won \(noOfSpades) spades\nBad Luck"
             case NewHand :
-                return "New Hand"
+                return nil
             case YourTurn :
                 return "Your Turn"
             case NewGame :
                 return "Game On"
-            case ResetGame :
-                return ""
+            case StartHand :
+                return nil
             case NotYourTurn :
                 return ""
             case CardDoesNotFollowSuite :
@@ -72,4 +72,22 @@ enum GameEvent
     }
 }
 
-
+public func ==(lhs: GameEvent, rhs: GameEvent) -> Bool {
+    switch (lhs, rhs) {
+        
+    case let (.WinTrick(la), .WinTrick(ra)): return la == ra
+    case let (.WinGame(la), .WinGame(ra)): return la == ra
+    case let (.WinRicketyKate(la), .WinRicketyKate(ra)): return la == ra
+    case let (.WinSpades(la,li), .WinSpades(ra,ri)): return la == ra && li == ri
+    case let (.DiscardWorstCards(la), .DiscardWorstCards(ra)): return la == ra
+    case (.NewHand, .NewHand): return true
+    case (.CardDoesNotFollowSuite, .CardDoesNotFollowSuite): return true
+    case (.WaitYourTurn, .WaitYourTurn): return true
+    case (.YourTurn, .YourTurn): return true
+    case (.NewGame, .NewGame): return true
+    case (.StartHand, .StartHand): return true
+    case (.NotYourTurn, .NotYourTurn): return true
+        
+    default: return false
+    }
+}

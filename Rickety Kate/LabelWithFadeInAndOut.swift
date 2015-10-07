@@ -54,8 +54,17 @@ class LabelWithFadeInAndOut : SKLabelNode
             
             runAction(action)
         }
-        
     }
+    func resetToScene(scene:SKNode)
+    {
+        if parent != nil
+        {
+            removeFromParent()
+        }
+        text = ""
+        scene.addChild(self)
+    }
+
 }
 
 

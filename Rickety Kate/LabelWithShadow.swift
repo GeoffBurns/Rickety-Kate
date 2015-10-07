@@ -17,7 +17,7 @@ class LabelWithShadow : SKLabelNode
   // don't need to rotate as it is a child
   //  override var zRotation : CGFloat { didSet { topLabel.zRotation = zRotation }}
     override var fontSize : CGFloat { didSet { topLabel.fontSize = fontSize }}
-    override var zPosition : CGFloat { didSet { topLabel.zPosition = zPosition-1.0 }}
+ //   override var zPosition : CGFloat { didSet { topLabel.zPosition = zPosition+1.0 }}
     
 
     /////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ class LabelWithShadow : SKLabelNode
         fontColor = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
         topLabel.position = CGPoint(x:-2,y:2)
         topLabel.fontColor = UIColor.whiteColor()
-       
+        topLabel.zPosition = 10
         addChild(topLabel)
     }
 

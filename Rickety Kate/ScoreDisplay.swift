@@ -112,7 +112,7 @@ class ScoreDisplay
         {
             
             let fontsize : CGFloat = GameSettings.isPad ?  20 : (GameSettings.isPhone6Plus ? 42 : 28)
-          //  let player = players[i]
+
             let l = LabelWithShadow(fontNamed:"Verdana")
             
             l.text = ""
@@ -124,7 +124,7 @@ class ScoreDisplay
             
    
             l.position = ScoreDisplay.scorePosition(side, scene: scene)
-            l.zPosition = 301
+            l.zPosition = 201
             l.zRotation = ScoreDisplay.scoreRotation(side)
                 
          
