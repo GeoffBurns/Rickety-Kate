@@ -8,13 +8,13 @@
 
 import SpriteKit
 
+
+
 /// Calculate the Result of the trick
 class Scorer
 {
-    var scores = [Int]()
-    var wins = [Int]()
+    var scores = [Score]()
     var scoresForHand = [Int]()
-    
     var players = [CardPlayer]()
     var lookup = Dictionary<String,Int>()
     
@@ -28,19 +28,15 @@ class Scorer
     func setupScorer( players: [CardPlayer])
     {
         scores = []
-        scoresForHand  = []
-        wins  = []
-        var i = 0
+        scoresForHand = []
         self.players=players
-        for player in players
+        
+        for (i, player) in players.enumerate()
         {
-            scores.append(0)
-            
+            scores.append(Score(playerName: player.name,currentScore: 0,totalWins: 0))
             scoresForHand.append(0)
-            wins.append(0)
-            lookup.updateValue(i, forKey: player.name)
 
-            i++
+            lookup.updateValue(i, forKey: player.name)
         }
     }
 
@@ -58,94 +54,75 @@ class Scorer
             }
         }
         return nil
-}
+    }
+    
+    func recordTheScoresForAGameWin(winnerIndex:Int)
+    {
+    self.scores[winnerIndex].totalWins = self.scores[winnerIndex].totalWins + 1
+    
+    for (i,score) in scores.enumerate()
+      {
+      scores[i].currentScore = 0
+      ScoreDisplay.publish(score)
+      }
+    }
     /// Did player get all the points avalilable in his hand
     func hasShotTheMoon() -> Bool
     {
     var hasShotMoon = false
     for (i,player) in self.players.enumerate()
-     {
-     /// Did player get all the points avalilable in his hand
-     let allPoints = 9 + GameSettings.sharedInstance.noOfCardsInASuite
-     if self.scoresForHand[i] >= allPoints
       {
-      self.scores[i] = 0
-      ScoreDisplay.publish(player,score: self.scores[i], wins: self.wins[i])
-      hasShotMoon = true
-      if player.name == "You"
-          {
-          StatusDisplay.publish("Congratulatons!!!",message2: "You just shot the Moon")
-          
-          }
-       else
-          {
-         StatusDisplay.publish("Wow!!!",message2: "\(player.name) just shot the Moon")
-          }
-    
+      /// Did player get all the points avalilable in his hand
+      let allPoints = 9 + GameSettings.sharedInstance.noOfCardsInASuite
+      if self.scoresForHand[i] >= allPoints
+         {
+         self.scores[i].currentScore = 0
+         ScoreDisplay.publish(scores[i])
+         hasShotMoon = true
+         Bus.sharedInstance.send(GameEvent.ShotTheMoon(player.name))
+        }
+      self.scoresForHand[i] = 0
       }
-     self.scoresForHand[i] = 0
-
-     }
-        
-        var lowestScore = 1000
-        var winner = -10
-        var hasWonGame = false
-        var isDraw = false
-   
-        for i in 0..<self.players.count
+    return hasShotMoon
+    }
+    
+    /// Has a player gone over a 100 points
+    func hasGameBeenWon()
+    {
+    var lowestScore = 1000
+    var winner = -10
+    var hasWonGame = false
+    var isDraw = false
+    
+    for i in 0..<self.players.count
+      {
+      if self.scores[i].currentScore < lowestScore
         {
-            if self.scores[i] < lowestScore
-            {
-                lowestScore = self.scores[i]
-                winner = i
-                isDraw = false
-            } else  if self.scores[i] == lowestScore
-            {
-               isDraw = true
-            }
-                
-            if self.scores[i] >= 100
-            {
-                hasWonGame = true
-            }
-         
-        }
-        
-        let isGameWon = hasWonGame && !isDraw
-        if isGameWon
+        lowestScore = self.scores[i].currentScore
+        winner = i
+        isDraw = false
+        } else  if self.scores[i].currentScore == lowestScore
         {
-            self.wins[winner] = self.wins[winner] + 1
-          
-            for (i,player) in players.enumerate()
-            {
-                scores[i] = 0
-                scoresForHand[i] = 0
-                ScoreDisplay.publish(player,score: self.scores[i], wins: self.wins[i])
-          
-            }
-            if winner == 0
-            {
-                StatusDisplay.publish("Congratulatons!!!",message2: "You just won the game")
-                
-            }
-            else
-            {
-                StatusDisplay.publish("Wow!!!",message2: "\(players[winner].name) just won the game")
-            }
-            return hasShotMoon
+        isDraw = true
         }
-        if(hasShotMoon)
+    
+      if self.scores[i].currentScore >= 100
         {
-        //    self.runAction(SKAction.sequence([SKAction.waitForDuration(self.cardTossDuration), SKAction.runBlock({
-                
-        //        StatusDisplay.publish("New Hand" )
-        //    })]))
-        } else {
-            
-            StatusDisplay.publish("New Hand" )
+        hasWonGame = true
         }
-        
-        return hasShotMoon
+      }
+    
+    let isGameWon = hasWonGame && !isDraw
+    if isGameWon
+      {
+      recordTheScoresForAGameWin(winner)
+    
+      for (i,_) in scoresForHand.enumerate()
+        {
+        scoresForHand[i] = 0
+        }
+      Bus.sharedInstance.send(GameEvent.WinGame(players[winner].name))
+      }
     }
 
     func trickWon(gameState:GameStateBase) -> CardPlayer?
@@ -158,9 +135,9 @@ class Scorer
                 let score = Awarder.sharedInstance.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
                 if(score>0)
                 {
-                    self.scores[winnerIndex] += score
+                    self.scores[winnerIndex].currentScore += score
                     self.scoresForHand[winnerIndex] += score
-                    ScoreDisplay.publish(winner,score: self.scores[winnerIndex], wins:self.wins[winnerIndex])
+                    ScoreDisplay.publish(self.scores[winnerIndex])
                 }
             }
             
@@ -168,6 +145,6 @@ class Scorer
             
         }
         return nil
-    }
+        }
 }
     

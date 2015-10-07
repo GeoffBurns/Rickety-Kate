@@ -90,11 +90,12 @@ class GameScene: SKScene {
 
         if arePassingCards && !table.isInDemoMode
         {
-            StatusDisplay.publish("Discard Your",message2: " Three Worst Cards")
+            Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
         }
         else
         {
-            StatusDisplay.publish("Game On",message2: "")
+            
+            Bus.sharedInstance.send(GameEvent.NewGame)
         }
     }
     
@@ -141,7 +142,8 @@ class GameScene: SKScene {
             self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
             if self.cardPassingPhase.isCurrentlyActive
             {
-              StatusDisplay.publish("Discard Your",message2: "Three Worst Cards")
+              Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
+               
             }
             else
             {
@@ -415,7 +417,7 @@ class GameScene: SKScene {
     cardsprite.color = UIColor.redColor()
     cardsprite.colorBlendFactor = 0.2
     
-    StatusDisplay.publish("Card Does Not",message2: "Follow Suite")
+    Bus.sharedInstance.send(GameEvent.CardDoesNotFollowSuite)
     }
     
     func transferCardToTrickPile(cardsprite:CardSprite)
@@ -423,7 +425,7 @@ class GameScene: SKScene {
         _ = self.table.playerOne._hand.remove(cardsprite.card)
         table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card,state:table.currentStateOfPlay!,willAnimate:false)
         table.currentStateOfPlay=nil
-        StatusDisplay.publish()
+        Bus.sharedInstance.send(GameEvent.NotYourTurn)
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -461,8 +463,8 @@ class GameScene: SKScene {
                           }
                          }
                 } else {
-                        StatusDisplay.publish("Wait your turn",message2: "")
-                    }
+                    Bus.sharedInstance.send(GameEvent.WaitYourTurn)
+                }
             
              restoreDraggedCard()
             }

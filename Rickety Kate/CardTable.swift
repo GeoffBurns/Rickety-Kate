@@ -199,6 +199,7 @@ public class CardTable : GameStateBase, GameState
                     }
                     
                     Scorer.sharedInstance.hasShotTheMoon()
+                    Scorer.sharedInstance.hasGameBeenWon()
                     
                     self.gameTracker.reset()
                     self.dealNewCardsToPlayers()
@@ -207,18 +208,14 @@ public class CardTable : GameStateBase, GameState
                 else
                 {
                     self.playTrickLeadBy(winner)
-                }
-                
+                } 
             })]))
         }
-        
         self.tricksPile = []
     }
     
-    
     func playTrick(state:StateOfPlay)
     {
-        
         let remainingPlayers = state.remainingPlayers
         
         if let playerWithTurn = remainingPlayers.first,
@@ -230,7 +227,6 @@ public class CardTable : GameStateBase, GameState
                 {
                     playTrickCard(playerWithTurn, trickcard:trickcard,state:state)
                     return
-                    
                 }
             }
             
@@ -241,7 +237,7 @@ public class CardTable : GameStateBase, GameState
         else
         {
             currentStateOfPlay = StateOfPlay( remainingPlayers: remainingPlayers)
-            StatusDisplay.publish("Your Turn")
+            Bus.sharedInstance.send(GameEvent.YourTurn)
         }
         
     }

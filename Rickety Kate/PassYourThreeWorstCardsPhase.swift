@@ -133,7 +133,7 @@ get {
         passOtherCards()
         takePassedCards()
         isCurrentlyActive  = false
-        StatusDisplay.publish()
+        Bus.sharedInstance.send(GameEvent.NotYourTurn)
         
     }
     
@@ -162,23 +162,17 @@ get {
     func isPassingPhaseContinuing() -> Bool
     {
         let count = cardsPassed[0].cards.count
+      
         if  count < 3
-        {
-            if count == 2
-            {
-                StatusDisplay.publish("Discard one more card", message2: "Your worst card")
-            }
-            else
-            {
-                StatusDisplay.publish("Discard \(3 - count) more cards", message2: "Your worst cards")
-            }
-        return true
-        }
+          {
+          Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3-count))
+          return true
+          }
         else
-        {
+          {
           endCardPassingPhase()
           //  startTrickPhase()
           return false
-        }
+          }
     }
 }

@@ -31,27 +31,23 @@ class Awarder
         
         let spades = cards.filter{$0.suite == PlayingCard.Suite.Spades && $0.imageName != "QS"}
         if !ricketyKate.isEmpty
-        {
+           {
             score = 10
-        }
+           }
         score += spades.count
         
         if !ricketyKate.isEmpty
-        {
-            StatusDisplay.publish("\(winnersName) won Rickety Kate",message2: "Poor \(winnersName)")
-        }
-        else if spades.count == 1
-        {
-            StatusDisplay.publish("\(winnersName) won a spade",message2: "Bad Luck")
-        }
-        else if spades.count > 1
-        {
-            StatusDisplay.publish("\(winnersName) won \(spades.count) spades",message2: "Bad Luck")
-        }
+           {
+            Bus.sharedInstance.send(GameEvent.WinRicketyKate(winnersName))
+           }
+        else if spades.count > 0
+           {
+            Bus.sharedInstance.send(GameEvent.WinSpades(winnersName,spades.count))
+           }
         else
-        {
-            StatusDisplay.publish("\(winnersName) won the Trick")
-        }
+           {
+            Bus.sharedInstance.send(GameEvent.WinTrick(winnersName))
+           }
         
         return score
     }

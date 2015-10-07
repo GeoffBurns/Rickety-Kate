@@ -11,34 +11,28 @@ import SpriteKit
 // Tells the game player what is going on
 class StatusDisplay
 {
-    var noticeLabel = SKLabelNode(fontNamed:"Chalkduster")
-    var noticeLabel2 = SKLabelNode(fontNamed:"Chalkduster")
-    var statusInfo = Publink<(String,String)>()
-    
+    var noticeLabel = LabelWithFadeInAndOut(fontNamed:"Chalkduster")
+    var noticeLabel2 = LabelWithFadeInAndOut(fontNamed:"Chalkduster")
+ 
     static let sharedInstance = StatusDisplay()
     private init() { }
-    
-    static func publish(message1:String = "",message2:String = "")
-    {
-        StatusDisplay.sharedInstance.statusInfo.publish((message1,message2))
-    }
     
     static func register(scene: SKNode)
     {
         StatusDisplay.sharedInstance.setupStatusArea(scene)
     }
     func setupStatusArea(scene: SKNode)
-{
-      let fontsize : CGFloat = GameSettings.isPad ?  55 : (GameSettings.isPhone6Plus ? 90 : 65)
-    if noticeLabel.parent != nil
     {
+    let fontsize : CGFloat = GameSettings.isPad ?  55 : (GameSettings.isPhone6Plus ? 90 : 65)
+    if noticeLabel.parent != nil
+      {
         noticeLabel.removeFromParent()
-    }
+      }
     
     if noticeLabel2.parent != nil
-    {
+      {
         noticeLabel2.removeFromParent()
-    }
+      }
     noticeLabel.text = ""
     noticeLabel.fontSize = fontsize;
     noticeLabel.position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.33);
@@ -48,37 +42,26 @@ class StatusDisplay
     scene.addChild(noticeLabel)
     scene.addChild(noticeLabel2)
     
-    statusInfo.subscribe() { (message1: String,message2: String) in
+    Bus.sharedInstance.gameSignal.observeNext { gameEvent in
         
-    self.noticeLabel.removeAllActions()
-    self.noticeLabel2.removeAllActions()
-        
-    self.noticeLabel.alpha = 1.0
-    self.noticeLabel2.alpha = 1.0
-        
-    let action = SKAction.repeatActionForever(
-            SKAction.sequence([
-                SKAction.fadeOutWithDuration(6),
-                SKAction.waitForDuration(10),
-                SKAction.fadeInWithDuration(4),
-                SKAction.waitForDuration(5),
-                ] )
-        )
-        switch (message1,message2)
+        let message = gameEvent.description
+        if message == ""
         {
-        case ("","") :
-            self.noticeLabel.text = "";
+            self.noticeLabel.text = ""
+            self.noticeLabel2.text = ""
+            return
+        }
+        let messageLines = message.componentsSeparatedByString("\n")
+        switch (messageLines.count)
+        {
+        case 1 :
+            self.noticeLabel.text = message;
             self.noticeLabel2.text = "";
-        case (_,"") :
-            self.noticeLabel.text = message1;
-            self.noticeLabel2.text = "";
-            self.noticeLabel.runAction(action)
             
         default :
-            self.noticeLabel2.text = message1;
-            self.noticeLabel.text = message2;
-            self.noticeLabel.runAction(action)
-            self.noticeLabel2.runAction(action)
+            self.noticeLabel2.text = messageLines[0];
+            self.noticeLabel.text = messageLines[1];
+
         }
     }
     
