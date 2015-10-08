@@ -7,25 +7,20 @@
 //
 
 import SpriteKit
+import ReactiveCocoa
+
 
 // Display the score for each player
 class ScoreDisplay
 {
     var scoreLabel = [SKLabelNode]()
-    var scoreLabel2 = [SKLabelNode]()
-    var scoreUpdates = [Publink<(Int,Int)>]()
-    
     var players = [CardPlayer]()
-    var lookup = Dictionary<String,Int>()
+    
+
     static let sharedInstance = ScoreDisplay()
     private init() { }
     
-    static func publish(player:CardPlayer,score:Int,wins:Int=0)
-    {
-        let i = ScoreDisplay.sharedInstance.lookup[player.name]
-        ScoreDisplay.sharedInstance.scoreUpdates[i!].publish(score,wins)
-    }
-    
+
     static func register(scene: SKNode, players: [CardPlayer])
     {
         ScoreDisplay.sharedInstance.setupScoreArea(scene, players: players)
@@ -34,7 +29,7 @@ class ScoreDisplay
     static func scorePosition(side:SideOfTable, scene: SKNode) -> CGPoint
     {
         
-        let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
+      let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
       switch side
       {
       case .Right:
@@ -87,73 +82,52 @@ class ScoreDisplay
         }
     }
 
-   func setupScoreFor(scene: SKNode,i:Int)
+    func setupScoreFor(scene: SKNode,player:CardPlayer) -> SKLabelNode
         {
             
             let fontsize : CGFloat = GameSettings.isPad ?  20 : (GameSettings.isPhone6Plus ? 42 : 28)
-            let player = players[i]
-            let l = scoreLabel[i]
-            let m = scoreLabel2[i]
-            
-            scoreUpdates[i] = Publink<(Int,Int)>()
+
+            let l = LabelWithShadow(fontNamed:"Verdana")
             
             l.text = ""
             l.fontSize = fontsize
-            l.name = "\(player.name)'s score label"
-            m.text = ""
-            m.fontSize = fontsize
-            
-            m.fontColor = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
+            l.name = player.name
+  
   
             let side = player.sideOfTable
             
    
             l.position = ScoreDisplay.scorePosition(side, scene: scene)
-            l.zPosition = 301
+            l.zPosition = 201
             l.zRotation = ScoreDisplay.scoreRotation(side)
-                
-            m.position = CGPoint(x:l.position.x+2,y:l.position.y-2)
-            m.zPosition = 299
-            m.zRotation = l.zRotation
-                
+
             scene.addChild(l)
-            scene.addChild(m)
-            
-            
-            scoreUpdates[i].subscribe() { (update:(Int,Int)) in
-                
-            let name = self.players[i].name
-                
-            let l = self.scoreLabel[i]
-            let m = self.scoreLabel2[i]
-            let wins = update.1
-            let message = (wins==0) ?
-                    ((name == "You") ? "Your Score is \(update.0)" : "\(name)'s Score is \(update.0)") :
-                    ((name == "You") ? "Your Score : \(update.0) With \(wins) Wins" : "\(name) : \(update.0) & \(wins) Wins")
-            l.text = message
-            m.text = message
+
+            l.rac_text <~ combineLatest(player.currentTotalScore.producer, player.noOfWins.producer)
+                . map {
+                    next in
+                    let name = player.name
+                    
+                    let wins = next.1
+                    let score = next.0
+                    return (wins==0) ?
+                        ((name == "You") ? "Your Score is \(score)" : "\(name)'s Score is \(score)") :
+                        ((name == "You") ? "Your Score : \(score) With \(wins) Wins" : "\(name) : \(score) & \(wins) Wins")
+                    
             }
-            
-            scoreUpdates[i].publish((0,0))
-            
+
+            return l
         }
     
   
 func setupScoreArea(scene: SKNode, players: [CardPlayer])
 {
-    scoreUpdates = []
     scoreLabel  = []
-    scoreLabel2  = []
-    var i = 0
+
     self.players=players
     for player in players
     {
-        scoreUpdates.append(Publink<(Int,Int)>())
-        scoreLabel.append(SKLabelNode(fontNamed:"Verdana"))
-        scoreLabel2.append(SKLabelNode(fontNamed:"Verdana"))
-        lookup.updateValue(i, forKey: player.name)
-        setupScoreFor(scene,i:i)
-        i++
+        scoreLabel.append(setupScoreFor(scene,player:player))
     }
 }
 }

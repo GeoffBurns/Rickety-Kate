@@ -14,6 +14,14 @@
 		AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */; };
 		AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */; };
 		AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */; };
+		AC2AB4CE1BC4AD2A0042BCBC /* ScoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4CD1BC4AD2A0042BCBC /* ScoreViewModel.swift */; settings = {ASSET_TAGS = (); }; };
+		AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */; settings = {ASSET_TAGS = (); }; };
+		AC2AB4D21BC4EB3F0042BCBC /* SKNodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */; settings = {ASSET_TAGS = (); }; };
+		AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */; settings = {ASSET_TAGS = (); }; };
+		AC2AB4D61BC5054C0042BCBC /* LabelWithFadeInAndOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4D51BC5054C0042BCBC /* LabelWithFadeInAndOut.swift */; settings = {ASSET_TAGS = (); }; };
+		AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
+		AC3309551BC3D51000A41706 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
+		AC33095A1BC44E1F00A41706 /* LabelWithShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3309591BC44E1F00A41706 /* LabelWithShadow.swift */; settings = {ASSET_TAGS = (); }; };
 		AC3E5D4A1BAB04B700B6A3A0 /* ScoreDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */; settings = {ASSET_TAGS = (); }; };
 		AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44D7D01BB203AA00DA92EC /* CardPile.swift */; settings = {ASSET_TAGS = (); }; };
 		AC627E891BA30766003E9A8F /* GivenADeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E881BA30766003E9A8F /* GivenADeck.swift */; };
@@ -50,9 +58,10 @@
 		AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BD1BA686C40064870C /* CardPlayer.swift */; };
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BF1BA686C40064870C /* PlayingCard.swift */; };
-		AC9E82C61BA686C40064870C /* Publink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82C01BA686C40064870C /* Publink.swift */; };
 		ACB33B971BC2003B0019DC7C /* CardSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B951BC2003B0019DC7C /* CardSlide.swift */; settings = {ASSET_TAGS = (); }; };
 		ACB33B981BC2003B0019DC7C /* PopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B961BC2003B0019DC7C /* PopupButton.swift */; settings = {ASSET_TAGS = (); }; };
+		ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
+		ACB33B9E1BC210240019DC7C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
 		ACB90FA01BB685CF009B1189 /* BinaryToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */; settings = {ASSET_TAGS = (); }; };
 		ACBF9A931BAD4A0C00837EEB /* NumberRangeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBF9A921BAD4A0C00837EEB /* NumberRangeToggle.swift */; settings = {ASSET_TAGS = (); }; };
 		ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */; settings = {ASSET_TAGS = (); }; };
@@ -91,6 +100,12 @@
 		AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIdeOfTable.swift; sourceTree = "<group>"; };
 		AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCardComparable.swift; sourceTree = "<group>"; };
 		AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPassingStrategy.swift; sourceTree = "<group>"; };
+		AC2AB4CD1BC4AD2A0042BCBC /* ScoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
+		AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEvent.swift; sourceTree = "<group>"; };
+		AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions.swift; sourceTree = "<group>"; };
+		AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
+		AC2AB4D51BC5054C0042BCBC /* LabelWithFadeInAndOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelWithFadeInAndOut.swift; sourceTree = "<group>"; };
+		AC3309591BC44E1F00A41706 /* LabelWithShadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelWithShadow.swift; sourceTree = "<group>"; };
 		AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreDisplay.swift; sourceTree = "<group>"; };
 		AC44D7D01BB203AA00DA92EC /* CardPile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPile.swift; sourceTree = "<group>"; };
 		AC627E881BA30766003E9A8F /* GivenADeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenADeck.swift; sourceTree = "<group>"; };
@@ -131,9 +146,10 @@
 		AC9E82BD1BA686C40064870C /* CardPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPlayer.swift; sourceTree = "<group>"; };
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		AC9E82BF1BA686C40064870C /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
-		AC9E82C01BA686C40064870C /* Publink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publink.swift; sourceTree = "<group>"; };
 		ACB33B951BC2003B0019DC7C /* CardSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSlide.swift; sourceTree = "<group>"; };
 		ACB33B961BC2003B0019DC7C /* PopupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupButton.swift; sourceTree = "<group>"; };
+		ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		ACB33B9D1BC210240019DC7C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryToggle.swift; sourceTree = "<group>"; };
 		ACBF9A921BAD4A0C00837EEB /* NumberRangeToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberRangeToggle.swift; sourceTree = "<group>"; };
 		ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitScreen.swift; sourceTree = "<group>"; };
@@ -159,6 +175,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */,
+				ACB33B9E1BC210240019DC7C /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +184,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */,
+				AC3309551BC3D51000A41706 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,9 +195,11 @@
 		AC62B68A1BA1564800B0EDAE = {
 			isa = PBXGroup;
 			children = (
+				AC62B6941BA1564800B0EDAE /* Products */,
+				ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */,
+				ACB33B9D1BC210240019DC7C /* Result.framework */,
 				AC62B6951BA1564800B0EDAE /* Rickety Kate */,
 				AC62B6AF1BA1564900B0EDAE /* Rickety KateTests */,
-				AC62B6941BA1564800B0EDAE /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -197,6 +219,7 @@
 				AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */,
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
 				ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */,
+				AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */,
 				AC1CF69C1BB4238300001024 /* buttons.atlas */,
 				AC6463EA1BC12A66000AEB7E /* ButtonSize.swift */,
 				AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */,
@@ -223,12 +246,15 @@
 				AC9E82BE1BA686C40064870C /* CardTable.swift */,
 				AC7C9FCF1BB3886D0086AC02 /* Direction.swift */,
 				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
+				AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
 				AC7C9FC61BB380A00086AC02 /* GameSetting.swift */,
 				ACE6DFB51BAA32AB005B5424 /* GameState.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
 				AC62B6A31BA1564800B0EDAE /* Images.xcassets */,
+				AC2AB4D51BC5054C0042BCBC /* LabelWithFadeInAndOut.swift */,
+				AC3309591BC44E1F00A41706 /* LabelWithShadow.swift */,
 				AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */,
 				AC62B6A01BA1564800B0EDAE /* Main.storyboard */,
 				ACE6DFB71BAA32AB005B5424 /* MathExtention.swift */,
@@ -241,12 +267,13 @@
 				AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */,
 				AC7C9FCD1BB385CA0086AC02 /* Popup.swift */,
 				ACB33B961BC2003B0019DC7C /* PopupButton.swift */,
-				AC9E82C01BA686C40064870C /* Publink.swift */,
 				AC0304031BAEDE7C005263C7 /* RuleScreen.swift */,
 				AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */,
 				ACCB13351BAB1D5700196393 /* Scorer.swift */,
+				AC2AB4CD1BC4AD2A0042BCBC /* ScoreViewModel.swift */,
 				AC7C9FC71BB380A00086AC02 /* Seater.swift */,
 				AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */,
+				AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */,
 				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
@@ -296,6 +323,7 @@
 				AC62B68F1BA1564800B0EDAE /* Sources */,
 				AC62B6901BA1564800B0EDAE /* Frameworks */,
 				AC62B6911BA1564800B0EDAE /* Resources */,
+				ACB33B9F1BC210610019DC7C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -313,6 +341,7 @@
 				AC62B6A81BA1564900B0EDAE /* Sources */,
 				AC62B6A91BA1564900B0EDAE /* Frameworks */,
 				AC62B6AA1BA1564900B0EDAE /* Resources */,
+				AC3309561BC3D53300A41706 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -394,6 +423,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		AC3309561BC3D53300A41706 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks ";
+		};
+		ACB33B9F1BC210610019DC7C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks ";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AC62B68F1BA1564800B0EDAE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -408,6 +470,7 @@
 				AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */,
 				ACE6DFC91BAA5FD9005B5424 /* CardSprite.swift in Sources */,
 				AC7C9FCE1BB385CA0086AC02 /* Popup.swift in Sources */,
+				AC2AB4CE1BC4AD2A0042BCBC /* ScoreViewModel.swift in Sources */,
 				AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */,
 				AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */,
 				ACE6DFBD1BAA32AB005B5424 /* Multi-Line.swift in Sources */,
@@ -416,10 +479,10 @@
 				ACBF9A931BAD4A0C00837EEB /* NumberRangeToggle.swift in Sources */,
 				ACB33B971BC2003B0019DC7C /* CardSlide.swift in Sources */,
 				ACE6DFBC1BAA32AB005B5424 /* MathExtention.swift in Sources */,
+				AC2AB4D21BC4EB3F0042BCBC /* SKNodeExtensions.swift in Sources */,
 				AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */,
 				ACE6DFBB1BAA32AB005B5424 /* TrickPlayingStrategy.swift in Sources */,
 				AC7C9FCC1BB3850A0086AC02 /* CardState.swift in Sources */,
-				AC9E82C61BA686C40064870C /* Publink.swift in Sources */,
 				AC7C9FC81BB380A00086AC02 /* CardFan.swift in Sources */,
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
 				AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */,
@@ -427,6 +490,8 @@
 				AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */,
 				AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */,
 				AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */,
+				AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */,
+				AC2AB4D61BC5054C0042BCBC /* LabelWithFadeInAndOut.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
 				ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */,
 				ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */,
@@ -438,7 +503,9 @@
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
 				ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
+				AC33095A1BC44E1F00A41706 /* LabelWithShadow.swift in Sources */,
 				AC6463EB1BC12A66000AEB7E /* ButtonSize.swift in Sources */,
+				AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */,
 				ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */,
 				ACE6DFC71BAA5563005B5424 /* StatusArea.swift in Sources */,
 				AC7C9FD01BB3886D0086AC02 /* Direction.swift in Sources */,
@@ -527,7 +594,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -566,7 +633,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -580,6 +647,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -595,6 +666,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -611,6 +686,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -631,6 +707,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Rickety KateTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
