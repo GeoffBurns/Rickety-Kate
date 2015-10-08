@@ -1535,11 +1535,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/Scorer.swift"
-            timestampString = "465907778.512787"
+            timestampString = "465983258.604974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "trickWon(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1757,11 +1757,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/ScoreDisplay.swift"
-            timestampString = "465880879.409428"
+            timestampString = "465983258.604974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "setupScoreFor(_:player:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1773,11 +1773,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/ScoreDisplay.swift"
-            timestampString = "465880879.409428"
+            timestampString = "465983258.604974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "scorePosition(_:scene:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2329,27 +2329,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/ScoreDisplay.swift"
-            timestampString = "465880879.409428"
+            timestampString = "465983258.604974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "setupScoreArea(_:players:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Rickety Kate/ScoreDisplay.swift"
-            timestampString = "465880879.409428"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "setupScoreArea(_:players:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2377,11 +2361,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/ScoreDisplay.swift"
-            timestampString = "465880879.409428"
+            timestampString = "465983258.604974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "setupScoreArea(_:players:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2393,11 +2377,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/Scorer.swift"
-            timestampString = "465907778.512787"
+            timestampString = "465983258.604974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "hasShotTheMoon()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2409,13 +2393,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/CardTable.swift"
-            timestampString = "465911540.894495"
+            timestampString = "465974075.068275"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "removeTricksPile(_:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety Kate/CardPlayer.swift"
+            timestampString = "465974424.600201"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "CardPlayer"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Rickety_Kate.CardPlayer.currentTotalScore.getter : ReactiveCocoa.MutableProperty&lt;Swift.Int&gt;"
+                  moduleName = "Rickety Kate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20Kate/CardPlayer.swift"
+                  timestampString = "465976769.348332"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Rickety_Kate.CardPlayer.currentTotalScore.setter : ReactiveCocoa.MutableProperty&lt;Swift.Int&gt;"
+                  moduleName = "Rickety Kate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20Kate/CardPlayer.swift"
+                  timestampString = "465976769.348539"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Rickety_Kate.CardPlayer.currentTotalScore.materializeForSet : ReactiveCocoa.MutableProperty&lt;Swift.Int&gt;"
+                  moduleName = "Rickety Kate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20Kate/CardPlayer.swift"
+                  timestampString = "465976769.34883"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "21">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

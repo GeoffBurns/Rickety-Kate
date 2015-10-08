@@ -30,7 +30,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         case Stars
         case Trumps
         case Jokers
-        case None
+        case NoOfSuites
         
 
         var imageCode : String
@@ -38,16 +38,16 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         {
             switch(self)
             {
-            case Spades: return "S"
-            case Hearts: return "H"
-            case Clubs:  return "C"
-            case Diamonds: return "D"
-            case Suns: return "U"
-            case Anchors: return "A"
-            case Stars : return "R"
-            case Trumps : return "T"
-            case Jokers : return "J"
-            case None : return ""
+            case .Spades: return "S"
+            case .Hearts: return "H"
+            case .Clubs:  return "C"
+            case .Diamonds: return "D"
+            case .Suns: return "U"
+            case .Anchors: return "A"
+            case .Stars : return "R"
+            case .Trumps : return "T"
+            case .Jokers : return "J"
+            case .NoOfSuites : return ""
             }
         }
         
@@ -56,16 +56,16 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             {
                 switch(self)
                 {
-                case Spades: return "Spades"
-                case Hearts: return "Hearts"
-                case Clubs:  return "Clubs"
-                case Diamonds: return "Diamonds"
-                case Suns: return "Suns"
-                case Anchors: return "Anchors"
-                case Stars : return "Stars"
-                case Trumps : return "Trumps"
-                case Jokers : return "Jokers"
-                case None : return "None"
+                case .Spades: return "Spades"
+                case .Hearts: return "Hearts"
+                case .Clubs:  return "Clubs"
+                case .Diamonds: return "Diamonds"
+                case .Suns: return "Suns"
+                case .Anchors: return "Anchors"
+                case .Stars : return "Stars"
+                case .Trumps : return "Trumps"
+                case .Jokers : return "Jokers"
+                case .NoOfSuites : return "None"
                 }
         }
 

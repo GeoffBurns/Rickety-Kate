@@ -58,7 +58,6 @@
 		AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BD1BA686C40064870C /* CardPlayer.swift */; };
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BF1BA686C40064870C /* PlayingCard.swift */; };
-		AC9E82C61BA686C40064870C /* Publink.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82C01BA686C40064870C /* Publink.swift */; };
 		ACB33B971BC2003B0019DC7C /* CardSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B951BC2003B0019DC7C /* CardSlide.swift */; settings = {ASSET_TAGS = (); }; };
 		ACB33B981BC2003B0019DC7C /* PopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B961BC2003B0019DC7C /* PopupButton.swift */; settings = {ASSET_TAGS = (); }; };
 		ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
@@ -147,7 +146,6 @@
 		AC9E82BD1BA686C40064870C /* CardPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPlayer.swift; sourceTree = "<group>"; };
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		AC9E82BF1BA686C40064870C /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
-		AC9E82C01BA686C40064870C /* Publink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publink.swift; sourceTree = "<group>"; };
 		ACB33B951BC2003B0019DC7C /* CardSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSlide.swift; sourceTree = "<group>"; };
 		ACB33B961BC2003B0019DC7C /* PopupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupButton.swift; sourceTree = "<group>"; };
 		ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
@@ -269,7 +267,6 @@
 				AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */,
 				AC7C9FCD1BB385CA0086AC02 /* Popup.swift */,
 				ACB33B961BC2003B0019DC7C /* PopupButton.swift */,
-				AC9E82C01BA686C40064870C /* Publink.swift */,
 				AC0304031BAEDE7C005263C7 /* RuleScreen.swift */,
 				AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */,
 				ACCB13351BAB1D5700196393 /* Scorer.swift */,
@@ -486,7 +483,6 @@
 				AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */,
 				ACE6DFBB1BAA32AB005B5424 /* TrickPlayingStrategy.swift in Sources */,
 				AC7C9FCC1BB3850A0086AC02 /* CardState.swift in Sources */,
-				AC9E82C61BA686C40064870C /* Publink.swift in Sources */,
 				AC7C9FC81BB380A00086AC02 /* CardFan.swift in Sources */,
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
 				AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */,

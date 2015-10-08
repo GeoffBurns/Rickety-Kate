@@ -9,44 +9,18 @@
 import SpriteKit
 import ReactiveCocoa
 
-struct ScoreViewModel
-{
-    var playerName : String { didSet { update() }}
-    var currentScore  : Int { didSet { update() }}
-    var totalWins : Int { didSet { update() }}
-    var scoreDisplayed : MutableProperty<String>
-    
-    
-    mutating func update()
-    {
-        scoreDisplayed.value = (totalWins==0) ?
-            ((playerName == "You") ? "Your Score is \(currentScore)" : "\(playerName)'s Score is \(currentScore)") :
-            ((playerName == "You") ? "Your Score : \(currentScore) With \(totalWins) Wins" : "\(playerName) : \(currentScore) & \(totalWins) Wins")
-    }
-}
-struct Score
-{
-    var playerName : String = ""
-    var currentScore = 0
-    var totalWins = 0
-    
-}
+
 // Display the score for each player
 class ScoreDisplay
 {
     var scoreLabel = [SKLabelNode]()
     var players = [CardPlayer]()
     
-    static let (scoreUpdate,scoreSink) = Signal<Score,NoError>.pipe()
 
     static let sharedInstance = ScoreDisplay()
     private init() { }
     
-    static func publish(score:Score)
-    {
-        sendNext(scoreSink,score)
-    }
-    
+
     static func register(scene: SKNode, players: [CardPlayer])
     {
         ScoreDisplay.sharedInstance.setupScoreArea(scene, players: players)
@@ -55,7 +29,7 @@ class ScoreDisplay
     static func scorePosition(side:SideOfTable, scene: SKNode) -> CGPoint
     {
         
-        let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
+      let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
       switch side
       {
       case .Right:
@@ -126,47 +100,34 @@ class ScoreDisplay
             l.position = ScoreDisplay.scorePosition(side, scene: scene)
             l.zPosition = 201
             l.zRotation = ScoreDisplay.scoreRotation(side)
-                
-         
+
             scene.addChild(l)
-            
-            
-            l.rac_text <~ ScoreDisplay.scoreUpdate
-                .filter {  l.name == $0.playerName }
+
+            l.rac_text <~ combineLatest(player.currentTotalScore.producer, player.noOfWins.producer)
                 . map {
                     next in
-                    let name = next.playerName
+                    let name = player.name
                     
-                    let wins = next.totalWins
-                    let score = next.currentScore
+                    let wins = next.1
+                    let score = next.0
                     return (wins==0) ?
                         ((name == "You") ? "Your Score is \(score)" : "\(name)'s Score is \(score)") :
                         ((name == "You") ? "Your Score : \(score) With \(wins) Wins" : "\(name) : \(score) & \(wins) Wins")
                     
             }
 
-            sendNext(ScoreDisplay.scoreSink,Score(playerName: player.name,currentScore: 0,totalWins: 0))
             return l
         }
     
   
 func setupScoreArea(scene: SKNode, players: [CardPlayer])
 {
-    
     scoreLabel  = []
 
     self.players=players
     for player in players
     {
-      //  let (scoreSignal, scoreSink) = Signal<Score, NoError>.pipe()
-     //   scoreUpdates.append(scoreSignal)
-        
-   //     scoreSinks.append(scoreSink)
         scoreLabel.append(setupScoreFor(scene,player:player))
-
-      //  lookup.updateValue(i, forKey: player.name)
-        
-    
     }
 }
 }

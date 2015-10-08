@@ -8,43 +8,43 @@
 
 import Foundation
 
+
 // Used by Computer Player to calculate strategy
 public class GameProgressTracker
 {
-    var cardCount = [Int](count: 9, repeatedValue: 0)
-    var cardCounter = Publink<PlayingCard.Suite>()
-    var notFollowingTracker = Publink<(PlayingCard.Suite, CardPlayer)>()
-    // TODO replace - repeat generator does not work so great with classes
-    var notFollowing = [Set<CardPlayer>](count: 9, repeatedValue: Set<CardPlayer>())
+    var cardCount = [Int](count: PlayingCard.Suite.NoOfSuites.rawValue, repeatedValue: 0)
+    var notFollowing  = [Set<CardPlayer>]()
      
     
     
     public func reset()
     {
-        for i in 0...3
+        for (i,_) in cardCount.enumerate()
         {
         cardCount[i] = 0
         notFollowing[i].removeAll(keepCapacity: true)
         }
     }
+     func countCardIn(suite: PlayingCard.Suite)
+     {
+        let index = suite.rawValue
+        
+        self.cardCount[index]++
+     }
+
+    
+    func playerNotFollowingSuite(player: CardPlayer, suite: PlayingCard.Suite )
+     {
+
+            let index = suite.rawValue
+            self.notFollowing[index].insert(player)
+     }
     
      init() {
-        
-        cardCounter.subscribe() { (suite: PlayingCard.Suite) in
-            
-        let index = suite.rawValue
-            
-            self.cardCount[index]++
-            
-        }
-        for i in 0...3
+
+        for _ in cardCount
         {
-             notFollowing[i] = Set<CardPlayer>()
+             notFollowing.append( Set<CardPlayer>())
         }
-        notFollowingTracker.subscribe() { (message: (PlayingCard.Suite, CardPlayer)) in
-            
-        let index = message.0.rawValue
-        self.notFollowing[index].insert(message.1)
-        }
-}
+      }
 }

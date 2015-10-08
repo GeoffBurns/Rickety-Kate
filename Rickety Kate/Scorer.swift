@@ -13,33 +13,32 @@ import SpriteKit
 /// Calculate the Result of the trick
 class Scorer
 {
-    var scores = [Score]()
-    var scoresForHand = [Int]()
     var players = [CardPlayer]()
-    var lookup = Dictionary<String,Int>()
     
     static let sharedInstance = Scorer()
     private init() { }
+    
     
     static func winnerIs(gameState:GameStateBase) -> CardPlayer?
     {
         return sharedInstance.trickWon(gameState)
     }
+    
+    
     func setupScorer( players: [CardPlayer])
     {
-        scores = []
-        scoresForHand = []
+
         self.players=players
         
-        for (i, player) in players.enumerate()
+        for player in players
         {
-            scores.append(Score(playerName: player.name,currentScore: 0,totalWins: 0))
-            scoresForHand.append(0)
-
-            lookup.updateValue(i, forKey: player.name)
+            player.currentTotalScore.value = 0
+            player.scoreForCurrentHand = 0
+            player.noOfWins.value = 0
         }
     }
-
+    
+    /// Which player has won the trick
     static func playerThatWon(gameState:GameStateBase) -> CardPlayer?
     {
         if let trick = gameState.tricksPile.first
@@ -56,32 +55,32 @@ class Scorer
         return nil
     }
     
-    func recordTheScoresForAGameWin(winnerIndex:Int)
+    // Update the score of the players
+    func recordTheScoresForAGameWin(winner: CardPlayer)
     {
-    self.scores[winnerIndex].totalWins = self.scores[winnerIndex].totalWins + 1
+    winner.noOfWins.value = winner.noOfWins.value + 1
     
-    for (i,score) in scores.enumerate()
+    for player in self.players
       {
-      scores[i].currentScore = 0
-      ScoreDisplay.publish(score)
+      player.currentTotalScore.value = 0
       }
     }
+    
     /// Did player get all the points avalilable in his hand
     func hasShotTheMoon() -> Bool
     {
     var hasShotMoon = false
-    for (i,player) in self.players.enumerate()
+    for player in self.players
       {
       /// Did player get all the points avalilable in his hand
       let allPoints = 9 + GameSettings.sharedInstance.noOfCardsInASuite
-      if self.scoresForHand[i] >= allPoints
+      if player.scoreForCurrentHand >= allPoints
          {
-         self.scores[i].currentScore = 0
-         ScoreDisplay.publish(scores[i])
+         player.currentTotalScore.value = 0
          hasShotMoon = true
          Bus.sharedInstance.send(GameEvent.ShotTheMoon(player.name))
         }
-      self.scoresForHand[i] = 0
+      player.scoreForCurrentHand = 0
       }
     return hasShotMoon
     }
@@ -90,38 +89,39 @@ class Scorer
     func hasGameBeenWon()
     {
     var lowestScore = 1000
-    var winner = -10
+    var winner : CardPlayer? = nil
     var hasWonGame = false
     var isDraw = false
     
-    for i in 0..<self.players.count
+    for player in players
       {
-      if self.scores[i].currentScore < lowestScore
+      if player.currentTotalScore.value  < lowestScore
         {
-        lowestScore = self.scores[i].currentScore
-        winner = i
+        lowestScore = player.currentTotalScore.value
+        winner = player
+
         isDraw = false
-        } else  if self.scores[i].currentScore == lowestScore
+        } else  if player.currentTotalScore.value  == lowestScore
         {
         isDraw = true
         }
     
-      if self.scores[i].currentScore >= 100
+      if player.currentTotalScore.value >= 100
         {
         hasWonGame = true
         }
       }
-    
+    // If there is a draw then do another hand
     let isGameWon = hasWonGame && !isDraw
     if isGameWon
       {
-      recordTheScoresForAGameWin(winner)
+      recordTheScoresForAGameWin(winner!)
     
-      for (i,_) in scoresForHand.enumerate()
+      for player in players
         {
-        scoresForHand[i] = 0
+        player.scoreForCurrentHand = 0
         }
-      Bus.sharedInstance.send(GameEvent.WinGame(players[winner].name))
+      Bus.sharedInstance.send(GameEvent.WinGame(winner!.name))
       }
     }
 
@@ -129,17 +129,14 @@ class Scorer
     {
         if let winner = Scorer.playerThatWon(gameState)
         {
-            
-            if let winnerIndex = players.indexOf(winner)
-            {
+         
                 let score = Awarder.sharedInstance.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
                 if(score>0)
                 {
-                    self.scores[winnerIndex].currentScore += score
-                    self.scoresForHand[winnerIndex] += score
-                    ScoreDisplay.publish(self.scores[winnerIndex])
+                    winner.currentTotalScore.value += score
+                    winner.scoreForCurrentHand += score
+                  
                 }
-            }
             
             return winner
             

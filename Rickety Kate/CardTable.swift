@@ -83,28 +83,33 @@ public class CardTable : GameStateBase, GameState
     //////////
     // internal functions
     //////////
-
+    func trackNotFollowingBehaviourForAIStrategy(player: CardPlayer, suite: PlayingCard.Suite )
+    {
+        if let firstcard = tricksPile.first
+        {
+            let leadingSuite = firstcard.playedCard.suite
+            if suite != leadingSuite
+            {
+                self.gameTracker.playerNotFollowingSuite(player, suite: suite)
+            }
+        }
+    }
+    
     func addToTrickPile(player:CardPlayer,cardName:String)
     {
         if let displayedCard = scene!.cardSpriteNamed(cardName)
         {
             
-            self.gameTracker.cardCounter.publish(displayedCard.card.suite)
+            self.gameTracker.countCardIn(displayedCard.card.suite)
+            trackNotFollowingBehaviourForAIStrategy(player, suite: displayedCard.card.suite)
             
-            if let firstcard = tricksPile.first
-            {
-                let leadingSuite = firstcard.playedCard.suite
-                if displayedCard.card.suite != leadingSuite
-                {
-                    self.gameTracker.notFollowingTracker.publish(displayedCard.card.suite,player)
-                }
-            }
             displayedCard.player=player
             let playedCard = displayedCard.card
             tricksPile.append(player:player,playedCard:playedCard)
             
         }
     }
+    
     func isMoveValid(player:CardPlayer,cardName:String) -> Bool
     {
         if self.tricksPile.isEmpty
@@ -115,6 +120,7 @@ public class CardTable : GameStateBase, GameState
         {
             let leadingSuite = trick.playedCard.suite
             let cardsInSuite = player.hand.filter { $0.suite == leadingSuite}
+            /// If the player has no cards in the suite they do not need to follow
             if cardsInSuite.isEmpty
             {
                 return true
