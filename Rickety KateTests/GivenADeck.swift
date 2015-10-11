@@ -17,9 +17,7 @@ public class GivenADeck: XCTestCase {
     override public func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-    
-       
+      
     }
     
     override public func tearDown() {
@@ -143,6 +141,11 @@ public class GivenADeck: XCTestCase {
         XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 6, noOfCardsInASuite:17, hasTrumps: true,  hasJokers:true).count == 138, "Pass")
         XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 7, noOfCardsInASuite:17, hasTrumps: true,  hasJokers:true).count == 140, "Pass")
         
+        // 150
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 4, noOfCardsInASuite:18, hasTrumps: true,  hasJokers:true).count == 148, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 5, noOfCardsInASuite:18, hasTrumps: true,  hasJokers:true).count == 150, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 6, noOfCardsInASuite:18, hasTrumps: true,  hasJokers:true).count == 150, "Pass")
+        XCTAssert(deckWithNoOfSuites( 7,noOfPlayersAtTable: 7, noOfCardsInASuite:18, hasTrumps: true,  hasJokers:true).count == 147, "Pass")
     }
  
 

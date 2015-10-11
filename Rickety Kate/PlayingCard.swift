@@ -146,30 +146,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case Ace: return 19
             }
         }
-        static var courtCard2Values : [String]
-        {
-            return ["Q","K"]
-        }
-        static var courtCardStandard3Values : [String]
-        {
-            return ["J","Q","K"]
-        }
-        static var courtCardExtra4Values : [String]
-        {
-            return ["J","KN","Q","K"]
-        }
-        static var courtCardExtra5Values : [String]
-        {
-            return ["J","KN","PS","Q","K"]
-        }
-        static var courtCardExtra6Values : [String]
-        {
-            return ["J","KN","AR","PS","Q","K"]
-        }
-        static var courtCardExtra7Values : [String]
-        {
-            return ["J","KN","AR","PS","PR","Q","K"]
-        }
+  
         static func valuesFor(noOfCardsInASuite:Int = 13) -> [CardValue]
         {
            switch noOfCardsInASuite
@@ -181,138 +158,38 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case 15: return values15CardInASuite
                 case 16: return values16CardInASuite
                 case 17: return values17CardInASuite
+                case 18: return values18CardInASuite
                 default: return standardValues
             }
         }
-        static var standardValues : [CardValue]
-        {
-            
-            var values = [Ace]
-            for faceValue in 2...10
-            {
-                values.append(Pip(faceValue))
-                
-            }
-            for cardLetter in courtCardStandard3Values
-            {
-                values.append(CourtCard(cardLetter))
-                
-            }
-            return values
+        static var standardValues : [CardValue] {
+            return [Ace] + (2...10).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
         }
-        static var values10CardInASuite : [CardValue]
-        {
-            
-            var values = [Ace]
-            for faceValue in 2...8
-            {
-                values.append(Pip(faceValue))
-                
-            }
-            for cardLetter in courtCard2Values
-            {
-                values.append(CourtCard(cardLetter))
-                
-            }
-            return values
+        static var values10CardInASuite : [CardValue] {
+            return [Ace] + (2...8).map { Pip($0) } + ["Q","K"].map { CourtCard($0) }
         }
-        static var values11CardInASuite : [CardValue]
-        {
-            
-            var values = [Ace]
-            for faceValue in 2...9
-            {
-                values.append(Pip(faceValue))
-                
-            }
-            for cardLetter in courtCard2Values
-            {
-                values.append(CourtCard(cardLetter))
-                
-            }
-            return values
+        static var values11CardInASuite : [CardValue] {
+            return [Ace] + (2...9).map { Pip($0) } + ["Q","K"].map { CourtCard($0) }
         }
-        static var values12CardInASuite : [CardValue]
-        {
-            
-            var values = [Ace]
-            for faceValue in 2...10
-            {
-                values.append(Pip(faceValue))
-                
-            }
-            for cardLetter in courtCard2Values
-            {
-                values.append(CourtCard(cardLetter))
-                
-            }
-            return values
+        static var values12CardInASuite : [CardValue] {
+            return [Ace] + (2...10).map { Pip($0) } + ["Q","K"].map { CourtCard($0) }
         }
-        static var values14CardInASuite : [CardValue]
-        {
-            
-            var values = [Ace]
-            for faceValue in 2...11
-            {
-                values.append(Pip(faceValue))
-                
-            }
-            for cardLetter in courtCardStandard3Values
-            {
-                values.append(CourtCard(cardLetter))
-                
-            }
-            return values
+        static var values14CardInASuite : [CardValue] {
+            return [Ace] + (2...11).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
         }
-        static var values15CardInASuite : [CardValue]
-        {
-            
-            var values = [Ace]
-            for faceValue in 2...11
-            {
-                values.append(Pip(faceValue))
-                
-            }
-            for cardLetter in courtCardExtra4Values
-            {
-                values.append(CourtCard(cardLetter))
-                
-            }
-            return values
+        static var values15CardInASuite : [CardValue] {
+            return [Ace] + (2...11).map { Pip($0) } + ["J","KN","Q","K"].map { CourtCard($0) }
         }
-        static var values16CardInASuite : [CardValue]
-        {
-            
-            var values = [Ace]
-            for faceValue in 2...11
-            {
-                values.append(Pip(faceValue))
-                
-            }
-            for cardLetter in courtCardExtra5Values
-            {
-                values.append(CourtCard(cardLetter))
-                
-            }
-            return values
+        static var values16CardInASuite : [CardValue] {
+            return [Ace] + (2...11).map { Pip($0) } + ["J","KN","PS","Q","K"].map { CourtCard($0) }
         }
-        static var values17CardInASuite : [CardValue]
-        {
-            
-            var values = [Ace]
-            for faceValue in 2...11
-            {
-                values.append(Pip(faceValue))
-                
-            }
-            for cardLetter in courtCardExtra6Values
-            {
-                values.append(CourtCard(cardLetter))
-                
-            }
-            return values
+        static var values17CardInASuite : [CardValue] {
+            return [Ace] + (2...11).map { Pip($0) } + ["J","KN","AR","PS","Q","K"].map { CourtCard($0) }
         }
-    }
+        static var values18CardInASuite : [CardValue]{
+            return [Ace] + (2...11).map { Pip($0) } + ["J","KN","AR","PS","PR","Q","K"].map { CourtCard($0) }
+        }
+}
     
     public let suite: Suite
     public let value: CardValue
