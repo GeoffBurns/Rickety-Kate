@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import ReactiveCocoa
 
 
 
@@ -17,7 +17,10 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     //////////////////////////////////////
     /// Variables
     //////////////////////////////////////
-    public var score : Int = 0
+   // public var score : Int = 0
+    var currentTotalScore  = MutableProperty<Int>(0)
+    var noOfWins = MutableProperty<Int>(0)
+    var scoreForCurrentHand = 0
     public var sideOfTable = SideOfTable.Bottom
     public var name : String = "Base"
     var wonCards : CardPile = CardPile(name: CardPileType.Won.description)
@@ -74,10 +77,7 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
         _hand.appendContentsOf(cards);
     }
 
-    public func resetScore()
-    {
-        score = 0
-    }
+  
     
     public func removeFromHand(card:PlayingCard) -> PlayingCard?
     {

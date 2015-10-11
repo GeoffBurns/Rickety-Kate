@@ -20,8 +20,6 @@ public class CardTable : GameStateBase, GameState
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
     var _players = [CardPlayer]()
     var scene : SKNode? = nil
-    var newGame :  Publink<Void> =  Publink<Void>()
-    var resetGame :  Publink<Void> =  Publink<Void>()
  
     var isInDemoMode = false
     func nop() {}
@@ -85,28 +83,33 @@ public class CardTable : GameStateBase, GameState
     //////////
     // internal functions
     //////////
-
+    func trackNotFollowingBehaviourForAIStrategy(player: CardPlayer, suite: PlayingCard.Suite )
+    {
+        if let firstcard = tricksPile.first
+        {
+            let leadingSuite = firstcard.playedCard.suite
+            if suite != leadingSuite
+            {
+                self.gameTracker.playerNotFollowingSuite(player, suite: suite)
+            }
+        }
+    }
+    
     func addToTrickPile(player:CardPlayer,cardName:String)
     {
         if let displayedCard = scene!.cardSpriteNamed(cardName)
         {
             
-            self.gameTracker.cardCounter.publish(displayedCard.card.suite)
+            self.gameTracker.countCardIn(displayedCard.card.suite)
+            trackNotFollowingBehaviourForAIStrategy(player, suite: displayedCard.card.suite)
             
-            if let firstcard = tricksPile.first
-            {
-                let leadingSuite = firstcard.playedCard.suite
-                if displayedCard.card.suite != leadingSuite
-                {
-                    self.gameTracker.notFollowingTracker.publish(displayedCard.card.suite,player)
-                }
-            }
             displayedCard.player=player
             let playedCard = displayedCard.card
             tricksPile.append(player:player,playedCard:playedCard)
             
         }
     }
+    
     func isMoveValid(player:CardPlayer,cardName:String) -> Bool
     {
         if self.tricksPile.isEmpty
@@ -117,6 +120,7 @@ public class CardTable : GameStateBase, GameState
         {
             let leadingSuite = trick.playedCard.suite
             let cardsInSuite = player.hand.filter { $0.suite == leadingSuite}
+            /// If the player has no cards in the suite they do not need to follow
             if cardsInSuite.isEmpty
             {
                 return true
@@ -199,26 +203,23 @@ public class CardTable : GameStateBase, GameState
                     }
                     
                     Scorer.sharedInstance.hasShotTheMoon()
+                    Scorer.sharedInstance.hasGameBeenWon()
                     
                     self.gameTracker.reset()
                     self.dealNewCardsToPlayers()
-                    self.resetGame.publish()
+                    Bus.sharedInstance.send(GameEvent.NewHand)
                 }
                 else
                 {
                     self.playTrickLeadBy(winner)
-                }
-                
+                } 
             })]))
         }
-        
         self.tricksPile = []
     }
     
-    
     func playTrick(state:StateOfPlay)
     {
-        
         let remainingPlayers = state.remainingPlayers
         
         if let playerWithTurn = remainingPlayers.first,
@@ -230,7 +231,6 @@ public class CardTable : GameStateBase, GameState
                 {
                     playTrickCard(playerWithTurn, trickcard:trickcard,state:state)
                     return
-                    
                 }
             }
             
@@ -241,7 +241,7 @@ public class CardTable : GameStateBase, GameState
         else
         {
             currentStateOfPlay = StateOfPlay( remainingPlayers: remainingPlayers)
-            StatusDisplay.publish("Your Turn")
+            Bus.sharedInstance.send(GameEvent.YourTurn)
         }
         
     }

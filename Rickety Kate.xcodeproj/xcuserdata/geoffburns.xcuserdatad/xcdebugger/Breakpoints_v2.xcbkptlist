@@ -1724,6 +1724,41 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+<<<<<<< HEAD
+=======
+            filePath = "Rickety Kate/PlayingCard.swift"
+            timestampString = "465645279.868781"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "PlayingCard"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety Kate/PlayingCard.swift"
+            timestampString = "465645279.868781"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "PlayingCard"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+>>>>>>> origin/master
             filePath = "Rickety Kate/ScoreDisplay.swift"
             timestampString = "465983258.604974"
             startingColumnNumber = "9223372036854775807"
@@ -1950,8 +1985,13 @@
             timestampString = "466224402.831091"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
             startingLineNumber = "265"
             endingLineNumber = "265"
+=======
+            startingLineNumber = "388"
+            endingLineNumber = "388"
+>>>>>>> origin/master
             landmarkName = "DeckBase"
             landmarkType = "3">
          </BreakpointContent>
@@ -1966,8 +2006,13 @@
             timestampString = "466224402.831091"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
             startingLineNumber = "264"
             endingLineNumber = "264"
+=======
+            startingLineNumber = "387"
+            endingLineNumber = "387"
+>>>>>>> origin/master
             landmarkName = "DeckBase"
             landmarkType = "3">
          </BreakpointContent>
@@ -2252,8 +2297,13 @@
             timestampString = "466224402.831091"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
             startingLineNumber = "257"
             endingLineNumber = "257"
+=======
+            startingLineNumber = "380"
+            endingLineNumber = "380"
+>>>>>>> origin/master
             landmarkName = "dealFor(_:)"
             landmarkType = "5">
          </BreakpointContent>

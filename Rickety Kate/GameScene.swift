@@ -20,13 +20,9 @@ class GameScene: SKScene {
 
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
-
-    
     var arePassingCards = true
-
-
-   
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
+    
     func setupTPassYourThreeWorstCardsPhase()
     {
         cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
@@ -90,11 +86,12 @@ class GameScene: SKScene {
 
         if arePassingCards && !table.isInDemoMode
         {
-            StatusDisplay.publish("Discard Your",message2: " Three Worst Cards")
+            Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
         }
         else
         {
-            StatusDisplay.publish("Game On",message2: "")
+            
+            Bus.sharedInstance.send(GameEvent.NewGame)
         }
     }
     
@@ -112,16 +109,14 @@ class GameScene: SKScene {
     
     func setupNewGameArrangement()
     {
-        let width = self.frame.size.width
-        let height = self.frame.size.height
-        
-        
-        table.resetGame.subscribe {
+        Bus.sharedInstance.gameSignal
+            .filter { $0 == GameEvent.NewHand }
+            .observeNext { [unowned self] _ in
    
             for player in self.table.players
             {
                 player.wonCards.clear()
-                    for card in player.hand
+                for card in player.hand
                     {
                         let sprite = self.cardSprite(card)!
                         sprite.flipDown()
@@ -129,28 +124,31 @@ class GameScene: SKScene {
                      }
             }
             
-            self.table.newGame.publish()
+             self.startHand()
         }
-        table.newGame.subscribe {
-            let doneAction =  (SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration*0.1),
-                SKAction.runBlock({ [unowned self] in
-                    self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
-                })]))
-            self.runAction(doneAction)
-           
-            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
-            if self.cardPassingPhase.isCurrentlyActive
-            {
-              StatusDisplay.publish("Discard Your",message2: "Three Worst Cards")
-            }
-            else
-            {
-              self.startTrickPhase()
-            }
-        }
+
     }
 
-
+    func startHand()
+    {
+        let width = self.frame.size.width
+        let height = self.frame.size.height
+        let doneAction =  (SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration*0.1),
+        SKAction.runBlock({ [unowned self] in
+             self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
+        })]))
+        self.runAction(doneAction)
+    
+        self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
+        if self.cardPassingPhase.isCurrentlyActive
+           {
+           Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
+           }
+        else
+           {
+           self.startTrickPhase()
+           }
+    }
  
     func setupPlayButton()
     {
@@ -208,8 +206,7 @@ class GameScene: SKScene {
         createCardSpritesForCardsInPlayersHand()
         ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
         setupNewGameArrangement()
-        
-        table.newGame.publish()
+        self.startHand()
     }
     
     func isNodeAPlayerOneCardSpite(cardsprite:CardSprite) -> Bool
@@ -415,7 +412,7 @@ class GameScene: SKScene {
     cardsprite.color = UIColor.redColor()
     cardsprite.colorBlendFactor = 0.2
     
-    StatusDisplay.publish("Card Does Not",message2: "Follow Suite")
+    Bus.sharedInstance.send(GameEvent.CardDoesNotFollowSuite)
     }
     
     func transferCardToTrickPile(cardsprite:CardSprite)
@@ -423,7 +420,7 @@ class GameScene: SKScene {
         _ = self.table.playerOne._hand.remove(cardsprite.card)
         table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card,state:table.currentStateOfPlay!,willAnimate:false)
         table.currentStateOfPlay=nil
-        StatusDisplay.publish()
+        Bus.sharedInstance.send(GameEvent.NotYourTurn)
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -461,8 +458,8 @@ class GameScene: SKScene {
                           }
                          }
                 } else {
-                        StatusDisplay.publish("Wait your turn",message2: "")
-                    }
+                    Bus.sharedInstance.send(GameEvent.WaitYourTurn)
+                }
             
              restoreDraggedCard()
             }
