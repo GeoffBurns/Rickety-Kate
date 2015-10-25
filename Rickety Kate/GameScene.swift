@@ -22,7 +22,8 @@ class GameScene: SKScene {
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
     var arePassingCards = true
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
-
+    var isYourTurn = false;
+    
     func setupPassYourThreeWorstCardsPhase()
     {
         cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
@@ -105,13 +106,10 @@ class GameScene: SKScene {
         }
         backgroundFan.replaceWithContentsOf(trickBackgroundCards)
         
-        
-        let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration*1.3),
-            SKAction.runBlock({ [unowned self] in
-                self.table.playTrickLeadBy(self.table.players[self.table.startPlayerNo])
-                
-            })]))
-        self.runAction(doneAction2)
+        NSTimer.schedule(delay: CardSprite.tossDuration*1.3) { [unowned self] timer in
+                self.table.playTrick(self.table.players[self.table.startPlayerNo])
+        }
+
     }
     
     func setupNewGameArrangement()
@@ -133,7 +131,12 @@ class GameScene: SKScene {
             
              self.startHand()
         }
-
+        Bus.sharedInstance.gameSignal
+            .filter { $0 == GameEvent.YourTurn }
+            .observeNext { [unowned self] _ in
+                
+                 self.isYourTurn = true
+        }
     }
 
     func startHand()
@@ -493,8 +496,7 @@ class GameScene: SKScene {
                     checkPassingPhaseProgess()
                     return;
                     }
-                else if let current  = self.table.currentPlayer
-                    where current.name == "You"
+                else if self.isYourTurn
                 {
                     if let cardsprite = draggedNode
                         where positionInScene.y > height * 0.3
@@ -503,6 +505,7 @@ class GameScene: SKScene {
                        if table.isMoveValid(self.table.playerOne,cardName: cardsprite.name!)
                           {
                           transferCardToTrickPile(cardsprite)
+                          self.isYourTurn = false
                           return;
                           }
                        else

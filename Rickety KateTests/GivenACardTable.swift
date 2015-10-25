@@ -25,7 +25,7 @@ class GivenACardTable: XCTestCase {
         super.tearDown()
     }
 
-    func testPlayersLeadby() {
+  /*  func testPlayersLeadby() {
         // This is an example of a functional test case.
         
         let players = table.trickPlayersLeadBy(table.players[1])
@@ -34,7 +34,7 @@ class GivenACardTable: XCTestCase {
         XCTAssert(players[2] == table.players[3] , "Pass")
         XCTAssert(players[3] == table.players[0] , "Pass")
     }
-
+*/
 
 
 }

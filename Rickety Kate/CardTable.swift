@@ -8,10 +8,6 @@
 
 import SpriteKit
 
-public struct StateOfPlay
-{
-    let remainingPlayers:[CardPlayer]
-}
 
 /// controls the flow of the game
 public class CardTable : GameStateBase, GameState
@@ -28,7 +24,7 @@ public class CardTable : GameStateBase, GameState
 
 
     var cardTossDuration = Double(0.7)
-    var currentPlayer : CardPlayer? = nil
+
     
     public var players : [CardPlayer] {
         get {
@@ -146,21 +142,42 @@ public class CardTable : GameStateBase, GameState
         {
           nextNo = 0
         }
-        
-        let firstNo = tricksPile[0].player.playerNo
-        if firstNo == nextNo
-        {
+        if let trick = tricksPile.first
+          {
+          let firstNo = trick.player.playerNo
+          if firstNo == nextNo
+            {
             NSTimer.schedule(delay: cardTossDuration*2.0) { [unowned self] timer in
                 self.trickWon()
-            }
+               }
             
-        } else {
-            NSTimer.schedule(delay: cardTossDuration*2.0) { [unowned self] timer in
-                self.playTrick(self.players[nextNo])
+            } else {
+               NSTimer.schedule(delay: cardTossDuration*2.0) { [unowned self] timer in
+                 self.playTrick(self.players[nextNo])
+               }
             }
+        } else {
+            
+             print("nextPlayer call after trickPile removed - this shouldn't happen")
+             self.endOfHand()
         }
+        
     }
-
+    func endOfHand()
+    {
+        self.startPlayerNo++
+        if self.startPlayerNo > 3
+        {
+            self.startPlayerNo = 0
+        }
+        
+        Scorer.sharedInstance.hasShotTheMoon()
+        Scorer.sharedInstance.hasGameBeenWon()
+        
+        self.gameTracker.reset()
+        self.dealNewCardsToPlayers()
+        Bus.sharedInstance.send(GameEvent.NewHand)
+    }
     func trickWon()
     {
         if let winner = Scorer.sharedInstance.trickWon(self)
@@ -188,27 +205,16 @@ public class CardTable : GameStateBase, GameState
         }
         if parent != nil
         {
-            parent!.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration), SKAction.runBlock({
+            parent!.runAction(SKAction.sequence([SKAction.waitForDuration(cardTossDuration*2.2), SKAction.runBlock({ [unowned self] in
                 
                 if(self.playerOne.hand.isEmpty)
                 {
-                    self.startPlayerNo++
-                    if self.startPlayerNo > 3
-                    {
-                        self.startPlayerNo = 0
-                    }
-                    
-                    Scorer.sharedInstance.hasShotTheMoon()
-                    Scorer.sharedInstance.hasGameBeenWon()
-                    
-                    self.gameTracker.reset()
-                    self.dealNewCardsToPlayers()
-                    Bus.sharedInstance.send(GameEvent.NewHand)
+                    self.endOfHand()
                 }
                 else
                 {
                     self.playTrick(winner)
-                } 
+                }
             })]))
         }
         self.tricksPile = []
@@ -216,7 +222,7 @@ public class CardTable : GameStateBase, GameState
     
     func playTrick(playerWithTurn: CardPlayer)
     {
-        currentPlayer = playerWithTurn
+       
         if let computerPlayer = playerWithTurn as? ComputerPlayer
         {
             if let card = computerPlayer.playCard( self)
@@ -227,10 +233,10 @@ public class CardTable : GameStateBase, GameState
                     return
                 }
             }
-            
-            // player has run out of cards
+            print(playerWithTurn.name + "player has run out of cards - this shouldn't happen")
+           
             nextPlayerAction2(playerWithTurn)
-   
+
         }
         else
         {
@@ -239,39 +245,7 @@ public class CardTable : GameStateBase, GameState
         }
         
     }
-    // return four players starting with the one that has the lead
-    public func trickPlayersLeadBy(playerWithLead:CardPlayer) -> [CardPlayer]
-    {
-        var trickPlayers = [CardPlayer]()
-        
-        var i = 0
-        var leaderFound = false
-        let noOfplayers = players.count
-        for player in players
-        {
-            if(!leaderFound)
-            {
-                leaderFound = playerWithLead == player
-            
-            }
-           if(leaderFound)
-           {
-            trickPlayers.append(player)
-            i++
-            }
-        }
-        for player in players
-        {
-            if(i>=noOfplayers)
-            {
-                break
-            }
-            trickPlayers.append(player)
-            i++
-        }
-        return trickPlayers
-    }
-    
+
 
    
     func playerThatWon() -> CardPlayer?
@@ -292,14 +266,6 @@ public class CardTable : GameStateBase, GameState
     func setupCardPilesSoPlayersCanPlayTricks()
     {
        trickFan.setup(scene!, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
-    }
-
-    
-    // start playing a new Trick
-    func playTrickLeadBy(playerWithLead:CardPlayer)
-    {
-        playTrick(playerWithLead)
-        
     }
 
     public func dealNewCardsToPlayers()
