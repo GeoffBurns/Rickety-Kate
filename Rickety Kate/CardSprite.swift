@@ -33,25 +33,23 @@ class CardSprite : SKSpriteNode
     
     
     static let tossDuration = 0.4
-    // static let anchorOffset = -0.7
  
     
     /////////////////////////////////////////////////////
     /// Constructors
     /////////////////////////////////////////////////////
-    private init(card:PlayingCard, player : CardPlayer?)
+    init(card:PlayingCard, player : CardPlayer? = nil, texture: SKTexture = SKTexture(imageNamed: "Back1"))
     {
     self.card = card
     self.player = player
-        
-    let back =  SKTexture(imageNamed: "Back1")
-    super.init(texture: back, color: UIColor.whiteColor(), size: back.size())
+    super.init(texture: texture, color: UIColor.whiteColor(), size: texture.size())
       
 
     self.name = card.imageName
     self.userInteractionEnabled = false
     }
-
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -149,7 +147,7 @@ class CardSprite : SKSpriteNode
         self.position = originalCardPosition
         self.zRotation = originalCardRotation
         self.setScale(originalScale)
-         self.fan?.reaZOrderCardsAtRest()
+        self.fan?.reaZOrderCardsAtRest()
    
     }
     /// Turn the card face up
@@ -174,6 +172,89 @@ class CardSprite : SKSpriteNode
     }
 }
 
+/// controls the appearance of the card on the screen
+class WhiteCardSprite : CardSprite
+{
+    
+    override var  anchorPoint : CGPoint { didSet { if let w = white, b = blank, o = outline, s = shadow, os = outlineShadow {
+        w.anchorPoint = self.anchorPoint
+        b.anchorPoint = self.anchorPoint
+        o.anchorPoint = self.anchorPoint
+        s.anchorPoint = self.anchorPoint
+        os.anchorPoint = self.anchorPoint
+        } } }
+    override var  zPosition : CGFloat { didSet { if let w = white, b = blank, o = outline, s = shadow, os = outlineShadow {
+        w.zPosition = self.zPosition + 0.5
+        b.zPosition = self.zPosition
+        o.zPosition = self.zPosition  + 0.7
+        s.zPosition = self.zPosition  + 0.4
+        os.zPosition = self.zPosition  + 0.6
+        } } }
+    
+    var white : SKSpriteNode? = nil
+    var shadow : SKSpriteNode? = nil
+    var blank : SKSpriteNode? = nil
+    var outline : SKSpriteNode? = nil
+    var outlineShadow : SKSpriteNode? = nil
+    private init(card:PlayingCard)
+    {
+        super.init(card:card, player : nil, texture: SKTexture(imageNamed: "blank"))
+        
+        white = SKSpriteNode(imageNamed: card.whiteImageName)
+        
+        blank = SKSpriteNode(imageNamed:  "blank")
+        outline = SKSpriteNode(imageNamed:  "outline")
+        shadow = SKSpriteNode(imageNamed:  card.whiteImageName)
+        outlineShadow = SKSpriteNode(imageNamed:  "outline")
+        
+        shadow!.color =  UIColor.blackColor()
+        outlineShadow!.color =  UIColor.blackColor()
+        blank!.color =  GameSettings.backgroundColor
+        
+        shadow!.colorBlendFactor = 1.0
+        outlineShadow!.colorBlendFactor = 1.0
+        blank!.colorBlendFactor = 1.0
+        
+        shadow!.position = CGPoint(x:2,y:-2)
+        outlineShadow!.position = CGPoint(x:2,y:-2)
+        
+      //  self.color =  UIColor.blackColor() //  GameSettings.backgroundColor
+      //  self.colorBlendFactor = 1.0
+       // white!.color = UIColor.blackColor()
+        // white!.colorBlendFactor = 1.0
+        
+        blank!.zPosition = 0
+        white!.zPosition = 0.5
+        outline!.zPosition = 0.7
+        shadow!.zPosition = 0.4
+        outlineShadow!.zPosition = 0.6
+        
+        
+        self.addChild(blank!)
+        self.addChild(white!)
+        self.addChild(outline!)
+        self.addChild(shadow!)
+        self.addChild(outlineShadow!)
+        self.name = card.whiteImageName
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    static func add(card:PlayingCard, scene:SKNode)
+    {
+        WhiteCardSprite.create(card, scene: scene)
+    }
+    static func create(card:PlayingCard, scene:SKNode) -> CardSprite
+    {
+        let sprite = WhiteCardSprite(card: card)
+        scene.addChild(sprite)
+        self.currentScene = scene
+        return sprite
+    }
+}
+
 
 extension SKNode
 {
@@ -184,5 +265,14 @@ extension SKNode
 func cardSprite(card :PlayingCard) -> CardSprite?
     {
     return self.cardSpriteNamed(card.imageName)
+    }
+    
+func whiteCardSprite(card :PlayingCard) -> CardSprite?
+    {
+        if let sprite = self.cardSpriteNamed(card.whiteImageName)
+        {
+            return sprite
+        }
+        return WhiteCardSprite.create(card, scene: self)
     }
 }

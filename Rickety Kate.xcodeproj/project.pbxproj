@@ -18,10 +18,8 @@
 		AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */; settings = {ASSET_TAGS = (); }; };
 		AC2AB4D21BC4EB3F0042BCBC /* SKNodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */; settings = {ASSET_TAGS = (); }; };
 		AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */; settings = {ASSET_TAGS = (); }; };
-		AC2AB4D61BC5054C0042BCBC /* LabelWithFadeInAndOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4D51BC5054C0042BCBC /* LabelWithFadeInAndOut.swift */; settings = {ASSET_TAGS = (); }; };
 		AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
 		AC3309551BC3D51000A41706 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
-		AC33095A1BC44E1F00A41706 /* LabelWithShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3309591BC44E1F00A41706 /* LabelWithShadow.swift */; settings = {ASSET_TAGS = (); }; };
 		AC3E5D4A1BAB04B700B6A3A0 /* ScoreDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */; settings = {ASSET_TAGS = (); }; };
 		AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44D7D01BB203AA00DA92EC /* CardPile.swift */; settings = {ASSET_TAGS = (); }; };
 		AC627E891BA30766003E9A8F /* GivenADeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E881BA30766003E9A8F /* GivenADeck.swift */; };
@@ -35,6 +33,9 @@
 		AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A31BA1564800B0EDAE /* Images.xcassets */; };
 		AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */; };
 		AC6463EB1BC12A66000AEB7E /* ButtonSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6463EA1BC12A66000AEB7E /* ButtonSize.swift */; settings = {ASSET_TAGS = (); }; };
+		AC701A8C1BDB98F4004FC5F8 /* cards_stars.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC701A8B1BDB98F4004FC5F8 /* cards_stars.atlas */; settings = {ASSET_TAGS = (); }; };
+		AC701A8E1BDC715A004FC5F8 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC701A8D1BDC715A004FC5F8 /* Label.swift */; settings = {ASSET_TAGS = (); }; };
+		AC701A901BDCDA54004FC5F8 /* NStimerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC701A8F1BDCDA54004FC5F8 /* NStimerExtensions.swift */; settings = {ASSET_TAGS = (); }; };
 		AC73DD9C1BB81A7300FF6114 /* cards_spades.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9D1BB81E9B00FF6114 /* cards_diamonds.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DDA01BB8218E00FF6114 /* cards_hearts.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9F1BB8218E00FF6114 /* cards_hearts.atlas */; settings = {ASSET_TAGS = (); }; };
@@ -43,7 +44,6 @@
 		AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */; settings = {ASSET_TAGS = (); }; };
-		AC73DDAE1BBC10C200FF6114 /* cards_star.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDAD1BBC10C200FF6114 /* cards_star.atlas */; settings = {ASSET_TAGS = (); }; };
 		AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0431BBEBA550051DF03 /* Navigator.swift */; settings = {ASSET_TAGS = (); }; };
 		AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */; settings = {ASSET_TAGS = (); }; };
 		AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC11BB378E60086AC02 /* CardPileType.swift */; settings = {ASSET_TAGS = (); }; };
@@ -79,6 +79,14 @@
 		ACE6DFC51BAA46F4005B5424 /* GivenALateGameFollowingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFC41BAA46F4005B5424 /* GivenALateGameFollowingStrategy.swift */; };
 		ACE6DFC71BAA5563005B5424 /* StatusArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFC61BAA5563005B5424 /* StatusArea.swift */; };
 		ACE6DFC91BAA5FD9005B5424 /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFC81BAA5FD9005B5424 /* CardSprite.swift */; };
+		ACF3157B1BDB129400F203E3 /* cards_stars_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315731BDB129400F203E3 /* cards_stars_white.atlas */; settings = {ASSET_TAGS = (); }; };
+		ACF3157C1BDB129400F203E3 /* cards_tarot_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315741BDB129400F203E3 /* cards_tarot_white.atlas */; settings = {ASSET_TAGS = (); }; };
+		ACF3157D1BDB129400F203E3 /* cards_suns_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315751BDB129400F203E3 /* cards_suns_white.atlas */; settings = {ASSET_TAGS = (); }; };
+		ACF3157E1BDB129400F203E3 /* cards_spades_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315761BDB129400F203E3 /* cards_spades_white.atlas */; settings = {ASSET_TAGS = (); }; };
+		ACF3157F1BDB129400F203E3 /* cards_hearts_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315771BDB129400F203E3 /* cards_hearts_white.atlas */; settings = {ASSET_TAGS = (); }; };
+		ACF315801BDB129400F203E3 /* cards_diamonds_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315781BDB129400F203E3 /* cards_diamonds_white.atlas */; settings = {ASSET_TAGS = (); }; };
+		ACF315811BDB129400F203E3 /* cards_anchors_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */; settings = {ASSET_TAGS = (); }; };
+		ACF315821BDB129400F203E3 /* cards_clubs_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF3157A1BDB129400F203E3 /* cards_clubs_white.atlas */; settings = {ASSET_TAGS = (); }; };
 		ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF58BD51BAEE652009C255A /* OptionScreen.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -104,8 +112,6 @@
 		AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEvent.swift; sourceTree = "<group>"; };
 		AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions.swift; sourceTree = "<group>"; };
 		AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
-		AC2AB4D51BC5054C0042BCBC /* LabelWithFadeInAndOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelWithFadeInAndOut.swift; sourceTree = "<group>"; };
-		AC3309591BC44E1F00A41706 /* LabelWithShadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelWithShadow.swift; sourceTree = "<group>"; };
 		AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreDisplay.swift; sourceTree = "<group>"; };
 		AC44D7D01BB203AA00DA92EC /* CardPile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPile.swift; sourceTree = "<group>"; };
 		AC627E881BA30766003E9A8F /* GivenADeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenADeck.swift; sourceTree = "<group>"; };
@@ -123,6 +129,9 @@
 		AC62B6AC1BA1564900B0EDAE /* Rickety KateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rickety KateTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC62B6B11BA1564900B0EDAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC6463EA1BC12A66000AEB7E /* ButtonSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonSize.swift; sourceTree = "<group>"; };
+		AC701A8B1BDB98F4004FC5F8 /* cards_stars.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_stars.atlas; sourceTree = "<group>"; };
+		AC701A8D1BDC715A004FC5F8 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Label.swift; path = ../Label.swift; sourceTree = "<group>"; };
+		AC701A8F1BDCDA54004FC5F8 /* NStimerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NStimerExtensions.swift; sourceTree = "<group>"; };
 		AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_spades.atlas; sourceTree = "<group>"; };
 		AC73DD9D1BB81E9B00FF6114 /* cards_diamonds.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_diamonds.atlas; sourceTree = "<group>"; };
 		AC73DD9F1BB8218E00FF6114 /* cards_hearts.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_hearts.atlas; sourceTree = "<group>"; };
@@ -131,7 +140,6 @@
 		AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs.atlas; sourceTree = "<group>"; };
 		AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot.atlas; sourceTree = "<group>"; };
 		AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassYourThreeWorstCardsPhase.swift; sourceTree = "<group>"; };
-		AC73DDAD1BBC10C200FF6114 /* cards_star.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_star.atlas; sourceTree = "<group>"; };
 		AC74F0431BBEBA550051DF03 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDisplayScreen.swift; sourceTree = "<group>"; };
 		AC7C9FC11BB378E60086AC02 /* CardPileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPileType.swift; sourceTree = "<group>"; };
@@ -167,6 +175,14 @@
 		ACE6DFC41BAA46F4005B5424 /* GivenALateGameFollowingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenALateGameFollowingStrategy.swift; sourceTree = "<group>"; };
 		ACE6DFC61BAA5563005B5424 /* StatusArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusArea.swift; sourceTree = "<group>"; };
 		ACE6DFC81BAA5FD9005B5424 /* CardSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSprite.swift; sourceTree = "<group>"; };
+		ACF315731BDB129400F203E3 /* cards_stars_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_stars_white.atlas; sourceTree = "<group>"; };
+		ACF315741BDB129400F203E3 /* cards_tarot_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot_white.atlas; sourceTree = "<group>"; };
+		ACF315751BDB129400F203E3 /* cards_suns_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_suns_white.atlas; sourceTree = "<group>"; };
+		ACF315761BDB129400F203E3 /* cards_spades_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_spades_white.atlas; sourceTree = "<group>"; };
+		ACF315771BDB129400F203E3 /* cards_hearts_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_hearts_white.atlas; sourceTree = "<group>"; };
+		ACF315781BDB129400F203E3 /* cards_diamonds_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_diamonds_white.atlas; sourceTree = "<group>"; };
+		ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_anchors_white.atlas; sourceTree = "<group>"; };
+		ACF3157A1BDB129400F203E3 /* cards_clubs_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs_white.atlas; sourceTree = "<group>"; };
 		ACF58BD51BAEE652009C255A /* OptionScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,20 +239,29 @@
 				AC1CF69C1BB4238300001024 /* buttons.atlas */,
 				AC6463EA1BC12A66000AEB7E /* ButtonSize.swift */,
 				AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */,
+				AC701A8F1BDCDA54004FC5F8 /* NStimerExtensions.swift */,
 				AC7C9FC51BB380A00086AC02 /* CardFan.swift */,
 				ACE6DFB41BAA32AB005B5424 /* CardHolder.swift */,
 				AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */,
 				AC44D7D01BB203AA00DA92EC /* CardPile.swift */,
 				AC7C9FC11BB378E60086AC02 /* CardPileType.swift */,
 				AC9E82BD1BA686C40064870C /* CardPlayer.swift */,
+				ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */,
 				AC73DDA31BB8252E00FF6114 /* cards_anchors.atlas */,
+				ACF3157A1BDB129400F203E3 /* cards_clubs_white.atlas */,
 				AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */,
+				ACF315781BDB129400F203E3 /* cards_diamonds_white.atlas */,
 				AC73DD9D1BB81E9B00FF6114 /* cards_diamonds.atlas */,
 				AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */,
+				ACF315771BDB129400F203E3 /* cards_hearts_white.atlas */,
 				AC73DD9F1BB8218E00FF6114 /* cards_hearts.atlas */,
+				ACF315761BDB129400F203E3 /* cards_spades_white.atlas */,
 				AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */,
-				AC73DDAD1BBC10C200FF6114 /* cards_star.atlas */,
+				ACF315731BDB129400F203E3 /* cards_stars_white.atlas */,
+				AC701A8B1BDB98F4004FC5F8 /* cards_stars.atlas */,
+				ACF315751BDB129400F203E3 /* cards_suns_white.atlas */,
 				AC73DDA11BB823DE00FF6114 /* cards_suns.atlas */,
+				ACF315741BDB129400F203E3 /* cards_tarot_white.atlas */,
 				AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */,
 				AC7C9FC31BB379310086AC02 /* CardSize.swift */,
 				ACB33B951BC2003B0019DC7C /* CardSlide.swift */,
@@ -253,8 +278,7 @@
 				ACE6DFB51BAA32AB005B5424 /* GameState.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
 				AC62B6A31BA1564800B0EDAE /* Images.xcassets */,
-				AC2AB4D51BC5054C0042BCBC /* LabelWithFadeInAndOut.swift */,
-				AC3309591BC44E1F00A41706 /* LabelWithShadow.swift */,
+				AC701A8D1BDC715A004FC5F8 /* Label.swift */,
 				AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */,
 				AC62B6A01BA1564800B0EDAE /* Main.storyboard */,
 				ACE6DFB71BAA32AB005B5424 /* MathExtention.swift */,
@@ -275,8 +299,8 @@
 				AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */,
 				AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */,
 				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
-				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
+				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 			);
 			path = "Rickety Kate";
 			sourceTree = "<group>";
@@ -398,18 +422,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACF315811BDB129400F203E3 /* cards_anchors_white.atlas in Resources */,
 				AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */,
 				AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */,
-				AC73DDAE1BBC10C200FF6114 /* cards_star.atlas in Resources */,
+				ACF315821BDB129400F203E3 /* cards_clubs_white.atlas in Resources */,
 				AC73DD9C1BB81A7300FF6114 /* cards_spades.atlas in Resources */,
 				AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */,
 				AC73DDA01BB8218E00FF6114 /* cards_hearts.atlas in Resources */,
 				AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */,
+				ACF3157C1BDB129400F203E3 /* cards_tarot_white.atlas in Resources */,
+				ACF3157E1BDB129400F203E3 /* cards_spades_white.atlas in Resources */,
 				AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */,
+				ACF3157F1BDB129400F203E3 /* cards_hearts_white.atlas in Resources */,
+				ACF315801BDB129400F203E3 /* cards_diamonds_white.atlas in Resources */,
 				AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */,
+				AC701A8C1BDB98F4004FC5F8 /* cards_stars.atlas in Resources */,
 				AC73DDA41BB8252E00FF6114 /* cards_anchors.atlas in Resources */,
 				AC73DDA21BB823DE00FF6114 /* cards_suns.atlas in Resources */,
 				AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */,
+				ACF3157B1BDB129400F203E3 /* cards_stars_white.atlas in Resources */,
+				ACF3157D1BDB129400F203E3 /* cards_suns_white.atlas in Resources */,
 				AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +497,7 @@
 				AC62B69D1BA1564800B0EDAE /* GameScene.swift in Sources */,
 				AC62B69F1BA1564800B0EDAE /* GameViewController.swift in Sources */,
 				ACE6DFBF1BAA38A9005B5424 /* CardSource.swift in Sources */,
+				AC701A901BDCDA54004FC5F8 /* NStimerExtensions.swift in Sources */,
 				AC7C9FC91BB380A00086AC02 /* GameSetting.swift in Sources */,
 				AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */,
 				AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */,
@@ -487,11 +520,11 @@
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
 				AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */,
 				AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */,
+				AC701A8E1BDC715A004FC5F8 /* Label.swift in Sources */,
 				AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */,
 				AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */,
 				AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */,
 				AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */,
-				AC2AB4D61BC5054C0042BCBC /* LabelWithFadeInAndOut.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
 				ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */,
 				ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */,
@@ -503,7 +536,6 @@
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
 				ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
-				AC33095A1BC44E1F00A41706 /* LabelWithShadow.swift in Sources */,
 				AC6463EB1BC12A66000AEB7E /* ButtonSize.swift in Sources */,
 				AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */,
 				ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */,
@@ -664,8 +696,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Geoff Burns (5CUBLSA9G4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Geoff Burns (5CUBLSA9G4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

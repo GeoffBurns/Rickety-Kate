@@ -30,10 +30,10 @@ enum CardSize
         {
             switch self
             {
-            case .Huge : return 150.0
-            case .Big : return 100.0
-            case .Medium : return 50.0
-            case .Small : return 10.0
+            case .Huge : return 200.0
+            case .Big : return 150.0
+            case .Medium : return 80.0
+            case .Small : return 30.0
             }
     }
 }

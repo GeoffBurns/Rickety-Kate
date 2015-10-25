@@ -25,6 +25,7 @@ class CardSlide : CardPile
         self.isUp = true
         self.sizeOfCards = sizeOfCards
         self.direction = Direction.Up
+        self.zPositon = self.sizeOfCards.zOrder
     }
     
     override func append(card:PlayingCard)
@@ -60,7 +61,7 @@ class CardSlide : CardPile
         let sortedHand = updatedCards.sort()
         cards = ( Array(sortedHand.reverse()))
     }
-    override func rearrange()
+    func rearrange()
     {
         if(scene==nil)
         {
@@ -68,13 +69,12 @@ class CardSlide : CardPile
         }
       
         let noCards = CGFloat(cards.count)
-        var positionInSpread = CGFloat(0)
-      
     
-        for card in cards
+
+        for (positionInSpread,card) in cards.enumerate()
         {
-            rearrangeFor(card,positionInSpread:positionInSpread, fullHand:noCards)
-            positionInSpread++
+            rearrangeFor(card,positionInSpread:CGFloat(positionInSpread), fullHand:noCards)
+            
             
         }
     }

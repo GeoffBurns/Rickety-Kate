@@ -12,8 +12,8 @@ import ReactiveCocoa
 // Tells the game player what is going on
 class StatusDisplay
 {
-    var noticeLabel = LabelWithFadeInAndOut(fontNamed:"Chalkduster")
-    var noticeLabel2 = LabelWithFadeInAndOut(fontNamed:"Chalkduster")
+    var noticeLabel = Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
+    var noticeLabel2 = Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
  
     static let sharedInstance = StatusDisplay()
     private init() { }

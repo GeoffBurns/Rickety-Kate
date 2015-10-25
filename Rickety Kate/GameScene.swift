@@ -11,19 +11,19 @@ import SpriteKit
 /// How game play is displayed
 class GameScene: SKScene {
     
-    var table : CardTable! {  didSet { setupTPassYourThreeWorstCardsPhase() } }
+    var table : CardTable! {  didSet { setupPassYourThreeWorstCardsPhase() } }
     var originalTouch = CGPoint()
     var draggedNode: CardSprite? = nil;
     var cardScaleForSelected = CGFloat(1.05)
     
     var dealtPiles = [CardPile]()
-
+    var backgroundFan = CardFan(name: CardPileType.Background.description)
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
     var arePassingCards = true
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
-    
-    func setupTPassYourThreeWorstCardsPhase()
+
+    func setupPassYourThreeWorstCardsPhase()
     {
         cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
     }
@@ -54,11 +54,10 @@ class GameScene: SKScene {
     }
     func seatPlayers()
     {
-        
         let seats = Seater.seatsFor(table.players.count)
-        for (player,seat) in Zip2Sequence(table.players,seats)
+        for (i,(player,seat)) in Zip2Sequence(table.players,seats).enumerate()
         {
-            player.setup(self, sideOfTable: seat)
+            player.setup(self, sideOfTable: seat, playerNo: i)
         }
     }
 
@@ -99,6 +98,14 @@ class GameScene: SKScene {
     
     func startTrickPhase()
     {
+        
+       for sprite in backgroundFan.sprites
+       {
+        sprite.position = CGPoint(x: -100, y: -400)
+        }
+        backgroundFan.replaceWithContentsOf(trickBackgroundCards)
+        
+        
         let doneAction2 =  (SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration*1.3),
             SKAction.runBlock({ [unowned self] in
                 self.table.playTrickLeadBy(self.table.players[self.table.startPlayerNo])
@@ -190,11 +197,54 @@ class GameScene: SKScene {
         StatusDisplay.register(self)
         StatusAreaFirstMessage()
     }
+    
+    var trickBackgroundCards : [PlayingCard]
+        {
+            let cards : Array = table.deck.orderedDeck
+                .filter { $0.suite == PlayingCard.Suite.Spades }
+                .sort()
+                .reverse()
+            
+            return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
+    }
+    var threeWorstBackgroundCards : [PlayingCard]
+        {
+     
+            
+            return [
+                CardName.Ace.of(PlayingCard.Suite.Spades)!,
+                CardName.Ace.of(PlayingCard.Suite.Hearts)!,
+                CardName.Ace.of(PlayingCard.Suite.Diamonds)!]
+    }
+    
+    func setupBackground()
+    {
+        self.backgroundColor = GameSettings.backgroundColor
+        
+        backgroundFan.setup(scene!, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
+        backgroundFan.createSprite = { $1.whiteCardSprite($0) }
+        backgroundFan.zPositon = 0.0
+        
+     
+        let cards =  arePassingCards && !table.isInDemoMode
+        ? threeWorstBackgroundCards
+        : trickBackgroundCards
+        backgroundFan.appendContentsOf(cards)
+       
+        
+        
+        /*   backgroundFan.appendContentsOf([
+        CardName.Ace.of(PlayingCard.Suite.Spades)!,
+        CardName.King.of(PlayingCard.Suite.Spades)!,
+        CardName.Queen.of(PlayingCard.Suite.Spades)!,
+        CardName.Jack.of(PlayingCard.Suite.Spades)!,
+        10.of(PlayingCard.Suite.Spades)])
+        */
+    }
     override func didMoveToView(view: SKView) {
                 /* Setup your scene here */
      
-        self.backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
-
+        setupBackground()
         setupStatusArea()
         setupPopupScreensAndButtons()
         seatPlayers()
@@ -319,9 +369,14 @@ class GameScene: SKScene {
     
     func isCardInTheRightDirection(touchedCardSprite:CardSprite, goingRight:Bool) -> Bool
     {
-        let touchedCardIsToRight = draggedNode!.positionInSpread < touchedCardSprite.positionInSpread
+        
+        if let node = draggedNode
+        {
+        let touchedCardIsToRight = node.positionInSpread < touchedCardSprite.positionInSpread
         return goingRight && touchedCardIsToRight
             || !goingRight && !touchedCardIsToRight
+        }
+        return false
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -418,8 +473,7 @@ class GameScene: SKScene {
     func transferCardToTrickPile(cardsprite:CardSprite)
     {
         _ = self.table.playerOne._hand.remove(cardsprite.card)
-        table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card,state:table.currentStateOfPlay!,willAnimate:false)
-        table.currentStateOfPlay=nil
+        table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card)
         Bus.sharedInstance.send(GameEvent.NotYourTurn)
     }
     
@@ -439,9 +493,8 @@ class GameScene: SKScene {
                     checkPassingPhaseProgess()
                     return;
                     }
-                else if let state = self.table.currentStateOfPlay,
-                    currentPlayer = state.remainingPlayers.first
-                    where currentPlayer.name == "You"
+                else if let current  = self.table.currentPlayer
+                    where current.name == "You"
                 {
                     if let cardsprite = draggedNode
                         where positionInScene.y > height * 0.3

@@ -18,6 +18,8 @@ public enum GameEvent : Equatable
     case NewHand
     case CardDoesNotFollowSuite
     case WaitYourTurn
+    case CardPlayed(CardPlayer,PlayingCard)
+    case PlayerKnocked(CardPlayer)
     case YourTurn
     case NewGame
     case StartHand
@@ -30,6 +32,10 @@ public enum GameEvent : Equatable
             {
             case WinTrick( let name ) :
                 return  name + " just Won the Trick"
+            case PlayerKnocked( let player ) :
+                return player.name=="You"
+                    ? "You can not Play\nYou have to Knock"
+                    : player.name + " Knocked"
             case ShotTheMoon( let name ) :
                 return name=="You"
                     ? "Congratulatons!!!\nYou just Shot the Moon"
@@ -51,6 +57,8 @@ public enum GameEvent : Equatable
             case NewGame :
                 return "Game On"
             case StartHand :
+                return nil
+            case CardPlayed :
                 return nil
             case NotYourTurn :
                 return ""

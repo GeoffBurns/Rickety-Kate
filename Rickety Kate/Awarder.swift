@@ -22,14 +22,15 @@ class Awarder
     static let sharedInstance = Awarder()
     private init() { }
 
+    var allPoints : Int { return  9 + GameSettings.sharedInstance.noOfCardsInASuite }
     
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
     {
         var score = 0
         
-        let ricketyKate = cards.filter{$0.imageName == "QS"}
+        let ricketyKate = cards.filter{$0 == CardName.Queen.of(PlayingCard.Suite.Spades)}
         
-        let spades = cards.filter{$0.suite == PlayingCard.Suite.Spades && $0.imageName != "QS"}
+        let spades = cards.filter{$0.suite == PlayingCard.Suite.Spades && $0 != CardName.Queen.of(PlayingCard.Suite.Spades)}
         if !ricketyKate.isEmpty
            {
             score = 10

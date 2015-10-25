@@ -18,16 +18,8 @@ class Scorer
     static let sharedInstance = Scorer()
     private init() { }
     
-    
-    static func winnerIs(gameState:GameStateBase) -> CardPlayer?
-    {
-        return sharedInstance.trickWon(gameState)
-    }
-    
-    
     func setupScorer( players: [CardPlayer])
     {
-
         self.players=players
         
         for player in players
@@ -73,8 +65,7 @@ class Scorer
     for player in self.players
       {
       /// Did player get all the points avalilable in his hand
-      let allPoints = 9 + GameSettings.sharedInstance.noOfCardsInASuite
-      if player.scoreForCurrentHand >= allPoints
+      if player.scoreForCurrentHand >= Awarder.sharedInstance.allPoints
          {
          player.currentTotalScore.value = 0
          hasShotMoon = true
@@ -137,7 +128,6 @@ class Scorer
                     winner.scoreForCurrentHand += score
                   
                 }
-            
             return winner
             
         }

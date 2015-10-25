@@ -5,7 +5,7 @@
 //  Created by Geoff Burns on 11/09/2015.
 //  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
-/*
+
 import UIKit
 import XCTest
 import Rickety_Kate
@@ -28,11 +28,11 @@ public class GivenTwoCards: XCTestCase {
     }
 
     public func testBeCompable() {
-        // This is an example of a functional test case.        
-        let QueenOfSpades = cards["QS"]!
-        let AceOfSpades = cards["AS"]!
+        
+        let QueenOfSpades = CardName.Queen.of(PlayingCard.Suite.Spades)!
+        let AceOfSpades = CardName.Ace.of(PlayingCard.Suite.Spades)!
         let KingOfSpades = cards["KS"]!
-        let TenOfSpades = cards["10S"]!
+        let TenOfSpades = 10.of(PlayingCard.Suite.Spades)
         let FiveOfSpades = cards["5S"]!
         
         XCTAssert(!(AceOfSpades.value <  AceOfSpades.value), "Less Than")
@@ -151,4 +151,4 @@ public class GivenTwoCards: XCTestCase {
 
   
 
-}*/
+}

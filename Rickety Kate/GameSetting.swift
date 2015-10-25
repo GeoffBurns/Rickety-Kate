@@ -96,6 +96,8 @@ class GameSettings : IGameSettings
         }
     }
     
+    static var backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
+    
     static var isPad : Bool
         {
         return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad

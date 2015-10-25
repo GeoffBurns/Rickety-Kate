@@ -16,7 +16,7 @@ enum CardPileType : CustomStringConvertible
     case Passing
     case Won
     case Trick
-    
+    case Background
     
     var description : String {
         switch self {
@@ -25,6 +25,7 @@ enum CardPileType : CustomStringConvertible
         case .Passing: return "Passing"
         case .Won: return "Won"
         case .Trick: return "Trick"
+        case .Background: return "Background"
         }
     }
 }

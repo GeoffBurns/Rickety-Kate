@@ -87,7 +87,7 @@ class ScoreDisplay
             
             let fontsize : CGFloat = GameSettings.isPad ?  20 : (GameSettings.isPhone6Plus ? 42 : 28)
 
-            let l = LabelWithShadow(fontNamed:"Verdana")
+            let l = Label(fontNamed:"Verdana").withShadow()
             
             l.text = ""
             l.fontSize = fontsize

@@ -25,6 +25,12 @@ class CardDisplayScreen: Popup {
     let noOfSlides = GameSettings.isPad ? 3 : 2
     let separationOfSlides = GameSettings.isPad ? 0.25 : 0.4
     let slideStart : CGFloat = GameSettings.isPad ? 0.72 : 0.7
+    var draggedNode : CardSprite? = nil
+    var originalTouch = CGPointZero
+    var originalScale = CGFloat(0)
+    var originalOrder = CGFloat(0)
+    
+    
     
     override func onEnter() {
 
@@ -158,35 +164,129 @@ class CardDisplayScreen: Popup {
         moreButton.alpha = nextStart >= deck.suitesInDeck.count ? 0.0 : 1.0
         backButton.alpha = suiteStart == 0 ? 0.0 : 1.0
     }
+    func buttonTouched(positionInScene:CGPoint) -> Bool
+    {
+        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode,
+        nodeName =  touchedNode.name
+        {
+            switch nodeName
+            {
+            case "More" :
+                self.suiteStart += noOfSlides
+                newPage()
+                
+                return true
+            case "Back" :
+                
+                self.suiteStart -= noOfSlides
+                
+                if self.suiteStart < 0
+                {
+                    self.suiteStart = 0
+                }
+                newPage()
+                
+                return true
+            default:
+                return false
+                
+            }
+        }
+        
+        return false
+    }
+    func storeDraggedNode(node:CardSprite)
+    {
+        draggedNode = node;
+        originalScale = node.xScale
+        originalOrder = node.zPosition
+        node.setScale(CardSize.Huge.scale)
+        
+        originalOrder = node.zPosition
+        
+        node.zPosition = CardSize.Huge.zOrder
+        
+        
+        let label = SKLabelNode(text:node.card.description)
+       
+        
+        label.position = CGPoint(x: 0.0, y: node.size.height*0.35) /// CGPoint(x: 0.5*node.size.width, y: node.size.height*0.98)
+        label.fontColor = UIColor.blackColor()
+        label.fontName = "Verdana"
+        label.fontSize = 11
+        node.addChild(label)
+    }
+    func cardTouched(positionInScene:CGPoint) -> Bool
+    {
+       // let width = self.frame.size.width
+    
+        if let node = self.nodeAtPoint(positionInScene) as? CardSprite
+        {
+       
+                storeDraggedNode(node)
+                return true
+            }
+          
+        return false
+    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
         for touch in (touches )
         {
-            let touchPoint = touch.locationInNode(self)
-            if let touchedNode : SKSpriteNode = self.nodeAtPoint(touchPoint) as? SKSpriteNode,
-               nodeName =  touchedNode.name
-            {
-                switch nodeName
-                {
-                case "More" :
-                    self.suiteStart += noOfSlides
-                    newPage()
-                  
-                case "Back" :
+            let positionInScene = touch.locationInNode(self)
             
-                    self.suiteStart -= noOfSlides
-                
-                    if self.suiteStart < 0
-                    {
-                      self.suiteStart = 0
-                    }
-                    newPage()
-                default:
-                    continue
-               
-                }
+            if buttonTouched(positionInScene)
+            {
+                return
             }
+            if cardTouched(positionInScene)
+            {
+                return
+            }
+            
         }
     }
+    func restoreDraggedNode()
+    {
+        if let cardsprite = draggedNode
+            
+        {
+            cardsprite.setScale(originalScale)
+            cardsprite.zPosition = originalOrder
+            
+            cardsprite.removeAllChildren()
+            draggedNode=nil
+        }
+    }
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        for touch in (touches )
+        {
+            let positionInScene = touch.locationInNode(self)
+            
+     
+            if let node = self.nodeAtPoint(positionInScene) as? CardSprite
+                where draggedNode?.name != node.name
+            {
+            
+                restoreDraggedNode()
+                storeDraggedNode(node)
+                return
+            }
+            
+        }
+        
+    }
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+  
+       restoreDraggedNode()
+
+    }
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        if let touches = touches {
+            touchesEnded(touches, withEvent: event)
+        }
+    }
+
 }

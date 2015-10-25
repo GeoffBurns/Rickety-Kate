@@ -16,7 +16,7 @@ public struct StateOfPlay
 /// controls the flow of the game
 public class CardTable : GameStateBase, GameState
 {
-    lazy var deck: Deck = PlayingCard.BuiltCardDeck()
+    lazy var deck = PlayingCard.BuiltCardDeck()
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
     var _players = [CardPlayer]()
     var scene : SKNode? = nil
@@ -26,10 +26,9 @@ public class CardTable : GameStateBase, GameState
  
     var startPlayerNo = 1
 
-    // if non-nil StateOfPlay is frozen awaiting user input
-    var currentStateOfPlay:StateOfPlay? = nil
+
     var cardTossDuration = Double(0.7)
-    
+    var currentPlayer : CardPlayer? = nil
     
     public var players : [CardPlayer] {
         get {
@@ -132,42 +131,39 @@ public class CardTable : GameStateBase, GameState
         }
         return false
     }
-    func playTrickCard(playerWithTurn:CardPlayer, trickcard:PlayingCard,state:StateOfPlay, willAnimate:Bool = true)
+    func playTrickCard(playerWithTurn:CardPlayer, trickcard:PlayingCard)
     {
         addToTrickPile(playerWithTurn,cardName: trickcard.imageName)
-       
-   
-        let doneAction =  nextPlayerAction(state , currentSuite: trickcard.suite)
-        
-        let  waitThenDo = SKAction.sequence([
-            SKAction.waitForDuration(cardTossDuration*2.0),
-            doneAction])
-        scene!.runAction(waitThenDo)
-
+        nextPlayerAction2(playerWithTurn)
     
-        
     }
     
-    func nextPlayerAction(state:StateOfPlay, currentSuite:PlayingCard.Suite?) -> SKAction
+    func nextPlayerAction2( playerWithTurn:CardPlayer)
     {
-        var remainingPlayers = state.remainingPlayers
-        remainingPlayers.removeAtIndex(0)
-        let nextPlayers = remainingPlayers
-        let doneAction = nextPlayers.isEmpty ?
-            (SKAction.runBlock({ [unowned self] in
-                self.trickWon()
-            })) :
-            
-            (SKAction.runBlock({ [unowned self] in
-                
-                self.playTrick(StateOfPlay(remainingPlayers: nextPlayers))
-            }))
+
+        var nextNo = playerWithTurn.playerNo + 1
+        if nextNo >= noOfPlayers
+        {
+          nextNo = 0
+        }
         
-        return doneAction
+        let firstNo = tricksPile[0].player.playerNo
+        if firstNo == nextNo
+        {
+            NSTimer.schedule(delay: cardTossDuration*2.0) { [unowned self] timer in
+                self.trickWon()
+            }
+            
+        } else {
+            NSTimer.schedule(delay: cardTossDuration*2.0) { [unowned self] timer in
+                self.playTrick(self.players[nextNo])
+            }
+        }
     }
+
     func trickWon()
     {
-        if let winner = Scorer.winnerIs(self)
+        if let winner = Scorer.sharedInstance.trickWon(self)
         {
             self.removeTricksPile(winner)
         }
@@ -211,36 +207,34 @@ public class CardTable : GameStateBase, GameState
                 }
                 else
                 {
-                    self.playTrickLeadBy(winner)
+                    self.playTrick(winner)
                 } 
             })]))
         }
         self.tricksPile = []
     }
     
-    func playTrick(state:StateOfPlay)
+    func playTrick(playerWithTurn: CardPlayer)
     {
-        let remainingPlayers = state.remainingPlayers
-        
-        if let playerWithTurn = remainingPlayers.first,
-            computerPlayer = playerWithTurn as? ComputerPlayer
+        currentPlayer = playerWithTurn
+        if let computerPlayer = playerWithTurn as? ComputerPlayer
         {
             if let card = computerPlayer.playCard( self)
             {
                 if let trickcard = computerPlayer.removeFromHand(card)
                 {
-                    playTrickCard(playerWithTurn, trickcard:trickcard,state:state)
+                    playTrickCard(playerWithTurn, trickcard:trickcard)
                     return
                 }
             }
             
             // player has run out of cards
-            let doneAction =  nextPlayerAction(state , currentSuite: nil)
-           scene!.runAction(doneAction)
+            nextPlayerAction2(playerWithTurn)
+   
         }
         else
         {
-            currentStateOfPlay = StateOfPlay( remainingPlayers: remainingPlayers)
+     
             Bus.sharedInstance.send(GameEvent.YourTurn)
         }
         
@@ -304,12 +298,7 @@ public class CardTable : GameStateBase, GameState
     // start playing a new Trick
     func playTrickLeadBy(playerWithLead:CardPlayer)
     {
-        let players = trickPlayersLeadBy(playerWithLead)
-        let remainingPlayers = players
-      
-   
-        let state = StateOfPlay( remainingPlayers: remainingPlayers)
-        playTrick(state)
+        playTrick(playerWithLead)
         
     }
 

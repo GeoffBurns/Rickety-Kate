@@ -199,23 +199,56 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     {
         return value.imageCode +  suite.imageCode
     }
+    public var whiteImageName : String
+        // create imagename for a card
+        {
+            return imageName +  "_"
+    }
     public var description : String
     // create description for a card
     {
-       if suite == PlayingCard.Suite.Jokers
+       switch(suite)
        {
+        case PlayingCard.Suite.Jokers:
         switch value.rank
          {
          case 0 : return "The Fool"
-         case 1 : return "Joker (1)"
-         case 2 : return "Joker (2)"
+         case 1 : return "Joker Light (1)"
+         case 2 : return "Joker Dark (2)"
          default:
             return value.description + " of " +  suite.description
          }
+        case PlayingCard.Suite.Trumps:
+            switch value.rank
+            {
+            case 1 : return "The Magician"
+            case 2 : return "The High Priestess"
+            case 3 : return "The Empress"
+            case 4 : return "The Emperor"
+            case 5 : return "The Hierophant"
+            case 6 : return "The Lovers"
+            case 7 : return "The Chariot"
+            case 8 : return "Strength"
+            case 9 : return "The Hermit"
+            case 10 : return "Wheel of Fortune"
+            case 11 : return "Justice"
+            case 12 : return "The Hanged Man"
+            case 13 : return "Death"
+            case 14 : return "Temperance"
+            case 15 : return "The Devil"
+            case 16 : return "The Tower"
+            case 17 : return "The Star"
+            case 18 : return "The Moon"
+            case 19 : return "The Sun"
+            case 20 : return "Judgement"
+            case 21 : return "The World"
+            default:
+                return value.description + " of " +  suite.description
+           }
+       default:
+          return value.description + " of " +  suite.description
        }
-       return value.description + " of " +  suite.description
     }
-    
    
     public var hashValue: Int
     {
@@ -229,7 +262,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public var isntRicketyKate : Bool
     {
-        return imageName != "QS"
+        return !isRicketyKate
     }
     
     public class DeckBase : Deck
@@ -393,7 +426,69 @@ public struct PlayingCard : Equatable, Comparable, Hashable
 }
 
 
+extension Int
+{
+    public func of(suite :PlayingCard.Suite) -> PlayingCard
+    {
+        return PlayingCard(suite: suite,value: cardValue)
+    }
+    
+    public var cardValue : PlayingCard.CardValue
+    {
+        return PlayingCard.CardValue.Pip(self)
+    }
+}
 
+public enum CardName
+{
+    case Ace
+    case King
+    case Queen
+    case Prince
+    case Princess
+    case Archer
+    case Knight
+    case Jack
+    
+    public var letter : String
+        {
+            switch(self)
+            {
+            case .Ace :
+                return "A"
+            case .King :
+                return "K"
+            case .Queen :
+                return "Q"
+            case .Prince :
+                return "PR"
+            case .Princess :
+                return "PS"
+            case .Archer :
+                return "AR"
+            case .Knight :
+                return "KN"
+            case .Jack :
+                return "J"
+            } 
+    }
+    public var cardValue : PlayingCard.CardValue
+        {
+            switch(self)
+            {
+            case Ace :
+                return PlayingCard.CardValue.Ace
+            default :
+                 return PlayingCard.CardValue.CourtCard(letter)
+            }
+    }
+
+    public func of(suite :PlayingCard.Suite) -> PlayingCard?
+    {
+        return PlayingCard(suite: suite,value: cardValue)
+
+    }
+}
 
 
 

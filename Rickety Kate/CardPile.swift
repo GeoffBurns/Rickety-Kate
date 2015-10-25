@@ -8,10 +8,12 @@
 
 import SpriteKit
 
+typealias CreateSprite = (PlayingCard,SKNode) -> CardSprite?
 
 /// How the cards are displayed in a pile
 class CardPile
 {
+ 
     static let defaultSpread = CGFloat(10)
     var cards = [PlayingCard]() { didSet { update() } }
     var isUp = false
@@ -23,15 +25,18 @@ class CardPile
     var isFanClosed = false
     var isFanOpen :Bool { return !isFanClosed }
     var name = ""
-    
+    var createSprite : CreateSprite = { $1.cardSprite($0) }
     var position = CGPointZero
-    
+    var zPositon = CGFloat(0)
     static let straightAnchorPoint = CGPoint(x: 0.5,y: 0.5)
     
     var cardAnchorPoint : CGPoint { get { return CardPile.straightAnchorPoint }}
     
    
-
+    var sprites : [SKNode]
+        {
+            return cards.map { createSprite($0,scene!)! }
+    }
     subscript(index: Int) -> PlayingCard {
         return cards[index]
     }
@@ -49,6 +54,7 @@ class CardPile
         self.isUp = isUp
         self.sizeOfCards = sizeOfCards
         self.isFanClosed = true
+        self.zPositon = self.sizeOfCards.zOrder
     }
 
     func append(card:PlayingCard)
@@ -107,7 +113,7 @@ class CardPile
     func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat,
         fullHand:CGFloat)
     {
-        if let sprite = scene!.cardSprite(card)
+        if let sprite = createSprite(card,scene!)
         {
             sprite.fan = self
             
@@ -167,7 +173,7 @@ class CardPile
             }
             
             sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({ [unowned sprite] in
-                sprite.zPosition = self.sizeOfCards.zOrder + positionInSpread
+                sprite.zPosition = self.zPositon + positionInSpread
             }) ]))
           
       
@@ -181,25 +187,24 @@ class CardPile
         }
         var fullHand = CardPile.defaultSpread
         let noCards = CGFloat(cards.count)
-        var positionInSpread = CGFloat(0)
-        
+        var positionStart = CGFloat(0)
         if isFanOpen
         {
-            positionInSpread = (fullHand - noCards) * 0.5
+            positionStart = (fullHand - noCards) * 0.5
             if fullHand < noCards
             {
                 fullHand = noCards
-                positionInSpread = CGFloat(0)
+                positionStart = CGFloat(0)
             }
         }
-        for card in cards
+        for (positionInSpread,card) in cards.enumerate()
         {
-            if let sprite = scene!.cardSprite(card)
+            if let sprite = createSprite(card,scene!)
                 where sprite.state == CardState.AtRest
             {
-                rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
+                rearrangeFor(card,positionInSpread:CGFloat(positionInSpread)+positionStart, fullHand:fullHand)
             }
-            positionInSpread++
+        
             
         }
     }
@@ -225,41 +230,16 @@ class CardPile
         }
         for card in cards
         {
-            if let sprite = scene!.cardSprite(card)
+            if let sprite = createSprite(card,scene!)
             where sprite.state == CardState.AtRest
             {
-            sprite.zPosition = sizeOfCards.zOrder  + positionInSpread
+            sprite.zPosition = self.zPositon  + positionInSpread
             }
             positionInSpread++
             
         }
     }
-    func rearrange()
-    {
-        if(scene==nil)
-        {
-            return
-        }
-        var fullHand = CardPile.defaultSpread
-        let noCards = CGFloat(cards.count)
-        var positionInSpread = CGFloat(0)
-        
-        if isFanOpen
-        {
-            positionInSpread = (fullHand - noCards) * 0.5
-            if fullHand < noCards
-            {
-                fullHand = noCards
-                positionInSpread = CGFloat(0)
-            }
-        }
-        for card in cards
-        {
-            rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
-            positionInSpread++
-           
-        }
-    }
+
     
     
 }

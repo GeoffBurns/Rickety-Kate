@@ -24,6 +24,7 @@ class CardFan : CardPile
         self.isUp = isUp
         self.sizeOfCards = sizeOfCards
         self.direction = sideOfTable.direction
+        self.zPositon = self.sizeOfCards.zOrder
     }
 
     override func append(card:PlayingCard)
@@ -58,6 +59,32 @@ class CardFan : CardPile
         let updatedCards = newCards
         let sortedHand = updatedCards.sort()
         cards = ( Array(sortedHand.reverse()))
+    }
+    func rearrange()
+    {
+        if(scene==nil)
+        {
+            return
+        }
+        var fullHand = CardPile.defaultSpread
+        let noCards = CGFloat(cards.count)
+        var positionInSpread = CGFloat(0)
+        
+        if isFanOpen
+        {
+            positionInSpread = (fullHand - noCards + 1) * 0.5
+            if fullHand < noCards
+            {
+                fullHand = noCards
+                positionInSpread = CGFloat(0)
+            }
+        }
+        for card in cards
+        {
+            rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
+            positionInSpread++
+            
+        }
     }
 }
 

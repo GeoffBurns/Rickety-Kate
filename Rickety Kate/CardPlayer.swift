@@ -22,6 +22,7 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     var noOfWins = MutableProperty<Int>(0)
     var scoreForCurrentHand = 0
     public var sideOfTable = SideOfTable.Bottom
+    var playerNo = 0
     public var name : String = "Base"
     var wonCards : CardPile = CardPile(name: CardPileType.Won.description)
     static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3),ComputerPlayer(name:"Rita",margin: 4)]
@@ -55,9 +56,10 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     init(name s: String) {
         self.name = s
     }
-    func setup(scene: SKNode, sideOfTable: SideOfTable)
+    func setup(scene: SKNode, sideOfTable: SideOfTable, playerNo: Int)
     {
         self.sideOfTable = sideOfTable
+        self.playerNo = playerNo
         let isUp = sideOfTable == SideOfTable.Bottom
         _hand.setup(scene, sideOfTable: sideOfTable, isUp: isUp, sizeOfCards: isUp ? CardSize.Big : CardSize.Small)
         wonCards.setup(scene, direction: sideOfTable.direction, position: sideOfTable.positionOfWonCards(scene.frame.width, height: scene.frame.height))
