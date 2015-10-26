@@ -12,21 +12,17 @@ import Foundation
 protocol IAwarder
 {
   var allPoints : Int { get }
+  var trumpSuite : PlayingCard.Suite { get }
   func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
 }
 /// Calculate the score value of the cards
 /// Used by the Scorer
 class StrategicAwarder : IAwarder
 {
-   // var scores = [Int]()
-   // var wins = [Int]()
-   // var scoresForHand = [Int]()
-    
-  //  var players = [CardPlayer]()
-  //  var lookup = Dictionary<String,Int>()
-    
 
     var allPoints : Int { return  9 + GameSettings.sharedInstance.noOfCardsInASuite }
+    var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.Spades }
+    
     
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
     {
