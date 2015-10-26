@@ -28,6 +28,7 @@ enum GameProperties : String
     case HasTrumps = "HasTrumps"
     case HasJokers = "HasJokers"
     case willPassCards = "willPassCards"
+    case ignorePassCards = "ignorePassCards"
     case speedOfToss = "speedOfToss"
     case ruleSet = "ruleSet"
  
@@ -86,10 +87,10 @@ class GameSettings : IGameSettings
     var willPassCards : Bool {
         
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.willPassCards.rawValue)
+            return !NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.ignorePassCards.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.willPassCards.rawValue)
+            NSUserDefaults.standardUserDefaults().setBool(!newValue, forKey: GameProperties.ignorePassCards.rawValue)
         }
     }
     
