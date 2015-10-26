@@ -19,7 +19,7 @@ class OptionScreen: Popup {
     var hasTrumps = BinaryToggle(current: false, text: "Include Tarot Trumps?" )
     var willPassCards = BinaryToggle(current: true, text: "Pass Worst Cards?" )
     var speedOfToss = ListToggle(list: ["Very Slow","Slow","Normal","Fast","Very Fast"], current: 3, text: "Speed of Tossed Cards" )
-    var ruleSet = NumberRangeToggle(min: 1, max: 2, current: 1, text: "Rule Set" )
+    var ruleSet = ListToggle(list: ["Strategic","Old Style"],  current: 1, text: "Rule Set" )
     
     var optionSettings = [SKNode]()
     var moreButton = SKSpriteNode(imageNamed: "More1")

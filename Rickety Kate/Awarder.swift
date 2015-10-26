@@ -8,19 +8,23 @@
 
 import Foundation
 
+
+protocol IAwarder
+{
+  var allPoints : Int { get }
+  func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
+}
 /// Calculate the score value of the cards
 /// Used by the Scorer
-class Awarder
+class StrategicAwarder : IAwarder
 {
-    var scores = [Int]()
-    var wins = [Int]()
-    var scoresForHand = [Int]()
+   // var scores = [Int]()
+   // var wins = [Int]()
+   // var scoresForHand = [Int]()
     
-    var players = [CardPlayer]()
-    var lookup = Dictionary<String,Int>()
+  //  var players = [CardPlayer]()
+  //  var lookup = Dictionary<String,Int>()
     
-    static let sharedInstance = Awarder()
-    private init() { }
 
     var allPoints : Int { return  9 + GameSettings.sharedInstance.noOfCardsInASuite }
     

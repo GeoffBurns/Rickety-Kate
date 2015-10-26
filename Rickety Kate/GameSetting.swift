@@ -126,7 +126,7 @@ class GameSettings : IGameSettings
             
         }
     }
-
+    var Rules : IAwarder = StrategicAwarder()
     
     var hasTrumps : Bool {
         

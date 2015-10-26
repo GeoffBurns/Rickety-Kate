@@ -65,7 +65,7 @@ class Scorer
     for player in self.players
       {
       /// Did player get all the points avalilable in his hand
-      if player.scoreForCurrentHand >= Awarder.sharedInstance.allPoints
+      if player.scoreForCurrentHand >= GameSettings.sharedInstance.Rules.allPoints
          {
          player.currentTotalScore.value = 0
          hasShotMoon = true
@@ -121,7 +121,7 @@ class Scorer
         if let winner = Scorer.playerThatWon(gameState)
         {
          
-                let score = Awarder.sharedInstance.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
+                let score = GameSettings.sharedInstance.Rules.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
                 if(score>0)
                 {
                     winner.currentTotalScore.value += score
