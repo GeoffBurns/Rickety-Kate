@@ -18,6 +18,7 @@ public protocol IGameSettings
     var willPassCards  : Bool { get }
     var speedOfToss  : Int { get }
     var ruleSet  : Int { get }
+    var gameWinningScore  : Int { get }
     
 }
 enum GameProperties : String
@@ -30,9 +31,10 @@ enum GameProperties : String
     case willPassCards = "willPassCards"
     case ignorePassCards = "ignorePassCards"
     case speedOfToss = "speedOfToss"
+    case gameWinningScore = "gameWinningScore"
     case ruleSet = "ruleSet"
- 
 }
+
 /// User controlled options for the game
 class GameSettings : IGameSettings
 {
@@ -127,7 +129,27 @@ class GameSettings : IGameSettings
             
         }
     }
+    
+    
     var Rules : IAwarder = StrategicAwarder()
+    
+    var gameWinningScores : [Int] = [ 20 , 50, 100, 150, 200, 250, 300, 500, 600]
+    var gameWinningScore : Int { return gameWinningScores[gameWinningScoreIndex] }
+    var gameWinningScoreIndex: Int {
+        
+        get {
+            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.gameWinningScore.rawValue)
+            if result == 0
+            {
+                return 2
+            }
+            return result
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.gameWinningScore.rawValue)
+            
+        }
+    }
     
     var hasTrumps : Bool {
         
@@ -177,6 +199,7 @@ class GameSettings : IGameSettings
         hasJokers:Bool = false,
         willPassCards:Bool = true,
         speedOfToss:Int = 3,
+        gameWinningScoreIndex:Int = 2,
         ruleSet:Int = 1
         ) -> Bool
     {
@@ -186,6 +209,7 @@ class GameSettings : IGameSettings
             sharedInstance.hasTrumps != hasTrumps ||
             sharedInstance.hasJokers != hasJokers ||
             sharedInstance.willPassCards != willPassCards ||
+            sharedInstance.gameWinningScoreIndex != gameWinningScoreIndex ||
             sharedInstance.speedOfToss != speedOfToss ||
             sharedInstance.ruleSet != ruleSet
         {
@@ -196,6 +220,7 @@ class GameSettings : IGameSettings
         sharedInstance.hasJokers = hasJokers
         sharedInstance.willPassCards = willPassCards
         sharedInstance.speedOfToss = speedOfToss
+        sharedInstance.gameWinningScoreIndex = gameWinningScoreIndex
         sharedInstance.ruleSet = ruleSet
         return true
         }
@@ -214,6 +239,8 @@ public class FakeGameSettings : IGameSettings
     public var speedOfToss = 3
     public var willPassCards = false
     public var ruleSet = 1
+    public var gameWinningScore = 1
+
 
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)
     {

@@ -19,8 +19,9 @@ class OptionScreen: Popup {
     var hasTrumps = BinaryToggle(current: false, text: "Include Tarot Trumps?" )
     var willPassCards = BinaryToggle(current: true, text: "Pass Worst Cards?" )
     var speedOfToss = ListToggle(list: ["Very Slow","Slow","Normal","Fast","Very Fast"], current: 3, text: "Speed of Tossed Cards" )
+    var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game Finishing Score" )
     var ruleSet = ListToggle(list: ["Strategic","Old Style"],  current: 1, text: "Rule Set" )
-    
+   
     var optionSettings = [SKNode]()
     var moreButton = SKSpriteNode(imageNamed: "More1")
     var backButton = SKSpriteNode(imageNamed: "Back")
@@ -36,6 +37,7 @@ class OptionScreen: Popup {
         self.hasJokers.current = GameSettings.sharedInstance.hasJokers
         self.willPassCards.current = GameSettings.sharedInstance.willPassCards
         self.speedOfToss.current = GameSettings.sharedInstance.speedOfToss
+        self.gameWinningScore.current = GameSettings.sharedInstance.gameWinningScoreIndex
         self.ruleSet.current = GameSettings.sharedInstance.ruleSet
         }
     
@@ -49,6 +51,7 @@ class OptionScreen: Popup {
             hasJokers: hasJokers.current,
             willPassCards:willPassCards.current,
             speedOfToss:speedOfToss.current,
+            gameWinningScoreIndex:gameWinningScore.current,
             ruleSet:ruleSet.current)
         {
             if let scene = gameScene as? GameScene
@@ -75,7 +78,7 @@ class OptionScreen: Popup {
         name = "Option Background"
 
         
-        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, speedOfToss] //ruleSet]
+        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss] //ruleSet]
         
         settupButtons()
         newPage()

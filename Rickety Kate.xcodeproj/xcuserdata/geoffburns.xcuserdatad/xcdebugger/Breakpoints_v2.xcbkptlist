@@ -310,11 +310,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "467542860.37139"
+            timestampString = "467589838.95474"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "GameSettings"
             landmarkType = "3">
          </BreakpointContent>
@@ -326,11 +326,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/OptionScreen.swift"
-            timestampString = "467548987.022554"
+            timestampString = "467590488.817083"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "buttonTouched(_:)"
             landmarkType = "5">
          </BreakpointContent>

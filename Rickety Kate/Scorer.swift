@@ -97,7 +97,7 @@ class Scorer
         isDraw = true
         }
     
-      if player.currentTotalScore.value >= 100
+      if player.currentTotalScore.value >= GameSettings.sharedInstance.gameWinningScore
         {
         hasWonGame = true
         }
