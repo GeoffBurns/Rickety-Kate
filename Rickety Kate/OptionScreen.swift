@@ -18,7 +18,7 @@ class OptionScreen: Popup {
     var hasJokers = BinaryToggle(current: false, text: "Include Jokers?" )
     var hasTrumps = BinaryToggle(current: false, text: "Include Tarot Trumps?" )
     var willPassCards = BinaryToggle(current: true, text: "Pass Worst Cards?" )
-    var speedOfToss = NumberRangeToggle(min: 1, max: 5, current: 3, text: "Speed of Tossed Cards" )
+    var speedOfToss = ListToggle(list: ["Very Slow","Slow","Normal","Fast","Very Fast"], current: 3, text: "Speed of Tossed Cards" )
     var ruleSet = NumberRangeToggle(min: 1, max: 2, current: 1, text: "Rule Set" )
     
     var optionSettings = [SKNode]()
@@ -37,13 +37,19 @@ class OptionScreen: Popup {
         self.willPassCards.current = GameSettings.sharedInstance.willPassCards
         self.speedOfToss.current = GameSettings.sharedInstance.speedOfToss
         self.ruleSet.current = GameSettings.sharedInstance.ruleSet
-        
-        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, speedOfToss,ruleSet]
-    }
+        }
     
     override func onExit()
     {
-        if GameSettings.changeSettings(noOfSuites.current,noOfPlayersAtTable: noOfPlayers.current,noOfCardsInASuite: noOfCardsInASuite.current, hasTrumps: hasTrumps.current,hasJokers: hasJokers.current)
+        if GameSettings.changeSettings(
+            noOfSuites.current,
+            noOfPlayersAtTable: noOfPlayers.current,
+            noOfCardsInASuite: noOfCardsInASuite.current,
+            hasTrumps: hasTrumps.current,
+            hasJokers: hasJokers.current,
+            willPassCards:willPassCards.current,
+            speedOfToss:speedOfToss.current,
+            ruleSet:ruleSet.current)
         {
             if let scene = gameScene as? GameScene
             {
@@ -64,85 +70,84 @@ class OptionScreen: Popup {
         position = CGPointZero
         anchorPoint = CGPointZero
         
-        let midWidth = CGRectGetMidX(scene.frame)
+        userInteractionEnabled = true
+        
         name = "Option Background"
 
         
+        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, speedOfToss] //ruleSet]
         
-        noOfSuites.name = "NoOfSuites"
- 
-        noOfSuites.position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.77 : 0.7))
-
-        self.addChild(noOfSuites)
-        
-        
-        
-        noOfCardsInASuite.name = "NoOfCardsInSuite"
-  
-        
-        noOfCardsInASuite.position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.62 : 0.5))
-        self.addChild(noOfCardsInASuite)
-        
-        noOfPlayers.name = "NoOfPlayers"
-
-        
-        noOfPlayers.position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.47 : 0.3))
-        self.addChild(noOfPlayers)
-        
-        if(isBigDevice)
-        {
-        hasTrumps.name = "hasTrumps"
-
-        
-        hasTrumps.position = CGPoint(x:midWidth,y:scene.frame.height *  0.32)
-        self.addChild(hasTrumps)
-            
-        hasJokers.name = "hasJokers"
-       
-            
-        hasJokers.position = CGPoint(x:midWidth,y:scene.frame.height *  0.17)
-        self.addChild(hasJokers)
-            
-            
-   
-        }
+        settupButtons()
+        newPage()
         
     }
+
     func newPage()
     {
         let scene = gameScene!
         let midWidth = CGRectGetMidX(gameScene!.frame)
         
+        for optionSetting in optionSettings
+        {
+            
+        if(optionSetting.parent != nil)
+           {
+           optionSetting.removeFromParent()
+           }
+        }
+        if (settingStart < optionSettings.count)
+        {
         optionSettings[settingStart].name = "Setting1"
         optionSettings[settingStart].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.77 : 0.7))
         self.addChild(optionSettings[settingStart])
+        }
         
+        if (settingStart+1 < optionSettings.count)
+        {
         optionSettings[settingStart+1].name = "Setting2"
         optionSettings[settingStart+1].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.62 : 0.5))
         self.addChild(optionSettings[settingStart+1])
- 
+        }
+        
+        if (settingStart+2 < optionSettings.count)
+        {
         optionSettings[settingStart+2].name = "Setting3"
         optionSettings[settingStart+2].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.47 : 0.3))
         self.addChild(optionSettings[settingStart+2])
-        
+        }
+ 
         
         if(isBigDevice)
         {
+
+        if (settingStart+3 < optionSettings.count)
+            {
             optionSettings[settingStart+3].name = "Setting4"
             optionSettings[settingStart+3].position = CGPoint(x:midWidth,y:scene.frame.height *  0.32)
             self.addChild(optionSettings[settingStart+3])
+            }
             
+        if (settingStart+4 < optionSettings.count)
+            {
             optionSettings[settingStart+4].name = "Setting5"
             optionSettings[settingStart+4].position = CGPoint(x:midWidth,y:scene.frame.height *  0.17)
             self.addChild(optionSettings[settingStart+4])
+            }
+            
+        
         }
+        
+        let nextStart = settingStart +  noOfSettings
+        
+        moreButton.alpha = nextStart >= optionSettings.count ? 0.0 : 1.0
+        backButton.alpha = settingStart == 0 ? 0.0 : 1.0
     }
     
     func settupButtons()
     {
         
         moreButton.setScale(ButtonSize.Small.scale)
-        moreButton.anchorPoint = CGPoint(x: 2.0, y: 0.0)
+        moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
         moreButton.position = CGPoint(x:self.frame.size.width,y:0.0)
         
         moreButton.name = "More"
@@ -195,6 +200,16 @@ class OptionScreen: Popup {
         
         return false
     }
-
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        /* Called when a touch begins */
+        
+        for touch in (touches )
+        {
+            let positionInScene = touch.locationInNode(self)
+            
+            if buttonTouched(positionInScene) { return }
+         //   if cardTouched(positionInScene) { return }
+        }
+    }
 }
 

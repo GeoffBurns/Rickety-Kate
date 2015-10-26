@@ -70,8 +70,7 @@ class CardDisplayScreen: Popup {
             cs.anchorPoint = CGPointMake(0.5,05)
         }
         suiteStart = 0
-       displayPage()
-        
+        displayPage() 
     }
     
     func displayPage()
@@ -236,25 +235,16 @@ class CardDisplayScreen: Popup {
         {
             let positionInScene = touch.locationInNode(self)
             
-            if buttonTouched(positionInScene)
-            {
-                return
-            }
-            if cardTouched(positionInScene)
-            {
-                return
-            }
-            
+            if buttonTouched(positionInScene) { return }
+            if cardTouched(positionInScene) { return }
         }
     }
     func restoreDraggedNode()
     {
         if let cardsprite = draggedNode
-            
         {
             cardsprite.setScale(originalScale)
             cardsprite.zPosition = originalOrder
-            
             cardsprite.removeAllChildren()
             draggedNode=nil
         }
@@ -264,24 +254,17 @@ class CardDisplayScreen: Popup {
         {
             let positionInScene = touch.locationInNode(self)
             
-     
             if let node = self.nodeAtPoint(positionInScene) as? CardSprite
                 where draggedNode?.name != node.name
             {
-            
                 restoreDraggedNode()
                 storeDraggedNode(node)
                 return
             }
-            
         }
-        
     }
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-  
        restoreDraggedNode()
-
     }
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         if let touches = touches {

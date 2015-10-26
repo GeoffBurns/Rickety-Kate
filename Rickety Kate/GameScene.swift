@@ -20,7 +20,7 @@ class GameScene: SKScene {
     var backgroundFan = CardFan(name: CardPileType.Background.description)
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
-    var arePassingCards = true
+    var arePassingCards : Bool { return  GameSettings.sharedInstance.willPassCards && !table.isInDemoMode }
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
     var isYourTurn = false;
     
@@ -84,7 +84,7 @@ class GameScene: SKScene {
     func StatusAreaFirstMessage()
     {
 
-        if arePassingCards && !table.isInDemoMode
+        if arePassingCards
         {
             Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
         }
@@ -126,9 +126,11 @@ class GameScene: SKScene {
                 player.wonCards.clear()
                 for card in player.hand
                     {
-                        let sprite = self.cardSprite(card)!
+                        if let sprite = self.cardSprite(card)
+                        {
                         sprite.flipDown()
                         sprite .player = player
+                        }
                      }
             }
             
@@ -151,7 +153,7 @@ class GameScene: SKScene {
 
             self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
             
-            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
+            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
             if self.cardPassingPhase.isCurrentlyActive
             {
                 self.resetBackgroundFan(self.threeWorstBackgroundCards)
@@ -161,7 +163,7 @@ class GameScene: SKScene {
         self.schedule(delay: GameSettings.sharedInstance.tossDuration*2.2) { [unowned self] timer in
             
             
-            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
+            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
             if self.cardPassingPhase.isCurrentlyActive
             {
                 Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
@@ -262,11 +264,9 @@ class GameScene: SKScene {
     func isNodeAPlayerOneCardSpite(cardsprite:CardSprite) -> Bool
     {
     // does the sprite belong to a player
-    if let player = cardsprite.player
-        {
+    if let player = cardsprite.player {
            return player.name == "You"
         }
-
     return false
     }
 
@@ -276,7 +276,7 @@ class GameScene: SKScene {
         let height = self.frame.size.height
         reverseDeal(width , height: height )
         
-       self.schedule(delay: GameSettings.sharedInstance.tossDuration) { [unowned self] in
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration) { [unowned self] in
                 let transition = SKTransition.crossFadeWithDuration(0.5)
                 let scene = GameScene(size: self.scene!.size)
                 
@@ -303,16 +303,12 @@ class GameScene: SKScene {
         {
             switch touchedNode.name!
             {
-                /// play button
+            /// play button
             case "Play" :
                 touchedNode.texture = SKTexture(imageNamed: "Play2")
                 resetSceneWithInteractiveTable()
                 return true
-    
-            
-
             default : break
-                
             }
         }
          return false
@@ -331,12 +327,9 @@ class GameScene: SKScene {
         if let adjustedNode = self.nodeAtPoint(adjustedPosition) as? CardSprite
         {
             if isNodeAPlayerOneCardSpite(adjustedNode)        {
-                
                 draggedNode = adjustedNode;
                 originalTouch = positionInScene
                 adjustedNode.liftUp(positionInScene)
-                
-                
                 return true
             }
             

@@ -108,7 +108,7 @@ class GameSettings : IGameSettings
         }
     }
     
-    var tossDurations : [NSTimeInterval] = [0.2, 0.3, 0.4, 0.5, 0.65, 0.8, 0.9, 1.0]
+    var tossDurations : [NSTimeInterval] = [ 1.0, 0.85, 0.7, 0.5, 0.4, 0.25, 0.18, 0.15, 0.1, 0.05]
     var tossDuration : NSTimeInterval { return tossDurations[speedOfToss] }
     
     var ruleSet : Int {
