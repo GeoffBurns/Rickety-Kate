@@ -32,7 +32,7 @@ class CardSprite : SKSpriteNode
     var originalCardAnchor  = CGPointZero
     
     
-    static let tossDuration = 0.4
+
  
     
     /////////////////////////////////////////////////////

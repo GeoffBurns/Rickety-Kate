@@ -12,11 +12,12 @@ class Bus {
     
     let (gameSignal,gameSink) = Signal<GameEvent,NoError>.pipe()
     
+    
     static let sharedInstance = Bus()
     private init() { }
     
     func send(gameEvent:GameEvent)
     {
-    sendNext(gameSink, gameEvent)
+    gameSink.sendNext( gameEvent)
     }
 }

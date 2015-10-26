@@ -15,6 +15,10 @@ public protocol IGameSettings
     var noOfCardsInASuite  : Int { get }
     var hasTrumps  : Bool { get }
     var hasJokers : Bool { get }
+    var willPassCards  : Bool { get }
+    var speedOfToss  : Int { get }
+    var ruleSet  : Int { get }
+    
 }
 enum GameProperties : String
 {
@@ -23,6 +27,9 @@ enum GameProperties : String
     case NoOfCardsInASuite = "NoOfCardsInASuite"
     case HasTrumps = "HasTrumps"
     case HasJokers = "HasJokers"
+    case willPassCards = "willPassCards"
+    case speedOfToss = "speedOfToss"
+    case ruleSet = "ruleSet"
  
 }
 /// User controlled options for the game
@@ -75,7 +82,52 @@ class GameSettings : IGameSettings
             
         }
     }
+    
+    var willPassCards : Bool {
+        
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.willPassCards.rawValue)
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.willPassCards.rawValue)
+        }
+    }
+    
+    var speedOfToss : Int {
+        
+        get {
+            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.speedOfToss.rawValue)
+            if result == 0
+            {
+                return 3
+            }
+            return result
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.speedOfToss.rawValue)
+        }
+    }
+    
+    var tossDurations : [NSTimeInterval] = [0.2, 0.3, 0.4, 0.5, 0.65, 0.8, 0.9, 1.0]
+    var tossDuration : NSTimeInterval { return tossDurations[speedOfToss] }
+    
+    var ruleSet : Int {
+        
+        get {
+            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.ruleSet.rawValue)
+            if result == 0
+            {
+                return 1
+            }
+            return result
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.ruleSet.rawValue)
+            
+        }
+    }
 
+    
     var hasTrumps : Bool {
         
         get {
@@ -105,7 +157,7 @@ class GameSettings : IGameSettings
     
     static var isPhone6Plus : Bool
     {
-      //  if #available(iOS 8.0, *) {
+    //  if #available(iOS 8.0, *) {
             return   UIScreen.mainScreen().nativeScale > 2.5
     //    } else {
     //        return UIScreen.mainScreen().bounds.size.height > 735.0
@@ -115,27 +167,39 @@ class GameSettings : IGameSettings
     static let sharedInstance = GameSettings()
     private init() { }
     
-    static func changeSettings(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false) -> Bool
+    
+    static func changeSettings(
+        noOfSuitesInDeck:Int = 4,
+        noOfPlayersAtTable:Int  = 4,
+        noOfCardsInASuite:Int  = 13,
+        hasTrumps:Bool = false,
+        hasJokers:Bool = false,
+        willPassCards:Bool = true,
+        speedOfToss:Int = 3,
+        ruleSet:Int = 1
+        ) -> Bool
     {
         if sharedInstance.noOfSuitesInDeck != noOfSuitesInDeck ||
             sharedInstance.noOfPlayersAtTable != noOfPlayersAtTable ||
             sharedInstance.noOfCardsInASuite != noOfCardsInASuite ||
             sharedInstance.hasTrumps != hasTrumps ||
-            sharedInstance.hasJokers != hasJokers
-        
+            sharedInstance.hasJokers != hasJokers ||
+            sharedInstance.willPassCards != willPassCards ||
+            sharedInstance.speedOfToss != speedOfToss ||
+            sharedInstance.ruleSet != ruleSet
         {
         sharedInstance.noOfSuitesInDeck = noOfSuitesInDeck
         sharedInstance.noOfPlayersAtTable = noOfPlayersAtTable
         sharedInstance.noOfCardsInASuite = noOfCardsInASuite
         sharedInstance.hasTrumps = hasTrumps
         sharedInstance.hasJokers = hasJokers
-            
-            return true
+        sharedInstance.willPassCards = willPassCards
+        sharedInstance.speedOfToss = speedOfToss
+        sharedInstance.ruleSet = ruleSet
+        return true
         }
-        return false
+     return false
     }
-    
-    
 }
 
 /// For testing
@@ -146,6 +210,9 @@ public class FakeGameSettings : IGameSettings
     public var noOfCardsInASuite = 15
     public var hasTrumps = false
     public var hasJokers = false
+    public var speedOfToss = 3
+    public var willPassCards = false
+    public var ruleSet = 1
 
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)
     {

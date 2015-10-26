@@ -135,7 +135,6 @@ public class ComputerPlayer :CardPlayer
     
     public func passCards() -> [PlayingCard]
     {
-
         return passingStrategy.chooseWorstCards(self)
     }
 

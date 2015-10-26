@@ -95,18 +95,21 @@ class GameScene: SKScene {
         }
     }
     
-
+    func resetBackgroundFan(cards:[PlayingCard])
+    {
+        
+        for sprite in backgroundFan.sprites
+        {
+            sprite.position = CGPoint(x: -100, y: -400)
+        }
+        backgroundFan.replaceWithContentsOf(cards)
+    }
     
     func startTrickPhase()
     {
-        
-       for sprite in backgroundFan.sprites
-       {
-        sprite.position = CGPoint(x: -100, y: -400)
-        }
-        backgroundFan.replaceWithContentsOf(trickBackgroundCards)
-        
-        NSTimer.schedule(delay: CardSprite.tossDuration*1.3) { [unowned self] timer in
+        resetBackgroundFan(trickBackgroundCards)
+
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*1.3) { [unowned self] timer in
                 self.table.playTrick(self.table.players[self.table.startPlayerNo])
         }
 
@@ -143,21 +146,32 @@ class GameScene: SKScene {
     {
         let width = self.frame.size.width
         let height = self.frame.size.height
-        let doneAction =  (SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration*0.1),
-        SKAction.runBlock({ [unowned self] in
-             self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
-        })]))
-        self.runAction(doneAction)
-    
-        self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
-        if self.cardPassingPhase.isCurrentlyActive
-           {
-           Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
-           }
-        else
-           {
-           self.startTrickPhase()
-           }
+        
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.5) { [unowned self] timer in
+
+            self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
+            
+            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
+            if self.cardPassingPhase.isCurrentlyActive
+            {
+                self.resetBackgroundFan(self.threeWorstBackgroundCards)
+                Bus.sharedInstance.send(GameEvent.NewGame)
+            }
+        }
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*2.2) { [unowned self] timer in
+            
+            
+            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards && !self.table.isInDemoMode
+            if self.cardPassingPhase.isCurrentlyActive
+            {
+                Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
+            }
+            else
+            {
+                self.startTrickPhase()
+            }
+        }
+  
     }
  
     func setupPlayButton()
@@ -212,8 +226,6 @@ class GameScene: SKScene {
     }
     var threeWorstBackgroundCards : [PlayingCard]
         {
-     
-            
             return [
                 CardName.Ace.of(PlayingCard.Suite.Spades)!,
                 CardName.Ace.of(PlayingCard.Suite.Hearts)!,
@@ -227,25 +239,10 @@ class GameScene: SKScene {
         backgroundFan.setup(scene!, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
         backgroundFan.createSprite = { $1.whiteCardSprite($0) }
         backgroundFan.zPositon = 0.0
-        
-     
-        let cards =  arePassingCards && !table.isInDemoMode
-        ? threeWorstBackgroundCards
-        : trickBackgroundCards
-        backgroundFan.appendContentsOf(cards)
-       
-        
-        
-        /*   backgroundFan.appendContentsOf([
-        CardName.Ace.of(PlayingCard.Suite.Spades)!,
-        CardName.King.of(PlayingCard.Suite.Spades)!,
-        CardName.Queen.of(PlayingCard.Suite.Spades)!,
-        CardName.Jack.of(PlayingCard.Suite.Spades)!,
-        10.of(PlayingCard.Suite.Spades)])
-        */
+        backgroundFan.speed = 0.1
     }
     override func didMoveToView(view: SKView) {
-                /* Setup your scene here */
+        /* Setup your scene here */
      
         setupBackground()
         setupStatusArea()
@@ -279,9 +276,7 @@ class GameScene: SKScene {
         let height = self.frame.size.height
         reverseDeal(width , height: height )
         
-    
-        self.runAction((SKAction.sequence([SKAction.waitForDuration(CardSprite.tossDuration),
-            SKAction.runBlock({ [unowned self] in
+       self.schedule(delay: GameSettings.sharedInstance.tossDuration) { [unowned self] in
                 let transition = SKTransition.crossFadeWithDuration(0.5)
                 let scene = GameScene(size: self.scene!.size)
                 
@@ -292,8 +287,7 @@ class GameScene: SKScene {
                     CardTable.makeDemo(scene)
                     
                 self.scene!.view!.presentScene(scene, transition: transition)
-                
-                })])))
+                }
     }
     func resetSceneWithInteractiveTable()
     {
@@ -475,8 +469,8 @@ class GameScene: SKScene {
     
     func transferCardToTrickPile(cardsprite:CardSprite)
     {
-        _ = self.table.playerOne._hand.remove(cardsprite.card)
         table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card)
+        self.isYourTurn = false
         Bus.sharedInstance.send(GameEvent.NotYourTurn)
     }
     
@@ -505,7 +499,7 @@ class GameScene: SKScene {
                        if table.isMoveValid(self.table.playerOne,cardName: cardsprite.name!)
                           {
                           transferCardToTrickPile(cardsprite)
-                          self.isYourTurn = false
+                          
                           return;
                           }
                        else
