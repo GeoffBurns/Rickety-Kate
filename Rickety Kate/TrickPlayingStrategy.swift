@@ -207,6 +207,23 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                 let orderedFollowingCards = cardsFollowingSuite.sort({$0.value > $1.value})
                 let highCard = orderedFollowingCards.first
                 
+                // Get rid of any Scoring Cards to someone else
+                let scoringCards = gameState.scoringCardsFor(suite)
+                if scoringCards.count > 0
+                {
+                   let scoringCardsInHand = Set<PlayingCard>(scoringCards).intersect(player.cardsIn(suite))
+                    if scoringCardsInHand.count > 0
+                    {
+                     let scorecardsLessThanHighCard = scoringCardsInHand.filter { $0.value < highCard!.value }
+                     let canGoLowScoring = !scorecardsLessThanHighCard.isEmpty
+                        if canGoLowScoring
+                        {
+                            let orderedLowScoreCards = scorecardsLessThanHighCard.sort({$0.value > $1.value})
+                            return orderedLowScoreCards.first
+                        }
+                    }
+                }
+                
                 let cardsLessThanHighCard = cardsInSuite.filter { $0.value < highCard!.value }
                 let canGoLow = !cardsLessThanHighCard.isEmpty
                 if canGoLow
@@ -216,16 +233,17 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                 }
                 else
                 {
-                    if suite == PlayingCard.Suite.Spades
+                    if suite == GameSettings.sharedInstance.rules.trumpSuite
                     {
                         // don't give yourself rickety kate
                         let notRicketyKate = cardsInSuite.filter { $0.isntRicketyKate }
                         var reverseOrderedCards = notRicketyKate.sort({$0.value < $1.value})
+                        // put out the lowest card you can
                         if let lowcard = reverseOrderedCards.first
                         {
                             return lowcard
                         }
-                        
+                        // if you have to yourself rickety kate here is no help for it
                         reverseOrderedCards = cardsInSuite.sort({$0.value < $1.value})
                         return reverseOrderedCards.first
                     }
