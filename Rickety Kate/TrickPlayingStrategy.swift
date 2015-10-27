@@ -249,12 +249,35 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                     }
                     let isLastPlayer = gameState.isLastPlayer
                     let isNoSpadesInPile = gameState.isntSpadesInPile
+                    
+                    // try not to  give yourself any Scoring Cards
+                    let scoringCards = gameState.scoringCards
+                    if scoringCards.count > 0
+                    {
+                        let unscoringCardsInHand = Set<PlayingCard>(player.hand).subtract(scoringCards)
+                        if unscoringCardsInHand.count > 0
+                        {
+                            // if you are not going to win scoring cards go high
+                            if isLastPlayer && isNoSpadesInPile
+                            {
+                                
+                                let orderedCards = unscoringCardsInHand.sort({$0.value > $1.value})
+                                return orderedCards.first
+                            }
+                            // go low
+                            let reverseOrderedCards = unscoringCardsInHand.sort({$0.value < $1.value})
+                            return reverseOrderedCards.first
+                        }
+                    }
+                   
+                    // if you are not going to win scoring cards go high
                     if isLastPlayer && isNoSpadesInPile
                     {
-                        
                         let orderedCards = cardsInSuite.sort({$0.value > $1.value})
                         return orderedCards.first
                     }
+                    
+                    // go low
                     let reverseOrderedCards = cardsInSuite.sort({$0.value < $1.value})
                     return reverseOrderedCards.first
                 }
