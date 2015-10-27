@@ -31,6 +31,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         case Trumps
         case Jokers
         case NoOfSuites
+        case None
         
 
         var imageCode : String
@@ -48,6 +49,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case .Trumps : return "T"
             case .Jokers : return "J"
             case .NoOfSuites : return ""
+            case .None : return ""
             }
         }
         
@@ -65,7 +67,8 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case .Stars : return "Stars"
                 case .Trumps : return "Trumps"
                 case .Jokers : return "Jokers"
-                case .NoOfSuites : return "None"
+                case .NoOfSuites : return "Not Applicable"
+                case .None : return "None"
                 }
         }
 
@@ -118,7 +121,21 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     case "K" : return "King"
                     default : return "Page"
                     }
-                case Pip(let faceValue): return faceValue.description
+                case Pip(let faceValue):
+                    switch faceValue
+                    {
+                    case 2 : return "Deuce"
+                    case 3 : return "Three"
+                    case 4 : return "Four"
+                    case 5 : return "Five"
+                    case 6 : return "Six"
+                    case 7 : return "Seven"
+                    case 8 : return "Eight"
+                    case 9 : return "Nine"
+                    case 10 : return "Ten"
+                    case 11 : return "Eleven"
+                    default : return faceValue.description
+                    }
                 case Ace: return "Ace"
                 }
         }
@@ -321,13 +338,13 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     public class BuiltCardDeck : DeckBase
     {
         var gameSettings:IGameSettings = GameSettings.sharedInstance
-        var suitesInDeck : [PlayingCard.Suite] = []
+        public var suitesInDeck : [PlayingCard.Suite] = []
         public init(gameSettings:IGameSettings = GameSettings.sharedInstance )
         {
             self.gameSettings = gameSettings
         }
         
-        
+  
         override public var orderedDeck:[PlayingCard]
             {
                 var deck = [PlayingCard]();

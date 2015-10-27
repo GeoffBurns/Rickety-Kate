@@ -47,8 +47,15 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
         {
             return nil
         }
-        let earlyLeadSuites = [PlayingCard.Suite.Diamonds,PlayingCard.Suite.Clubs,PlayingCard.Suite.Hearts]
-        
+        var earlyLeadSuites = PlayingCard.BuiltCardDeck().suitesInDeck
+        if let j = earlyLeadSuites.indexOf(PlayingCard.Suite.Jokers)
+        {
+            earlyLeadSuites.removeAtIndex(j)
+        }
+        if let t = earlyLeadSuites.indexOf(GameSettings.sharedInstance.rules.trumpSuite)
+        {
+            earlyLeadSuites.removeAtIndex(t)
+        }
         
         var maxCard : PlayingCard? = nil
         var max = -20
@@ -65,7 +72,6 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
                     maxCard = card
                 }
             }
-            
         }
         
         if  max < 0

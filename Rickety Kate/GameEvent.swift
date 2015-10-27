@@ -48,8 +48,8 @@ public enum GameEvent : Equatable
                 return name + " won Rickety Kate\nPoor " + name
             case WinSpades( let name, let noOfSpades ) :
                 return  noOfSpades == 1
-                    ? name + " won a spade\nBad Luck"
-                    : name + " won \(noOfSpades) spades\nBad Luck"
+                    ? name + " won a \(GameSettings.sharedInstance.rules.trumpSuiteSingular)\nBad Luck"
+                    : name + " won \(noOfSpades) \(GameSettings.sharedInstance.rules.trumpSuite.description)\nBad Luck"
             case NewHand :
                 return nil
             case YourTurn :

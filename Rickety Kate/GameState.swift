@@ -69,7 +69,8 @@ public class GameStateBase
 
     
     public var isntSpadesInPile : Bool {
-        return tricksPile.filter { $0.playedCard.suite == PlayingCard.Suite.Spades }.isEmpty
+        return tricksPile.filter { $0.playedCard.suite == GameSettings.sharedInstance.rules.trumpSuite }.isEmpty &&
+        tricksPile.filter { $0.playedCard == CardName.Queen.of(PlayingCard.Suite.Spades) }.isEmpty
     }
     
     public var isSpadesInPile : Bool {

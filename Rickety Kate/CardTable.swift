@@ -76,17 +76,7 @@ public class CardTable : GameStateBase, GameState
     //////////
     // internal functions
     //////////
-    func trackNotFollowingBehaviourForAIStrategy(player: CardPlayer, suite: PlayingCard.Suite )
-    {
-        if let firstcard = tricksPile.first
-        {
-            let leadingSuite = firstcard.playedCard.suite
-            if suite != leadingSuite
-            {
-                self.gameTracker.playerNotFollowingSuite(player, suite: suite)
-            }
-        }
-    }
+
     
     func addToTrickPile(player:CardPlayer,trickcard:PlayingCard)
     {
@@ -94,8 +84,8 @@ public class CardTable : GameStateBase, GameState
             displayedCard = scene!.cardSpriteNamed(card.imageName)
         {
             
-            self.gameTracker.countCardIn(displayedCard.card.suite)
-            trackNotFollowingBehaviourForAIStrategy(player, suite: displayedCard.card.suite)
+           
+            self.gameTracker.trackProgress(tricksPile.first,player:player, playedCard:displayedCard.card)
             
             displayedCard.player=player
             let playedCard = displayedCard.card

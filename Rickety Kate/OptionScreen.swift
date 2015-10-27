@@ -20,7 +20,7 @@ class OptionScreen: Popup {
     var willPassCards = BinaryToggle(current: true, text: "Pass Worst Cards?" )
     var speedOfToss = ListToggle(list: ["Very Slow","Slow","Normal","Fast","Very Fast"], current: 3, text: "Speed of Tossed Cards" )
     var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game Finishing Score" )
-    var ruleSet = ListToggle(list: ["Strategic","Old Style"],  current: 1, text: "Rule Set" )
+    var ruleSet = ListToggle(list: ["Spades","Hearts","Jacks"],  current: 1, text: "Rule Set" )
    
     var optionSettings = [SKNode]()
     var moreButton = SKSpriteNode(imageNamed: "More1")
@@ -78,7 +78,7 @@ class OptionScreen: Popup {
         name = "Option Background"
 
         
-        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss] //ruleSet]
+        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet]
         
         settupButtons()
         newPage()

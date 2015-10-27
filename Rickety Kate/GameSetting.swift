@@ -16,6 +16,7 @@ public protocol IGameSettings
     var hasTrumps  : Bool { get }
     var hasJokers : Bool { get }
     var willPassCards  : Bool { get }
+    var isAceHigh  : Bool { get }
     var speedOfToss  : Int { get }
     var ruleSet  : Int { get }
     var gameWinningScore  : Int { get }
@@ -38,6 +39,8 @@ enum GameProperties : String
 /// User controlled options for the game
 class GameSettings : IGameSettings
 {
+    
+  var isAceHigh  : Bool { return true }
   var noOfSuitesInDeck : Int {
         
     get {
@@ -129,9 +132,16 @@ class GameSettings : IGameSettings
             
         }
     }
+    var ruleSetIndex : Int {
+        let result = ruleSet - 1
+        if result < 0 { return 0 }
+        
+        if result > ruleChoices.count-1 { return ruleChoices.count-1 }
+        return result
+    }
     
-    
-    var Rules : IAwarder = StrategicAwarder()
+    var ruleChoices : [IAwarder] = [SpadesAwarder(), HeartsAwarder(),JacksAwarder()]
+    var rules : IAwarder { return ruleChoices[ruleSetIndex] }
     
     var gameWinningScores : [Int] = [ 20 , 50, 100, 150, 200, 250, 300, 500, 600]
     var gameWinningScore : Int { return gameWinningScores[gameWinningScoreIndex] }
@@ -240,7 +250,7 @@ public class FakeGameSettings : IGameSettings
     public var willPassCards = false
     public var ruleSet = 1
     public var gameWinningScore = 1
-
+    public var isAceHigh  : Bool { return true }
 
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)
     {

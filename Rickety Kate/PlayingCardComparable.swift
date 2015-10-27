@@ -59,7 +59,6 @@ func pictureLetterToRank(letter:String) -> Int
     case "KN" : return 13
     case "J" : return 12
     default: return 0
-        
     }
 }
 
@@ -67,8 +66,8 @@ public func <=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
 {
     switch (lhs, rhs) {
     case (.Ace, .Ace): return true
-    case (.Ace, _): return false
-    case (_, .Ace): return true
+    case (.Ace, _): return !GameSettings.sharedInstance.isAceHigh
+    case (_, .Ace): return GameSettings.sharedInstance.isAceHigh
     case let (.CourtCard(la), .CourtCard(ra)): return pictureLetterToRank(la) <= pictureLetterToRank(ra)
     case (.CourtCard, _): return false
     case let (.Pip(la), .Pip(ra)): return la <= ra
@@ -80,8 +79,8 @@ public func >=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
 {
     switch (lhs, rhs) {
     case (.Ace, .Ace): return true
-    case (.Ace, _): return true
-    case (_, .Ace): return false
+    case (.Ace, _): return GameSettings.sharedInstance.isAceHigh
+    case (_, .Ace): return !GameSettings.sharedInstance.isAceHigh
     case let (.CourtCard(la), .CourtCard(ra)): return pictureLetterToRank(la) >= pictureLetterToRank(ra)
     case (.CourtCard, _): return true
     case let (.Pip(la), .Pip(ra)): return la >= ra
@@ -92,8 +91,8 @@ public func >(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
 {
     switch (lhs, rhs) {
     case (.Ace, .Ace): return false
-    case (.Ace, _): return true
-    case (_, .Ace): return false
+    case (.Ace, _): return GameSettings.sharedInstance.isAceHigh
+    case (_, .Ace): return !GameSettings.sharedInstance.isAceHigh
     case let (.CourtCard(la), .CourtCard(ra)): return pictureLetterToRank(la) > pictureLetterToRank(ra)
     case (.CourtCard, _): return true
     case let (.Pip(la), .Pip(ra)): return la > ra
@@ -104,8 +103,8 @@ public func < (lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
 {
     switch (lhs, rhs) {
     case (.Ace, .Ace): return false
-    case (.Ace, _): return false
-    case (_, .Ace): return true
+    case (.Ace, _): return !GameSettings.sharedInstance.isAceHigh
+    case (_, .Ace): return GameSettings.sharedInstance.isAceHigh
     case let (.CourtCard(la), .CourtCard(ra)): return pictureLetterToRank(la) < pictureLetterToRank(ra)
     case (.CourtCard, _): return false
     case let (.Pip(la), .Pip(ra)): return la < ra
