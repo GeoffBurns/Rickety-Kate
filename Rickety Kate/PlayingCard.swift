@@ -337,9 +337,9 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     }
     public class BuiltCardDeck : DeckBase
     {
-        var gameSettings:IGameSettings = GameSettings.sharedInstance
+        var gameSettings:IGameSettings? = nil
         public var suitesInDeck : [PlayingCard.Suite] = []
-        public init(gameSettings:IGameSettings = GameSettings.sharedInstance )
+        public init(gameSettings:IGameSettings )
         {
             self.gameSettings = gameSettings
         }
@@ -348,23 +348,23 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         override public var orderedDeck:[PlayingCard]
             {
                 var deck = [PlayingCard]();
-                var noOfPossibleCardsInDeck = (gameSettings.noOfSuitesInDeck * gameSettings.noOfCardsInASuite)
-                if gameSettings.hasTrumps
+                var noOfPossibleCardsInDeck = (gameSettings!.noOfSuitesInDeck * gameSettings!.noOfCardsInASuite)
+                if gameSettings!.hasTrumps
                 {
                   noOfPossibleCardsInDeck += 22
                 }
-                if gameSettings.hasJokers
+                if gameSettings!.hasJokers
                 {
                     noOfPossibleCardsInDeck += 2
                 }
                 
-                let toRemove = noOfPossibleCardsInDeck % gameSettings.noOfPlayersAtTable
+                let toRemove = noOfPossibleCardsInDeck % gameSettings!.noOfPlayersAtTable
                 var removedCards = Set<PlayingCard>()
-                let suites = PlayingCard.Suite.normalSuites[0..<gameSettings.noOfSuitesInDeck]
+                let suites = PlayingCard.Suite.normalSuites[0..<gameSettings!.noOfSuitesInDeck]
                 suitesInDeck.appendContentsOf(suites)
                 for s in suites
                 {
-                    noInSuites[s.rawValue]  = gameSettings.noOfCardsInASuite
+                    noInSuites[s.rawValue]  = gameSettings!.noOfCardsInASuite
                 }
                 
                 var removedSoFar = 0
@@ -392,7 +392,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
              
                 for s in suites
                 {
-                    for v in PlayingCard.CardValue.valuesFor(gameSettings.noOfCardsInASuite)
+                    for v in PlayingCard.CardValue.valuesFor(gameSettings!.noOfCardsInASuite)
                     {
                        let c = PlayingCard(suite: s, value: v)
                         if removedCards.contains(c)
@@ -403,7 +403,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     }
                 }
                 
-                if gameSettings.hasTrumps
+                if gameSettings!.hasTrumps
                 {
                     deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(0)))
                     suitesInDeck.append(PlayingCard.Suite.Trumps)
@@ -412,7 +412,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                         deck.append(PlayingCard(suite: PlayingCard.Suite.Trumps, value : PlayingCard.CardValue.Pip(v)))
                     }
                 }
-                if gameSettings.hasJokers
+                if gameSettings!.hasJokers
                 {
                     suitesInDeck.append(PlayingCard.Suite.Jokers)
                     for v in 1...2

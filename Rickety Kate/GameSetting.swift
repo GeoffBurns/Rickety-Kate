@@ -19,7 +19,9 @@ public protocol IGameSettings
     var isAceHigh  : Bool { get }
     var speedOfToss  : Int { get }
     var ruleSet  : Int { get }
-    var gameWinningScore  : Int { get }
+    var gameWinningScore  : Int { get  }
+    var deck  : PlayingCard.BuiltCardDeck? { get  }
+
     
 }
 enum GameProperties : String
@@ -39,7 +41,7 @@ enum GameProperties : String
 /// User controlled options for the game
 class GameSettings : IGameSettings
 {
-    
+  var deck : PlayingCard.BuiltCardDeck? = nil
   var isAceHigh  : Bool { return true }
   var noOfSuitesInDeck : Int {
         
@@ -140,7 +142,7 @@ class GameSettings : IGameSettings
         return result
     }
     
-    var ruleChoices : [IAwarder] = [SpadesAwarder(), HeartsAwarder(),JacksAwarder()]
+    var ruleChoices  = [IAwarder]()
     var rules : IAwarder { return ruleChoices[ruleSetIndex] }
     
     var gameWinningScores : [Int] = [ 20 , 50, 100, 150, 200, 250, 300, 500, 600]
@@ -198,7 +200,12 @@ class GameSettings : IGameSettings
     }
   
     static let sharedInstance = GameSettings()
-    private init() { }
+    private init() {
+   
+ 
+    deck = PlayingCard.BuiltCardDeck(gameSettings: self)
+    ruleChoices = [SpadesAwarder(gameSettings: self), HeartsAwarder(gameSettings: self),JacksAwarder(gameSettings: self)]
+    }
     
     
     static func changeSettings(
@@ -232,6 +239,7 @@ class GameSettings : IGameSettings
         sharedInstance.speedOfToss = speedOfToss
         sharedInstance.gameWinningScoreIndex = gameWinningScoreIndex
         sharedInstance.ruleSet = ruleSet
+        sharedInstance.deck = PlayingCard.BuiltCardDeck(gameSettings: sharedInstance)
         return true
         }
      return false
@@ -251,7 +259,7 @@ public class FakeGameSettings : IGameSettings
     public var ruleSet = 1
     public var gameWinningScore = 1
     public var isAceHigh  : Bool { return true }
-
+    public var deck  : PlayingCard.BuiltCardDeck? = nil
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)
     {
         
@@ -260,5 +268,6 @@ public class FakeGameSettings : IGameSettings
         self.noOfCardsInASuite = noOfCardsInASuite
         self.hasTrumps = hasTrumps
         self.hasJokers = hasJokers
+        deck  = PlayingCard.BuiltCardDeck(gameSettings: self)
     }
 }

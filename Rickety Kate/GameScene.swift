@@ -219,7 +219,7 @@ class GameScene: SKScene {
     
     var trickBackgroundCards : [PlayingCard]
         {
-            let cards : Array = table.deck.orderedDeck
+            let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
                 .filter { $0.suite == PlayingCard.Suite.Spades }
                 .sort()
                 .reverse()

@@ -47,7 +47,7 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
         {
             return nil
         }
-        var earlyLeadSuites = PlayingCard.BuiltCardDeck().suitesInDeck
+        var earlyLeadSuites = GameSettings.sharedInstance.deck!.suitesInDeck
         if let j = earlyLeadSuites.indexOf(PlayingCard.Suite.Jokers)
         {
             earlyLeadSuites.removeAtIndex(j)

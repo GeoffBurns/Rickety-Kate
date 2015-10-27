@@ -16,7 +16,7 @@ class CardDisplayScreen: Popup {
     var slides = [CardSlide]()
     
     var discard = CardSlide(name: "slide")
-    lazy var deck = PlayingCard.BuiltCardDeck()
+
     var moreButton = SKSpriteNode(imageNamed: "More1")
     var backButton = SKSpriteNode(imageNamed: "Back")
     var suiteStart = 0
@@ -49,7 +49,7 @@ class CardDisplayScreen: Popup {
         position = CGPointZero
         anchorPoint = CGPointZero
         userInteractionEnabled = true
-        cards = deck.orderedDeck
+        cards = GameSettings.sharedInstance.deck!.orderedDeck
    
 
         for i in 0..<noOfSlides
@@ -111,9 +111,9 @@ class CardDisplayScreen: Popup {
         let fontsize : CGFloat = GameSettings.isPad ?  18 : (GameSettings.isPhone6Plus ? 30 : 20)
         for (i,slide) in slides.enumerate()
         {
-            if  i+suiteStart < deck.suitesInDeck.count
+            if  i+suiteStart < GameSettings.sharedInstance.deck!.suitesInDeck.count
             {
-            let suite = cards.filter { $0.suite == deck.suitesInDeck[i+suiteStart]}
+            let suite = cards.filter { $0.suite == GameSettings.sharedInstance.deck!.suitesInDeck[i+suiteStart]}
             
             if suite.count > 0
             {
@@ -160,7 +160,7 @@ class CardDisplayScreen: Popup {
         
         let nextStart = suiteStart +  noOfSlides
         
-        moreButton.alpha = nextStart >= deck.suitesInDeck.count ? 0.0 : 1.0
+        moreButton.alpha = nextStart >= GameSettings.sharedInstance.deck!.suitesInDeck.count ? 0.0 : 1.0
         backButton.alpha = suiteStart == 0 ? 0.0 : 1.0
     }
     func buttonTouched(positionInScene:CGPoint) -> Bool

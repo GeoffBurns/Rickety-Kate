@@ -12,7 +12,6 @@ import SpriteKit
 /// controls the flow of the game
 public class CardTable : GameStateBase, GameState
 {
-    lazy var deck = PlayingCard.BuiltCardDeck()
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
     var _players = [CardPlayer]()
     var scene : SKNode? = nil
@@ -258,7 +257,7 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
     public func dealNewCardsToPlayers()
     {
        // deck = PlayingCard.BuiltCardDeck()
-        var hands = deck.dealFor(players.count)
+        var hands = GameSettings.sharedInstance.deck!.dealFor(players.count)
         var i = 0
         for player in players
         {
