@@ -21,6 +21,8 @@ public protocol GameState
     var noOfPlayers : Int { get }
     var playedCardsInTrick : Int { get }
     var unplayedCardsInTrick : Int { get }
+    var scoringCards : Set<PlayingCard> { get }
+    
     
     func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
     func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
@@ -88,6 +90,7 @@ public class GameStateBase
     {
         return gameTracker.unplayedScoringCards.filter { $0.suite == suite }
     }
+    public var scoringCards : Set<PlayingCard> { return gameTracker.unplayedScoringCards }
 }
 
 

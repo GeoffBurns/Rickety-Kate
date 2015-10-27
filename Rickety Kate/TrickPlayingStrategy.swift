@@ -241,17 +241,19 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                     return reverseOrderedCards.first
                 }
             }
-            
+            // if not following suit get rid of your highest scoring card
             if let RicketyKate = player.RicketyKate
             {
                 return RicketyKate
             }
-            let Spades = player.cardsIn(GameSettings.sharedInstance.rules.trumpSuite )
+            let Spades = gameState.scoringCards.intersect(player.hand)
             if !Spades.isEmpty
             {
                 let orderedSpades = Spades.sort({$0.value > $1.value})
                 return orderedSpades.first
             }
+            
+             // if no your scoring cards then your highest card
             let orderedHand = player.hand.sort({$0.value > $1.value})
             
             return orderedHand.first
