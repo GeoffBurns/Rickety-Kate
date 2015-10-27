@@ -183,13 +183,13 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             return [Ace] + (2...10).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
         }
         static var values10CardInASuite : [CardValue] {
-            return [Ace] + (2...8).map { Pip($0) } + ["Q","K"].map { CourtCard($0) }
+            return [Ace] + (2...7).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
         }
         static var values11CardInASuite : [CardValue] {
-            return [Ace] + (2...9).map { Pip($0) } + ["Q","K"].map { CourtCard($0) }
+            return [Ace] + (2...8).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
         }
         static var values12CardInASuite : [CardValue] {
-            return [Ace] + (2...10).map { Pip($0) } + ["Q","K"].map { CourtCard($0) }
+            return [Ace] + (2...9).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
         }
         static var values14CardInASuite : [CardValue] {
             return [Ace] + (2...11).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
