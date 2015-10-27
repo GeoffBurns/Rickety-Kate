@@ -43,6 +43,7 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
     public init(margin:Int) { safetyMargin = margin }
     public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     {
+        
         if(gameState.hasntLead)
         {
             return nil
@@ -93,7 +94,7 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardHolder,gameState:Ga
     let unplayedCardsInTrick = gameState.unplayedCardsInTrick
     
     /// TODO ask deck for unaccountedForCards
-    var unaccountedForCards = GameSettings.sharedInstance.noOfCardsInASuite
+    var unaccountedForCards = GameSettings.sharedInstance.deck!.noCardIn(suite)
     
     // remove cards in hand
     
@@ -146,7 +147,13 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
         {
             
             // you don't want to win if its spades
-            if gameState.leadingSuite == PlayingCard.Suite.Spades
+            if gameState.leadingSuite == GameSettings.sharedInstance.rules.trumpSuite
+            {
+                return nil
+            }
+            
+            let scoringCards = gameState.scoringCardsFor(suite)
+            if scoringCards.count > 0
             {
                 return nil
             }
@@ -239,7 +246,7 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
             {
                 return RicketyKate
             }
-            let Spades = player.cardsIn(PlayingCard.Suite.Spades )
+            let Spades = player.cardsIn(GameSettings.sharedInstance.rules.trumpSuite )
             if !Spades.isEmpty
             {
                 let orderedSpades = Spades.sort({$0.value > $1.value})
