@@ -8,17 +8,26 @@
 
 import SpriteKit
 
+enum CardDisplayTab
+{
+    case DeckTab
+    case ScoringTab
+}
+
+typealias ScorePairCollection = [(PlayingCard,Int)]
 // Help Screen
 class CardDisplayScreen: Popup {
     
 
     var isSetup = false
     var slides = [CardSlide]()
-    
+    var orderedGroups : [(Int,ScorePairCollection)] = []
     var discard = CardSlide(name: "slide")
-
+    var activeTab = CardDisplayTab.DeckTab
     var moreButton = SKSpriteNode(imageNamed: "More1")
     var backButton = SKSpriteNode(imageNamed: "Back")
+    var deckButton = SKSpriteNode(imageNamed: "Deck2")
+    var scoreButton = SKSpriteNode(imageNamed: "Scores1")
     var suiteStart = 0
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
@@ -60,7 +69,7 @@ class CardDisplayScreen: Popup {
             slides.append(slide)
         }
         discard.setup(self, slideWidth: size.width * 0.9)
-
+        discard.speed = 0.1
         }
         isSetup = true
 
@@ -81,7 +90,13 @@ class CardDisplayScreen: Popup {
         title.position = CGPointMake(size.width * 0.50, size.height * 0.92 )
         title.text = "Card Rankings"
         self.addChild(title)
-        displayCards()
+        
+        switch activeTab
+        {
+        case .DeckTab : displayCardsInDeck()
+        case .ScoringTab : displayScoringCards()
+        }
+      
         
         moreButton.setScale(ButtonSize.Small.scale)
         moreButton.anchorPoint = CGPoint(x: 2.0, y: 0.0)
@@ -104,8 +119,38 @@ class CardDisplayScreen: Popup {
         backButton.userInteractionEnabled = false
         backButton.alpha = 0.0
         self.addChild(backButton)
+        
+        
+        deckButton.setScale(ButtonSize.Small.scale)
+        deckButton.anchorPoint = CGPoint(x: 2.0, y: 1.0)
+        deckButton.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height)
+        
+        deckButton.name = "Deck"
+        
+        deckButton.zPosition = 300
+        deckButton.userInteractionEnabled = false
+        
+        self.addChild(deckButton)
+        
+        scoreButton.setScale(ButtonSize.Small.scale)
+        scoreButton.anchorPoint = CGPoint(x: 1.0, y: 1.0)
+        scoreButton.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height)
+        
+        scoreButton.name = "Score"
+        
+        scoreButton.zPosition = 300
+        scoreButton.userInteractionEnabled = false
+        
+        self.addChild(scoreButton)
+        
+        let nextStart = noOfSlides
+        switch activeTab
+        {
+        case .DeckTab :  moreButton.alpha = nextStart >= GameSettings.sharedInstance.deck!.suitesInDeck.count ? 0.0 : 1.0
+        case .ScoringTab : moreButton.alpha = nextStart >=  self.orderedGroups.count ? 0.0 : 1.0
+        }
     }
-    func displayCards()
+    func displayCardsInDeck()
     {
         
         let fontsize : CGFloat = GameSettings.isPad ?  18 : (GameSettings.isPhone6Plus ? 30 : 20)
@@ -113,28 +158,73 @@ class CardDisplayScreen: Popup {
         {
             if  i+suiteStart < GameSettings.sharedInstance.deck!.suitesInDeck.count
             {
-            let suite = cards.filter { $0.suite == GameSettings.sharedInstance.deck!.suitesInDeck[i+suiteStart]}
+                let suite = cards.filter { $0.suite == GameSettings.sharedInstance.deck!.suitesInDeck[i+suiteStart]}
+                
+                if suite.count > 0
+                {
+                    let l = SKLabelNode(fontNamed:"Verdana")
+                    l.fontSize = fontsize
+                    l.position = CGPointMake(size.width * 0.10, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
+                    l.text = "High Cards"
+                    l.name = "label"
+                    
+                    let m = SKLabelNode(fontNamed:"Verdana")
+                    m.fontSize = fontsize
+                    m.position = CGPointMake(size.width * 0.93, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
+                    m.text = "Low Cards"
+                    
+                    m.name = "label"
+                    
+                    self.addChild(l)
+                    self.addChild(m)
+                    
+                    discard.replaceWithContentsOf(slide.cards)
+                    slide.replaceWithContentsOf(suite)
+                    slide.update()
+                }
+                continue
+            }
             
-            if suite.count > 0
+            discard.replaceWithContentsOf(slide.cards)
+            slide.clear()
+            slide.update()
+            
+        }
+    }
+    
+    func displayScoringCards()
+    {
+        
+        let fontsize : CGFloat = GameSettings.isPad ?  18 : (GameSettings.isPhone6Plus ? 30 : 20)
+        
+        let pointsGroups = GameSettings.sharedInstance.rules.cardScores.categorise {$0.1}
+        
+        self.orderedGroups = pointsGroups.sort { $0.0 > $1.0 }
+        
+        
+        for (i,slide) in slides.enumerate()
+        {
+            if  i+suiteStart < orderedGroups.count
+            {
+                
+            let group = orderedGroups[i+suiteStart]
+            let cards = group.1.map { $0.0 }
+            
+            if cards.count > 0
             {
             let l = SKLabelNode(fontNamed:"Verdana")
             l.fontSize = fontsize
             l.position = CGPointMake(size.width * 0.10, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
-            l.text = "High Cards"
+            if cards.count > 1 { l.text = "\(group.0) Points Each" }
+            else { l.text = "\(group.0) Points" }
             l.name = "label"
             
-            let m = SKLabelNode(fontNamed:"Verdana")
-            m.fontSize = fontsize
-            m.position = CGPointMake(size.width * 0.93, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
-            m.text = "Low Cards"
-            
-            m.name = "label"
-            
+    
             self.addChild(l)
-            self.addChild(m)
+    
             
             discard.replaceWithContentsOf(slide.cards)
-            slide.replaceWithContentsOf(suite)
+            slide.replaceWithContentsOf(cards)
             slide.update()
             }
                 continue
@@ -156,11 +246,24 @@ class CardDisplayScreen: Popup {
             l = self.childNodeWithName("label")
         }
         
-        displayCards()
+        
+        scene!.schedule(delay: 0.3)
+        {
+          switch self.activeTab
+             {
+             case .DeckTab : self.displayCardsInDeck()
+             case .ScoringTab : self.displayScoringCards()
+             }
+        }
         
         let nextStart = suiteStart +  noOfSlides
         
-        moreButton.alpha = nextStart >= GameSettings.sharedInstance.deck!.suitesInDeck.count ? 0.0 : 1.0
+        switch activeTab
+        {
+        case .DeckTab :  moreButton.alpha = nextStart >= GameSettings.sharedInstance.deck!.suitesInDeck.count ? 0.0 : 1.0
+        case .ScoringTab : moreButton.alpha = nextStart >=  self.orderedGroups.count ? 0.0 : 1.0
+        }
+
         backButton.alpha = suiteStart == 0 ? 0.0 : 1.0
     }
     func buttonTouched(positionInScene:CGPoint) -> Bool
@@ -170,6 +273,28 @@ class CardDisplayScreen: Popup {
         {
             switch nodeName
             {
+            case "Deck" :
+                
+                if activeTab != .DeckTab
+                {
+                    self.suiteStart = 0
+                    deckButton.texture = SKTexture(imageNamed: "Deck2")
+                    scoreButton.texture = SKTexture(imageNamed: "Scores1")
+                    activeTab = .DeckTab
+                    newPage()
+                }
+                return true
+            case "Score" :
+                
+                if activeTab != .ScoringTab
+                {
+                    self.suiteStart = 0
+                    deckButton.texture = SKTexture(imageNamed: "Deck1")
+                    scoreButton.texture = SKTexture(imageNamed: "Scores2")
+                    activeTab = .ScoringTab
+                    newPage()
+                }
+                return true
             case "More" :
                 self.suiteStart += noOfSlides
                 newPage()

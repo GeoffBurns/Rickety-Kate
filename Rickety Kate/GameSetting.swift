@@ -21,8 +21,20 @@ public protocol IGameSettings
     var ruleSet  : Int { get }
     var gameWinningScore  : Int { get  }
     var deck  : PlayingCard.BuiltCardDeck? { get  }
-
-    
+    var rules : IAwarder { get  }
+    var tossDuration : NSTimeInterval { get  }
+    var gameWinningScoreIndex : Int { get }
+    func changeSettings(
+        noOfSuitesInDeck:Int,
+        noOfPlayersAtTable:Int,
+        noOfCardsInASuite:Int,
+        hasTrumps:Bool,
+        hasJokers:Bool,
+        willPassCards:Bool,
+        speedOfToss:Int,
+        gameWinningScoreIndex:Int,
+        ruleSet:Int
+        ) -> Bool
 }
 enum GameProperties : String
 {
@@ -37,9 +49,43 @@ enum GameProperties : String
     case gameWinningScore = "gameWinningScore"
     case ruleSet = "ruleSet"
 }
-
 /// User controlled options for the game
-class GameSettings : IGameSettings
+public class GameSettings
+{
+    static var instance : IGameSettings? = nil
+    public static var sharedInstance : IGameSettings {
+        get{
+            if instance == nil
+            {
+                instance = LiveGameSettings()
+            }
+            return instance!
+        }
+        set{
+                instance = newValue
+        }
+    }
+    
+    static var backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
+    
+    static var isPad : Bool
+    {
+        return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+    }
+    
+    static var isPhone6Plus : Bool
+    {
+        //  if #available(iOS 8.0, *) {
+        return   UIScreen.mainScreen().nativeScale > 2.5
+        //    } else {
+        //        return UIScreen.mainScreen().bounds.size.height > 735.0
+        //    }
+    }
+    
+
+}
+/// User controlled options for the game
+class LiveGameSettings : IGameSettings
 {
   var deck : PlayingCard.BuiltCardDeck? = nil
   var isAceHigh  : Bool { return true }
@@ -131,20 +177,29 @@ class GameSettings : IGameSettings
         }
         set (newValue) {
             NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.ruleSet.rawValue)
+            awarder = nil
+        }
+    
+    }
+
+    
+    var awarder : IAwarder? = nil
+    var rules : IAwarder {
+        if awarder == nil {
+            switch ruleSet
+            {
+            case 2 :
+                awarder = HeartsAwarder(gameSettings: self)
+            case 3 :
+                awarder = JacksAwarder(gameSettings: self)
+            default :
+                awarder = SpadesAwarder(gameSettings: self)
+    
+            }
             
         }
+        return awarder!
     }
-    var ruleSetIndex : Int {
-        let result = ruleSet - 1
-        if result < 0 { return 0 }
-        
-        if result > ruleChoices.count-1 { return ruleChoices.count-1 }
-        return result
-    }
-    
-    var ruleChoices  = [IAwarder]()
-    var rules : IAwarder { return ruleChoices[ruleSetIndex] }
-    
     var gameWinningScores : [Int] = [ 20 , 50, 100, 150, 200, 250, 300, 500, 600]
     var gameWinningScore : Int { return gameWinningScores[gameWinningScoreIndex] }
     var gameWinningScoreIndex: Int {
@@ -182,33 +237,15 @@ class GameSettings : IGameSettings
             NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.HasJokers.rawValue)
         }
     }
-    
-    static var backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
-    
-    static var isPad : Bool
-        {
-        return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
-        }
-    
-    static var isPhone6Plus : Bool
-    {
-    //  if #available(iOS 8.0, *) {
-            return   UIScreen.mainScreen().nativeScale > 2.5
-    //    } else {
-    //        return UIScreen.mainScreen().bounds.size.height > 735.0
-    //    }
-    }
-  
-    static let sharedInstance = GameSettings()
-    private init() {
+ 
+    init() {
    
  
     deck = PlayingCard.BuiltCardDeck(gameSettings: self)
-    ruleChoices = [SpadesAwarder(gameSettings: self), HeartsAwarder(gameSettings: self),JacksAwarder(gameSettings: self)]
+    
     }
     
-    
-    static func changeSettings(
+    func changeSettings(
         noOfSuitesInDeck:Int = 4,
         noOfPlayersAtTable:Int  = 4,
         noOfCardsInASuite:Int  = 13,
@@ -220,31 +257,32 @@ class GameSettings : IGameSettings
         ruleSet:Int = 1
         ) -> Bool
     {
-        if sharedInstance.noOfSuitesInDeck != noOfSuitesInDeck ||
-            sharedInstance.noOfPlayersAtTable != noOfPlayersAtTable ||
-            sharedInstance.noOfCardsInASuite != noOfCardsInASuite ||
-            sharedInstance.hasTrumps != hasTrumps ||
-            sharedInstance.hasJokers != hasJokers ||
-            sharedInstance.willPassCards != willPassCards ||
-            sharedInstance.gameWinningScoreIndex != gameWinningScoreIndex ||
-            sharedInstance.speedOfToss != speedOfToss ||
-            sharedInstance.ruleSet != ruleSet
+        if self.noOfSuitesInDeck != noOfSuitesInDeck ||
+            self.noOfPlayersAtTable != noOfPlayersAtTable ||
+            self.noOfCardsInASuite != noOfCardsInASuite ||
+            self.hasTrumps != hasTrumps ||
+            self.hasJokers != hasJokers ||
+            self.willPassCards != willPassCards ||
+            self.gameWinningScoreIndex != gameWinningScoreIndex ||
+            self.speedOfToss != speedOfToss ||
+            self.ruleSet != ruleSet
         {
-        sharedInstance.noOfSuitesInDeck = noOfSuitesInDeck
-        sharedInstance.noOfPlayersAtTable = noOfPlayersAtTable
-        sharedInstance.noOfCardsInASuite = noOfCardsInASuite
-        sharedInstance.hasTrumps = hasTrumps
-        sharedInstance.hasJokers = hasJokers
-        sharedInstance.willPassCards = willPassCards
-        sharedInstance.speedOfToss = speedOfToss
-        sharedInstance.gameWinningScoreIndex = gameWinningScoreIndex
-        sharedInstance.ruleSet = ruleSet
-        sharedInstance.deck = PlayingCard.BuiltCardDeck(gameSettings: sharedInstance)
-        return true
+            self.noOfSuitesInDeck = noOfSuitesInDeck
+            self.noOfPlayersAtTable = noOfPlayersAtTable
+            self.noOfCardsInASuite = noOfCardsInASuite
+            self.hasTrumps = hasTrumps
+            self.hasJokers = hasJokers
+            self.willPassCards = willPassCards
+            self.speedOfToss = speedOfToss
+            self.gameWinningScoreIndex = gameWinningScoreIndex
+            self.ruleSet = ruleSet
+            self.deck = PlayingCard.BuiltCardDeck(gameSettings: self)
+            return true
         }
-     return false
+        return false
     }
-}
+
+ }
 
 /// For testing
 public class FakeGameSettings : IGameSettings
@@ -260,6 +298,15 @@ public class FakeGameSettings : IGameSettings
     public var gameWinningScore = 1
     public var isAceHigh  : Bool { return true }
     public var deck  : PlayingCard.BuiltCardDeck? = nil
+    public var gameWinningScoreIndex = 1
+    var awarder : IAwarder? = nil
+    public var rules : IAwarder {
+        if awarder == nil{
+           awarder = SpadesAwarder(gameSettings: self)
+        }
+        return awarder!
+    }
+    public var tossDuration : NSTimeInterval = 0.4
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)
     {
         
@@ -268,6 +315,24 @@ public class FakeGameSettings : IGameSettings
         self.noOfCardsInASuite = noOfCardsInASuite
         self.hasTrumps = hasTrumps
         self.hasJokers = hasJokers
+        
+
+
         deck  = PlayingCard.BuiltCardDeck(gameSettings: self)
+    }
+    
+    public func changeSettings(
+        noOfSuitesInDeck:Int,
+        noOfPlayersAtTable:Int,
+        noOfCardsInASuite:Int,
+        hasTrumps:Bool,
+        hasJokers:Bool,
+        willPassCards:Bool,
+        speedOfToss:Int,
+        gameWinningScoreIndex:Int,
+        ruleSet:Int
+        ) -> Bool
+    {
+        return false
     }
 }

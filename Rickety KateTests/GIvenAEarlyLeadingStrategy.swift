@@ -20,7 +20,7 @@ class GivenAEarlyLeadingStrategy: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         player.addCardsToHand(["QS","QD","5D","2C","KC","10C"])
-    
+        GameSettings.sharedInstance = FakeGameSettings()
         
     }
     
@@ -33,14 +33,20 @@ class GivenAEarlyLeadingStrategy: XCTestCase {
         // This is an example of a functional test case.
         
         var card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
-        XCTAssert(card?.imageName=="QD", "Pass")
+        XCTAssert(card?.imageName=="QD", (card?.imageName ?? "nil") + " chosen instead of QD")
         
         gameState.addNotFollowed(PlayingCard.Suite.Diamonds)
         
         card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
         
-        let cardname = card?.imageName
-        XCTAssert(cardname=="KC", "Pass")
+        if let cardname = card?.imageName
+        {
+        XCTAssert(cardname=="KC", (card?.imageName ?? "nil") + " chosen instead of KC")
+        }
+        else
+        {
+            XCTAssert(false, "No Card")
+        }
         
         gameState.addNotFollowed(PlayingCard.Suite.Clubs)
         

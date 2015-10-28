@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "467648969.775426"
+            timestampString = "467694550.58094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
+            startingLineNumber = "467"
+            endingLineNumber = "467"
             landmarkName = "Int"
             landmarkType = "3">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "467648969.775426"
+            timestampString = "467694550.58094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "458"
-            endingLineNumber = "458">
+            startingLineNumber = "472"
+            endingLineNumber = "472">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "467648969.775426"
+            timestampString = "467694550.58094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "497"
-            endingLineNumber = "497">
+            startingLineNumber = "511"
+            endingLineNumber = "511">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -310,12 +310,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "467653058.531569"
+            timestampString = "467708244.853549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "GameSettings"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "LiveGameSettings"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -357,22 +357,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Rickety Kate/Awarder.swift"
-            timestampString = "467651172.572371"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "init(gameSettings:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Rickety KateTests/GivenACardTable.swift"
             timestampString = "467606245.826144"
             startingColumnNumber = "9223372036854775807"
@@ -390,11 +374,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/Awarder.swift"
-            timestampString = "467650381.579116"
+            timestampString = "467713374.955749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "HeartsAwarder"
             landmarkType = "3">
             <Locations>
@@ -444,6 +428,198 @@
                   offsetFromSymbolStart = "21">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety KateTests/GIvenAEarlyLeadingStrategy.swift"
+            timestampString = "467686017.094765"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "testCardChoice()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety KateTests/GIvenAEarlyLeadingStrategy.swift"
+            timestampString = "467686020.46505"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "testCardChoice()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Rickety_KateTests.GivenAEarlyLeadingStrategy.testCardChoice (Rickety_KateTests.GivenAEarlyLeadingStrategy)() -&gt; ()"
+                  moduleName = "Rickety KateTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20KateTests/GIvenAEarlyLeadingStrategy.swift"
+                  timestampString = "467689429.847844"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "326">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Rickety_KateTests.GivenAEarlyLeadingStrategy.(testCardChoice (Rickety_KateTests.GivenAEarlyLeadingStrategy) -&gt; () -&gt; ()).(implicit closure #1)"
+                  moduleName = "Rickety KateTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20KateTests/GIvenAEarlyLeadingStrategy.swift"
+                  timestampString = "467689429.848403"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "39">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety Kate/GameSetting.swift"
+            timestampString = "467709748.96542"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "FakeGameSettings"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety KateTests/GivenAEarlyFollowingStrategy.swift"
+            timestampString = "467689374.425475"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "testCardChoice()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Rickety_KateTests.GivenAEarlyGameFollowingStrategy.testCardChoice (Rickety_KateTests.GivenAEarlyGameFollowingStrategy)() -&gt; ()"
+                  moduleName = "Rickety KateTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20KateTests/GivenAEarlyFollowingStrategy.swift"
+                  timestampString = "467689375.179567"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "326">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Rickety_KateTests.GivenAEarlyGameFollowingStrategy.(testCardChoice (Rickety_KateTests.GivenAEarlyGameFollowingStrategy) -&gt; () -&gt; ()).(implicit closure #1)"
+                  moduleName = "Rickety KateTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20KateTests/GivenAEarlyFollowingStrategy.swift"
+                  timestampString = "467689375.179973"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "39">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety KateTests/GIvenAEarlyLeadingStrategy.swift"
+            timestampString = "467690428.741592"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "testCardChoice()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety Kate/TrickPlayingStrategy.swift"
+            timestampString = "467690452.585146"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "chooseCard(_:gameState:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety Kate/GameSetting.swift"
+            timestampString = "467708244.853549"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "GameSettings"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety Kate/GameSetting.swift"
+            timestampString = "467709748.96542"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "changeSettings(_:noOfPlayersAtTable:noOfCardsInASuite:hasTrumps:hasJokers:willPassCards:speedOfToss:gameWinningScoreIndex:ruleSet:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

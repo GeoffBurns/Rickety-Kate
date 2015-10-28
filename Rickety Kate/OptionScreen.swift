@@ -43,7 +43,7 @@ class OptionScreen: Popup {
     
     override func onExit()
     {
-        if GameSettings.changeSettings(
+        if GameSettings.sharedInstance.changeSettings(
             noOfSuites.current,
             noOfPlayersAtTable: noOfPlayers.current,
             noOfCardsInASuite: noOfCardsInASuite.current,

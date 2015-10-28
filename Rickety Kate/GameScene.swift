@@ -219,13 +219,8 @@ class GameScene: SKScene {
     
     var trickBackgroundCards : [PlayingCard]
         {
-            let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
-                .filter { $0.suite == PlayingCard.Suite.Spades }
-                .sort()
-                .reverse()
-            
-            return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
-    }
+            return GameSettings.sharedInstance.rules.backgroundCards
+        }
     var threeWorstBackgroundCards : [PlayingCard]
         {
             return [

@@ -10,7 +10,6 @@
 		AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0304031BAEDE7C005263C7 /* RuleScreen.swift */; };
 		AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF69C1BB4238300001024 /* buttons.atlas */; };
 		AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */; };
-		AC252A3F1BA6F1C400C0121A /* ArrayExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */; };
 		AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */; };
 		AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */; };
 		AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */; };
@@ -58,7 +57,9 @@
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BF1BA686C40064870C /* PlayingCard.swift */; };
 		ACA1A1351BDDBFD20010BB0B /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1A1341BDDBFD20010BB0B /* Label.swift */; };
-		ACA1A1371BDDEB050010BB0B /* SKNodeExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1A1361BDDEB050010BB0B /* SKNodeExtentions.swift */; };
+		ACB20F9D1BE0C5F500718CC0 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9B1BE0C5F500718CC0 /* ArrayExtensions.swift */; };
+		ACB20F9E1BE0C5F500718CC0 /* SequenceTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9C1BE0C5F500718CC0 /* SequenceTypeExtensions.swift */; };
+		ACB20FA01BE0C64700718CC0 /* SKNodeExtensions2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */; };
 		ACB33B971BC2003B0019DC7C /* CardSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B951BC2003B0019DC7C /* CardSlide.swift */; };
 		ACB33B981BC2003B0019DC7C /* PopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B961BC2003B0019DC7C /* PopupButton.swift */; };
 		ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
@@ -105,7 +106,6 @@
 		AC0304031BAEDE7C005263C7 /* RuleScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuleScreen.swift; sourceTree = "<group>"; };
 		AC1CF69C1BB4238300001024 /* buttons.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = buttons.atlas; sourceTree = "<group>"; };
 		AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Extra.atlas; sourceTree = "<group>"; };
-		AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtentions.swift; sourceTree = "<group>"; };
 		AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIdeOfTable.swift; sourceTree = "<group>"; };
 		AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCardComparable.swift; sourceTree = "<group>"; };
 		AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPassingStrategy.swift; sourceTree = "<group>"; };
@@ -155,7 +155,9 @@
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		AC9E82BF1BA686C40064870C /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		ACA1A1341BDDBFD20010BB0B /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
-		ACA1A1361BDDEB050010BB0B /* SKNodeExtentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtentions.swift; sourceTree = "<group>"; };
+		ACB20F9B1BE0C5F500718CC0 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		ACB20F9C1BE0C5F500718CC0 /* SequenceTypeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTypeExtensions.swift; sourceTree = "<group>"; };
+		ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions2.swift; sourceTree = "<group>"; };
 		ACB33B951BC2003B0019DC7C /* CardSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSlide.swift; sourceTree = "<group>"; };
 		ACB33B961BC2003B0019DC7C /* PopupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupButton.swift; sourceTree = "<group>"; };
 		ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
@@ -234,7 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				AC62B6981BA1564800B0EDAE /* AppDelegate.swift */,
-				AC252A3E1BA6F1C400C0121A /* ArrayExtentions.swift */,
+				ACB20F9B1BE0C5F500718CC0 /* ArrayExtensions.swift */,
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
 				ACB90F9F1BB685CF009B1189 /* BinaryToggle.swift */,
 				AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */,
@@ -275,7 +277,6 @@
 				AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
-				ACA1A1361BDDEB050010BB0B /* SKNodeExtentions.swift */,
 				AC7C9FC61BB380A00086AC02 /* GameSetting.swift */,
 				ACE6DFB51BAA32AB005B5424 /* GameState.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
@@ -299,8 +300,10 @@
 				ACCB13351BAB1D5700196393 /* Scorer.swift */,
 				AC2AB4CD1BC4AD2A0042BCBC /* ScoreViewModel.swift */,
 				AC7C9FC71BB380A00086AC02 /* Seater.swift */,
+				ACB20F9C1BE0C5F500718CC0 /* SequenceTypeExtensions.swift */,
 				AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */,
 				AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */,
+				ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */,
 				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
@@ -527,10 +530,11 @@
 				AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */,
 				AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */,
 				AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */,
+				ACB20F9D1BE0C5F500718CC0 /* ArrayExtensions.swift in Sources */,
+				ACB20F9E1BE0C5F500718CC0 /* SequenceTypeExtensions.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
 				ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */,
 				ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */,
-				AC252A3F1BA6F1C400C0121A /* ArrayExtentions.swift in Sources */,
 				AC7C9FC41BB379310086AC02 /* CardSize.swift in Sources */,
 				ACB33B981BC2003B0019DC7C /* PopupButton.swift in Sources */,
 				AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */,
@@ -539,11 +543,11 @@
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
 				ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
+				ACB20FA01BE0C64700718CC0 /* SKNodeExtensions2.swift in Sources */,
 				AC6463EB1BC12A66000AEB7E /* ButtonSize.swift in Sources */,
 				AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */,
 				ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */,
 				ACE6DFC71BAA5563005B5424 /* StatusArea.swift in Sources */,
-				ACA1A1371BDDEB050010BB0B /* SKNodeExtentions.swift in Sources */,
 				AC7C9FD01BB3886D0086AC02 /* Direction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

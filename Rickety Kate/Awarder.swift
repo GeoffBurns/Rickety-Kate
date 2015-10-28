@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol IAwarder
+public protocol IAwarder
 {
     var allPoints : Int { get }
     var ricketyKatePoints : Int { get }
@@ -18,19 +18,47 @@ protocol IAwarder
     var trumpSuitePlural : String  { get }
     var description : String { get }
     var cardScores : Dictionary<PlayingCard,Int> { get }
+    var backgroundCards : [PlayingCard] { get }
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
+    
 }
 /// Calculate the score value of the cards
 /// Used by the Scorer
 class SpadesAwarder : IAwarder
 {
-
+    var backgroundCards : [PlayingCard] {
+    let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
+        .filter { $0.suite == trumpSuite }
+        .sort()
+        .reverse()
+    
+    return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
+    }
+    
     var allPoints : Int { return  9 + GameSettings.sharedInstance.noOfCardsInASuite }
     var ricketyKatePoints : Int { return  10 }
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.Spades }
-    var trumpSuiteSingular : String  { return "spade" }
+    var trumpSuiteSingular : String  { return "Spade" }
     var trumpSuitePlural : String  { return trumpSuite.description }
-    var cardScores = Dictionary<PlayingCard,Int>()
+    var cardScores_ : Dictionary<PlayingCard,Int>? = nil
+    var cardScores : Dictionary<PlayingCard,Int> {
+        if cardScores_ == nil
+        {
+           cardScores_ =  Dictionary<PlayingCard,Int>()
+            let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
+            var trumpsSet = Set(trumps)
+            
+            cardScores_![CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
+            
+            trumpsSet.remove(CardName.Queen.of(PlayingCard.Suite.Spades)!)
+            
+            for card in trumpsSet
+            {
+                cardScores_![card] = 1
+            }
+        }
+        return cardScores_!
+    }
     var description = "Rickety Kate (Spade Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
     
     
@@ -40,18 +68,6 @@ class SpadesAwarder : IAwarder
     {
         self.gameSettings = gameSettings
    
-        let trumps = gameSettings.deck!.orderedDeck.filter { $0.suite == trumpSuite }
-        var trumpsSet = Set(trumps)
-        
-        cardScores[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
-        
-        trumpsSet.remove(CardName.Queen.of(PlayingCard.Suite.Spades)!)
-        
-        for card in trumpsSet
-        {
-            cardScores[card] = 1
-        }
-        
     }
     
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
@@ -89,18 +105,48 @@ class SpadesAwarder : IAwarder
 class HeartsAwarder : IAwarder
 {
     var description = "Rickety Kate (Hearts Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 13 points against you and the hearts are worth fewer points against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
-    var cardScores = Dictionary<PlayingCard,Int>()
-    var ricketyKatePoints : Int { return  13 }
-    var allPoints : Int = 0
+    var cardScores_ : Dictionary<PlayingCard,Int>? = nil
+    var cardScores : Dictionary<PlayingCard,Int> {
+        if cardScores_ == nil
+        {
+            cardScores_ =  Dictionary<PlayingCard,Int>()
+            
+            let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
+            var trumpsSet = Set(trumps)
+            
+            cardScores_![CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
+            
+            addScoreIfIn(&trumpsSet,card:CardName.Ace.of(PlayingCard.Suite.Hearts)!, score:4)
+            addScoreIfIn(&trumpsSet,card:CardName.King.of(PlayingCard.Suite.Hearts)!, score:3)
+            addScoreIfIn(&trumpsSet,card:CardName.Queen.of(PlayingCard.Suite.Hearts)!, score:2)
+            addScoreIfIn(&trumpsSet,card:CardName.Jack.of(PlayingCard.Suite.Hearts)!, score:5)
+            
+            for card in trumpsSet
+            {
+                cardScores_![card] = 1
+            }
+        }
+        return cardScores_!
+    }
+    var backgroundCards : [PlayingCard] {
+        let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
+            .filter { $0.suite == trumpSuite }
+            .sort()
+            .reverse()
+        
+        return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
+    }
+    var ricketyKatePoints = 13
+    var allPoints : Int { return cardScores.reduce(0) { $0 + $1.1 } }
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.Hearts }
-    var trumpSuiteSingular : String  { return "heart" }
+    var trumpSuiteSingular : String  { return "Heart" }
     var trumpSuitePlural : String  { return trumpSuite.description }
     
     func addScoreIfIn(inout deck: Set<PlayingCard>,card:PlayingCard, score:Int)
     {
      if deck.contains(card)
        {
-       cardScores[card] = 4
+       cardScores_![card] = score
        deck.remove(card)
        }
     }
@@ -110,23 +156,6 @@ class HeartsAwarder : IAwarder
     init(gameSettings:IGameSettings  )
     {
         self.gameSettings = gameSettings
-        let trumps = gameSettings.deck!.orderedDeck.filter { $0.suite == trumpSuite }
-        var trumpsSet = Set(trumps)
-        
-        cardScores[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
-        
-        addScoreIfIn(&trumpsSet,card:CardName.Ace.of(PlayingCard.Suite.Hearts)!, score:4)
-        addScoreIfIn(&trumpsSet,card:CardName.King.of(PlayingCard.Suite.Hearts)!, score:3)
-        addScoreIfIn(&trumpsSet,card:CardName.Queen.of(PlayingCard.Suite.Hearts)!, score:2)
-        addScoreIfIn(&trumpsSet,card:CardName.Jack.of(PlayingCard.Suite.Hearts)!, score:5)
-
-        for card in trumpsSet
-        {
-           cardScores[card] = 1
-        }
-
-        allPoints = cardScores.reduce(0) { $0 + $1.1 }
-      
     }
     
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
@@ -171,10 +200,17 @@ class JacksAwarder : IAwarder
     var ricketyKatePoints : Int { return  10 }
     var allPoints : Int { return 10 + GameSettings.sharedInstance.noOfSuitesInDeck * 2 }
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.None }
-    var trumpSuiteSingular : String  { return "jack" }
+    var trumpSuiteSingular : String  { return "Jack" }
     var trumpSuitePlural : String  { return "Jacks" }
 
-    
+    var backgroundCards : [PlayingCard] {
+        let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
+            .filter { $0.suite == PlayingCard.Suite.Diamonds }
+            .sort()
+            .reverse()
+        
+        return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
+    }
 
     var gameSettings:IGameSettings? = nil
     

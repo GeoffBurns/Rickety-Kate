@@ -48,15 +48,9 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
         {
             return nil
         }
-        var earlyLeadSuites = GameSettings.sharedInstance.deck!.suitesInDeck
-        if let j = earlyLeadSuites.indexOf(PlayingCard.Suite.Jokers)
-        {
-            earlyLeadSuites.removeAtIndex(j)
-        }
-        if let t = earlyLeadSuites.indexOf(GameSettings.sharedInstance.rules.trumpSuite)
-        {
-            earlyLeadSuites.removeAtIndex(t)
-        }
+        let suites = GameSettings.sharedInstance.deck!.setOfSuitesInDeck
+        let earlyLeadSuites = Array(suites.subtract([PlayingCard.Suite.Jokers,GameSettings.sharedInstance.rules.trumpSuite]))
+  
         
         var maxCard : PlayingCard? = nil
         var max = -20

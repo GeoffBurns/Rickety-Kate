@@ -338,10 +338,27 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     public class BuiltCardDeck : DeckBase
     {
         var gameSettings:IGameSettings? = nil
+        public var setOfSuitesInDeck = Set<PlayingCard.Suite>()
         public var suitesInDeck : [PlayingCard.Suite] = []
+        public var normalSuitesInDeck : [PlayingCard.Suite] = []
         public init(gameSettings:IGameSettings )
         {
             self.gameSettings = gameSettings
+            normalSuitesInDeck = Array(PlayingCard.Suite.normalSuites[0..<gameSettings.noOfSuitesInDeck])
+            suitesInDeck = normalSuitesInDeck
+            if gameSettings.hasTrumps
+            {
+                suitesInDeck.append(PlayingCard.Suite.Trumps)
+               
+            }
+            if gameSettings.hasJokers
+            {
+                suitesInDeck.append(PlayingCard.Suite.Jokers)
+        
+            }
+            
+            setOfSuitesInDeck = Set<PlayingCard.Suite>(suitesInDeck)
+
         }
         
   
@@ -360,9 +377,8 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 
                 let toRemove = noOfPossibleCardsInDeck % gameSettings!.noOfPlayersAtTable
                 var removedCards = Set<PlayingCard>()
-                let suites = PlayingCard.Suite.normalSuites[0..<gameSettings!.noOfSuitesInDeck]
-                suitesInDeck.appendContentsOf(suites)
-                for s in suites
+          
+                for s in normalSuitesInDeck
                 {
                     noInSuites[s.rawValue]  = gameSettings!.noOfCardsInASuite
                 }
@@ -372,13 +388,13 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 /// Make sure than the cards divide evenly between the players by removing low value cards until the pack size is a multiple of the number of players
                 repeat
                 {
-                  for s in suites
+                  for s in normalSuitesInDeck
                   {
                     if removedSoFar >= toRemove
                     {
                         break
                     }
-                    if s == PlayingCard.Suite.Spades
+                    if s == gameSettings!.rules.trumpSuite
                     {
                         continue
                     }
@@ -390,7 +406,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 }
                 while removedSoFar < toRemove
              
-                for s in suites
+                for s in normalSuitesInDeck
                 {
                     for v in PlayingCard.CardValue.valuesFor(gameSettings!.noOfCardsInASuite)
                     {
@@ -406,7 +422,6 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 if gameSettings!.hasTrumps
                 {
                     deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(0)))
-                    suitesInDeck.append(PlayingCard.Suite.Trumps)
                     for v in 1...21
                     {
                         deck.append(PlayingCard(suite: PlayingCard.Suite.Trumps, value : PlayingCard.CardValue.Pip(v)))
@@ -414,7 +429,6 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 }
                 if gameSettings!.hasJokers
                 {
-                    suitesInDeck.append(PlayingCard.Suite.Jokers)
                     for v in 1...2
                     {
                         deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(v)))
