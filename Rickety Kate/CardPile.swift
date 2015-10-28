@@ -16,6 +16,7 @@ class CardPile
  
     static let defaultSpread = CGFloat(10)
     var cards = [PlayingCard]() { didSet { update() } }
+    var baseCard : PlayingCard? = nil  { didSet { updateBase() } }
     var isUp = false
     var sizeOfCards = CardSize.Small
     var scene : SKNode? = nil
@@ -32,7 +33,7 @@ class CardPile
     var speed = GameSettings.sharedInstance.tossDuration
     var cardAnchorPoint : CGPoint { get { return CardPile.straightAnchorPoint }}
     var sprites : [SKNode] { return cards.map { createSprite($0,scene!)! } }
-    
+    var baseSprite : CardSprite? { if baseCard == nil {return nil}; return scene!.whiteCardSprite(baseCard!) }
     subscript(index: Int) -> PlayingCard { return cards[index] }
     
     init(name:String) { self.name = name }
@@ -96,7 +97,38 @@ class CardPile
         return direction.rotationOfCard(positionInSpread, fullHand:fullHand) - 30.degreesToRadians
     }
     
+    func updateBase()
+    {
+        if let sprite = baseSprite
+        {
+            sprite.fan = self
+            
+            if (sprite.state != CardState.AtRest)
+            {
+                sprite.zPosition = 140
+                sprite.state = CardState.AtRest
+            }
+            
+            
+            sprite.positionInSpread = 0
+            
+            // PlayerOne's cards are larger
+            let newScale =  sizeOfCards.scale
+            
+            let newHeight = newScale * sprite.size.height / sprite.yScale
+            sprite.updateAnchorPoint(cardAnchorPoint)
+            sprite.color = UIColor.whiteColor()
+            sprite.colorBlendFactor = 0
+            
+        
+            sprite.position =  positionOfCard(0, spriteHeight: newHeight, fullHand:fullHand)
+
+            sprite.zRotation = rotationOfCard(0, fullHand:fullHand)
+            sprite.setScale(sizeOfCards.scale)
     
+        }
+    }
+
     func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat,
         fullHand:CGFloat)
     {
