@@ -64,8 +64,54 @@ class AwarderBase
             .map { $0.0 }
         )
     }
+    var gameSettings:IGameSettings? = nil
     
-
+    internal init(gameSettings:IGameSettings  )
+    {
+        self.gameSettings = gameSettings
+      
+    }
+    // overriden in derived class
+    func countTrumps(cards: [PlayingCard]) -> Int
+    {
+        return 0
+    }
+    
+    func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
+    {
+        let ricketyKate = cards.filter{$0 == CardName.Queen.of(PlayingCard.Suite.Spades)}
+        
+        let noTrumps = countTrumps(cards)
+        
+        let omni = omnibus == nil ? [] : cards.filter{$0 == self.omnibus_}
+        let hool = hooligan == nil ? [] : cards.filter{$0 == hooligan_}
+        
+        let score = cards.reduce(0) { $0 + (cardScores[$1] ?? 0) }
+        
+        if !ricketyKate.isEmpty
+        {
+            Bus.sharedInstance.send(GameEvent.WinRicketyKate(winnersName))
+        }
+        else if !omni.isEmpty
+        {
+            Bus.sharedInstance.send(GameEvent.WinOmnibus(winnersName))
+        }
+        else if !hool.isEmpty
+        {
+            Bus.sharedInstance.send(GameEvent.WinHooligan(winnersName))
+        }
+            
+        else if noTrumps > 0
+        {
+            Bus.sharedInstance.send(GameEvent.WinSpades(winnersName,noTrumps))
+        }
+        else
+        {
+            Bus.sharedInstance.send(GameEvent.WinTrick(winnersName))
+        }
+        
+        return score
+    }
 }
 
 /// Calculate the score value of the cards
@@ -91,13 +137,7 @@ class SpadesAwarder : AwarderBase, IAwarder
     var description = "Rickety Kate (Spade Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
     
     
-    var gameSettings:IGameSettings? = nil
 
-    internal init(gameSettings:IGameSettings )
-    {
-        self.gameSettings = gameSettings
-   
-    }
     
     override func createCardScores() -> Dictionary<PlayingCard,Int>
     {
@@ -127,46 +167,11 @@ class SpadesAwarder : AwarderBase, IAwarder
         return result
     }
     
-    
-    func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
+    override func countTrumps(cards: [PlayingCard]) -> Int
     {
-    
-        let ricketyKate = cards.filter{$0 == CardName.Queen.of(PlayingCard.Suite.Spades)}
-        
-        let spades = cards.filter{$0.suite == PlayingCard.Suite.Spades && $0 != CardName.Queen.of(PlayingCard.Suite.Spades)}
-        
-        let omni = omnibus == nil ? [] : cards.filter{$0 == omnibus_}
-        let hool = hooligan == nil ? [] : cards.filter{$0 == hooligan_}
-        
-    
-        let score = cards.reduce(0) { $0 + (cardScores[$1] ?? 0) }
-        
-        if !ricketyKate.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinRicketyKate(winnersName))
-        }
-        else if !omni.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinOmnibus(winnersName))
-        }
-        else if !hool.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinHooligan(winnersName))
-        }
-
-        else if spades.count > 0
-           {
-            Bus.sharedInstance.send(GameEvent.WinSpades(winnersName,spades.count))
-           }
-        else
-           {
-            Bus.sharedInstance.send(GameEvent.WinTrick(winnersName))
-           }
-        
-        return score
+        return cards.filter {$0.suite == PlayingCard.Suite.Spades && $0 != CardName.Queen.of(PlayingCard.Suite.Spades)}.count
     }
 }
-
 /// Calculate the score value of the cards
 /// Used by the Scorer
 class HeartsAwarder : AwarderBase, IAwarder
@@ -216,46 +221,9 @@ class HeartsAwarder : AwarderBase, IAwarder
     var trumpSuitePlural : String  { return trumpSuite.description }
     
     
-    var gameSettings:IGameSettings? = nil
-    
-    init(gameSettings:IGameSettings  )
+    override func countTrumps(cards: [PlayingCard]) -> Int
     {
-        self.gameSettings = gameSettings
-    }
-    
-    func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
-    {
-
-        let ricketyKate = cards.filter{$0 == CardName.Queen.of(PlayingCard.Suite.Spades)}
-        let omni = omnibus == nil ? [] : cards.filter{$0 == omnibus_}
-        let hool = hooligan == nil ? [] : cards.filter{$0 == hooligan_}
-        
-        let hearts = cards.filter{$0.suite == trumpSuite }
-
-        let score = cards.reduce(0) { $0 + (cardScores[$1] ?? 0) }
-        
-        if !ricketyKate.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinRicketyKate(winnersName))
-        }
-        else if !omni.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinOmnibus(winnersName))
-        }
-        else if !hool.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinHooligan(winnersName))
-        }
-        else if hearts.count > 0
-        {
-            Bus.sharedInstance.send(GameEvent.WinSpades(winnersName,hearts.count))
-        }
-        else
-        {
-            Bus.sharedInstance.send(GameEvent.WinTrick(winnersName))
-        }
-        
-        return score
+        return cards.filter{$0.suite == trumpSuite }.count
     }
 }
 
@@ -307,49 +275,10 @@ class JacksAwarder : AwarderBase, IAwarder
         return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
     }
 
-    var gameSettings:IGameSettings? = nil
-    
-    internal init(gameSettings:IGameSettings  )
+    override func countTrumps(cards: [PlayingCard]) -> Int
     {
-        self.gameSettings = gameSettings
-    
- 
+        return  cards.filter{$0.value == CardName.Jack.cardValue }.count
     }
     
-    func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
-    {
-        let ricketyKate = cards.filter{$0 == CardName.Queen.of(PlayingCard.Suite.Spades)}
-        
-        let jacks = cards.filter{$0.value == CardName.Jack.cardValue }
-
-        let omni = omnibus == nil ? [] : cards.filter{$0 == self.omnibus_}
-        let hool = hooligan == nil ? [] : cards.filter{$0 == hooligan_}
-
-        let score = cards.reduce(0) { $0 + (cardScores[$1] ?? 0) }
-        
-        if !ricketyKate.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinRicketyKate(winnersName))
-        }
-        else if !omni.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinOmnibus(winnersName))
-        }
-        else if !hool.isEmpty
-        {
-            Bus.sharedInstance.send(GameEvent.WinHooligan(winnersName))
-        }
-
-        else if jacks.count > 0
-        {
-            Bus.sharedInstance.send(GameEvent.WinSpades(winnersName,jacks.count))
-        }
-        else
-        {
-            Bus.sharedInstance.send(GameEvent.WinTrick(winnersName))
-        }
-        
-        return score
    }
-}
 
