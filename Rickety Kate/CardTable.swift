@@ -93,27 +93,33 @@ public class CardTable : GameStateBase, GameState
         }
     }
     
-    func isMoveValid(player:CardPlayer,cardName:String) -> Bool
+    func isMoveValid(player:CardPlayer,card:PlayingCard) -> GameEvent
     {
+     
         if self.tricksPile.isEmpty
         {
-            return true
+            
+            if !gameTracker.trumpsHaveBeenBroken && !GameSettings.sharedInstance.allowBreakingTrumps
+            {
+                return GameEvent.TrumpsHaveNotBeenBroken
+            }
+            
+            return GameEvent.CardPlayed(player, card)
         }
         if let trick = self.tricksPile.first
         {
             let leadingSuite = trick.playedCard.suite
             let cardsInSuite = player.hand.filter { $0.suite == leadingSuite}
+            
+               let displayedCard = scene!.cardSprite(card)
+            
             /// If the player has no cards in the suite they do not need to follow
-            if cardsInSuite.isEmpty
+            if cardsInSuite.isEmpty || displayedCard!.card.suite == leadingSuite
             {
-                return true
+                return GameEvent.CardPlayed(player, card)
             }
-            let displayedCard = scene!.cardSpriteNamed(cardName)
-            
-            return displayedCard!.card.suite == leadingSuite
-            
         }
-        return false
+        return GameEvent.CardDoesNotFollowSuite
     }
     
     func playTrickCard(playerWithTurn:CardPlayer, trickcard:PlayingCard)

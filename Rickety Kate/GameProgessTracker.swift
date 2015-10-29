@@ -14,8 +14,8 @@ public class GameProgressTracker
 {
     var cardCount = [Int](count: PlayingCard.Suite.NoOfSuites.rawValue, repeatedValue: 0)
     var notFollowing  = [Set<CardPlayer>]()
-    var unplayedScoringCards  = Set<PlayingCard>()
-    
+    var unplayedScoringCards = Set<PlayingCard>()
+    var trumpsHaveBeenBroken = false
     
     public func reset()
     {
@@ -25,6 +25,7 @@ public class GameProgressTracker
         notFollowing[i].removeAll(keepCapacity: true)
         }
         unplayedScoringCards = Set<PlayingCard>(GameSettings.sharedInstance.rules.cardScores.keys)
+        trumpsHaveBeenBroken = false
     }
     
     func trackNotFollowingBehaviourForAIStrategy(first:(player:CardPlayer, playedCard:PlayingCard)?,player: CardPlayer, suite: PlayingCard.Suite )
@@ -41,6 +42,11 @@ public class GameProgressTracker
     
     func trackProgress(first:(player:CardPlayer, playedCard:PlayingCard)?,player:CardPlayer, playedCard:PlayingCard)
     {
+        
+        if playedCard.suite == GameSettings.sharedInstance.rules.trumpSuite
+        {
+            trumpsHaveBeenBroken = true
+        }
         countCardIn(playedCard.suite)
         trackNotFollowingBehaviourForAIStrategy(first, player: player, suite: playedCard.suite)
         unplayedScoringCards.remove(playedCard)

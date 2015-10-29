@@ -484,16 +484,18 @@ class GameScene: SKScene {
                         where positionInScene.y > height * 0.3
                         {
                         
-                       if table.isMoveValid(self.table.playerOne,cardName: cardsprite.name!)
+                       let gameEvent = table.isMoveValid(self.table.playerOne,card: cardsprite.card)
+                        switch gameEvent
                           {
-                          transferCardToTrickPile(cardsprite)
+                        case .CardPlayed(_, _) :
+                            transferCardToTrickPile(cardsprite)
+                        case .CardDoesNotFollowSuite :
+                            doesNotFollowSuite(cardsprite)
+                        default:
+                             Bus.sharedInstance.send(gameEvent)
                           
-                          return;
                           }
-                       else
-                          {
-                          doesNotFollowSuite(cardsprite)
-                          }
+                    
                          }
                 } else {
                     Bus.sharedInstance.send(GameEvent.WaitYourTurn)
