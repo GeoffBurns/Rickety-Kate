@@ -19,6 +19,7 @@ public enum GameEvent : Equatable
     case WinSpades(String,Int)
     case NewHand
     case CardDoesNotFollowSuite
+    case TrumpsHaveNotBeenBroken
     case WaitYourTurn
     case CardPlayed(CardPlayer,PlayingCard)
     case PlayerKnocked(CardPlayer)
@@ -74,6 +75,9 @@ public enum GameEvent : Equatable
                 return nil
             case NotYourTurn :
                 return ""
+            case TrumpsHaveNotBeenBroken :
+                return "Can not Lead with a " + GameSettings.sharedInstance.rules.trumpSuiteSingular +
+                "\nAs " + GameSettings.sharedInstance.rules.trumpSuitePlural + " Have Not Been Broken"
             case CardDoesNotFollowSuite :
                 return "Card Does Not\nFollow Suite"
             case WaitYourTurn :
