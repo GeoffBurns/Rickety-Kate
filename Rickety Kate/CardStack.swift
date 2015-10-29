@@ -10,7 +10,7 @@ import SpriteKit
 
 /// How the cards are displayed in a stack
 /// Only certain cards are accepted on the stack
-
+/// Used in Sevens and Penalty Games
 typealias ValidNextCardCalculator = (PlayingCard) -> Set<PlayingCard>
 
 class CardStack : CardPile

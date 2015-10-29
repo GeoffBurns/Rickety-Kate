@@ -18,15 +18,60 @@ public protocol IAwarder
     var trumpSuitePlural : String  { get }
     var description : String { get }
     var cardScores : Dictionary<PlayingCard,Int> { get }
+    var bonusCards : Set<PlayingCard> { get }
+    var penaltyCards : Set<PlayingCard> { get }
     var omnibus : PlayingCard? { get }
     var hooligan : PlayingCard? { get }
     var backgroundCards : [PlayingCard] { get }
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
     
 }
+
+class AwarderBase
+{
+    var omnibus_ : PlayingCard  { return CardName.Jack.of(PlayingCard.Suite.Diamonds)! }
+    var hooligan_ = 7.of(PlayingCard.Suite.Clubs)
+    var omnibus : PlayingCard? = nil
+    var hooligan : PlayingCard? = nil
+    var cardScores_ : Dictionary<PlayingCard,Int>? = nil
+    // Overriden in derived class
+    func createCardScores() -> Dictionary<PlayingCard,Int>
+    {
+        return Dictionary<PlayingCard,Int>()
+    }
+    var cardScores : Dictionary<PlayingCard,Int> {
+        if cardScores_ == nil
+           {
+           cardScores_ = createCardScores()
+           }
+        return cardScores_!
+    }
+    var bonusCards : Set<PlayingCard> {
+        return Set<PlayingCard>(
+         cardScores
+            // only cards with negative sdores
+            .filter { $0.1 < 0 }
+            // only interested in the key
+            .map { $0.0 }
+        )
+    }
+    var penaltyCards : Set<PlayingCard> {
+        return Set<PlayingCard>(
+        cardScores
+            // only cards with positive sdores
+            .filter { $0.1 > 0 }
+            // only interested in the key
+            .map { $0.0 }
+        )
+    }
+    
+
+}
+
 /// Calculate the score value of the cards
+/// For the Spades Variant of Rickety Kate
 /// Used by the Scorer
-class SpadesAwarder : IAwarder
+class SpadesAwarder : AwarderBase, IAwarder
 {
     var backgroundCards : [PlayingCard] {
     let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
@@ -38,44 +83,11 @@ class SpadesAwarder : IAwarder
     }
     
     var allPoints : Int { return  9 + GameSettings.sharedInstance.noOfCardsInASuite }
-    var ricketyKatePoints : Int { return  10 }
+    var ricketyKatePoints = 10
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.Spades }
-    var trumpSuiteSingular : String  { return "Spade" }
+    var trumpSuiteSingular = "Spade"
     var trumpSuitePlural : String  { return trumpSuite.description }
-    var omnibus_ = CardName.Jack.of(PlayingCard.Suite.Diamonds)!
-    var hooligan_ = 7.of(PlayingCard.Suite.Clubs)
-    var omnibus : PlayingCard? = nil
-    var hooligan : PlayingCard? = nil
-    var cardScores_ : Dictionary<PlayingCard,Int>? = nil
-    var cardScores : Dictionary<PlayingCard,Int> {
-        if cardScores_ == nil
-        {
-           cardScores_ =  Dictionary<PlayingCard,Int>()
-            let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
-            var trumpsSet = Set(trumps)
-            
-            cardScores_![CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
-            
-            trumpsSet.remove(CardName.Queen.of(PlayingCard.Suite.Spades)!)
-            
-            for card in trumpsSet
-            {
-                cardScores_![card] = 1
-            }
-            
-            if gameSettings!.includeHooligan
-            {
-                cardScores_![hooligan_] = 7
-                hooligan = hooligan_
-            }
-            if gameSettings!.includeOmnibus
-            {
-                cardScores_![omnibus_] = -10
-                omnibus=omnibus_
-            }
-        }
-        return cardScores_!
-    }
+
     var description = "Rickety Kate (Spade Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
     
     
@@ -86,6 +98,35 @@ class SpadesAwarder : IAwarder
         self.gameSettings = gameSettings
    
     }
+    
+    override func createCardScores() -> Dictionary<PlayingCard,Int>
+    {
+        var result =  Dictionary<PlayingCard,Int>()
+        let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
+        var trumpsSet = Set(trumps)
+        
+        result[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
+        
+        trumpsSet.remove(CardName.Queen.of(PlayingCard.Suite.Spades)!)
+        
+        for card in trumpsSet
+        {
+            result[card] = 1
+        }
+        
+        if gameSettings!.includeHooligan
+        {
+            result[hooligan_] = 7
+            hooligan = hooligan_
+        }
+        if gameSettings!.includeOmnibus
+        {
+            result[omnibus_] = -10
+            omnibus=omnibus_
+        }
+        return result
+    }
+    
     
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
     {
@@ -128,46 +169,41 @@ class SpadesAwarder : IAwarder
 
 /// Calculate the score value of the cards
 /// Used by the Scorer
-class HeartsAwarder : IAwarder
+class HeartsAwarder : AwarderBase, IAwarder
 {
     var description = "Rickety Kate (Hearts Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 13 points against you and the hearts are worth fewer points against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
-    var omnibus_ = CardName.Jack.of(PlayingCard.Suite.Diamonds)!
-    var hooligan_ = 7.of(PlayingCard.Suite.Clubs)
-    var omnibus : PlayingCard? = nil
-    var hooligan : PlayingCard? = nil
-    var cardScores_ : Dictionary<PlayingCard,Int>? = nil
-    var cardScores : Dictionary<PlayingCard,Int> {
-        if cardScores_ == nil
+
+    override func createCardScores() -> Dictionary<PlayingCard,Int>
+    {
+        var result =  Dictionary<PlayingCard,Int>()
+        let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
+        var trumpsSet = Set(trumps)
+        
+        result[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
+        
+        addScoreIfIn(&trumpsSet,card:CardName.Ace.of(PlayingCard.Suite.Hearts)!, score:4)
+        addScoreIfIn(&trumpsSet,card:CardName.King.of(PlayingCard.Suite.Hearts)!, score:3)
+        addScoreIfIn(&trumpsSet,card:CardName.Queen.of(PlayingCard.Suite.Hearts)!, score:2)
+        addScoreIfIn(&trumpsSet,card:CardName.Jack.of(PlayingCard.Suite.Hearts)!, score:5)
+        
+        for card in trumpsSet
         {
-            cardScores_ =  Dictionary<PlayingCard,Int>()
-            
-            let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
-            var trumpsSet = Set(trumps)
-            
-            cardScores_![CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
-            
-            addScoreIfIn(&trumpsSet,card:CardName.Ace.of(PlayingCard.Suite.Hearts)!, score:4)
-            addScoreIfIn(&trumpsSet,card:CardName.King.of(PlayingCard.Suite.Hearts)!, score:3)
-            addScoreIfIn(&trumpsSet,card:CardName.Queen.of(PlayingCard.Suite.Hearts)!, score:2)
-            addScoreIfIn(&trumpsSet,card:CardName.Jack.of(PlayingCard.Suite.Hearts)!, score:5)
-            
-            for card in trumpsSet
-            {
-                cardScores_![card] = 1
-            }
-            if gameSettings!.includeHooligan
-            {
-                cardScores_![hooligan_] = 7
-                hooligan = hooligan_
-            }
-            if gameSettings!.includeOmnibus
-            {
-                cardScores_![omnibus_] = -10
-                omnibus=omnibus_
-            }
+            result[card] = 1
         }
-        return cardScores_!
+        if gameSettings!.includeHooligan
+        {
+            result[hooligan_] = 7
+            hooligan = hooligan_
+        }
+        if gameSettings!.includeOmnibus
+        {
+            result[omnibus_] = -10
+            omnibus=omnibus_
+        }
+
+        return result
     }
+
     var backgroundCards : [PlayingCard] {
         let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
             .filter { $0.suite == trumpSuite }
@@ -179,7 +215,7 @@ class HeartsAwarder : IAwarder
     var ricketyKatePoints = 13
     var allPoints : Int { return cardScores.reduce(0) { $0 + $1.1 } }
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.Hearts }
-    var trumpSuiteSingular : String  { return "Heart" }
+    var trumpSuiteSingular = "Heart"
     var trumpSuitePlural : String  { return trumpSuite.description }
     
     func addScoreIfIn(inout deck: Set<PlayingCard>,card:PlayingCard, score:Int)
@@ -237,40 +273,37 @@ class HeartsAwarder : IAwarder
 
 /// Calculate the score value of the cards
 /// Used by the Scorer
-class JacksAwarder : IAwarder
+class JacksAwarder : AwarderBase, IAwarder
 {
     var description = "Rickety Kate (Jacks Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and each Jack is worth two points against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
-    var omnibus_ = CardName.Queen.of(PlayingCard.Suite.Diamonds)!
-    var hooligan_ = 7.of(PlayingCard.Suite.Clubs)
-    var omnibus : PlayingCard? = nil
-    var hooligan : PlayingCard? = nil
-    var cardScores_ : Dictionary<PlayingCard,Int>? = nil
-    var cardScores : Dictionary<PlayingCard,Int> {
-        if cardScores_ == nil
-        {
-            cardScores_ =  Dictionary<PlayingCard,Int>()
-            
-            cardScores_![CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
-            
-            for suite in gameSettings!.deck!.suitesInDeck
-            {
-                cardScores_![CardName.Jack.of(suite)!] = 2
-            }
-            if gameSettings!.includeHooligan
-            {
-                cardScores_![hooligan_] = 7
-                hooligan = hooligan_
-            }
-            if gameSettings!.includeOmnibus
-            {
-                cardScores_![omnibus_] = -10
-                omnibus=omnibus_
-            }
-        }
-        return cardScores_!
-    }
+    
+    override var omnibus_ : PlayingCard { return CardName.Queen.of(PlayingCard.Suite.Diamonds)! }
 
-    var ricketyKatePoints : Int { return  10 }
+    override func createCardScores() -> Dictionary<PlayingCard,Int>
+    {
+        var result =  Dictionary<PlayingCard,Int>()
+        cardScores_![CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
+        
+        for suite in gameSettings!.deck!.suitesInDeck
+        {
+            result[CardName.Jack.of(suite)!] = 2
+        }
+        if gameSettings!.includeHooligan
+        {
+            result[hooligan_] = 7
+            hooligan = hooligan_
+        }
+        if gameSettings!.includeOmnibus
+        {
+            result[self.omnibus_] = -10
+            omnibus=self.omnibus_
+        }
+
+        
+        return result
+    }
+    
+    var ricketyKatePoints = 10 
     var allPoints : Int { return 10 + GameSettings.sharedInstance.noOfSuitesInDeck * 2 }
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.None }
     var trumpSuiteSingular : String  { return "Jack" }
@@ -300,7 +333,7 @@ class JacksAwarder : IAwarder
         
         let jacks = cards.filter{$0.value == CardName.Jack.cardValue }
 
-        let omni = omnibus == nil ? [] : cards.filter{$0 == omnibus_}
+        let omni = omnibus == nil ? [] : cards.filter{$0 == self.omnibus_}
         let hool = hooligan == nil ? [] : cards.filter{$0 == hooligan_}
 
         let score = cards.reduce(0) { $0 + (cardScores[$1] ?? 0) }
@@ -328,5 +361,6 @@ class JacksAwarder : IAwarder
         }
         
         return score
+   }
 }
-}
+
