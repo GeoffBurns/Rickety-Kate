@@ -177,19 +177,17 @@ class HeartsAwarder : AwarderBase, IAwarder
     {
         var result =  Dictionary<PlayingCard,Int>()
         let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
-        var trumpsSet = Set(trumps)
-        
-        result[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
-        
-        addScoreIfIn(&trumpsSet,card:CardName.Ace.of(PlayingCard.Suite.Hearts)!, score:4)
-        addScoreIfIn(&trumpsSet,card:CardName.King.of(PlayingCard.Suite.Hearts)!, score:3)
-        addScoreIfIn(&trumpsSet,card:CardName.Queen.of(PlayingCard.Suite.Hearts)!, score:2)
-        addScoreIfIn(&trumpsSet,card:CardName.Jack.of(PlayingCard.Suite.Hearts)!, score:5)
-        
-        for card in trumpsSet
+
+        for card in trumps
         {
             result[card] = 1
         }
+        result[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
+        result[CardName.Ace.of(PlayingCard.Suite.Hearts)!] = 4
+        result[CardName.King.of(PlayingCard.Suite.Hearts)!] = 3
+        result[CardName.Queen.of(PlayingCard.Suite.Hearts)!] = 2
+        result[CardName.Jack.of(PlayingCard.Suite.Hearts)!] = 5
+      
         if gameSettings!.includeHooligan
         {
             result[hooligan_] = 7
@@ -200,7 +198,6 @@ class HeartsAwarder : AwarderBase, IAwarder
             result[omnibus_] = -10
             omnibus=omnibus_
         }
-
         return result
     }
 
@@ -218,14 +215,6 @@ class HeartsAwarder : AwarderBase, IAwarder
     var trumpSuiteSingular = "Heart"
     var trumpSuitePlural : String  { return trumpSuite.description }
     
-    func addScoreIfIn(inout deck: Set<PlayingCard>,card:PlayingCard, score:Int)
-    {
-     if deck.contains(card)
-       {
-       cardScores_![card] = score
-       deck.remove(card)
-       }
-    }
     
     var gameSettings:IGameSettings? = nil
     
