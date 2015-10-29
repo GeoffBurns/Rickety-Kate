@@ -14,6 +14,8 @@ public enum GameEvent : Equatable
     case WinGame(String)
     case ShotTheMoon(String)
     case WinRicketyKate(String)
+    case WinHooligan(String)
+    case WinOmnibus(String)
     case WinSpades(String,Int)
     case NewHand
     case CardDoesNotFollowSuite
@@ -45,7 +47,17 @@ public enum GameEvent : Equatable
                     ? "Congratulatons!!!\nYou just Won the Game"
                     : "Wow!!!\n\(name) just Won the Game"
             case WinRicketyKate( let name ) :
-                return name + " won Rickety Kate\nPoor " + name
+                return name=="You"
+                    ? name + " were kissed by\nRickety Kate. Poor " + name
+                    : name + " was kissed by\nRickety Kate. Poor " + name
+            case WinHooligan( let name ) :
+                return name=="You"
+                    ? name + " were bashed by\nthe Hooligan. Poor " + name
+                    : name + " was bashed by\nthe Hooligan. Poor " + name
+            case WinOmnibus( let name ) :
+                return name=="You"
+                   ? "Congratulatons!\nYou just Caught the Bus"
+                   : "Wow!\n\(name) just Caught the Bus"
             case WinSpades( let name, let noOfSpades ) :
                 return  noOfSpades == 1
                     ? name + " won a \(GameSettings.sharedInstance.rules.trumpSuiteSingular)\nBad Luck"

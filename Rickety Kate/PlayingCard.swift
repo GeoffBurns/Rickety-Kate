@@ -284,7 +284,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public class DeckBase : Deck
     {
-        var noInSuites = [13,13,13,13,13,13,13,22,3]
+        var noInSuites = [13,13,13,13,13,13,13,21,3]
         func noCardIn(suite:PlayingCard.Suite) -> Int
         {
             return noInSuites[suite.rawValue]
@@ -341,6 +341,19 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         public var setOfSuitesInDeck = Set<PlayingCard.Suite>()
         public var suitesInDeck : [PlayingCard.Suite] = []
         public var normalSuitesInDeck : [PlayingCard.Suite] = []
+    
+        var noOfPossibleCardsInDeck : Int {
+            var result = (gameSettings!.noOfSuitesInDeck * gameSettings!.noOfCardsInASuite)
+             if gameSettings!.hasTrumps
+                {
+                result += 22
+                }
+             if gameSettings!.hasJokers
+                 {
+                 result += 2
+                 }
+            return result
+        }
         public init(gameSettings:IGameSettings )
         {
             self.gameSettings = gameSettings
@@ -358,32 +371,39 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             }
             
             setOfSuitesInDeck = Set<PlayingCard.Suite>(suitesInDeck)
-
+            
         }
         
-  
+        func calculateNoOfCardsInEachSuite()
+        {
+            for s in normalSuitesInDeck
+            {
+                noInSuites[s.rawValue]  = gameSettings!.noOfCardsInASuite
+            }
+            noInSuites[PlayingCard.Suite.Jokers.rawValue] = 0
+            if gameSettings!.hasTrumps
+            {
+                noInSuites[PlayingCard.Suite.Trumps.rawValue] = 21
+                noInSuites[PlayingCard.Suite.Jokers.rawValue] = 1
+            }
+            if gameSettings!.hasJokers
+            {
+                noInSuites[PlayingCard.Suite.Jokers.rawValue]  += 2
+            }
+        }
         override public var orderedDeck:[PlayingCard]
             {
                 var deck = [PlayingCard]();
-                var noOfPossibleCardsInDeck = (gameSettings!.noOfSuitesInDeck * gameSettings!.noOfCardsInASuite)
-                if gameSettings!.hasTrumps
-                {
-                  noOfPossibleCardsInDeck += 22
-                }
-                if gameSettings!.hasJokers
-                {
-                    noOfPossibleCardsInDeck += 2
-                }
+       
+                calculateNoOfCardsInEachSuite()
                 
-                let toRemove = noOfPossibleCardsInDeck % gameSettings!.noOfPlayersAtTable
+                let toRemove = gameSettings!.makeDeckEvenlyDevidable
+                                   ? noOfPossibleCardsInDeck % gameSettings!.noOfPlayersAtTable
+                                   : 0
+                
                 var removedCards = Set<PlayingCard>()
-          
-                for s in normalSuitesInDeck
-                {
-                    noInSuites[s.rawValue]  = gameSettings!.noOfCardsInASuite
-                }
-                
                 var removedSoFar = 0
+                
                 var pip = 2
                 /// Make sure than the cards divide evenly between the players by removing low value cards until the pack size is a multiple of the number of players
                 repeat

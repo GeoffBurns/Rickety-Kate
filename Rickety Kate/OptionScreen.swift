@@ -18,6 +18,9 @@ class OptionScreen: Popup {
     var hasJokers = BinaryToggle(current: false, text: "Include Jokers?" )
     var hasTrumps = BinaryToggle(current: false, text: "Include Tarot Trumps?" )
     var willPassCards = BinaryToggle(current: true, text: "Pass Worst Cards?" )
+    var includeHooligan = BinaryToggle(current: false, text: "Include Hooligan?" )
+    var includeOmnibus = BinaryToggle(current: false, text: "Include Omnibus?" )
+    var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow Breaking Trumps?" )
     var speedOfToss = ListToggle(list: ["Very Slow","Slow","Normal","Fast","Very Fast"], current: 3, text: "Speed of Tossed Cards" )
     var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game Finishing Score" )
     var ruleSet = ListToggle(list: ["Spades","Hearts","Jacks"],  current: 1, text: "Rule Set" )
@@ -39,6 +42,10 @@ class OptionScreen: Popup {
         self.speedOfToss.current = GameSettings.sharedInstance.speedOfToss
         self.gameWinningScore.current = GameSettings.sharedInstance.gameWinningScoreIndex
         self.ruleSet.current = GameSettings.sharedInstance.ruleSet
+        self.allowBreakingTrumps.current = GameSettings.sharedInstance.allowBreakingTrumps
+        self.includeHooligan.current = GameSettings.sharedInstance.includeHooligan
+        self.includeOmnibus.current = GameSettings.sharedInstance.includeOmnibus
+        
         }
     
     override func onExit()
@@ -52,7 +59,11 @@ class OptionScreen: Popup {
             willPassCards:willPassCards.current,
             speedOfToss:speedOfToss.current,
             gameWinningScoreIndex:gameWinningScore.current,
-            ruleSet:ruleSet.current)
+            ruleSet:ruleSet.current,
+            allowBreakingTrumps:allowBreakingTrumps.current,
+            includeHooligan:includeHooligan.current,
+            includeOmnibus:includeOmnibus.current
+            )
         {
             if let scene = gameScene as? GameScene
             {
@@ -78,7 +89,7 @@ class OptionScreen: Popup {
         name = "Option Background"
 
         
-        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet]
+        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan]
         
         settupButtons()
         newPage()

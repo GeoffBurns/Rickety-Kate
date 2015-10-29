@@ -16,7 +16,11 @@ public protocol IGameSettings
     var hasTrumps  : Bool { get }
     var hasJokers : Bool { get }
     var willPassCards  : Bool { get }
+    var allowBreakingTrumps  : Bool { get }
+    var includeHooligan  : Bool { get }
+    var includeOmnibus  : Bool { get }
     var isAceHigh  : Bool { get }
+    var makeDeckEvenlyDevidable  : Bool { get }
     var speedOfToss  : Int { get }
     var ruleSet  : Int { get }
     var gameWinningScore  : Int { get  }
@@ -33,7 +37,10 @@ public protocol IGameSettings
         willPassCards:Bool,
         speedOfToss:Int,
         gameWinningScoreIndex:Int,
-        ruleSet:Int
+        ruleSet:Int,
+        allowBreakingTrumps:Bool,
+        includeHooligan:Bool,
+        includeOmnibus:Bool
         ) -> Bool
 }
 enum GameProperties : String
@@ -45,6 +52,9 @@ enum GameProperties : String
     case HasJokers = "HasJokers"
     case willPassCards = "willPassCards"
     case ignorePassCards = "ignorePassCards"
+    case dontBreakTrumps = "dontBreakTrumps"
+    case includeHooligan = "includeHooligan"
+    case includeOmnibus = "includeOmnibus"
     case speedOfToss = "speedOfToss"
     case gameWinningScore = "gameWinningScore"
     case ruleSet = "ruleSet"
@@ -88,7 +98,9 @@ public class GameSettings
 class LiveGameSettings : IGameSettings
 {
   var deck : PlayingCard.BuiltCardDeck? = nil
-  var isAceHigh  : Bool { return true }
+  var isAceHigh =  true
+  var makeDeckEvenlyDevidable =  true
+    
   var noOfSuitesInDeck : Int {
         
     get {
@@ -146,7 +158,34 @@ class LiveGameSettings : IGameSettings
             NSUserDefaults.standardUserDefaults().setBool(!newValue, forKey: GameProperties.ignorePassCards.rawValue)
         }
     }
-    
+    var allowBreakingTrumps : Bool {
+        
+        get {
+            return !NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.dontBreakTrumps.rawValue)
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setBool(!newValue, forKey: GameProperties.dontBreakTrumps.rawValue)
+        }
+    }
+    var includeHooligan : Bool {
+        
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.includeHooligan.rawValue)
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.includeHooligan.rawValue)
+        }
+    }
+    var includeOmnibus : Bool {
+        
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.includeOmnibus.rawValue)
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.includeOmnibus.rawValue)
+        }
+    }
+
     var speedOfToss : Int {
         
         get {
@@ -254,7 +293,10 @@ class LiveGameSettings : IGameSettings
         willPassCards:Bool = true,
         speedOfToss:Int = 3,
         gameWinningScoreIndex:Int = 2,
-        ruleSet:Int = 1
+        ruleSet:Int = 1,
+        allowBreakingTrumps:Bool = true,
+        includeHooligan:Bool  = false,
+        includeOmnibus:Bool  = false
         ) -> Bool
     {
         if self.noOfSuitesInDeck != noOfSuitesInDeck ||
@@ -265,7 +307,10 @@ class LiveGameSettings : IGameSettings
             self.willPassCards != willPassCards ||
             self.gameWinningScoreIndex != gameWinningScoreIndex ||
             self.speedOfToss != speedOfToss ||
-            self.ruleSet != ruleSet
+            self.ruleSet != ruleSet ||
+            self.allowBreakingTrumps != allowBreakingTrumps ||
+            self.includeHooligan != includeHooligan ||
+            self.includeOmnibus != includeOmnibus
         {
             self.noOfSuitesInDeck = noOfSuitesInDeck
             self.noOfPlayersAtTable = noOfPlayersAtTable
@@ -277,6 +322,10 @@ class LiveGameSettings : IGameSettings
             self.gameWinningScoreIndex = gameWinningScoreIndex
             self.ruleSet = ruleSet
             self.deck = PlayingCard.BuiltCardDeck(gameSettings: self)
+            self.allowBreakingTrumps = allowBreakingTrumps
+            self.includeHooligan = includeHooligan
+            self.includeOmnibus = includeOmnibus
+            
             return true
         }
         return false
@@ -292,11 +341,15 @@ public class FakeGameSettings : IGameSettings
     public var noOfCardsInASuite = 15
     public var hasTrumps = false
     public var hasJokers = false
+    public var allowBreakingTrumps = true
+    public var includeHooligan  = false
+    public var includeOmnibus  = false
     public var speedOfToss = 3
     public var willPassCards = false
     public var ruleSet = 1
     public var gameWinningScore = 1
-    public var isAceHigh  : Bool { return true }
+    public var isAceHigh  = true
+    public var makeDeckEvenlyDevidable  = true
     public var deck  : PlayingCard.BuiltCardDeck? = nil
     public var gameWinningScoreIndex = 1
     var awarder : IAwarder? = nil
@@ -309,15 +362,11 @@ public class FakeGameSettings : IGameSettings
     public var tossDuration : NSTimeInterval = 0.4
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)
     {
-        
         self.noOfSuitesInDeck = noOfSuitesInDeck
         self.noOfPlayersAtTable = noOfPlayersAtTable
         self.noOfCardsInASuite = noOfCardsInASuite
         self.hasTrumps = hasTrumps
         self.hasJokers = hasJokers
-        
-
-
         deck  = PlayingCard.BuiltCardDeck(gameSettings: self)
     }
     
@@ -330,7 +379,10 @@ public class FakeGameSettings : IGameSettings
         willPassCards:Bool,
         speedOfToss:Int,
         gameWinningScoreIndex:Int,
-        ruleSet:Int
+        ruleSet:Int,
+        allowBreakingTrumps:Bool,
+        includeHooligan:Bool,
+        includeOmnibus:Bool
         ) -> Bool
     {
         return false

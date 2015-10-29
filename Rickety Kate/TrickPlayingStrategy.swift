@@ -58,7 +58,7 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
         // find safest suite
         for suite in earlyLeadSuites
         {
-            let (possibleCard,safety) = bestEarlyGameCardFor(suite,player: player,gameState: gameState,margin: safetyMargin)
+            let (possibleCard,safety) = bestEarlyGameCardFor(suite,highCard:nil,player: player,gameState: gameState,margin: safetyMargin)
             if let card = possibleCard
             {
                 if safety > max
@@ -81,13 +81,13 @@ public class EarlyGameLeadingStrategy : TrickPlayingStrategy
 
 
 // It might be okay to win the trick if its early in the hand
-func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardHolder,gameState:GameState,margin:Int) -> (PlayingCard?,Int)
+func bestEarlyGameCardFor(suite:PlayingCard.Suite,highCard:PlayingCard?, player:CardHolder,gameState:GameState,margin:Int) -> (PlayingCard?,Int)
 {
     
     //  let noOfPlayers = gameState.noOfPlayers
     let unplayedCardsInTrick = gameState.unplayedCardsInTrick
     
-    /// TODO ask deck for unaccountedForCards
+  
     var unaccountedForCards = GameSettings.sharedInstance.deck!.noCardIn(suite)
     
     // remove cards in hand
@@ -102,6 +102,8 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardHolder,gameState:Ga
     unaccountedForCards -= noCardsPlayed
     
     // remove suites that  been unfollowed
+    
+    
     
     // TODO allow if player does not have any spades
     // do not use if one player does not have the suite
@@ -118,7 +120,17 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,player:CardHolder,gameState:Ga
         return (nil,safety)
     }
     
-    let cardsInChosenSuite = player.cardsIn( suite)
+    var cardsInChosenSuite = player.cardsIn( suite)
+    let scoringCards = gameState.scoringCardsFor(suite)
+    if !scoringCards.isEmpty
+    {
+        var min = scoringCards.minElement()
+        if let high = highCard where high.value > min!.value
+        {
+            min = high
+        }
+        cardsInChosenSuite = cardsInChosenSuite.filter { $0.value < min!.value }
+    }
     let orderedCards = cardsInChosenSuite.sort({$0.value > $1.value})
     
     return (orderedCards.first,safety)
@@ -140,18 +152,14 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
         if let suite = gameState.leadingSuite
         {
             
-            // you don't want to win if its spades
+            // you don't want to win if its spades go to late game strategy
             if gameState.leadingSuite == GameSettings.sharedInstance.rules.trumpSuite
             {
                 return nil
             }
             
-            let scoringCards = gameState.scoringCardsFor(suite)
-            if scoringCards.count > 0
-            {
-                return nil
-            }
-            return bestEarlyGameCardFor(suite,player: player,gameState: gameState,margin: safetyMargin).0;
+            let max = gameState.cardsFollowingSuite.maxElement()
+            return bestEarlyGameCardFor(suite,highCard:max,player: player,gameState: gameState,margin: safetyMargin).0;
             
         }
         return nil
