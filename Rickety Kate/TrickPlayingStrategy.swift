@@ -292,12 +292,12 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
             let Spades = gameState.scoringCards.intersect(player.hand)
             if !Spades.isEmpty
             {
-                let orderedSpades = Spades.sort({$0.value > $1.value})
+                let orderedSpades = Spades.sort {$0.value > $1.value}
                 return orderedSpades.first
             }
             
              // if no your scoring cards then your highest card
-            let orderedHand = player.hand.sort({$0.value > $1.value})
+            let orderedHand = player.hand.sort {$0.value > $1.value}
             
             return orderedHand.first
         }

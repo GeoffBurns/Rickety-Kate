@@ -487,12 +487,12 @@ class GameScene: SKScene {
                        let gameEvent = table.isMoveValid(self.table.playerOne,card: cardsprite.card)
                         switch gameEvent
                           {
-                        case .CardPlayed(_, _) :
-                            transferCardToTrickPile(cardsprite)
-                        case .CardDoesNotFollowSuite :
-                            doesNotFollowSuite(cardsprite)
-                        default:
-                             Bus.sharedInstance.send(gameEvent)
+                          case .CardPlayed(_, _) :
+                               transferCardToTrickPile(cardsprite)
+                          case .CardDoesNotFollowSuite :
+                               doesNotFollowSuite(cardsprite)
+                          default:
+                               Bus.sharedInstance.send(gameEvent)
                           
                           }
                     

@@ -60,6 +60,7 @@
 		ACB20F9D1BE0C5F500718CC0 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9B1BE0C5F500718CC0 /* ArrayExtensions.swift */; };
 		ACB20F9E1BE0C5F500718CC0 /* SequenceTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9C1BE0C5F500718CC0 /* SequenceTypeExtensions.swift */; };
 		ACB20FA01BE0C64700718CC0 /* SKNodeExtensions2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */; };
+		ACB20FE01BE258DB00718CC0 /* CardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20FDF1BE258DB00718CC0 /* CardStack.swift */; };
 		ACB33B971BC2003B0019DC7C /* CardSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B951BC2003B0019DC7C /* CardSlide.swift */; };
 		ACB33B981BC2003B0019DC7C /* PopupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB33B961BC2003B0019DC7C /* PopupButton.swift */; };
 		ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
@@ -158,6 +159,7 @@
 		ACB20F9B1BE0C5F500718CC0 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		ACB20F9C1BE0C5F500718CC0 /* SequenceTypeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTypeExtensions.swift; sourceTree = "<group>"; };
 		ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions2.swift; sourceTree = "<group>"; };
+		ACB20FDF1BE258DB00718CC0 /* CardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardStack.swift; sourceTree = "<group>"; };
 		ACB33B951BC2003B0019DC7C /* CardSlide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSlide.swift; sourceTree = "<group>"; };
 		ACB33B961BC2003B0019DC7C /* PopupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupButton.swift; sourceTree = "<group>"; };
 		ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				ACB33B951BC2003B0019DC7C /* CardSlide.swift */,
 				ACE6DFBE1BAA38A9005B5424 /* CardSource.swift */,
 				ACE6DFC81BAA5FD9005B5424 /* CardSprite.swift */,
+				ACB20FDF1BE258DB00718CC0 /* CardStack.swift */,
 				AC7C9FCB1BB3850A0086AC02 /* CardState.swift */,
 				AC9E82BE1BA686C40064870C /* CardTable.swift */,
 				AC7C9FCF1BB3886D0086AC02 /* Direction.swift */,
@@ -510,6 +513,7 @@
 				ACE6DFC91BAA5FD9005B5424 /* CardSprite.swift in Sources */,
 				AC7C9FCE1BB385CA0086AC02 /* Popup.swift in Sources */,
 				AC2AB4CE1BC4AD2A0042BCBC /* ScoreViewModel.swift in Sources */,
+				ACB20FE01BE258DB00718CC0 /* CardStack.swift in Sources */,
 				AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */,
 				AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */,
 				ACE6DFBD1BAA32AB005B5424 /* Multi-Line.swift in Sources */,
