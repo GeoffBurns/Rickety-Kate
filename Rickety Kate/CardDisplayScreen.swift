@@ -256,16 +256,17 @@ class CardDisplayScreen: Popup {
              case .DeckTab : self.displayCardsInDeck()
              case .ScoringTab : self.displayScoringCards()
              }
-        }
-        
-        let nextStart = suiteStart +  noOfSlides
-        
-        switch activeTab
-        {
-        case .DeckTab :  moreButton.alpha = nextStart >= GameSettings.sharedInstance.deck!.suitesInDeck.count ? 0.0 : 1.0
-        case .ScoringTab : moreButton.alpha = nextStart >=  self.orderedGroups.count ? 0.0 : 1.0
-        }
+            let nextStart = self.suiteStart +  self.noOfSlides
+            
+            switch self.activeTab
+            {
+            case .DeckTab :  self.moreButton.alpha = nextStart >= GameSettings.sharedInstance.deck!.suitesInDeck.count ? 0.0 : 1.0
+            case .ScoringTab : self.moreButton.alpha = nextStart >=  self.orderedGroups.count ? 0.0 : 1.0
+            }
 
+        }
+        
+   
         backButton.alpha = suiteStart == 0 ? 0.0 : 1.0
     }
     func buttonTouched(positionInScene:CGPoint) -> Bool
