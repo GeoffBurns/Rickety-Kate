@@ -489,9 +489,12 @@ class GameScene: SKScene {
                           {
                           case .CardPlayed(_, _) :
                                transferCardToTrickPile(cardsprite)
+                               return
                           case .CardDoesNotFollowSuite :
                                doesNotFollowSuite(cardsprite)
                           default:
+                               cardsprite.color = UIColor.redColor()
+                               cardsprite.colorBlendFactor = 0.2
                                Bus.sharedInstance.send(gameEvent)
                           
                           }
