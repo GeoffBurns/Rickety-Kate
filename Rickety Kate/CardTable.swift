@@ -99,7 +99,10 @@ public class CardTable : GameStateBase, GameState
         if self.tricksPile.isEmpty
         {
             
-            if !gameTracker.trumpsHaveBeenBroken && !GameSettings.sharedInstance.allowBreakingTrumps
+            if !gameTracker.trumpsHaveBeenBroken &&
+               !GameSettings.sharedInstance.allowBreakingTrumps &&
+               card.suite == GameSettings.sharedInstance.rules.trumpSuite
+            
             {
                 return GameEvent.TrumpsHaveNotBeenBroken
             }
