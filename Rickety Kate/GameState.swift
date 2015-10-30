@@ -16,17 +16,21 @@ public protocol GameState
     var leadingSuite : PlayingCard.Suite? { get }
     var cardsFollowingSuite : [PlayingCard] { get }
     var isLastPlayer : Bool { get }
-    var isSpadesInPile : Bool { get }
-    var isntSpadesInPile : Bool { get }
+    var scoreOfPile : Int { get }
     var noOfPlayers : Int { get }
     var playedCardsInTrick : Int { get }
     var unplayedCardsInTrick : Int { get }
-    var scoringCards : Set<PlayingCard> { get }
-    
+    var highestCardInTrick : PlayingCard { get }
+    var penaltyCards : Set<PlayingCard> { get }
+    var bonusCards : Set<PlayingCard> { get }
+    var canLeadTrumps : Bool { get }
     
     func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
     func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
-    func scoringCardsFor(suite:PlayingCard.Suite) -> [PlayingCard]
+    func penaltyCardsFor(suite:PlayingCard.Suite) -> [PlayingCard]
+    func bonusCardFor(suite:PlayingCard.Suite) -> [PlayingCard]
+   
+    
     
 }
 
@@ -40,7 +44,9 @@ public class GameStateBase
         return tricksPile.count
     }
     
-
+    public var highestCardInTrick : PlayingCard { return cardsFollowingSuite.maxElement()! }
+    public var canLeadTrumps :Bool { return gameTracker.trumpsHaveBeenBroken || GameSettings.sharedInstance.allowBreakingTrumps }
+    
     
     public func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
     {
@@ -70,27 +76,37 @@ public class GameStateBase
     }
     
 
-    
-    public var isntSpadesInPile : Bool {
-        return tricksPile.filter { $0.playedCard.suite == GameSettings.sharedInstance.rules.trumpSuite }.isEmpty &&
-        tricksPile.filter { $0.playedCard == CardName.Queen.of(PlayingCard.Suite.Spades) }.isEmpty
+    public var scoreOfPile : Int {
+        return tricksPile.reduce(0) { $0 + ( GameSettings.sharedInstance.rules.cardScores[$1.playedCard] ?? 0) }
     }
     
-    public var isSpadesInPile : Bool {
-        
-        return !isntSpadesInPile
-    }
+ 
     
     public func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
     {
         return gameTracker.cardCount[suite.rawValue]
     }
     
-    public func scoringCardsFor(suite:PlayingCard.Suite) -> [PlayingCard]
+    public func penaltyCardsFor(suite:PlayingCard.Suite) -> [PlayingCard]
     {
-        return gameTracker.unplayedScoringCards.filter { $0.suite == suite }
+        return penaltyCards.filter { $0.suite == suite }
     }
-    public var scoringCards : Set<PlayingCard> { return gameTracker.unplayedScoringCards }
+    public func bonusCardFor(suite:PlayingCard.Suite) -> [PlayingCard]
+    {
+        return bonusCards.filter { $0.suite == suite }
+    }
+    
+
+    public var penaltyCards : Set<PlayingCard> {
+        return Set<PlayingCard>(gameTracker.unplayedScoringCards.filter {
+            (GameSettings.sharedInstance.rules.cardScores[$0] ?? 0) > 0
+        })}
+    
+    public var bonusCards : Set<PlayingCard> {
+        return Set<PlayingCard>(gameTracker.unplayedScoringCards.filter {
+            (GameSettings.sharedInstance.rules.cardScores[$0] ?? 0) < 0
+        })}
+
 }
 
 

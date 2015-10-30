@@ -112,6 +112,8 @@ public class ComputerPlayer :CardPlayer
     public init(name s: String,margin:Int) {
         super.init(name: s)
         strategies  = [
+            PerfectKnowledgeStrategy.sharedInstance,
+            NonFollowingStrategy.sharedInstance,
             EarlyGameLeadingStrategy(margin:margin),
             EarlyGameFollowingStrategy(margin:margin),
             LateGameLeadingStrategy.sharedInstance,

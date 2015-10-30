@@ -108,12 +108,23 @@ class Scorer
       {
       recordTheScoresForAGameWin(winner!)
     
-      for player in players
-        {
-        player.scoreForCurrentHand = 0
-        }
+    
       Bus.sharedInstance.send(GameEvent.WinGame(winner!.name))
       }
+        
+      for player in players
+        {
+            
+            if player.scoreForCurrentHand  < 0
+            {
+                player.currentTotalScore.value  -= player.scoreForCurrentHand
+            }
+            player.scoreForCurrentHand = 0
+         /*   if player.currentTotalScore.value  < 0
+            {
+               player.currentTotalScore.value  = 0
+            } */
+        }
     }
 
     func trickWon(gameState:GameStateBase) -> CardPlayer?
@@ -122,12 +133,13 @@ class Scorer
         {
          
                 let score = GameSettings.sharedInstance.rules.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
-                if(score>0)
+                if(score != 0)
                 {
                     winner.currentTotalScore.value += score
                     winner.scoreForCurrentHand += score
                   
                 }
+          
             return winner
             
         }

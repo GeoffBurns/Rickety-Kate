@@ -22,13 +22,24 @@ public class RandomStrategy : TrickPlayingStrategy
     private init() { }
     public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
     {
-        if let suite: PlayingCard.Suite = gameState.leadingSuite
+        if let suite = gameState.leadingSuite
         {
             let validCards = player.cardsIn( suite)
-            if let choosenCard:PlayingCard = validCards.randomItem
+            if let choosenCard = validCards.randomItem
             {
                 return choosenCard
             }
+        }
+        
+        if !gameState.canLeadTrumps && gameState.leadingSuite == nil
+          {
+          let cards = player.hand.filter {
+              $0.suite != GameSettings.sharedInstance.rules.trumpSuite
+          }
+            
+          if let card = cards.randomItem {
+             return card
+          }
         }
         // no leading suite or player has no cards in leading suite
         return player.hand.randomItem
@@ -121,7 +132,7 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,highCard:PlayingCard?, player:
     }
     
     var cardsInChosenSuite = player.cardsIn( suite)
-    let scoringCards = gameState.scoringCardsFor(suite)
+    let scoringCards = gameState.penaltyCardsFor(suite)
     if !scoringCards.isEmpty
     {
         var min = scoringCards.minElement()
@@ -158,7 +169,7 @@ public class EarlyGameFollowingStrategy : TrickPlayingStrategy
                 return nil
             }
             
-            let max = gameState.cardsFollowingSuite.maxElement()
+            let max = gameState.highestCardInTrick
             return bestEarlyGameCardFor(suite,highCard:max,player: player,gameState: gameState,margin: safetyMargin).0;
             
         }
@@ -177,7 +188,14 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
             return nil
         }
        // Avoid Jokers if posible
-       var orderedCards = player.hand.filter { $0.suite != PlayingCard.Suite.Jokers }.sort({$0.value < $1.value})
+       var orderedCards = player.hand
+                                .filter
+                                   {
+                                   $0.suite != PlayingCard.Suite.Jokers &&
+                                       ( gameState.canLeadTrumps ||
+                                        $0.suite != GameSettings.sharedInstance.rules.trumpSuite)
+                                   }
+                                .sort {$0.value < $1.value}
         
         
         if let lowCard = orderedCards.first
@@ -190,6 +208,46 @@ public class LateGameLeadingStrategy : TrickPlayingStrategy
     }
 }
 
+
+// If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
+public class PerfectKnowledgeStrategy : TrickPlayingStrategy
+{
+    public static let sharedInstance = PerfectKnowledgeStrategy()
+    private init() { }
+    public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
+    {
+    if let suite = gameState.leadingSuite where gameState.isLastPlayer
+    {
+
+        // give yourself a bonus card if you can
+        let bonus = gameState.bonusCardFor(suite).filter { $0.value > gameState.highestCardInTrick.value }
+        if let card = bonus.first,
+            bonusScore =  GameSettings.sharedInstance.rules.cardScores[card]
+            where gameState.scoreOfPile + bonusScore < 0
+        {
+            return card
+        }
+        
+        let cardsInSuite = player.cardsIn( suite)
+        let orderedCards = cardsInSuite.sort({$0.value > $1.value})
+        
+        // if you are not going to win a bad score go high
+        if gameState.scoreOfPile > 0
+        {
+            return orderedCards.first
+        }
+        // if its a bad score try to give it to someone else by being just under the highest card
+        let underHighest = orderedCards.filter {  $0.value < gameState.highestCardInTrick.value }
+        if let justUnderHighest = underHighest.first
+        {
+            return justUnderHighest
+        }
+        // you are going to win anyway get rid of your highest card
+        return orderedCards.first
+    }
+         return nil
+    }
+}
 
 
 // If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
@@ -210,14 +268,14 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                 let highCard = orderedFollowingCards.first
                 
                 // Get rid of any Scoring Cards to someone else
-                let scoringCards = gameState.scoringCardsFor(suite)
+                let scoringCards = gameState.penaltyCardsFor(suite)
                 if scoringCards.count > 0
                 {
-                   let scoringCardsInHand = Set<PlayingCard>(scoringCards).intersect(player.cardsIn(suite))
+                    let scoringCardsInHand = Set<PlayingCard>(scoringCards).intersect(player.cardsIn(suite))
                     if scoringCardsInHand.count > 0
                     {
-                     let scorecardsLessThanHighCard = scoringCardsInHand.filter { $0.value < highCard!.value }
-                     let canGoLowScoring = !scorecardsLessThanHighCard.isEmpty
+                        let scorecardsLessThanHighCard = scoringCardsInHand.filter { $0.value < highCard!.value }
+                        let canGoLowScoring = !scorecardsLessThanHighCard.isEmpty
                         if canGoLowScoring
                         {
                             let orderedLowScoreCards = scorecardsLessThanHighCard.sort({$0.value > $1.value})
@@ -250,17 +308,17 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                         return reverseOrderedCards.first
                     }
                     let isLastPlayer = gameState.isLastPlayer
-                    let isNoSpadesInPile = gameState.isntSpadesInPile
+                    
                     
                     // try not to  give yourself any Scoring Cards
-                    let scoringCards = gameState.scoringCards
+                    let scoringCards = gameState.penaltyCards
                     if scoringCards.count > 0
                     {
                         let unscoringCardsInHand = Set<PlayingCard>(player.hand).subtract(scoringCards)
                         if unscoringCardsInHand.count > 0
                         {
                             // if you are not going to win scoring cards go high
-                            if isLastPlayer && isNoSpadesInPile
+                            if isLastPlayer && gameState.scoreOfPile > 0
                             {
                                 
                                 let orderedCards = unscoringCardsInHand.sort({$0.value > $1.value})
@@ -271,9 +329,9 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                             return reverseOrderedCards.first
                         }
                     }
-                   
+                    
                     // if you are not going to win scoring cards go high
-                    if isLastPlayer && isNoSpadesInPile
+                    if isLastPlayer && gameState.scoreOfPile > 0
                     {
                         let orderedCards = cardsInSuite.sort({$0.value > $1.value})
                         return orderedCards.first
@@ -285,21 +343,65 @@ public class LateGameFollowingStrategy : TrickPlayingStrategy
                 }
             }
             // if not following suit get rid of your highest scoring card
-            if let RicketyKate = player.RicketyKate
+          /*  if let RicketyKate = player.RicketyKate
             {
                 return RicketyKate
             }
-            let Spades = gameState.scoringCards.intersect(player.hand)
+            let Spades = gameState.penaltyCards.intersect(player.hand)
             if !Spades.isEmpty
             {
                 let orderedSpades = Spades.sort {$0.value > $1.value}
                 return orderedSpades.first
             }
             
-             // if no your scoring cards then your highest card
+            // if no your scoring cards then your highest card
             let orderedHand = player.hand.sort {$0.value > $1.value}
             
             return orderedHand.first
+*/
+        }
+        
+        return nil
+    }
+}
+// If you can not follow suite you are free to get rid of bad cards
+public class NonFollowingStrategy : TrickPlayingStrategy
+{
+    public static let sharedInstance = NonFollowingStrategy()
+    private init() { }
+    public func chooseCard(player:CardHolder,gameState:GameState) -> PlayingCard?
+    {
+        if let suite = gameState.leadingSuite
+        {
+            let cardsInSuite = player.cardsIn( suite)
+ 
+            if !cardsInSuite.isEmpty
+            {
+               return nil
+            }
+  
+            let penaltyCardsInHand = gameState.penaltyCards.intersect(player.hand)
+            if penaltyCardsInHand.isEmpty
+            {
+                // if no your scoring cards then your highest card
+                let orderedHand = player.hand.sort {$0.value > $1.value}
+                
+                return orderedHand.first
+            }
+            
+            // if not following suit get rid of your highest scoring card
+            let orderedSpades = penaltyCardsInHand
+                    .sort {
+                        let score0 = GameSettings.sharedInstance.rules.cardScores[$0]
+                        let score1 = GameSettings.sharedInstance.rules.cardScores[$1]
+                        
+                        return score0 > score1 ||
+                            ( score0 == score1 && $0.value > $1.value )
+                }
+                return orderedSpades.first
+           
+            
+        
         }
         
         return nil

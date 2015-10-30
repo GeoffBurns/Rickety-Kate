@@ -581,11 +581,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/TrickPlayingStrategy.swift"
-            timestampString = "467690452.585146"
+            timestampString = "467899444.098544"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "chooseCard(_:gameState:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -635,6 +635,22 @@
             startingLineNumber = "239"
             endingLineNumber = "239"
             landmarkName = "createCardScores()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Rickety Kate/TrickPlayingStrategy.swift"
+            timestampString = "467899444.098544"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
+            landmarkName = "chooseCard(_:gameState:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

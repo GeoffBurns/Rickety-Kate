@@ -214,9 +214,11 @@ class CardDisplayScreen: Popup {
             {
             let l = SKLabelNode(fontNamed:"Verdana")
             l.fontSize = fontsize
-            l.position = CGPointMake(size.width * 0.10, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
+            l.horizontalAlignmentMode = .Left
+            l.position = CGPointMake(size.width * 0.05, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
             if cards.count > 1 { l.text = "\(group.0) Points Each" }
-            else { l.text = "\(group.0) Points" }
+            else if group.0 > 0 { l.text = "\(group.0) Points" }
+            else  { l.text = "\(group.0) Points (Total Points for Hand can not Fall Below Zero)" }
             l.name = "label"
             
     
