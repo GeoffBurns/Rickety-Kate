@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "467792672.447798"
+            timestampString = "467971885.312864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "487"
-            endingLineNumber = "487"
+            startingLineNumber = "495"
+            endingLineNumber = "495"
             landmarkName = "Int"
             landmarkType = "3">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "467792672.447798"
+            timestampString = "467971885.312864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "492"
-            endingLineNumber = "492">
+            startingLineNumber = "500"
+            endingLineNumber = "500">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "467792672.447798"
+            timestampString = "467971885.312864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "531"
-            endingLineNumber = "531">
+            startingLineNumber = "539"
+            endingLineNumber = "539">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

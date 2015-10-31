@@ -46,6 +46,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case .Suns: return "U"
             case .Anchors: return "A"
             case .Stars : return "R"
+            case .Picks : return "P"
             case .Trumps : return "T"
             case .Jokers : return "J"
             case .NoOfSuites : return ""
@@ -65,6 +66,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case .Suns: return "Suns"
                 case .Anchors: return "Anchors"
                 case .Stars : return "Stars"
+                case .Picks : return "Picks"
                 case .Trumps : return "Trumps"
                 case .Jokers : return "Jokers"
                 case .NoOfSuites : return "Not Applicable"
@@ -78,11 +80,11 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         }
         static var normalSuites : [Suite]
         {
-            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors,Stars]
+            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors,Stars,Picks]
         }
         static var allSuites : [Suite]
         {
-            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors,Stars,Trumps,Jokers]
+            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors,Stars,Picks,Trumps,Jokers]
         }
     }
     public enum CardValue : Equatable, Comparable
@@ -284,10 +286,18 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public class DeckBase : Deck
     {
-        var noInSuites = [13,13,13,13,13,13,13,21,3]
+        var noInSuites = [13,13,13,13,13,13,13,13,21,3]
         func noCardIn(suite:PlayingCard.Suite) -> Int
         {
             return noInSuites[suite.rawValue]
+        }
+        func middleCardIn(suite:PlayingCard.Suite) -> PlayingCard
+        {
+            return PlayingCard(suite:suite,value:PlayingCard.CardValue.Pip((noInSuites[suite.rawValue]+1)/2))
+        }
+        func lowerMiddleCardIn(suite:PlayingCard.Suite) -> PlayingCard
+        {
+            return PlayingCard(suite:suite,value:PlayingCard.CardValue.Pip((noInSuites[suite.rawValue]-1)/2))
         }
         public var cards: [PlayingCard] {
            
