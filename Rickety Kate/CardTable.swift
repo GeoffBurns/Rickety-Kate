@@ -17,22 +17,24 @@ public class CardTable : GameStateBase, GameState
     var scene : SKNode? = nil
     let bus = Bus.sharedInstance
     var isInDemoMode = false
-    func nop() {}
-    var dealtHands_ : [[PlayingCard]] = []
-    var dealtHands : [[PlayingCard]]
-        {
-            if dealtHands_.isEmpty
-            {
-               dealtHands_ = GameSettings.sharedInstance.deck!.dealFor(players.count)
-            }
-            return dealtHands_
-    }
+    
+    lazy var dealtHands : [[PlayingCard]] = self.dealHands()
+
+
     var startPlayerNo = 1
 
     var cardTossDuration = GameSettings.sharedInstance.tossDuration*1.8
-
-
- 
+    
+    func dealHands()->[[PlayingCard]]
+    {
+        return GameSettings.sharedInstance.deck!.dealFor(players.count)
+    }
+    
+    func redealHands()
+    {
+        dealtHands = self.dealHands()
+    }
+    
     static public func makeTable(scene:SKNode, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable {
      return CardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
 }
@@ -184,6 +186,7 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
         Scorer.sharedInstance.hasGameBeenWon()
         
         self.gameTracker.reset()
+        self.redealHands()
         self.dealNewCardsToPlayersThen{
                 self.bus.send(GameEvent.NewHand)
         }

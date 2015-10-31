@@ -123,10 +123,6 @@ class Scorer
                 player.currentTotalScore.value  -= player.scoreForCurrentHand
             }
             player.scoreForCurrentHand = 0
-            /*   if player.currentTotalScore.value  < 0
-            {
-            player.currentTotalScore.value  = 0
-            } */
         }
     }
     func trickWon(gameState:GameStateBase) -> CardPlayer?
