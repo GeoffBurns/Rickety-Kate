@@ -71,7 +71,6 @@
 		ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13351BAB1D5700196393 /* Scorer.swift */; };
 		ACCB13381BAD16E600196393 /* Awarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13371BAD16E600196393 /* Awarder.swift */; };
 		ACE6DFB11BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFB01BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift */; };
-		ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFB41BAA32AB005B5424 /* CardHolder.swift */; };
 		ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFB51BAA32AB005B5424 /* GameState.swift */; };
 		ACE6DFBB1BAA32AB005B5424 /* TrickPlayingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */; };
 		ACE6DFBC1BAA32AB005B5424 /* MathExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFB71BAA32AB005B5424 /* MathExtention.swift */; };
@@ -170,7 +169,6 @@
 		ACCB13351BAB1D5700196393 /* Scorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scorer.swift; sourceTree = "<group>"; };
 		ACCB13371BAD16E600196393 /* Awarder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Awarder.swift; sourceTree = "<group>"; };
 		ACE6DFB01BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIvenAEarlyLeadingStrategy.swift; sourceTree = "<group>"; };
-		ACE6DFB41BAA32AB005B5424 /* CardHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardHolder.swift; sourceTree = "<group>"; };
 		ACE6DFB51BAA32AB005B5424 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrickPlayingStrategy.swift; sourceTree = "<group>"; };
 		ACE6DFB71BAA32AB005B5424 /* MathExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathExtention.swift; sourceTree = "<group>"; };
@@ -246,7 +244,6 @@
 				AC6463EA1BC12A66000AEB7E /* ButtonSize.swift */,
 				AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */,
 				AC7C9FC51BB380A00086AC02 /* CardFan.swift */,
-				ACE6DFB41BAA32AB005B5424 /* CardHolder.swift */,
 				AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */,
 				AC44D7D01BB203AA00DA92EC /* CardPile.swift */,
 				AC7C9FC11BB378E60086AC02 /* CardPileType.swift */,
@@ -550,7 +547,6 @@
 				ACB20FA01BE0C64700718CC0 /* SKNodeExtensions2.swift in Sources */,
 				AC6463EB1BC12A66000AEB7E /* ButtonSize.swift in Sources */,
 				AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */,
-				ACE6DFB91BAA32AB005B5424 /* CardHolder.swift in Sources */,
 				ACE6DFC71BAA5563005B5424 /* StatusArea.swift in Sources */,
 				AC7C9FD01BB3886D0086AC02 /* Direction.swift in Sources */,
 			);

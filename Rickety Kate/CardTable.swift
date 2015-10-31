@@ -13,23 +13,25 @@ import SpriteKit
 public class CardTable : GameStateBase, GameState
 {
     var playerOne: CardPlayer = HumanPlayer.sharedInstance;
-    var _players = [CardPlayer]()
+    public var players = [CardPlayer]()
     var scene : SKNode? = nil
     let bus = Bus.sharedInstance
     var isInDemoMode = false
     func nop() {}
- 
+    var dealtHands_ : [[PlayingCard]] = []
+    var dealtHands : [[PlayingCard]]
+        {
+            if dealtHands_.isEmpty
+            {
+               dealtHands_ = GameSettings.sharedInstance.deck!.dealFor(players.count)
+            }
+            return dealtHands_
+    }
     var startPlayerNo = 1
 
     var cardTossDuration = GameSettings.sharedInstance.tossDuration*1.8
 
-    public var players : [CardPlayer] {
-        get {
-            return _players
-        }
-        
-    }
-    
+
  
     static public func makeTable(scene:SKNode, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable {
      return CardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
@@ -39,12 +41,12 @@ public class CardTable : GameStateBase, GameState
      return CardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable), scene:scene )
     }
     private init(players: [CardPlayer],  scene:SKNode) {
-    _players = players
-    playerOne = _players[0]
+    self.players = players
+    playerOne = self.players[0]
     isInDemoMode = playerOne.name != "You"
     self.scene  = scene
 
-    Scorer.sharedInstance.setupScorer(_players)
+    Scorer.sharedInstance.setupScorer(self.players)
     super.init()
   //  setPassedCards()
     }
@@ -175,13 +177,16 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
         {
             self.startPlayerNo = 0
         }
-        
+
         Scorer.sharedInstance.hasShotTheMoon()
+        Scorer.sharedInstance.endHand() 
+
         Scorer.sharedInstance.hasGameBeenWon()
         
         self.gameTracker.reset()
-        self.dealNewCardsToPlayers()
-        self.bus.send(GameEvent.NewHand)
+        self.dealNewCardsToPlayersThen{
+                self.bus.send(GameEvent.NewHand)
+        }
     }
     func trickWon()
     {
@@ -263,17 +268,18 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
        trickFan.setup(scene!, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
     }
 
-    public func dealNewCardsToPlayers()
+    public func dealNewCardsToPlayersThen(whenDone: () -> Void)
     {
-       // deck = PlayingCard.BuiltCardDeck()
-        var hands = GameSettings.sharedInstance.deck!.dealFor(players.count)
-        var i = 0
-        for player in players
+   
+
+        for (i,(player,hand)) in Zip2Sequence(players,dealtHands).enumerate()
         {
-            
-          let sortedHand = hands[i].sort()
+            scene?.schedule(delay: NSTimeInterval(i) * GameSettings.sharedInstance.tossDuration + 0.1) {
+            let sortedHand = hand.sort()
             player.newHand( Array(sortedHand.reverse()))
-            i++
+            }
+     
         }
+        scene?.schedule(delay: NSTimeInterval(players.count+1) * GameSettings.sharedInstance.tossDuration, handler: whenDone)
     }
 }

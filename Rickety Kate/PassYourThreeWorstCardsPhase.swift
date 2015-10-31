@@ -10,7 +10,7 @@ import SpriteKit
 
 public class PassYourThreeWorstCardsPhase
 {
-var _players : [CardPlayer]
+var players : [CardPlayer]
 var scene : SKNode
 var cardsPassed = [CardPile]()
 var isCurrentlyActive = true
@@ -18,30 +18,26 @@ var isCurrentlyActive = true
     
     init(scene : SKNode, players:[CardPlayer])
     {
-        _players = players
+        self.players = players
         self.scene = scene
         setPassedCards()
     }
 
-public var players : [CardPlayer] {
-get {
-    return _players
-}
-    }
+
     func setPassedCards()
     {
     cardsPassed.append(CardFan(name: CardPileType.Passing.description))
-    for _ in 0..<(_players.count-1)
-    {
-    cardsPassed.append(CardPile(name: CardPileType.Passing.description))
-    }
+    for _ in players
+        {
+        cardsPassed.append(CardPile(name: CardPileType.Passing.description))
+        }
     }
     func resetPassedCards()
     {
     
-    for i in 0..<(_players.count)
+    for (cardTrioPassed,_) in Zip2Sequence(cardsPassed,players)
        {
-       cardsPassed[i].cards = []
+       cardTrioPassed.cards = []
     }
     }
     func setupCardPilesSoPlayersCanPassTheir3WorstCards()

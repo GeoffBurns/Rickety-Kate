@@ -71,7 +71,6 @@ class Scorer
          hasShotMoon = true
          Bus.sharedInstance.send(GameEvent.ShotTheMoon(player.name))
         }
-      player.scoreForCurrentHand = 0
       }
     return hasShotMoon
     }
@@ -112,7 +111,11 @@ class Scorer
       Bus.sharedInstance.send(GameEvent.WinGame(winner!.name))
       }
         
-      for player in players
+ 
+    }
+    func endHand()
+    {
+        for player in players
         {
             
             if player.scoreForCurrentHand  < 0
@@ -120,13 +123,12 @@ class Scorer
                 player.currentTotalScore.value  -= player.scoreForCurrentHand
             }
             player.scoreForCurrentHand = 0
-         /*   if player.currentTotalScore.value  < 0
+            /*   if player.currentTotalScore.value  < 0
             {
-               player.currentTotalScore.value  = 0
+            player.currentTotalScore.value  = 0
             } */
         }
     }
-
     func trickWon(gameState:GameStateBase) -> CardPlayer?
     {
         if let winner = Scorer.playerThatWon(gameState)

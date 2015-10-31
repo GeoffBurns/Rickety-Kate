@@ -33,26 +33,22 @@ class GameScene: SKScene {
     {
         dealtPiles = []
         let hSpacing = CGFloat(table.players.count) * 2
-        for (i,player) in table.players.enumerate()
+        
+        for (i,(player,hand)) in Zip2Sequence(table.players,table.dealtHands).enumerate()
         {
+            for card in hand
+            {
+                CardSprite.add(card, player: player, scene: self)
+            }
             let dealtPile = CardPile(name: "dealt")
             dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
             
-            dealtPile.appendContentsOf(player._hand.cards)
+            dealtPile.appendContentsOf(hand)
             dealtPiles.append(dealtPile)
         }
     }
     
-    func createCardSpritesForCardsInPlayersHand()
-    {
-        for player in table.players
-        {
-            for card in player.hand
-            {
-                CardSprite.add(card, player: player, scene: self)
-            }
-        }
-    }
+
     func seatPlayers()
     {
         let seats = Seater.seatsFor(table.players.count)
@@ -76,7 +72,9 @@ class GameScene: SKScene {
     {
         for (i,player) in table.players.enumerate() 
            {
-            dealtPiles[i].replaceWithContentsOf(player._hand.cards)
+            let cards = player.hand
+            player._hand.clear()
+            dealtPiles[i].replaceWithContentsOf(cards)
             }
         dealtPiles[0].appendContentsOf(table.tricksPile.map{ return $0.playedCard })
     }
@@ -97,7 +95,10 @@ class GameScene: SKScene {
     
     func resetBackgroundFan(cards:[PlayingCard])
     {
-        
+        if backgroundFan.cards == cards
+        {
+            return
+        }
         for sprite in backgroundFan.sprites
         {
             sprite.position = CGPoint(x: -100, y: -400)
@@ -237,6 +238,15 @@ class GameScene: SKScene {
         backgroundFan.createSprite = { $1.whiteCardSprite($0) }
         backgroundFan.zPositon = 0.0
         backgroundFan.speed = 0.1
+        self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
+        if self.cardPassingPhase.isCurrentlyActive
+        {
+            self.resetBackgroundFan(self.threeWorstBackgroundCards)
+        }
+        else
+        {
+        self.resetBackgroundFan(self.trickBackgroundCards)
+        }
     }
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -248,12 +258,14 @@ class GameScene: SKScene {
         cardPassingPhase.setupCardPilesSoPlayersCanPassTheir3WorstCards()
         table.setupCardPilesSoPlayersCanPlayTricks()
         createCardPilesToProvideStartPointForCardAnimation(self.frame.size.width,  height: self.frame.size.height)
-        table.dealNewCardsToPlayers()
-        
-        createCardSpritesForCardsInPlayersHand()
         ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
-        setupNewGameArrangement()
-        self.startHand()
+        table.dealNewCardsToPlayersThen {
+            self.setupNewGameArrangement()
+            self.startHand()
+        }
+    
+ 
+  
     }
     
     func isNodeAPlayerOneCardSpite(cardsprite:CardSprite) -> Bool

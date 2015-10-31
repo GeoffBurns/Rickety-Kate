@@ -11,6 +11,32 @@ import ReactiveCocoa
 
 
 
+// Cut down version of a CardPlayer that is visible to tests
+public protocol CardHolder
+{
+    func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
+    var RicketyKate : PlayingCard? {get}
+    var hand : [PlayingCard] { get }
+}
+
+public class CardHolderBase
+{
+    var _hand : CardFan = CardFan(name: CardPileType.Hand.description)
+    public var hand : [PlayingCard] { get { return _hand.cards } set { _hand.cards = newValue }}
+    public func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
+    {
+        return _hand.cards.filter {$0.suite == suite}
+    }
+    public var RicketyKate : PlayingCard?
+        {
+            let RicketyKate = _hand.cards.filter { $0.isRicketyKate}
+            
+            return RicketyKate.first
+    }
+}
+
+
+
 // Models the state and behaviour of each of the players in the game
 public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
 {
@@ -143,6 +169,26 @@ public class ComputerPlayer :CardPlayer
     
 }
 
+public class FakeCardHolder : CardHolderBase, CardHolder
+{
+    let cardSource = CardSource.sharedInstance
+    
+    //////////
+    // internal functions
+    //////////
+    public func addCardsToHand(cardCodes:[String])
+    {
+        for code in cardCodes
+        {
+            let card : PlayingCard = cardSource[code]
+            
+            hand.append(card)
+        }
+    }
+    
+    public override init() {}
+    
+}
 ////////////////////////////////////////////////////////////
 /// Equatable Protocol
 ///////////////////////////////////////////////////////////
