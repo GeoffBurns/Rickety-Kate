@@ -28,6 +28,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         case Suns
         case Anchors
         case Stars
+        case Picks
         case Trumps
         case Jokers
         case NoOfSuites
