@@ -4,7 +4,8 @@ swift iphone app
 
 Rules for rickety-kate can be found at http://australiancardgames.com.au/rickety-kate/
 
-However the scoring of this app is based on my families rules - 10 points for Queen of Spaces and 1 point for other spades
+However the default scoring of this app is based on my families rules - 10 points for Queen of Spaces and 1 point for other spades
+Two other scoring variants are available - Hearts variant and Jacks variant. Optional scoring for the hooligan and the omnibus can also be switched on.
 
 This codebase uses carthage to manage dependencies https://github.com/Carthage/Carthage
 
