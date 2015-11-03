@@ -90,6 +90,8 @@
 		ACF315811BDB129400F203E3 /* cards_anchors_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */; };
 		ACF315821BDB129400F203E3 /* cards_clubs_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF3157A1BDB129400F203E3 /* cards_clubs_white.atlas */; };
 		ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF58BD51BAEE652009C255A /* OptionScreen.swift */; };
+		ACF739FB1BE87C9D003BA7F4 /* cards_picks_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF739F91BE87C9C003BA7F4 /* cards_picks_white.atlas */; };
+		ACF739FC1BE87C9D003BA7F4 /* cards_picks.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF739FA1BE87C9D003BA7F4 /* cards_picks.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,6 +190,8 @@
 		ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_anchors_white.atlas; sourceTree = "<group>"; };
 		ACF3157A1BDB129400F203E3 /* cards_clubs_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs_white.atlas; sourceTree = "<group>"; };
 		ACF58BD51BAEE652009C255A /* OptionScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionScreen.swift; sourceTree = "<group>"; };
+		ACF739F91BE87C9C003BA7F4 /* cards_picks_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_picks_white.atlas; sourceTree = "<group>"; };
+		ACF739FA1BE87C9D003BA7F4 /* cards_picks.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_picks.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +261,8 @@
 				AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */,
 				ACF315771BDB129400F203E3 /* cards_hearts_white.atlas */,
 				AC73DD9F1BB8218E00FF6114 /* cards_hearts.atlas */,
+				ACF739F91BE87C9C003BA7F4 /* cards_picks_white.atlas */,
+				ACF739FA1BE87C9D003BA7F4 /* cards_picks.atlas */,
 				ACF315761BDB129400F203E3 /* cards_spades_white.atlas */,
 				AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */,
 				ACF315731BDB129400F203E3 /* cards_stars_white.atlas */,
@@ -436,10 +442,12 @@
 				AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */,
 				AC73DDA01BB8218E00FF6114 /* cards_hearts.atlas in Resources */,
 				AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */,
+				ACF739FB1BE87C9D003BA7F4 /* cards_picks_white.atlas in Resources */,
 				ACF3157C1BDB129400F203E3 /* cards_tarot_white.atlas in Resources */,
 				ACF3157E1BDB129400F203E3 /* cards_spades_white.atlas in Resources */,
 				AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */,
 				ACF3157F1BDB129400F203E3 /* cards_hearts_white.atlas in Resources */,
+				ACF739FC1BE87C9D003BA7F4 /* cards_picks.atlas in Resources */,
 				ACF315801BDB129400F203E3 /* cards_diamonds_white.atlas in Resources */,
 				AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */,
 				AC701A8C1BDB98F4004FC5F8 /* cards_stars.atlas in Resources */,

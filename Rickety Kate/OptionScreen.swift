@@ -12,7 +12,7 @@ import SpriteKit
 /// Game Option Setting Screen
 class OptionScreen: Popup {
     
-    var noOfSuites = NumberRangeToggle(min: 3, max: 7, current: 4, text: "Number Of Suites in Deck")
+    var noOfSuites = NumberRangeToggle(min: 3, max: 8, current: 4, text: "Number Of Suites in Deck")
     var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 18, current: 13, text: "Number Of Cards in Suite")
     var noOfPlayers = NumberRangeToggle(min: 3, max:(GameSettings.isPad ? 7 : 6), current: 4, text: "Number Of Players At Table")
     var hasJokers = BinaryToggle(current: false, text: "Include Jokers?" )
