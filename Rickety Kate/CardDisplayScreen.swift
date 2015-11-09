@@ -84,7 +84,7 @@ class CardDisplayScreen: Popup {
     
     func displayPage()
     {
-        let fontsize : CGFloat = GameSettings.isPad ?  25 : (GameSettings.isPhone6Plus ? 40 : 30)
+        let fontsize : CGFloat = FontSize.Small.scale
         let title = SKLabelNode(fontNamed:"Verdana")
         title.fontSize = fontsize
         title.position = CGPointMake(size.width * 0.50, size.height * 0.92 )
@@ -153,7 +153,7 @@ class CardDisplayScreen: Popup {
     func displayCardsInDeck()
     {
         
-        let fontsize : CGFloat = GameSettings.isPad ?  18 : (GameSettings.isPhone6Plus ? 30 : 20)
+        let fontsize : CGFloat = FontSize.Smallest.scale
         for (i,slide) in slides.enumerate()
         {
             if  i+suiteStart < GameSettings.sharedInstance.deck!.suitesInDeck.count
@@ -195,7 +195,7 @@ class CardDisplayScreen: Popup {
     func displayScoringCards()
     {
         
-        let fontsize : CGFloat = GameSettings.isPad ?  18 : (GameSettings.isPhone6Plus ? 30 : 20)
+        let fontsize : CGFloat = FontSize.Smallest.scale
         
         let pointsGroups = GameSettings.sharedInstance.rules.cardScores.categorise {$0.1}
         

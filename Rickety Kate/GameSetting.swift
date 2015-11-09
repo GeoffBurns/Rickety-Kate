@@ -8,6 +8,13 @@
 
 import SpriteKit
 
+public enum DeviceType
+{
+ case Phone
+ case Pad
+ case Phone6plus
+ case PadPro
+}
 public protocol IGameSettings
 {
     var noOfSuitesInDeck : Int { get }
@@ -28,6 +35,8 @@ public protocol IGameSettings
     var rules : IAwarder { get  }
     var tossDuration : NSTimeInterval { get  }
     var gameWinningScoreIndex : Int { get }
+ 
+    
     func changeSettings(
         noOfSuitesInDeck:Int,
         noOfPlayersAtTable:Int,
@@ -91,8 +100,39 @@ public class GameSettings
         //        return UIScreen.mainScreen().bounds.size.height > 735.0
         //    }
     }
+    static var isPadPro : Bool
+    {
+        //  if #available(iOS 8.0, *) {
+        return   isPad && UIScreen.mainScreen().bounds.size.height > 1000.0
+        //    } else {
+        //        return UIScreen.mainScreen().bounds.size.height > 735.0
+        //    }
+    }
+    static var isBig: Bool
+    {
+        return isPadPro || isPhone6Plus
+    }
     
-
+     static  var device : DeviceType {
+        
+        if isPad
+        {
+            if isPadPro
+            {
+                return .PadPro
+            }
+            
+            return .Pad
+        }
+       
+            if isPhone6Plus
+            {
+                return .Phone6plus
+            }
+        
+        return .Phone
+      
+    }
 }
 /// User controlled options for the game
 class LiveGameSettings : IGameSettings

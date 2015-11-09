@@ -30,8 +30,6 @@ public protocol GameState
     func penaltyCardsFor(suite:PlayingCard.Suite) -> [PlayingCard]
     func bonusCardFor(suite:PlayingCard.Suite) -> [PlayingCard]
    
-    
-    
 }
 
 public class GameStateBase

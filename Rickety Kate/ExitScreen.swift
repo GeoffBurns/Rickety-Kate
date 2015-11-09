@@ -30,7 +30,7 @@ class ExitScreen: Popup {
     override func setup(scene:SKNode)
     {
         button!.zPosition = 350
-        let fontsize : CGFloat = GameSettings.isPad ?  55 : (GameSettings.isPhone6Plus ? 90 : 65)
+        let fontsize = FontSize.Huge.scale
         self.gameScene = scene
         color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
         size = scene.frame.size

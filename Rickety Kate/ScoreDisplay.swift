@@ -85,7 +85,7 @@ class ScoreDisplay
     func setupScoreFor(scene: SKNode,player:CardPlayer) -> SKLabelNode
         {
             
-            let fontsize : CGFloat = GameSettings.isPad ?  20 : (GameSettings.isPhone6Plus ? 42 : 28)
+            let fontsize : CGFloat = FontSize.Smaller.scale
 
             let l = Label(fontNamed:"Verdana").withShadow()
             

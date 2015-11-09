@@ -17,8 +17,8 @@ enum ButtonSize
         {
             switch self
             {
-            case .Big : return GameSettings.isPhone6Plus ?  CGFloat(1.5) : CGFloat(1.0)
-            case .Small : return GameSettings.isPhone6Plus ?  CGFloat(0.75) : CGFloat(0.5)
+            case .Big : return GameSettings.isBig ?  CGFloat(1.5) : CGFloat(1.0)
+            case .Small : return GameSettings.isBig ?  CGFloat(0.75) : CGFloat(0.5)
             }
     }
 }

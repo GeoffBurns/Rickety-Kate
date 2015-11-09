@@ -22,7 +22,7 @@ class BinaryToggle: SKNode {
     init(current:Bool, text: String)
     {
         self.current = current
-        label.fontSize = 45;
+        label.fontSize = FontSize.Big.scale
         self.text = text
         label.userInteractionEnabled = false
         let YorN = current ? "Yes" : "No"

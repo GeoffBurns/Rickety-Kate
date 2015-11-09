@@ -24,7 +24,7 @@ class StatusDisplay
     }
     func setupStatusArea(scene: SKNode)
     {
-    let fontsize : CGFloat = GameSettings.isPad ?  55 : (GameSettings.isPhone6Plus ? 90 : 65)
+    let fontsize : CGFloat = FontSize.Huge.scale
     noticeLabel.resetToScene(scene)
     noticeLabel2.resetToScene(scene)
     noticeLabel.fontSize = fontsize;

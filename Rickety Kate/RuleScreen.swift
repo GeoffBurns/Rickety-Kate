@@ -21,8 +21,8 @@ class RuleScreen: Popup {
         size = scene.frame.size
         position = CGPointZero
         anchorPoint = CGPointZero
-        let fontsize : CGFloat = GameSettings.isPad ?  24 : (GameSettings.isPhone6Plus ? 42 : 28)
-        let leading : Int = GameSettings.isPad ?  32 : (GameSettings.isPhone6Plus ? 55 : 38)
+        let fontsize : CGFloat = FontSize.Medium.scale
+        let leading : Int = Int(FontSize.Medium.scale)
         
         rulesText  = SKMultilineLabel(text: GameSettings.sharedInstance.rules.description, labelWidth: Int(scene.frame.width * 0.88), pos: CGPoint(x:CGRectGetMidX(scene.frame),y:scene.frame.size.height*0.8),fontSize:fontsize,fontColor:UIColor.whiteColor(),leading:leading)
       
