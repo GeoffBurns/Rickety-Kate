@@ -310,11 +310,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "468377494.168112"
+            timestampString = "468890267.561398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
             landmarkName = "LiveGameSettings"
             landmarkType = "3">
          </BreakpointContent>
@@ -501,11 +501,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "468377494.168112"
+            timestampString = "468890267.561398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "395"
-            endingLineNumber = "395"
+            startingLineNumber = "396"
+            endingLineNumber = "396"
             landmarkName = "FakeGameSettings"
             landmarkType = "3">
          </BreakpointContent>
@@ -613,11 +613,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "468377494.168112"
+            timestampString = "468890267.561398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
             landmarkName = "changeSettings(_:noOfPlayersAtTable:noOfCardsInASuite:hasTrumps:hasJokers:willPassCards:speedOfToss:gameWinningScoreIndex:ruleSet:allowBreakingTrumps:includeHooligan:includeOmnibus:)"
             landmarkType = "5">
          </BreakpointContent>

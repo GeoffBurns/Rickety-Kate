@@ -277,12 +277,12 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
 
         for (i,(player,hand)) in Zip2Sequence(players,dealtHands).enumerate()
         {
-            scene?.schedule(delay: NSTimeInterval(i) * GameSettings.sharedInstance.tossDuration + 0.1) {
+            scene?.schedule(delay: NSTimeInterval(i) * GameSettings.sharedInstance.tossDuration*1.2 + 0.1) {
             let sortedHand = hand.sort()
             player.newHand( Array(sortedHand.reverse()))
             }
      
         }
-        scene?.schedule(delay: NSTimeInterval(players.count+1) * GameSettings.sharedInstance.tossDuration, handler: whenDone)
+        scene?.schedule(delay: NSTimeInterval(players.count-1) * GameSettings.sharedInstance.tossDuration*1.2, handler: whenDone)
     }
 }

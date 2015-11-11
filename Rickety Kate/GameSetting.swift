@@ -94,30 +94,31 @@ public class GameSettings
     
     static var isPhone6Plus : Bool
     {
-        //  if #available(iOS 8.0, *) {
+  
         return   UIScreen.mainScreen().nativeScale > 2.5
-        //    } else {
-        //        return UIScreen.mainScreen().bounds.size.height > 735.0
-        //    }
+       
+    }
+    static var isBigPad : Bool
+    {
+      return isPad && UIScreen.mainScreen().nativeScale > 1.9
     }
     static var isPadPro : Bool
     {
-        //  if #available(iOS 8.0, *) {
+
         return   isPad && UIScreen.mainScreen().bounds.size.height > 1000.0
-        //    } else {
-        //        return UIScreen.mainScreen().bounds.size.height > 735.0
-        //    }
+
     }
     static var isBig: Bool
     {
-        return isPadPro || isPhone6Plus
+        //  return isPadPro || isPhone6Plus
+          return isBigPad || isPhone6Plus
     }
     
      static  var device : DeviceType {
         
         if isPad
         {
-            if isPadPro
+            if isBigPad // isPadPro
             {
                 return .PadPro
             }
@@ -147,7 +148,7 @@ class LiveGameSettings : IGameSettings
             let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfSuitesInDeck.rawValue)
             if result == 0
             {
-                return 6
+                return 5
             }
             return result
     }
@@ -179,7 +180,7 @@ class LiveGameSettings : IGameSettings
             let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfCardsInASuite.rawValue)
             if result == 0
             {
-                return 16
+                return 14
             }
             return result
         }

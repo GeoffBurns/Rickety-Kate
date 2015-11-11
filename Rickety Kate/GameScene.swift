@@ -129,7 +129,7 @@ class GameScene: SKScene {
                     {
                         if let sprite = self.cardSprite(card)
                         {
-                        sprite.flipDown()
+                    //    sprite.flipDown()
                         sprite .player = player
                         }
                      }
@@ -150,7 +150,7 @@ class GameScene: SKScene {
         let width = self.frame.size.width
         let height = self.frame.size.height
         
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.5) { [unowned self] timer in
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.5) { [unowned self]  in
 
             self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
             
@@ -161,7 +161,7 @@ class GameScene: SKScene {
                 Bus.sharedInstance.send(GameEvent.NewGame)
             }
         }
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration*2.2) { [unowned self] timer in
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*2.2) { [unowned self]  in
             
             
             self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
@@ -271,6 +271,7 @@ class GameScene: SKScene {
     func isNodeAPlayerOneCardSpite(cardsprite:CardSprite) -> Bool
     {
     // does the sprite belong to a player
+        
     if let player = cardsprite.player {
            return player.name == "You"
         }
