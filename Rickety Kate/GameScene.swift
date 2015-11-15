@@ -276,7 +276,7 @@ class RicketyKateGameScene: CardGameScene {
         self.backgroundColor = GameSettings.backgroundColor
         
         backgroundFan.setup(self, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
-        backgroundFan.createSprite = { $1.whiteCardSprite($0) }
+        backgroundFan.isBackground = true
         backgroundFan.zPositon = 0.0
         backgroundFan.speed = 0.1
         self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
