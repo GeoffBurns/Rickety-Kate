@@ -16,11 +16,8 @@ public protocol HasDiscardArea : class
 
 public class CardScene : SKScene, HasDiscardArea {
     
-    
     public var discardPile = CardPile(name: CardPileType.Discard.description)
     public var discardWhitePile = CardPile(name: CardPileType.Discard.description)
-    
-
 }
 
 extension HasDiscardArea
@@ -57,17 +54,15 @@ class CardGameScene : CardScene {
     }
 
     /// at end of game return sprites to start
-    func reverseDeal(width: CGFloat , height: CGFloat )
+    func discard()
     {
-        for (i,player) in table.players.enumerate()
+        for player in table.players
         {
-            let cards = player.hand
-            player._hand.clear()
-            dealtPiles[i].replaceWithContentsOf(cards)
+            player._hand.discardAll()
+       
         }
-        dealtPiles[0].appendContentsOf(table.tricksPile.map{ return $0.playedCard })
+        table.trickFan.discardAll()
     }
-    
 }
 
 
@@ -313,9 +308,7 @@ class RicketyKateGameScene: CardGameScene {
 
     func resetSceneWithNewTableThatIsInteractive(isInteractive:Bool)
     {
-        let width = self.frame.size.width
-        let height = self.frame.size.height
-        reverseDeal(width , height: height )
+        discard()
         
         self.schedule(delay: GameSettings.sharedInstance.tossDuration) { [unowned self] in
                 let transition = SKTransition.crossFadeWithDuration(0.5)
