@@ -265,7 +265,11 @@ extension SKNode
     }
 func cardSprite(card :PlayingCard) -> CardSprite?
     {
-    return self.cardSpriteNamed(card.imageName)
+    if let sprite = self.cardSpriteNamed(card.imageName)
+        {
+            return sprite
+        }
+        return CardSprite.create(card, scene: self)
     }
     
 func whiteCardSprite(card :PlayingCard) -> CardSprite?

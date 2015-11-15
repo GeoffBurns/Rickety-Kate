@@ -20,9 +20,7 @@ public class CardScene : SKScene, HasDiscardArea {
     public var discardPile = CardPile(name: CardPileType.Discard.description)
     public var discardWhitePile = CardPile(name: CardPileType.Discard.description)
     
-    
 
-    
 }
 
 extension HasDiscardArea
@@ -50,10 +48,6 @@ class CardGameScene : CardScene {
         
         for (i,hand) in table.dealtHands.enumerate()
         {
-            for card in hand
-            {
-                CardSprite.create(card, scene: self)
-            }
             let dealtPile = CardPile(name: CardPileType.Dealt.description)
             dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
             dealtPile.speed = 0.1
