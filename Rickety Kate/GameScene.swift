@@ -32,25 +32,45 @@ extension HasDiscardArea
         discardWhitePile.speed = 0.1
     }
 }
-
-class CardGameScene : CardScene {
+protocol HasDealersArea : HasDiscardArea
+{
+    var dealtPiles : [CardPile] { get set }
+    
+}
+extension HasDealersArea
+{
+    func setupDealersAreaFor(noOfPlayers:Int,width: CGFloat , height: CGFloat )
+    {
+        dealtPiles = []
+        let hSpacing = CGFloat(noOfPlayers) * 2
+        
+        for i in 0..<noOfPlayers
+        {
+            let dealtPile = CardPile(name: CardPileType.Dealt.description)
+            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
+            dealtPile.speed = 0.1
+            dealtPiles.append(dealtPile)
+        }
+        
+    }
+    
+    func deal(hands:[[PlayingCard]])
+    {
+        for (dealtPile,hand) in Zip2Sequence(dealtPiles,hands)
+        {
+            dealtPile.replaceWithContentsOf(hand)
+        }
+    }
+}
+class CardGameScene : CardScene, HasDealersArea {
     
     var table : RicketyKateCardTable!
     var dealtPiles = [CardPile]()
     
     func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
     {
-        dealtPiles = []
-        let hSpacing = CGFloat(table.players.count) * 2
-        
-        for (i,hand) in table.dealtHands.enumerate()
-        {
-            let dealtPile = CardPile(name: CardPileType.Dealt.description)
-            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
-            dealtPile.speed = 0.1
-            dealtPile.appendContentsOf(hand)
-            dealtPiles.append(dealtPile)
-        }
+        setupDealersAreaFor(table.players.count,width: width , height: height )
+        deal(table.dealtHands)
     }
 
     /// at end of game return sprites to start
