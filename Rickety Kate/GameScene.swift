@@ -21,13 +21,21 @@ public class CardScene : SKScene, HasDiscardArea {
     public var discardWhitePile = CardPile(name: CardPileType.Discard.description)
     
     
-    func setup()
+
+    
+}
+
+extension HasDiscardArea
+{
+    func setupDiscardArea()
     {
         discardPile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
-        discardWhitePile.isBackground = true
         discardWhitePile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
+        discardPile.isDiscard = true
+        discardWhitePile.isDiscard = true
+        discardWhitePile.isBackground = true
+        discardWhitePile.speed = 0.1
     }
-    
 }
 
 class CardGameScene : CardScene {
@@ -90,9 +98,6 @@ class RicketyKateGameScene: CardGameScene {
         cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
     }
     
-
-    
-
     func seatPlayers()
     {
         let seats = Seater.seatsFor(table.players.count)
@@ -129,14 +134,7 @@ class RicketyKateGameScene: CardGameScene {
     
     func resetBackgroundFan(cards:[PlayingCard])
     {
-        if backgroundFan.cards == cards
-        {
-            return
-        }
-        for sprite in backgroundFan.sprites
-        {
-            sprite.position = CGPoint(x: -100, y: -400)
-        }
+        backgroundFan.discardAll()
         backgroundFan.replaceWithContentsOf(cards)
     }
     
@@ -284,7 +282,7 @@ class RicketyKateGameScene: CardGameScene {
     }
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-     
+        setupDiscardArea()
         setupBackground()
         setupStatusArea()
         setupPopupScreensAndButtons()
@@ -548,7 +546,7 @@ class RicketyKateGameScene: CardGameScene {
                                return
                           case .CardDoesNotFollowSuite :
                                doesNotFollowSuite(cardsprite)
-                            //   draggedNode = nil
+                        
                           default:
                                cardsprite.color = UIColor.redColor()
                                cardsprite.colorBlendFactor = 0.2

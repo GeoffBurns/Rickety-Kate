@@ -73,12 +73,9 @@ public class GameStateBase
         return []
     }
     
-
     public var scoreOfPile : Int {
         return tricksPile.reduce(0) { $0 + ( GameSettings.sharedInstance.rules.cardScores[$1.playedCard] ?? 0) }
     }
-    
- 
     
     public func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
     {

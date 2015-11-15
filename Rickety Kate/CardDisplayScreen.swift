@@ -55,12 +55,7 @@ class CardDisplayScreen: Popup, HasDiscardArea {
           {
           self.gameScene = scene
             
-          discardPile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: true)
-          discardWhitePile.isBackground = true
-          discardPile.isDiscard = true
-          discardWhitePile.isDiscard = true
-          discardWhitePile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: true)
-          discardPile.speed = 0.1
+          setupDiscardArea()
             
           color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
           size = scene.frame.size
@@ -186,23 +181,21 @@ class CardDisplayScreen: Popup, HasDiscardArea {
                     self.addChild(m)
                     
                     
-              //      self.schedule(repeatInterval: 0.4 * Double(i)){ [unowned slide] in
+           
                       slide.discardAll()
                       slide.replaceWithContentsOf(suite)
                     slide.rearrange()
-                   //   slide.update()
-              //      }
+     
                     
                     continue
                 }
             }
-         //   self.schedule(repeatInterval:0.4 * Double(i)){ [unowned slide] in
+
               slide.discardAll()
            
               slide.clear()
               slide.rearrange()
-            //  slide.update()
-         //   }
+ 
             
         }
     }
