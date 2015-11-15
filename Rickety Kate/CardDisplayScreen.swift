@@ -15,14 +15,17 @@ enum CardDisplayTab
 }
 
 typealias ScorePairCollection = [(PlayingCard,Int)]
-// Help Screen
-class CardDisplayScreen: Popup {
-    
 
+// Help Screen
+class CardDisplayScreen: Popup, HasDiscardArea {
+    
+    
+    var discardPile = CardPile(name: CardPileType.Discard.description)
+    var discardWhitePile = CardPile(name: CardPileType.Discard.description)
+    
     var isSetup = false
     var slides = [CardSlide]()
     var orderedGroups : [(Int,ScorePairCollection)] = []
-    var discard = CardSlide(name: "slide")
     var activeTab = CardDisplayTab.DeckTab
     var moreButton = SKSpriteNode(imageNamed: "More1")
     var backButton = SKSpriteNode(imageNamed: "Back")
@@ -39,8 +42,6 @@ class CardDisplayScreen: Popup {
     var originalScale = CGFloat(0)
     var originalOrder = CGFloat(0)
     
-    
-    
     override func onEnter() {
 
     }
@@ -51,31 +52,37 @@ class CardDisplayScreen: Popup {
     override func setup(scene:SKNode)
     {
         if !isSetup
-        {
-        self.gameScene = scene
-        color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
-        size = scene.frame.size
-        position = CGPointZero
-        anchorPoint = CGPointZero
-        userInteractionEnabled = true
-        cards = GameSettings.sharedInstance.deck!.orderedDeck
+          {
+          self.gameScene = scene
+            
+          discardPile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: true)
+          discardWhitePile.isBackground = true
+          discardPile.isDiscard = true
+          discardWhitePile.isDiscard = true
+          discardWhitePile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: true)
+          discardPile.speed = 0.1
+            
+          color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
+          size = scene.frame.size
+          position = CGPointZero
+          anchorPoint = CGPointZero
+          userInteractionEnabled = true
+          cards = GameSettings.sharedInstance.deck!.orderedDeck
    
 
-        for i in 0..<noOfSlides
-        {
+          for i in 0..<noOfSlides
+           {
             let slide = CardSlide(name: "slide")
             slide.setup(self, slideWidth: size.width * 0.9)
             slide.position = CGPointMake(size.width * 0.10, size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
             slides.append(slide)
-        }
-        discard.setup(self, slideWidth: size.width * 0.9)
-        discard.speed = 0.1
-        }
-        isSetup = true
+           }
+            
+           isSetup = true
+          }
 
-        discard.position = CGPointMake(size.width * 0.10, size.height * -0.5 )
         for card in cards {
-            let cs = CardSprite.create(card, player: nil, scene: self)
+            let cs = CardSprite.create(card, scene: self)
             cs.anchorPoint = CGPointMake(0.5,05)
         }
         suiteStart = 0
@@ -178,16 +185,24 @@ class CardDisplayScreen: Popup {
                     self.addChild(l)
                     self.addChild(m)
                     
-                    discard.replaceWithContentsOf(slide.cards)
-                    slide.replaceWithContentsOf(suite)
-                    slide.update()
+                    
+              //      self.schedule(repeatInterval: 0.4 * Double(i)){ [unowned slide] in
+                      slide.discardAll()
+                      slide.replaceWithContentsOf(suite)
+                    slide.rearrange()
+                   //   slide.update()
+              //      }
+                    
+                    continue
                 }
-                continue
             }
-            
-            discard.replaceWithContentsOf(slide.cards)
-            slide.clear()
-            slide.update()
+         //   self.schedule(repeatInterval:0.4 * Double(i)){ [unowned slide] in
+              slide.discardAll()
+           
+              slide.clear()
+              slide.rearrange()
+            //  slide.update()
+         //   }
             
         }
     }
@@ -204,38 +219,31 @@ class CardDisplayScreen: Popup {
         
         for (i,slide) in slides.enumerate()
         {
-            if  i+suiteStart < orderedGroups.count
+         slide.discardAll()
+         if  i+suiteStart < orderedGroups.count
             {
                 
             let group = orderedGroups[i+suiteStart]
             let cards = group.1.map { $0.0 }
             
             if cards.count > 0
-            {
-            let l = SKLabelNode(fontNamed:"Verdana")
-            l.fontSize = fontsize
-            l.horizontalAlignmentMode = .Left
-            l.position = CGPointMake(size.width * 0.05, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
-            if cards.count > 1 { l.text = "\(group.0) Points Each" }
-            else if group.0 > 0 { l.text = "\(group.0) Points" }
-            else  { l.text = "\(group.0) Points (Total Points for Hand can not Fall Below Zero)" }
-            l.name = "label"
-            
-    
-            self.addChild(l)
-    
-            
-            discard.replaceWithContentsOf(slide.cards)
-            slide.replaceWithContentsOf(cards)
-            slide.update()
+              {
+              let l = SKLabelNode(fontNamed:"Verdana")
+              l.fontSize = fontsize
+              l.horizontalAlignmentMode = .Left
+              l.position = CGPointMake(size.width * 0.05, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
+              if cards.count > 1 { l.text = "\(group.0) Points Each" }
+              else if group.0 > 0 { l.text = "\(group.0) Points" }
+              else  { l.text = "\(group.0) Points (Total Points for Hand can not Fall Below Zero)" }
+              l.name = "label"
+              self.addChild(l)
+ 
+              slide.replaceWithContentsOf(cards)
+                
+              continue
+              }
             }
-                continue
-            }
-           
-            discard.replaceWithContentsOf(slide.cards)
-            slide.clear()
-            slide.update()
-           
+        slide.clear()
         }
     }
     
@@ -249,7 +257,7 @@ class CardDisplayScreen: Popup {
         }
         
         
-        scene!.schedule(delay: 0.3)
+        self.schedule(delay: 0.3)
         {
           switch self.activeTab
              {
@@ -266,7 +274,6 @@ class CardDisplayScreen: Popup {
 
         }
         
-   
         backButton.alpha = suiteStart == 0 ? 0.0 : 1.0
     }
     func buttonTouched(positionInScene:CGPoint) -> Bool

@@ -17,9 +17,10 @@ class CardSlide : CardPile
     
     var slideWidth = CGFloat()
     
-    func setup(scene:SKNode, slideWidth: CGFloat, sizeOfCards: CardSize = CardSize.Medium)
+    func setup(scene:HasDiscardArea, slideWidth: CGFloat, sizeOfCards: CardSize = CardSize.Medium)
     {
-        self.scene = scene
+        self.discardAreas = scene
+        self.scene = scene as? SKNode
         self.sideOfTable = SideOfTable.Bottom
         self.slideWidth = slideWidth
         self.isUp = true
@@ -67,10 +68,10 @@ class CardSlide : CardPile
         {
             return
         }
-      
+        
         let noCards = CGFloat(cards.count)
-    
-
+        
+        
         for (positionInSpread,card) in cards.enumerate()
         {
             rearrangeFor(card,positionInSpread:CGFloat(positionInSpread), fullHand:noCards)
@@ -78,6 +79,6 @@ class CardSlide : CardPile
             
         }
     }
-
+    
 }
 

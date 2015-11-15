@@ -17,9 +17,10 @@ class CardFan : CardPile
      override var cardAnchorPoint : CGPoint { get { return CardFan.fanAnchorPoint }}
     
     
-    func setup(scene:SKNode, sideOfTable: SideOfTable, isUp: Bool, sizeOfCards: CardSize = CardSize.Small)
+    func setup(scene:HasDiscardArea, sideOfTable: SideOfTable, isUp: Bool, sizeOfCards: CardSize = CardSize.Small)
     {
-        self.scene = scene
+        self.discardAreas = scene
+        self.scene = scene as? SKNode
         self.sideOfTable = sideOfTable
         self.isUp = isUp
         self.sizeOfCards = sizeOfCards

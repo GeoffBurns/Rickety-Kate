@@ -97,7 +97,7 @@ class ExitScreen: Popup {
             {
                 touchedNode.texture = SKTexture(imageNamed: "Yes2")
                 
-                if let scene = gameScene as? GameScene
+                if let scene = gameScene as? RicketyKateGameScene
                 {
                     scene.resetSceneAsDemo()
                 }

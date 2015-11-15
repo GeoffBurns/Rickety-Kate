@@ -40,13 +40,13 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
             width = temp
         }
         // Scene should be shown in fullscreen mode
-        let scene = GameScene(size: CGSizeMake(width, height))
-       //let scene = GameScene(size: CGSizeMake(2048, 1536))
+        let scene = RicketyKateGameScene(size: CGSizeMake(width, height))
+    
 
         // Configure the view.
         let skView = self.view as! SKView
             
-        //let scene  =  GameScene(size:skView.bounds.size)
+
         skView.showsFPS = false
         skView.showsNodeCount = false
             
@@ -56,7 +56,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         /* Set the scale mode to scale to fit the window */
         scene.scaleMode = .AspectFill
      
-        scene.table = CardTable.makeDemo(scene)
+        scene.table = RicketyKateCardTable.makeDemo(scene)
             
         skView.presentScene(scene)
        // loadAds()

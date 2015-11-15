@@ -17,8 +17,17 @@ class CardSprite : SKSpriteNode
     /// Variables
     /////////////////////////////////////////////////////
     weak static var currentScene : SKNode? = nil
-    weak var fan : CardPile? = nil
-    weak var player : CardPlayer? = nil
+    var fan : CardPile? = nil
+        {
+        didSet {
+            if let f = fan
+            where f.player != nil {
+                player = f.player
+            }
+
+        }
+    }
+    var player : CardHolderBase? = nil
     var card : PlayingCard
     var isUp = false
     var positionInSpread = CGFloat(0.0)
@@ -38,10 +47,9 @@ class CardSprite : SKSpriteNode
     /////////////////////////////////////////////////////
     /// Constructors
     /////////////////////////////////////////////////////
-    init(card:PlayingCard, player : CardPlayer? = nil, texture: SKTexture = SKTexture(imageNamed: "Back1"))
+    init(card:PlayingCard,  texture: SKTexture = SKTexture(imageNamed: "Back1"))
     {
     self.card = card
-    self.player = player
     super.init(texture: texture, color: UIColor.whiteColor(), size: texture.size())
       
 
@@ -54,14 +62,10 @@ class CardSprite : SKSpriteNode
         fatalError("init(coder:) has not been implemented")
     }
     
-    static func add(card:PlayingCard, player : CardPlayer?, scene:SKNode)
+
+    static func create(card:PlayingCard, scene:SKNode) -> CardSprite
     {
-        CardSprite.create(card, player: player,scene: scene)
-      
-    }
-    static func create(card:PlayingCard, player : CardPlayer?, scene:SKNode) -> CardSprite
-    {
-        let sprite = CardSprite(card: card, player: player)
+        let sprite = CardSprite(card: card)
         scene.addChild(sprite)
         self.currentScene = scene
         return sprite
@@ -198,7 +202,7 @@ class WhiteCardSprite : CardSprite
     var outlineShadow : SKSpriteNode? = nil
     private init(card:PlayingCard)
     {
-        super.init(card:card, player : nil, texture: SKTexture(imageNamed: "blank"))
+        super.init(card:card, texture: SKTexture(imageNamed: "blank"))
         
         white = SKSpriteNode(imageNamed: card.whiteImageName)
         
@@ -242,11 +246,8 @@ class WhiteCardSprite : CardSprite
         fatalError("init(coder:) has not been implemented")
     }
     
-    static func add(card:PlayingCard, scene:SKNode)
-    {
-        WhiteCardSprite.create(card, scene: scene)
-    }
-    static func create(card:PlayingCard, scene:SKNode) -> CardSprite
+
+    static func createWhite(card:PlayingCard, scene:SKNode) -> CardSprite
     {
         let sprite = WhiteCardSprite(card: card)
         scene.addChild(sprite)
@@ -273,6 +274,6 @@ func whiteCardSprite(card :PlayingCard) -> CardSprite?
         {
             return sprite
         }
-        return WhiteCardSprite.create(card, scene: self)
+        return WhiteCardSprite.createWhite(card, scene: self)
     }
 }

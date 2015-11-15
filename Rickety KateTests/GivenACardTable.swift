@@ -12,7 +12,7 @@ import Rickety_Kate
 import SpriteKit
 
 class GivenACardTable: XCTestCase {
-   var table : CardTable = CardTable.makeTable(SKNode(), gameSettings:FakeGameSettings(noOfSuitesInDeck: 4 ,
+   var table : RicketyKateCardTable = RicketyKateCardTable.makeTable(CardScene(), gameSettings:FakeGameSettings(noOfSuitesInDeck: 4 ,
         noOfPlayersAtTable: 4) )
     
     override func setUp() {

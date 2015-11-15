@@ -10,19 +10,26 @@ import SpriteKit
 
 
 /// controls the flow of the game
-public class CardTable : GameStateBase, GameState
+public class CardTable: GameStateBase
 {
-    var playerOne: CardPlayer = HumanPlayer.sharedInstance;
     public var players = [CardPlayer]()
-    var scene : SKNode? = nil
-    let bus = Bus.sharedInstance
+    var scene : CardScene? = nil
+    var playerOne: CardPlayer = HumanPlayer.sharedInstance;
+
     var isInDemoMode = false
     
     lazy var dealtHands : [[PlayingCard]] = self.dealHands()
+    
+    private init(players: [CardPlayer],  scene:CardScene) {
+        self.players = players
+        playerOne = self.players[0]
+        isInDemoMode = playerOne.name != "You"
+        self.scene  = scene
+        
 
-
-    var startPlayerNo = 1
-
+        super.init()
+        //  setPassedCards()
+    }
     var cardTossDuration = GameSettings.sharedInstance.tossDuration*1.8
     
     func dealHands()->[[PlayingCard]]
@@ -34,23 +41,28 @@ public class CardTable : GameStateBase, GameState
     {
         dealtHands = self.dealHands()
     }
-    
-    static public func makeTable(scene:SKNode, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable {
-     return CardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
 }
 
-    static public func makeDemo(scene:SKNode, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> CardTable  {
-     return CardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable), scene:scene )
-    }
-    private init(players: [CardPlayer],  scene:SKNode) {
-    self.players = players
-    playerOne = self.players[0]
-    isInDemoMode = playerOne.name != "You"
-    self.scene  = scene
+/// controls the flow of the game
+public class RicketyKateCardTable : CardTable, GameState
+{
 
-    Scorer.sharedInstance.setupScorer(self.players)
-    super.init()
-  //  setPassedCards()
+    let bus = Bus.sharedInstance
+
+    var startPlayerNo = 1
+
+    static public func makeTable(scene:CardScene, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> RicketyKateCardTable {
+     return RicketyKateCardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
+}
+
+    static public func makeDemo(scene:CardScene, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> RicketyKateCardTable  {
+     return RicketyKateCardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable), scene:scene )
+    }
+    private override init(players: [CardPlayer],  scene:CardScene) {
+
+    Scorer.sharedInstance.setupScorer(players)
+    super.init(players: players,scene: scene)
+
     }
     
     // everyone except PlayerOne

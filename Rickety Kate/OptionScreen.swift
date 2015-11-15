@@ -65,7 +65,7 @@ class OptionScreen: Popup {
             includeOmnibus:includeOmnibus.current
             )
         {
-            if let scene = gameScene as? GameScene
+            if let scene = gameScene as? RicketyKateGameScene
             {
                 scene.resetSceneAsDemo()
             }

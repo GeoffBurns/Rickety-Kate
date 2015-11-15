@@ -15,41 +15,59 @@ import ReactiveCocoa
 public protocol CardHolder
 {
     func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
-    var RicketyKate : PlayingCard? {get}
+    
     var hand : [PlayingCard] { get }
 }
 
-public class CardHolderBase
+extension CardHolder
 {
-    var _hand : CardFan = CardFan(name: CardPileType.Hand.description)
+    public var RicketyKate : PlayingCard?
+        {
+            let RicketyKate = hand.filter { $0.isRicketyKate}
+            
+            return RicketyKate.first
+    }
+}
+public class NoPlayer:  CardHolderBase
+{
+    init() {
+        super.init(name: "Played")
+    }
+}
+public class CardHolderBase :  CardHolder
+{
+    
+    public var name : String = "Base"
+    lazy var _hand : CardFan = CardFan(name: CardPileType.Hand.description, player:self)
     public var hand : [PlayingCard] { get { return _hand.cards } set { _hand.cards = newValue }}
     public func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
     {
         return _hand.cards.filter {$0.suite == suite}
     }
-    public var RicketyKate : PlayingCard?
-        {
-            let RicketyKate = _hand.cards.filter { $0.isRicketyKate}
-            
-            return RicketyKate.first
+    
+    init(name s: String) {
+        self.name = s
+    }
+    public func removeFromHand(card:PlayingCard) -> PlayingCard?
+    {
+        return _hand.remove(card)
     }
 }
 
 
 
 // Models the state and behaviour of each of the players in the game
-public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
+public class CardPlayer :CardHolderBase , Equatable, Hashable
 {
     //////////////////////////////////////
     /// Variables
     //////////////////////////////////////
-   // public var score : Int = 0
+    // public var score : Int = 0
     var currentTotalScore  = MutableProperty<Int>(0)
     var noOfWins = MutableProperty<Int>(0)
     var scoreForCurrentHand = 0
     public var sideOfTable = SideOfTable.Bottom
     var playerNo = 0
-    public var name : String = "Base"
     var wonCards : CardPile = CardPile(name: CardPileType.Won.description)
     static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3),ComputerPlayer(name:"Rita",margin: 4)]
     
@@ -74,15 +92,12 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     public var hashValue: Int {
         return self.name.hashValue
     }
-
-
+    
+    
     /////////////////////////////////
     /// Constructors and setup
-     /////////////////////////////////
-    init(name s: String) {
-        self.name = s
-    }
-    func setup(scene: SKNode, sideOfTable: SideOfTable, playerNo: Int)
+    /////////////////////////////////
+    func setup(scene: CardScene, sideOfTable: SideOfTable, playerNo: Int)
     {
         self.sideOfTable = sideOfTable
         self.playerNo = playerNo
@@ -100,17 +115,12 @@ public class CardPlayer :CardHolderBase,  CardHolder , Equatable, Hashable
     {
         _hand.replaceWithContentsOf(cards)
     }
+    
     public func appendContentsToHand(cards: [PlayingCard]  )
     {
         _hand.appendContentsOf(cards);
     }
-
-  
     
-    public func removeFromHand(card:PlayingCard) -> PlayingCard?
-    {
-      return _hand.remove(card)
-    }
 }
 
 public class HumanPlayer :CardPlayer
@@ -169,7 +179,7 @@ public class ComputerPlayer :CardPlayer
     
 }
 
-public class FakeCardHolder : CardHolderBase, CardHolder
+public class FakeCardHolder : CardHolderBase
 {
     let cardSource = CardSource.sharedInstance
     
@@ -186,7 +196,9 @@ public class FakeCardHolder : CardHolderBase, CardHolder
         }
     }
     
-    public override init() {}
+    public init() {
+        super.init(name: "Fake")
+    }
     
 }
 ////////////////////////////////////////////////////////////

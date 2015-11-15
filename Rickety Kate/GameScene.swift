@@ -8,15 +8,76 @@
 
 import SpriteKit
 
-/// How game play is displayed
-class GameScene: SKScene {
+public protocol HasDiscardArea : class
+{
+    var discardPile : CardPile { get }
+    var discardWhitePile : CardPile { get }
+}
+
+public class CardScene : SKScene, HasDiscardArea {
     
-    var table : CardTable! {  didSet { setupPassYourThreeWorstCardsPhase() } }
+    
+    public var discardPile = CardPile(name: CardPileType.Discard.description)
+    public var discardWhitePile = CardPile(name: CardPileType.Discard.description)
+    
+    
+    func setup()
+    {
+        discardPile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
+        discardWhitePile.isBackground = true
+        discardWhitePile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
+    }
+    
+}
+
+class CardGameScene : CardScene {
+    
+    var table : RicketyKateCardTable!
+    var dealtPiles = [CardPile]()
+    
+    func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
+    {
+        dealtPiles = []
+        let hSpacing = CGFloat(table.players.count) * 2
+        
+        for (i,hand) in table.dealtHands.enumerate()
+        {
+            for card in hand
+            {
+                CardSprite.create(card, scene: self)
+            }
+            let dealtPile = CardPile(name: CardPileType.Dealt.description)
+            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
+            dealtPile.speed = 0.1
+            dealtPile.appendContentsOf(hand)
+            dealtPiles.append(dealtPile)
+        }
+    }
+
+    /// at end of game return sprites to start
+    func reverseDeal(width: CGFloat , height: CGFloat )
+    {
+        for (i,player) in table.players.enumerate()
+        {
+            let cards = player.hand
+            player._hand.clear()
+            dealtPiles[i].replaceWithContentsOf(cards)
+        }
+        dealtPiles[0].appendContentsOf(table.tricksPile.map{ return $0.playedCard })
+    }
+    
+}
+
+
+/// How game play is displayed
+class RicketyKateGameScene: CardGameScene {
+
+    
+    override var table : RicketyKateCardTable! {  didSet { setupPassYourThreeWorstCardsPhase() } }
     var originalTouch = CGPoint()
     var draggedNode: CardSprite? = nil;
     var cardScaleForSelected = CGFloat(1.05)
     
-    var dealtPiles = [CardPile]()
     var backgroundFan = CardFan(name: CardPileType.Background.description)
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Play1")
@@ -29,24 +90,7 @@ class GameScene: SKScene {
         cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
     }
     
-    func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
-    {
-        dealtPiles = []
-        let hSpacing = CGFloat(table.players.count) * 2
-        
-        for (i,(player,hand)) in Zip2Sequence(table.players,table.dealtHands).enumerate()
-        {
-            for card in hand
-            {
-                CardSprite.add(card, player: player, scene: self)
-            }
-            let dealtPile = CardPile(name: "dealt")
-            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
-            
-            dealtPile.appendContentsOf(hand)
-            dealtPiles.append(dealtPile)
-        }
-    }
+
     
 
     func seatPlayers()
@@ -67,17 +111,7 @@ class GameScene: SKScene {
             
         }
     }
-    /// at end of game return sprites to start
-    func reverseDeal(width: CGFloat , height: CGFloat )
-    {
-        for (i,player) in table.players.enumerate() 
-           {
-            let cards = player.hand
-            player._hand.clear()
-            dealtPiles[i].replaceWithContentsOf(cards)
-            }
-        dealtPiles[0].appendContentsOf(table.tricksPile.map{ return $0.playedCard })
-    }
+
     
     func StatusAreaFirstMessage()
     {
@@ -110,7 +144,7 @@ class GameScene: SKScene {
     {
         resetBackgroundFan(trickBackgroundCards)
 
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration*1.3) { [unowned self] timer in
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*1.3) { [unowned self]  in
                 self.table.playTrick(self.table.players[self.table.startPlayerNo])
         }
 
@@ -234,7 +268,7 @@ class GameScene: SKScene {
     {
         self.backgroundColor = GameSettings.backgroundColor
         
-        backgroundFan.setup(scene!, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
+        backgroundFan.setup(self, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
         backgroundFan.createSprite = { $1.whiteCardSprite($0) }
         backgroundFan.zPositon = 0.0
         backgroundFan.speed = 0.1
@@ -270,13 +304,20 @@ class GameScene: SKScene {
     
     func isNodeAPlayerOneCardSpite(cardsprite:CardSprite) -> Bool
     {
-    // does the sprite belong to a player
         
-    if let player = cardsprite.player {
-           return player.name == "You"
+        // does the sprite belong to a player
+        if let fan = cardsprite.fan,
+            player = cardsprite.player
+            where (fan.name == CardPileType.Passing.description ||
+                fan.name == CardPileType.Hand.description) &&
+                player.name == "You"
+        {
+            return true
         }
-    return false
+        return false
+        
     }
+ 
 
     func resetSceneWithNewTableThatIsInteractive(isInteractive:Bool)
     {
@@ -286,13 +327,13 @@ class GameScene: SKScene {
         
         self.schedule(delay: GameSettings.sharedInstance.tossDuration) { [unowned self] in
                 let transition = SKTransition.crossFadeWithDuration(0.5)
-                let scene = GameScene(size: self.scene!.size)
+                let scene = RicketyKateGameScene(size: self.scene!.size)
                 
                 scene.scaleMode = SKSceneScaleMode.AspectFill
              
                 scene.table = isInteractive ?
-                    CardTable.makeTable(scene) :
-                    CardTable.makeDemo(scene)
+                    RicketyKateCardTable.makeTable(scene) :
+                    RicketyKateCardTable.makeDemo(scene)
                     
                 self.scene!.view!.presentScene(scene, transition: transition)
                 }
@@ -441,6 +482,7 @@ class GameScene: SKScene {
         let isTargetHand = positionInScene.y > height * 0.3
         if cardPassingPhase.transferCardSprite(cardsprite, isTargetHand:isTargetHand)
             {
+            draggedNode = nil
             return
             }
   
@@ -502,9 +544,11 @@ class GameScene: SKScene {
                           {
                           case .CardPlayed(_, _) :
                                transferCardToTrickPile(cardsprite)
+                               draggedNode = nil
                                return
                           case .CardDoesNotFollowSuite :
                                doesNotFollowSuite(cardsprite)
+                            //   draggedNode = nil
                           default:
                                cardsprite.color = UIColor.redColor()
                                cardsprite.colorBlendFactor = 0.2

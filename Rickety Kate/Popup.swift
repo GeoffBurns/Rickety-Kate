@@ -8,15 +8,20 @@
 
 import SpriteKit
 
+
 // Popup screen for user input
 class Popup: SKSpriteNode {
     
     weak var gameScene : SKNode? = nil
     weak var button :  PopupButton? = nil
     
+
+    
+
     func setup(gameScene : SKNode)
     {
         self.gameScene = gameScene
+ 
     }
     
     init()

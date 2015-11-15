@@ -11,12 +11,12 @@ import SpriteKit
 public class PassYourThreeWorstCardsPhase
 {
 var players : [CardPlayer]
-var scene : SKNode
+var scene : CardScene
 var cardsPassed = [CardPile]()
 var isCurrentlyActive = true
 
     
-    init(scene : SKNode, players:[CardPlayer])
+    init(scene : CardScene, players:[CardPlayer])
     {
         self.players = players
         self.scene = scene
@@ -90,24 +90,12 @@ var isCurrentlyActive = true
     
     func unpassCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
     {
-    if let removedCard = self.cardsPassed[seatNo].remove(passedCard)
-      {
-      players[seatNo]._hand.append(removedCard)
-      return removedCard
-      }
-    
-    return nil
+      return players[seatNo]._hand.transferCardFrom(self.cardsPassed[seatNo], card: passedCard)
     }
     
     func passCard(seatNo:Int, passedCard:PlayingCard) -> PlayingCard?
     {
-    if let removedCard = players[seatNo].removeFromHand(passedCard)
-      {
-      self.cardsPassed[seatNo].cards.append(removedCard)
-      return removedCard
-      }
-    
-    return nil
+        return self.cardsPassed[seatNo].transferCardFrom(players[seatNo]._hand, card: passedCard)
     }
     
     func passOtherCards()
