@@ -126,11 +126,16 @@ extension HasDraggableCards
             draggedNode=nil
         }
     }
-    func quickSwapDraggedCard(newCard:CardSprite,oldPosition:CGPoint)
+    func quickSwapDraggedCard(newCard:CardSprite,originalPosition:CGPoint)
     {
     draggedNode?.setdownQuick()
-    newCard.liftUpQuick(oldPosition)
+    newCard.liftUpQuick(originalPosition)
     draggedNode = newCard;
+    }
+    func startDraggingCard(newCard:CardSprite,originalPosition:CGPoint)
+    {
+    draggedNode = newCard
+    newCard.liftUp(originalPosition)
     }
 }
 
@@ -420,10 +425,10 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         let adjustedPosition = CGPoint(x: newX,y: positionInScene.y)
         if let adjustedNode = self.nodeAtPoint(adjustedPosition) as? CardSprite
         {
-            if isNodeAPlayerOneCardSpite(adjustedNode)        {
-                draggedNode = adjustedNode;
+            if isNodeAPlayerOneCardSpite(adjustedNode)
+            {
+                startDraggingCard(adjustedNode,originalPosition:positionInScene)
                 originalTouch = positionInScene
-                adjustedNode.liftUp(positionInScene)
                 return true
             }
             
@@ -451,18 +456,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         }
     }
     
-    func isCardInTheRightDirection(touchedCardSprite:CardSprite, goingRight:Bool) -> Bool
-    {
-        
-        if let node = draggedNode
-        {
-        let touchedCardIsToRight = node.positionInSpread < touchedCardSprite.positionInSpread
-        return goingRight && touchedCardIsToRight
-            || !goingRight && !touchedCardIsToRight
-        }
-        return false
-    }
-    
+
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
     let touch = (touches ).first!
     let positionInScene = touch.locationInNode(self)
@@ -487,7 +481,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                   let newCard = fan.cards[newIndex]
                   if let cardSprite = self.cardSprite(newCard)
                     {
-                    quickSwapDraggedCard(cardSprite,oldPosition:positionInScene)
+                    quickSwapDraggedCard(cardSprite,originalPosition:positionInScene)
                     originalTouch = positionInScene
                     }
                         
