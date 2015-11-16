@@ -126,6 +126,12 @@ extension HasDraggableCards
             draggedNode=nil
         }
     }
+    func quickSwapDraggedCard(newCard:CardSprite,oldPosition:CGPoint)
+    {
+    draggedNode?.setdownQuick()
+    newCard.liftUpQuick(oldPosition)
+    draggedNode = newCard;
+    }
 }
 
 /// How game play is displayed
@@ -479,10 +485,8 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                         && draggedNode != touchedNode
                         && isCardInTheRightDirection(touchedNode, goingRight:goingRight)
                     {
-                        
-                        draggedNode?.setdownQuick()
-                        touchedNode.liftUpQuick(positionInScene)
-                        draggedNode = touchedNode;
+                        quickSwapDraggedCard(touchedNode,oldPosition:positionInScene)
+                
                         originalTouch = positionInScene
                         return
                     }
@@ -498,9 +502,6 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     }
 
  
-    
-
-    
     
     func setDownDraggedPassingCard(positionInScene:CGPoint)
     {
