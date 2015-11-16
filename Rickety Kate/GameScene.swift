@@ -84,6 +84,8 @@ extension HasBackgroundSpread
     }
     
 }
+
+
 class CardGameScene : CardScene, HasDealersArea {
     
     var table : RicketyKateCardTable!
@@ -107,9 +109,27 @@ class CardGameScene : CardScene, HasDealersArea {
     }
 }
 
+protocol HasDraggableCards : class
+{
+
+    var draggedNode: CardSprite? { get set }
+}
+
+extension HasDraggableCards
+{
+    func restoreDraggedCard()
+    {
+        if let cardsprite = draggedNode
+            
+        {
+            cardsprite.setdown()
+            draggedNode=nil
+        }
+    }
+}
 
 /// How game play is displayed
-class RicketyKateGameScene: CardGameScene, HasBackgroundSpread {
+class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCards {
 
     
     override var table : RicketyKateCardTable! {  didSet { setupPassYourThreeWorstCardsPhase() } }
@@ -479,18 +499,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread {
 
  
     
-    func restoreDraggedCard()
-    {
-        
-        if let cardsprite = draggedNode
-    
-        {
-          cardsprite.setdown()
-         draggedNode=nil
-        }
-        
-    
-    }
+
     
     
     func setDownDraggedPassingCard(positionInScene:CGPoint)
