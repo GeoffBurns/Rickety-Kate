@@ -475,28 +475,28 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     /// displaying each card in turn
     if deltaX > (2.2 * deltaY) && deltaX > 15
         {
-           let touchedNodes = self.nodesAtPoint(positionInScene)
-    
-           for node in touchedNodes
-                {
-                 if let touchedNode  = node as? CardSprite
+            if let oldCard = draggedNode,
+                    fan = oldCard.fan,
+                    indexInFan = fan.cards.indexOf(oldCard.card)
+                where isNodeAPlayerOneCardSpite(oldCard)
+            {
+                let newIndex = goingRight ? indexInFan+1 : indexInFan-1
                     
-                      where isNodeAPlayerOneCardSpite(touchedNode)
-                        && draggedNode != touchedNode
-                        && isCardInTheRightDirection(touchedNode, goingRight:goingRight)
+                if newIndex >= 0 && fan.cards.count > newIndex
+                {
+                  let newCard = fan.cards[newIndex]
+                  if let cardSprite = self.cardSprite(newCard)
                     {
-                        quickSwapDraggedCard(touchedNode,oldPosition:positionInScene)
-                
-                        originalTouch = positionInScene
-                        return
+                    quickSwapDraggedCard(cardSprite,oldPosition:positionInScene)
+                    originalTouch = positionInScene
                     }
-               }
+                        
+                }
+                 return
             }
-        
-     if( draggedNode != nil)
+        }
+     if let touchedNode = draggedNode
       {
-        let touchedNode = draggedNode!;
-        
       touchedNode.position = positionInScene
       }
     }
