@@ -739,11 +739,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/CardDisplayScreen.swift"
-            timestampString = "469313613.960461"
+            timestampString = "469320979.186782"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "displayScoringCards()"
             landmarkType = "5">
          </BreakpointContent>
@@ -755,11 +755,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/CardDisplayScreen.swift"
-            timestampString = "469313613.960461"
+            timestampString = "469320979.186782"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "displayCardsInDeck()"
             landmarkType = "5">
          </BreakpointContent>

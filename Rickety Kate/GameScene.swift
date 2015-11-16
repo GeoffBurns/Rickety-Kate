@@ -43,11 +43,11 @@ extension HasDealersArea
     {
         dealtPiles = []
         let hSpacing = CGFloat(noOfPlayers) * 2
-        
+        let directions = [Direction.Down,Direction.Right,Direction.Right,Direction.Up,Direction.Up,Direction.Left,Direction.Left,Direction.Left,Direction.Left,Direction.Left,Direction.Left]
         for i in 0..<noOfPlayers
         {
             let dealtPile = CardPile(name: CardPileType.Dealt.description)
-            dealtPile.setup(self, direction: Direction.Up, position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
+            dealtPile.setup(self, direction: directions[i], position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
             dealtPile.speed = 0.1
             dealtPiles.append(dealtPile)
         }
@@ -61,6 +61,28 @@ extension HasDealersArea
             dealtPile.replaceWithContentsOf(hand)
         }
     }
+}
+
+protocol HasBackgroundSpread : HasDiscardArea
+{
+    var backgroundFan : CardFan { get }
+    
+}
+extension HasBackgroundSpread
+{
+    func setupBackgroundSpread( )
+    {
+        backgroundFan.setup(self, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
+        backgroundFan.isBackground = true
+        backgroundFan.zPositon = 0.0
+        backgroundFan.speed = 0.1
+    }
+    func fillBackgroundSpreadWith(cards:[PlayingCard])
+    {
+        backgroundFan.discardAll()
+        backgroundFan.replaceWithContentsOf(cards)
+    }
+    
 }
 class CardGameScene : CardScene, HasDealersArea {
     
@@ -87,7 +109,7 @@ class CardGameScene : CardScene, HasDealersArea {
 
 
 /// How game play is displayed
-class RicketyKateGameScene: CardGameScene {
+class RicketyKateGameScene: CardGameScene, HasBackgroundSpread {
 
     
     override var table : RicketyKateCardTable! {  didSet { setupPassYourThreeWorstCardsPhase() } }
@@ -141,15 +163,10 @@ class RicketyKateGameScene: CardGameScene {
         }
     }
     
-    func resetBackgroundFan(cards:[PlayingCard])
-    {
-        backgroundFan.discardAll()
-        backgroundFan.replaceWithContentsOf(cards)
-    }
-    
+ 
     func startTrickPhase()
     {
-        resetBackgroundFan(trickBackgroundCards)
+        fillBackgroundSpreadWith(trickBackgroundCards)
 
         self.schedule(delay: GameSettings.sharedInstance.tossDuration*1.3) { [unowned self]  in
                 self.table.playTrick(self.table.players[self.table.startPlayerNo])
@@ -198,7 +215,7 @@ class RicketyKateGameScene: CardGameScene {
             self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
             if self.cardPassingPhase.isCurrentlyActive
             {
-                self.resetBackgroundFan(self.threeWorstBackgroundCards)
+                self.fillBackgroundSpreadWith(self.threeWorstBackgroundCards)
                 Bus.sharedInstance.send(GameEvent.NewGame)
             }
         }
@@ -275,18 +292,15 @@ class RicketyKateGameScene: CardGameScene {
     {
         self.backgroundColor = GameSettings.backgroundColor
         
-        backgroundFan.setup(self, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
-        backgroundFan.isBackground = true
-        backgroundFan.zPositon = 0.0
-        backgroundFan.speed = 0.1
+        self.setupBackgroundSpread( )
         self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
         if self.cardPassingPhase.isCurrentlyActive
         {
-            self.resetBackgroundFan(self.threeWorstBackgroundCards)
+            self.fillBackgroundSpreadWith(self.threeWorstBackgroundCards)
         }
         else
         {
-        self.resetBackgroundFan(self.trickBackgroundCards)
+        self.fillBackgroundSpreadWith(self.trickBackgroundCards)
         }
     }
     override func didMoveToView(view: SKView) {

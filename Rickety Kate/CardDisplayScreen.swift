@@ -76,10 +76,6 @@ class CardDisplayScreen: Popup, HasDiscardArea {
            isSetup = true
           }
 
-        for card in cards {
-            let cs = CardSprite.create(card, scene: self)
-            cs.anchorPoint = CGPointMake(0.5,05)
-        }
         suiteStart = 0
         displayPage() 
     }
