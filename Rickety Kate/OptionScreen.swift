@@ -28,7 +28,7 @@ class OptionScreen: Popup {
     var optionSettings = [SKNode]()
     var moreButton = SKSpriteNode(imageNamed: "More1")
     var backButton = SKSpriteNode(imageNamed: "Back")
-    let isBigDevice = GameSettings.isPad || GameSettings.isPhone6Plus
+    let isBigDevice = GameSettings.isBigDevice
     var noOfSettings : Int { return isBigDevice ? 5 : 3 }
     var settingStart = 0
     

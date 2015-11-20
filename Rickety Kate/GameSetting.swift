@@ -10,11 +10,12 @@ import SpriteKit
 
 public enum DeviceType
 {
- case Phone
- case Pad
- case Phone6plus
- case PadPro
+    case Phone
+    case Pad
+    case BigPhone
+    case BigPad
 }
+
 public protocol IGameSettings
 {
     var noOfSuitesInDeck : Int { get }
@@ -92,48 +93,44 @@ public class GameSettings
         return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
     }
     
-    static var isPhone6Plus : Bool
+    static var isBigPhone : Bool
     {
-  
         return   UIScreen.mainScreen().nativeScale > 2.5
-       
     }
     static var isBigPad : Bool
     {
-      return isPad && UIScreen.mainScreen().nativeScale > 1.9
+        return   isPad && UIScreen.mainScreen().nativeScale > 1.9
+        
     }
-    static var isPadPro : Bool
+    static var isBiggerDevice: Bool
     {
-
-        return   isPad && UIScreen.mainScreen().bounds.size.height > 1000.0
-
+        return isBigPhone || isBigPad
     }
-    static var isBig: Bool
+    static var isBigDevice: Bool
     {
-        //  return isPadPro || isPhone6Plus
-          return isBigPad || isPhone6Plus
+        return isBigPhone || isPad
     }
-    
-     static  var device : DeviceType {
+    static  var device : DeviceType {
         
         if isPad
         {
-            if isBigPad // isPadPro
+            if isBigPad
             {
-                return .PadPro
+                return .BigPad
             }
             
             return .Pad
         }
-       
-            if isPhone6Plus
-            {
-                return .Phone6plus
-            }
+        
+        if isBigPhone
+        {
+            return .BigPhone
+        }
         
         return .Phone
-      
+        
     }
+    
 }
 /// User controlled options for the game
 class LiveGameSettings : IGameSettings

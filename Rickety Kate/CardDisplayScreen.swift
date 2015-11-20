@@ -329,14 +329,12 @@ class CardDisplayScreen: Popup, HasDiscardArea {
         
         node.zPosition = CardSize.Huge.zOrder
         
-        
         let label = SKLabelNode(text:node.card.description)
-       
-        
-        label.position = CGPoint(x: 0.0, y: node.size.height*0.35) /// CGPoint(x: 0.5*node.size.width, y: node.size.height*0.98)
+        label.position = CGPoint(x: 0.0, y: node.size.height*(GameSettings.isBiggerDevice ? 0.18 : 0.37)) /// CGPoint(x: 0.5*node.size.width, y: node.size.height*0.98)
         label.fontColor = UIColor.blackColor()
         label.fontName = "Verdana"
         label.fontSize = 11
+        label.zPosition = CardSize.Huge.zOrder + 100.0
         node.addChild(label)
     }
     func cardTouched(positionInScene:CGPoint) -> Bool

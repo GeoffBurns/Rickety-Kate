@@ -19,10 +19,10 @@ enum CardSize
         {
             switch self
             {
-            case .Huge : return GameSettings.isBig ?  CGFloat(2.4) : CGFloat(1.2)
-            case .Big : return GameSettings.isBig ?  CGFloat(1.8) : CGFloat(0.9)
-            case .Medium : return GameSettings.isBig ?  CGFloat(1.2) : CGFloat(0.6)
-            case .Small : return GameSettings.isBig ?  CGFloat(0.9) : CGFloat(0.45)
+            case .Huge : return GameSettings.isBiggerDevice ?  CGFloat(2.4) : CGFloat(1.2)
+            case .Big : return GameSettings.isBiggerDevice ?  CGFloat(1.8) : CGFloat(0.9)
+            case .Medium : return GameSettings.isBiggerDevice ?  CGFloat(1.2) : CGFloat(0.6)
+            case .Small : return GameSettings.isBiggerDevice ?  CGFloat(0.9) : CGFloat(0.45)
             }
     }
     
@@ -47,8 +47,8 @@ enum ButtonSize
         {
             switch self
             {
-            case .Big : return GameSettings.isBig ?  CGFloat(1.5) : CGFloat(1.0)
-            case .Small : return GameSettings.isBig ?  CGFloat(0.75) : CGFloat(0.5)
+            case .Big : return GameSettings.isBiggerDevice ?  CGFloat(1.5) : CGFloat(1.0)
+            case .Small : return GameSettings.isBiggerDevice ?  CGFloat(0.75) : CGFloat(0.5)
             }
     }
 }
@@ -70,11 +70,11 @@ enum FontSize
                  {
                   case .Phone :
                      return 65
-                  case .Phone6plus :
+                  case .BigPhone :
                      return 90
                   case .Pad :
                      return 55
-                  case .PadPro :
+                  case .BigPad :
                      return 100
                 }
             case .Big : return 45
@@ -83,11 +83,11 @@ enum FontSize
             {
             case .Phone :
                 return 38
-            case .Phone6plus :
+            case .BigPhone :
                 return 55
             case .Pad :
                 return 32
-            case .PadPro :
+            case .BigPad :
                 return 60
             }
 
@@ -98,11 +98,11 @@ enum FontSize
                   {
                   case .Phone :
                      return 30
-                  case .Phone6plus :
+                  case .BigPhone :
                      return 40
                   case .Pad :
                      return 25
-                  case .PadPro :
+                  case .BigPad :
                      return 50
                   }
             case .Smaller :
@@ -110,11 +110,11 @@ enum FontSize
                 {
                 case .Phone :
                     return 28
-                case .Phone6plus :
+                case .BigPhone :
                     return 42
                 case .Pad :
                     return 24
-                case .PadPro :
+                case .BigPad :
                     return 48
                 }
             case .Smallest :
@@ -122,11 +122,11 @@ enum FontSize
                 {
                     case .Phone :
                         return 20
-                    case .Phone6plus :
+                    case .BigPhone :
                         return 30
                     case .Pad :
                         return 18
-                    case .PadPro :
+                    case .BigPad :
                         return 36
                 }
             }
