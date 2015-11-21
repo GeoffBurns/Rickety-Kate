@@ -86,7 +86,7 @@ class CardDisplayScreen: Popup, HasDiscardArea {
         let title = SKLabelNode(fontNamed:"Verdana")
         title.fontSize = fontsize
         title.position = CGPointMake(size.width * 0.50, size.height * 0.92 )
-        title.text = "Card Rankings"
+        title.text = "Card Rankings".localize_
         self.addChild(title)
         
         switch activeTab
@@ -163,13 +163,13 @@ class CardDisplayScreen: Popup, HasDiscardArea {
                     let l = SKLabelNode(fontNamed:"Verdana")
                     l.fontSize = fontsize
                     l.position = CGPointMake(size.width * 0.10, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
-                    l.text = "High Cards"
+                    l.text = "High Cards".localize_
                     l.name = "label"
                     
                     let m = SKLabelNode(fontNamed:"Verdana")
                     m.fontSize = fontsize
                     m.position = CGPointMake(size.width * 0.93, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
-                    m.text = "Low Cards"
+                    m.text = "Low Cards".localize_
                     
                     m.name = "label"
                     
