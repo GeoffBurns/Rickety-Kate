@@ -16,21 +16,24 @@ class OptionScreen: Popup {
     var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 18, current: 14, text: "Number Of Cards in Suite".local("Number_In_Suite"))
     var noOfPlayers = NumberRangeToggle(min: 3, max:(GameSettings.isPad ? 7 : 6), current: 4, text: "Number Of Players At Table".local("Number_Of_Players"))
     
-    var hasJokers = BinaryToggle(current: false, text: "Include Jokers?" )
+    var hasJokers = BinaryToggle(current: false, text: "Include Jokers?".local("Include_Jokers") )
     var hasTrumps = BinaryToggle(current: false, text: "Include Tarot Trumps?".local("Include_Tarot_Trumps"))
     var willPassCards = BinaryToggle(current: false, text: "Pass Worst Cards?".local("Pass_Worst_Cards"))
-    var includeHooligan = BinaryToggle(current: false, text: "Include Hooligan?" )
-    var includeOmnibus = BinaryToggle(current: false, text: "Include Omnibus?" )
-    var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow Breaking Trumps?" )
+    var includeHooligan = BinaryToggle(current: false, text: "Include Hooligan?" .local("Include_Hooligan"))
+    var includeOmnibus = BinaryToggle(current: false, text: "Include Omnibus?".local("Include_Omnibus"))
+    var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow Breaking Trumps?".local("Allow_Breaking_Trumps") )
     var speedOfToss = ListToggle(list: ["Very Slow".localize_,
         "Slow".localize,
         "Normal".localize,
         "Fast".localize,
         "Very Fast".localize_
         ], current: 3, text: "Speed of Tossed Cards".local("Speed_Of_Cards"))
-    var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game Finishing Score" )
-    var ruleSet = ListToggle(list: ["Spades","Hearts","Jacks"],  current: 1, text: "Rule Set" )
-   
+    var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game Finishing Score".local("Game_Finishing_Score") )
+    var ruleSet = ListToggle(list: ["Spades".localize,"Hearts".localize,"Jacks".localize],  current: 1, text: "Rule Set".localize_ )
+ 
+
+
+ 
     var optionSettings = [SKNode]()
     var moreButton = SKSpriteNode(imageNamed: "More1".symbol)
     var backButton = SKSpriteNode(imageNamed: "Back".symbol)

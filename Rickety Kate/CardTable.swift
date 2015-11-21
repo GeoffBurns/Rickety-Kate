@@ -23,7 +23,7 @@ public class CardTable: GameStateBase
     private init(players: [CardPlayer],  scene:CardScene) {
         self.players = players
         playerOne = self.players[0]
-        isInDemoMode = playerOne.name != "You"
+        isInDemoMode = !playerOne.isYou
         self.scene  = scene
         
 
