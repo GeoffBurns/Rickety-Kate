@@ -24,8 +24,6 @@ class ExitScreen: Popup {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    
     
     override func setup(scene:SKNode)
     {
@@ -38,23 +36,23 @@ class ExitScreen: Popup {
         anchorPoint = CGPointZero
         name = "ExitBackground"
         userInteractionEnabled = true
-  
+        
         let midWidth = CGRectGetMidX(scene.frame)
         
-        exitLabel.text = "Are you sure"
+        exitLabel.text = "Are you sure".localize_
         exitLabel.fontSize = fontsize;
         exitLabel.position = CGPoint(x:midWidth, y:self.frame.size.height * 0.7);
         
         self.addChild(exitLabel)
         
         
-        exitLabel2.text = "you want to exit?"
+        exitLabel2.text = "you want to exit?".local("you_want_to_exit")
         exitLabel2.fontSize = fontsize;
         exitLabel2.position = CGPoint(x:midWidth, y:self.frame.size.height * 0.57);
         
         self.addChild(exitLabel2)
         
-        let yesButton =  SKSpriteNode(imageNamed:"Yes")
+        let yesButton =  SKSpriteNode(imageNamed:"Yes".symbol)
         yesButton.position = CGPoint(x:self.frame.width * 0.25,y:self.frame.height * 0.4)
         yesButton.setScale(ButtonSize.Small.scale)
         yesButton.zPosition = 100
@@ -63,7 +61,7 @@ class ExitScreen: Popup {
         
         
         
-        let noButton =  SKSpriteNode(imageNamed:"No")
+        let noButton =  SKSpriteNode(imageNamed:"No".symbol)
         noButton.position = CGPoint(x:self.frame.width*0.75,y:self.frame.height * 0.4)
         noButton.setScale(ButtonSize.Small.scale)
         noButton.zPosition = 100
@@ -72,11 +70,7 @@ class ExitScreen: Popup {
         
         self.addChild(yesButton)
         self.addChild(noButton)
-        
-
     }
-
-
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */

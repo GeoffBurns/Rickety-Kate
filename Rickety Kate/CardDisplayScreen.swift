@@ -27,10 +27,10 @@ class CardDisplayScreen: Popup, HasDiscardArea {
     var slides = [CardSlide]()
     var orderedGroups : [(Int,ScorePairCollection)] = []
     var activeTab = CardDisplayTab.DeckTab
-    var moreButton = SKSpriteNode(imageNamed: "More1")
-    var backButton = SKSpriteNode(imageNamed: "Back")
-    var deckButton = SKSpriteNode(imageNamed: "Deck2")
-    var scoreButton = SKSpriteNode(imageNamed: "Scores1")
+    var moreButton = SKSpriteNode(imageNamed: "More1".symbol)
+    var backButton = SKSpriteNode(imageNamed: "Back".symbol)
+    var deckButton = SKSpriteNode(imageNamed: "Deck2".symbol)
+    var scoreButton = SKSpriteNode(imageNamed: "Scores1".symbol)
     var suiteStart = 0
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
@@ -277,8 +277,8 @@ class CardDisplayScreen: Popup, HasDiscardArea {
                 if activeTab != .DeckTab
                 {
                     self.suiteStart = 0
-                    deckButton.texture = SKTexture(imageNamed: "Deck2")
-                    scoreButton.texture = SKTexture(imageNamed: "Scores1")
+                    deckButton.texture = SKTexture(imageNamed: "Deck2".symbol)
+                    scoreButton.texture = SKTexture(imageNamed: "Scores1".symbol)
                     activeTab = .DeckTab
                     newPage()
                 }
@@ -288,8 +288,8 @@ class CardDisplayScreen: Popup, HasDiscardArea {
                 if activeTab != .ScoringTab
                 {
                     self.suiteStart = 0
-                    deckButton.texture = SKTexture(imageNamed: "Deck1")
-                    scoreButton.texture = SKTexture(imageNamed: "Scores2")
+                    deckButton.texture = SKTexture(imageNamed: "Deck1".symbol)
+                    scoreButton.texture = SKTexture(imageNamed: "Scores2".symbol)
                     activeTab = .ScoringTab
                     newPage()
                 }

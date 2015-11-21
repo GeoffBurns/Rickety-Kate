@@ -1,3 +1,46 @@
+
+
+convert /Users/geoffburns/Documents/projects/PROJECT/robot/cards/Vector-Playing-Cards-master/button/Deck1b_symbol.png -color-matrix \
+                   " 0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                    -0.35 -0.35 -0.35 1.0, 0.0,  0.0 \
+                     -0.35 -0.35 -0.35 0.0, 1.0,  0.0 \
+                     0.0 0.0 0.0 0.0, 0.0,  1.0" /Users/geoffburns/Documents/projects/PROJECT/robot/cards/Vector-Playing-Cards-master/button/Deck1_symbol.png
+
+convert /Users/geoffburns/Documents/projects/PROJECT/robot/cards/Vector-Playing-Cards-master/button/Deck2b_symbol.png -color-matrix \
+                   " 0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                    -0.35 -0.35 -0.35 1.0, 0.0,  0.0 \
+                     -0.35 -0.35 -0.35 0.0, 1.0,  0.0 \
+                     0.0 0.0 0.0 0.0, 0.0,  1.0" /Users/geoffburns/Documents/projects/PROJECT/robot/cards/Vector-Playing-Cards-master/button/Deck2_symbol.png
+
+convert /Users/geoffburns/Documents/projects/PROJECT/robot/cards/Vector-Playing-Cards-master/button/Deck1b_symbol@x2.png -color-matrix \
+                   " 0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                    -0.35 -0.35 -0.35 1.0, 0.0,  0.0 \
+                     -0.35 -0.35 -0.35 0.0, 1.0,  0.0 \
+                     0.0 0.0 0.0 0.0, 0.0,  1.0" /Users/geoffburns/Documents/projects/PROJECT/robot/cards/Vector-Playing-Cards-master/button/Deck1_symbol@x2.png
+
+convert /Users/geoffburns/Documents/projects/PROJECT/robot/cards/Vector-Playing-Cards-master/button/Deck2b_symbol@x2.png -color-matrix \
+                   " 0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                    -0.35 -0.35 -0.35 1.0, 0.0,  0.0 \
+                     -0.35 -0.35 -0.35 0.0, 1.0,  0.0 \
+                     0.0 0.0 0.0 0.0, 0.0,  1.0" /Users/geoffburns/Documents/projects/PROJECT/robot/cards/Vector-Playing-Cards-master/button/Deck2_symbol@x2.png
+
+convert $i -color-matrix \
+                   " 0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                     0.0 0.0 0.0 0.0, 0.0, 1.0 \
+                    -0.35 -0.35 -0.35 1.0, 0.0,  0.0 \
+                     -0.35 -0.35 -0.35 0.0, 1.0,  0.0 \
+                     0.0 0.0 0.0 0.0, 0.0,  1.0" 
+
+
 for i in *.png; do convert $i -color-matrix \
   " 0.0 0.0 0.0 0.0, 0.0, 1.0 \
     0.0 0.0 0.0 0.0, 0.0, 1.0 \

@@ -1,10 +1,10 @@
-/* 
-  localizable.strings
-  Sevens
-
-  Created by Geoff Burns on 18/11/2015.
-  Copyright © 2015 Nereids Gold. All rights reserved.
-*/
+/*
+ localizable.strings
+ Sevens
+ 
+ Created by Geoff Burns on 18/11/2015.
+ Copyright © 2015 Nereids Gold. All rights reserved.
+ */
 
 Spades="Piques";
 Hearts="Cœurs";
@@ -15,7 +15,7 @@ Anchors="Ancres";
 Stars="Étoiles";
 Picks="Pioches";
 Trumps="Trumps";
-Jokers="Jokers";
+Jokers="Bouffons";
 Spade="Pique";
 Heart="Cœur";
 Club="Trèfle";
@@ -25,7 +25,7 @@ Anchor="Ancrer";
 Star="Étoile";
 Pick="Pioche";
 Trump="Trump";
-Joker="Joker";
+Joker="Bouffon";
 Not_Applicable="N'est pas applicable";
 None="Aucun";
 Of=" de ";
@@ -121,6 +121,10 @@ was_bashed_by="a été défoncé par";
 the_Hooligan="le Hooligan";
 poor_you="Pauvre toi";
 poor="le pauvre";
+Bad_Luck="Malchance";
+You_won="Vous avez gagné";
+a="un";
+has_won="a gagné";
 Wow="Ouah!!!";
 Finished="Terminé";
 Are_you_sure="Êtes-vous sûr";

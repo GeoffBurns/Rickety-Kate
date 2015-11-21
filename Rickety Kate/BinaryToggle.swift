@@ -7,30 +7,30 @@
 //
 
 
+
 import SpriteKit
 
 /// User input control for integers
 class BinaryToggle: SKNode {
-
-
-    var current : Bool {didSet {update()}}
-    var text:String {didSet {update()}}
+    
+    
+    var current : Bool {didSet {updateLabelText()}}
+    var text:String {didSet {updateLabelText()}}
     
     var label = SKLabelNode(fontNamed:"Chalkduster")
+    var YorN : String { return current ? "Yes".localize : "No".localize }
     
     
     init(current:Bool, text: String)
     {
         self.current = current
-        label.fontSize = FontSize.Big.scale
+        label.fontSize =  FontSize.Big.scale
         self.text = text
         label.userInteractionEnabled = false
-        let YorN = current ? "Yes" : "No"
-        label.text = "\(text) : \( YorN )"
-        super.init()
         
-
-               self.addChild(label)
+        super.init()
+        updateLabelText()
+        self.addChild(label)
         self.userInteractionEnabled = true
     }
     
@@ -39,30 +39,27 @@ class BinaryToggle: SKNode {
     }
     
     
-    func update()
+    func updateLabelText()
     {
-        let YorN = current ? "Yes" : "No"
-        label.text = "\(text) : \(YorN)"
+        label.text = "\(text) : \(self.YorN)"
     }
     func touched()
     {
         current  = !current
-        update()
+        updateLabelText()
     }
-       override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
         for touch in (touches )
         {
             let touchPoint = touch.locationInNode(self)
-         
+            
             if label.containsPoint(touchPoint) {
                 
                 touched()
                 return
             }
         }
-        
-        
         
     }}

@@ -14,7 +14,7 @@ class Navigate {
    
     static func setupCardDisplayButton(scene:SKNode)
     {
-        let cardDisplayButton = PopupButton(imageNamed:"More1", altNamed:"Rules1",popup:CardDisplayScreen())
+        let cardDisplayButton = PopupButton(imageNamed:"More1".symbol, altNamed:"Rules1".symbol,popup:CardDisplayScreen())
         cardDisplayButton.setScale(ButtonSize.Small.scale)
         cardDisplayButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
         cardDisplayButton.position = CGPoint(x:scene.frame.size.width,y:0.0)
@@ -23,7 +23,7 @@ class Navigate {
     static func setupRulesButton(scene:SKNode)
     {
    
-        let rulesButton = PopupButton(imageNamed:"Rules1", altNamed:"X",popup:RuleScreen())
+        let rulesButton = PopupButton(imageNamed:"Rules1".symbol, altNamed:"X",popup:RuleScreen())
         rulesButton.setScale(ButtonSize.Small.scale)
         rulesButton.anchorPoint = CGPoint(x: 0.0, y: 1.0)
         rulesButton.position = CGPoint(x:0.0,y:scene.frame.size.height * 0.97)
@@ -31,7 +31,7 @@ class Navigate {
     }
     static func setupOptionButton(scene:SKNode)
     {
-        let optionsButton = PopupButton(imageNamed:"Options1", altNamed:"X",popup:OptionScreen())
+        let optionsButton = PopupButton(imageNamed:"Options1".symbol, altNamed:"X",popup:OptionScreen())
         optionsButton.setScale(ButtonSize.Small.scale)
         optionsButton.anchorPoint = CGPoint(x: 1.0,  y: 1.0)
         optionsButton.position = CGPoint(x:scene.frame.size.width,y:scene.frame.size.height * 0.97)
@@ -39,7 +39,7 @@ class Navigate {
     }
     static func setupExitButton(scene:SKNode)
     {
-        let exitButton = PopupButton(imageNamed:"Exit", altNamed:"X",popup:ExitScreen())
+        let exitButton = PopupButton(imageNamed:"Exit".symbol, altNamed:"X",popup:ExitScreen())
         exitButton.setScale(ButtonSize.Small.scale)
         exitButton.anchorPoint = CGPoint(x: 1.0,  y: 1.0)
         exitButton.position = CGPoint(x:scene.frame.size.width,y:scene.frame.size.height * 0.97)

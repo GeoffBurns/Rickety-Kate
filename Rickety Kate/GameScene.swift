@@ -149,8 +149,8 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     var cardScaleForSelected = CGFloat(1.05)
     
     var backgroundFan = CardFan(name: CardPileType.Background.description)
-    var playButton1 =  SKSpriteNode(imageNamed:"Play1")
-    var playButton2 =  SKSpriteNode(imageNamed:"Play1")
+    var playButton1 =  SKSpriteNode(imageNamed:"Play1".symbol)
+    var playButton2 =  SKSpriteNode(imageNamed:"Play1".symbol)
     var arePassingCards : Bool { return  GameSettings.sharedInstance.willPassCards && !table.isInDemoMode }
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
     var isYourTurn = false;
@@ -404,7 +404,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             {
             /// play button
             case "Play" :
-                touchedNode.texture = SKTexture(imageNamed: "Play2")
+                touchedNode.texture = SKTexture(imageNamed: "Play2".symbol)
                 resetSceneWithInteractiveTable()
                 return true
             default : break
