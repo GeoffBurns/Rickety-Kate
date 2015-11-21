@@ -175,7 +175,7 @@ class SpadesAwarder : AwarderBase, IAwarder
 /// Used by the Scorer
 class HeartsAwarder : AwarderBase, IAwarder
 {
-    var description = "Rickety Kate (Hearts Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 13 points against you and the hearts are worth fewer points against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
+    var description = "Rickety Kate (Hearts Variant) is a trick taking card game.".local("Rickety_Kate_Hearts")
 
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
@@ -221,8 +221,7 @@ class HeartsAwarder : AwarderBase, IAwarder
 /// Used by the Scorer
 class JacksAwarder : AwarderBase, IAwarder
 {
-    var description = "Rickety Kate (Jacks Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and each Jack is worth two points against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
-    
+    var description = "Rickety Kate (Jacks Variant) is a trick taking card game".local("Rickety_Kate_Jacks")
     override var omnibus_ : PlayingCard { return CardName.Queen.of(PlayingCard.Suite.Diamonds)! }
 
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
