@@ -145,8 +145,7 @@ class SpadesAwarder : AwarderBase, IAwarder
     var trumpSuiteSingular = "Spade"
     var trumpSuitePlural : String  { return trumpSuite.description }
 
-    var description = "Rickety Kate (Spade Variant) is a trick taking card game. This means every player tosses in a card and the player with the highest card in the same suite as the first card wins the trick and the cards. But wait! the person with the lowest running score wins. So winning a trick is not necessarially good.  The Queen of Spades (Rickety Kate) is worth 10 points against you and the other spades are worth 1 point against you. When you run out of cards you are dealt another hand. If you obtain all the spades in a hand it is called 'Shooting the Moon' and your score drops to zero. At the beginning of each hand the player pass their three worst cards to their neighbour. Aces and King are the worst cards."
-    
+    var description = "Rickety Kate (Spade Variant) is a trick taking card game.".local("Rickety_Kate_Spades")
     
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
