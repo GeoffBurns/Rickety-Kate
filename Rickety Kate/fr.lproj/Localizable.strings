@@ -30,6 +30,7 @@ Not_Applicable="N'est pas applicable";
 None="Aucun";
 __of__="%1$@ de %2$@";
 Jack="Valet";
+Jacks="Valets";
 Knight="Chevalier";
 Archer="Archer";
 Princess="Princesse";
