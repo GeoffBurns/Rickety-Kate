@@ -723,11 +723,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/CardDisplayScreen.swift"
-            timestampString = "469856250.735126"
+            timestampString = "469879726.162781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "displayScoringCards()"
             landmarkType = "5">
          </BreakpointContent>

@@ -115,7 +115,7 @@ class ScoreDisplay
                     {
                        if name.isYou
                        {
-                            return "Your Score is".localize_ + " " + score.description
+                            return "Your score is _".localizeWith(score)
                         }
                        return  String(format: "score is".localize_, name) + " " + score.description
                     }
