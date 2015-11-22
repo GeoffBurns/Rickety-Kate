@@ -25,8 +25,8 @@ public enum GameEvent : Equatable
     case DiscardWorstCards(Int)
     
     
-    var congrats : String  { return "Congratulatons!!!".local("Congratulatons") + "\n"}
-    var wow : String  { return "Wow!!!".local("Wow") + "\n" }
+    var congrats : String  { return "Congratulatons".localize + "\n"}
+    var wow : String  { return "Wow!".localize  + "\n" }
     
     var description : String?
         {
@@ -35,13 +35,13 @@ public enum GameEvent : Equatable
             case WinTrick( let name ) :
                 return name.isYou
                     ? "You just Won the Trick".localize_
-                    :  name + " " + "just Won the Trick".localize_
+                    : "_ just Won the Trick".localizeWith(name)
             case PlayerKnocked( let player ) :
                 return player.isYou
-                    ? "You can not Play".localize_ + "\n" + "You have to Knock"
-                    : player.name + " " + "Knocked".localize
+                    ? "You can not Play You have to Knock".localize_
+                    : "_ Knocked".localizeWith(player.name )
             case YouNeedToPlayThisFirst(let card) :
-                return "You Need to Play".localize_ + "\n" + String(format:"%@ First".local("You_Need_to_Play2"), card.description)
+                return "You Need to Play _ First".localizeWith(card.description)
             case SuiteFinished(let suite) :
                 return suite.description + " " + "Finished".localize
             case ShotTheMoon( let name ) :

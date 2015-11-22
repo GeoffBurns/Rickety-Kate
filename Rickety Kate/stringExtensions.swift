@@ -14,16 +14,29 @@ extension String
 {
     func local(key:String) -> String
     {
-      return NSLocalizedString(key, comment: self)
+        return NSLocalizedString(key, comment: self)
+    }
+    var underscore : String
+        {
+            return self.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
+    }
+    func localizeWith(arguements:CVarArgType...) -> String
+    {
+        return String(format: self.localize_, arguments: arguements)
+    }
+    func localizeWith2(arguements:[CVarArgType]) -> String
+    {
+        return String(format: self.localize_, arguments: arguements)
     }
     var localize : String
-    {
-        return NSLocalizedString(self, comment: self)
+        {
+            return NSLocalizedString(self, comment: self)
     }
     var localize_ : String
-    {
-    return NSLocalizedString(self.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil), comment: self)
+        {
+            return NSLocalizedString(self.underscore, comment: self)
     }
+
     var symbol : String
         { 
             if let codeObj = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode),

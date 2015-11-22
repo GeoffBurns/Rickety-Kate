@@ -225,9 +225,10 @@ class CardDisplayScreen: Popup, HasDiscardArea {
               l.fontSize = fontsize
               l.horizontalAlignmentMode = .Left
               l.position = CGPointMake(size.width * 0.05, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
-              if cards.count > 1 { l.text = "\(group.0) Points Each" }
-              else if group.0 > 0 { l.text = "\(group.0) Points" }
-              else  { l.text = "\(group.0) Points (Total Points for Hand can not Fall Below Zero)" }
+              if cards.count > 1 { l.text = "_ Points Each".localizeWith(group.0) }
+              else if group.0 > 0 { l.text = "_ Points".localizeWith(group.0) }
+              else  { l.text = "_ Points".localizeWith(group.0) +
+                " (" + "Total Points for Hand can not Fall Below Zero".localize_ + ")" }
               l.name = "label"
               self.addChild(l)
  
