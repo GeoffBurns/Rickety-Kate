@@ -54,8 +54,9 @@ public enum GameEvent : Equatable
                     : wow + name + " " + "just Won the Game".localize_
             case WinRicketyKate( let name ) :
                 return name.isYou
-                    ? "you were kissed by".localize_ + "\nRickety Kate. " + "Poor you".localize_ + "."
-                    : name + " " + "was kissed by".localize_ + "\nRickety Kate. " + "Poor".localize + " " + name + "."
+                    ? "You were kissed by Rickety Kate Poor you".localize
+                    : "_ was kissed by Rickety Kate Poor _".localizeWith(name,name)
+            
             case WinHooligan( let name ) :
                 return name.isYou
                     ? "You were bashed by the Hooligan Poor you".localize
