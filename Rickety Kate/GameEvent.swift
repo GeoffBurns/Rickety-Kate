@@ -65,14 +65,21 @@ public enum GameEvent : Equatable
                     ? congrats + "You just Caught the Bus".localize_
                     : wow + name + " " + "just Caught the Bus".localize_
             case WinSpades( let name, let noOfSpades ) :
-                let start = name.isYou ? "You won".localize_ : name + " " + "has won".localize_ +  " "
-      
-                let middle = (noOfSpades == 1)
-                ? ("a".localize + " " +  GameSettings.sharedInstance.rules.trumpSuiteSingular)  :
-                (noOfSpades.description + " " + GameSettings.sharedInstance.rules.trumpSuite.description)
-            
-                let end = "\n" + "Bad Luck".localize_ + "."
-                return  start + middle + end
+
+                var start = ""
+                if name.isYou
+                {
+                  start = (noOfSpades == 1)
+                        ?  "You won a _".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
+                        :  "You won _ _".localizeWith(noOfSpades,GameSettings.sharedInstance.rules.trumpSuiteSingular)
+                }
+                else
+                {
+                    start = (noOfSpades == 1)
+                        ?  "_ won a _".localizeWith(name,GameSettings.sharedInstance.rules.trumpSuiteSingular)
+                        :  "_ won _ _".localizeWith(name,noOfSpades,GameSettings.sharedInstance.rules.trumpSuiteSingular)
+                }
+                return  start + "\n" + "Bad Luck".localize_ + "."
                 
                 
             case NewHand :
