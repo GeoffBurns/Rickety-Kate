@@ -153,7 +153,7 @@ public class CardPile
             
             
             // Stop all running animations before starting new ones
-         //   sprite.removeAllActions()
+            sprite.removeAllActions()
             sprite.positionInSpread = positionInSpread
             
             // PlayerOne's cards are larger

@@ -142,7 +142,7 @@ class SpadesAwarder : AwarderBase, IAwarder
     
     var ricketyKatePoints = 10
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.Spades }
-    var trumpSuiteSingular = "Spade"
+    var trumpSuiteSingular = "Spade".localize
     var trumpSuitePlural : String  { return trumpSuite.description }
 
     var description = "Rickety Kate (Spade Variant) is a trick taking card game.".local("Rickety_Kate_Spades")
@@ -229,20 +229,18 @@ class JacksAwarder : AwarderBase, IAwarder
         var result =  Dictionary<PlayingCard,Int>()
         result[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
         
-        for suite in gameSettings!.deck!.suitesInDeck
+        for suite in gameSettings!.deck!.normalSuitesInDeck
         {
             result[CardName.Jack.of(suite)!] = 2
         }
 
-
-        
         return result
     }
     
     var ricketyKatePoints = 10 
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.None }
-    var trumpSuiteSingular : String  { return "Jack" }
-    var trumpSuitePlural : String  { return "Jacks" }
+    var trumpSuiteSingular : String  { return "Jack".localize }
+    var trumpSuitePlural : String  { return "Jacks".localize }
 
     var backgroundCards : [PlayingCard] {
         let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck

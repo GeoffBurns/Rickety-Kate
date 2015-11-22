@@ -128,7 +128,7 @@ public class HumanPlayer :CardPlayer
     static let sharedInstance = HumanPlayer()
     private init() {
 
-        super.init(name: "You")
+        super.init(name: "You".localize)
     }
 }
 

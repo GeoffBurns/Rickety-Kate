@@ -41,9 +41,6 @@ class CardSprite : SKSpriteNode
     var originalCardAnchor  = CGPointZero
     
     
-
- 
-    
     /////////////////////////////////////////////////////
     /// Constructors
     /////////////////////////////////////////////////////
@@ -71,7 +68,18 @@ class CardSprite : SKSpriteNode
         return sprite
     }
     
-
+    static func create(card:PlayingCard, isUp: Bool, scene:SKNode) -> CardSprite
+    {
+        let sprite = CardSprite(card: card,
+            texture: isUp
+                ? SKTexture(imageNamed: card.imageName)
+                :SKTexture(imageNamed: "Back1"))
+        sprite.isUp = isUp
+        scene.addChild(sprite)
+        self.currentScene = scene
+        return sprite
+    }
+    
     /////////////////////////////////////////////
     /// Instance Methods
     /////////////////////////////////////////////
@@ -88,27 +96,13 @@ class CardSprite : SKSpriteNode
     self.position = CGPointMake(self.position.x+dx, self.position.y+dy)
     self.anchorPoint = anchorPoint
     }
-    func removeLabel()
-    {
-        self.removeAllChildren()
-    }
-    func addLabel()
-    {
-        let label = SKLabelNode(text:self.card.description)
-        
-        
-        label.position = CGPoint(x: 0.0, y:  self.size.height*(GameSettings.isBiggerDevice ? 0.25 : 0.49)) /// CGPoint(x: 0.5*node.size.width, y: node.size.height*0.98)
-        label.fontColor = UIColor.blackColor()
-        label.fontName = "Verdana"
-        label.fontSize = 11
-        label.zPosition = CardSize.Huge.zOrder + 100.0
-        self.addChild(label)
-    }
+    
     /// the user has just started dragging the sprite
     func liftUp(positionInScene:CGPoint)
     {
         
         addLabel()
+
         state = CardState.Dragged
         originalScale = self.yScale
         originalCardPosition  = self.position
@@ -128,6 +122,7 @@ class CardSprite : SKSpriteNode
     /// the user has just stopped dragging the sprite
     func setdown()
     {
+        
         removeLabel()
         state = CardState.AtRest
         updateAnchorPoint(originalCardAnchor)
@@ -142,12 +137,28 @@ class CardSprite : SKSpriteNode
                 self.fan?.reaZOrderCardsAtRest()
             }]))
     }
+    func removeLabel()
+    {
+        self.removeAllChildren()
+    }
+    func addLabel()
+    {
+        let label = SKLabelNode(text:self.card.description)
+        
+        
+        label.position = CGPoint(x: 0.0, y:  self.size.height*(GameSettings.isBiggerDevice ? 0.25 : 0.49)) /// CGPoint(x: 0.5*node.size.width, y: node.size.height*0.98)
+        label.fontColor = UIColor.blackColor()
+        label.fontName = "Verdana"
+        label.fontSize = 11
+        label.zPosition = CardSize.Huge.zOrder + 100.0
+        self.addChild(label)
+    }
     /// the user has just switched which sprite they are dragging
     func liftUpQuick(positionInScene:CGPoint)
     {
-        
-        addLabel()
         removeAllActions()
+        addLabel()
+        
         state = CardState.Dragged
         originalScale = self.yScale
         originalCardPosition  = self.position
@@ -164,9 +175,8 @@ class CardSprite : SKSpriteNode
     /// the user has just switched which sprite they are dragging
     func setdownQuick()
     {
-        
-        removeLabel()
         removeAllActions()
+        removeLabel()
         state = CardState.AtRest
         self.anchorPoint = originalCardAnchor
         self.zPosition = originalCardZPosition
@@ -287,7 +297,7 @@ extension SKNode
     }
 func cardSprite(card :PlayingCard) -> CardSprite?
     {
-    if let sprite = self.cardSpriteNamed(card.imageName)
+        if let sprite = self.cardSpriteNamed(card.imageName)
         {
             return sprite
         }

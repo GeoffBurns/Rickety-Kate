@@ -110,10 +110,20 @@ class ScoreDisplay
                     
                     let wins = next.1
                     let score = next.0
-                    //if score < 0 {score = 0 }
-                    return (wins==0) ?
-                        ((name == "You") ? "Your Score is \(score)" : "\(name)'s Score is \(score)") :
-                        ((name == "You") ? "Your Score : \(score) With \(wins) Wins" : "\(name) : \(score) & \(wins) Wins")
+                    
+                    if wins==0
+                    {
+                       if name.isYou
+                       {
+                            return "Your Score is".localize_ + " " + score.description
+                        }
+                       return  String(format: "score is".localize_, name) + " " + score.description
+                    }
+                 
+                     return  ((name.isYou) ?
+                            String(format: "Your score wins".localize_, score, wins)
+                            : String(format: "name score wins".localize_, name, score, wins))
+                  
                     
             }
 

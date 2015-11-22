@@ -1,11 +1,3 @@
-//
-//  GameEvent.swift
-//  Rickety Kate
-//
-//  Created by Geoff Burns on 7/10/2015.
-//  Copyright © 2015 Geoff Burns. All rights reserved.
-//
-
 import SpriteKit
 
 public enum GameEvent : Equatable
@@ -21,54 +13,76 @@ public enum GameEvent : Equatable
     case CardDoesNotFollowSuite
     case TrumpsHaveNotBeenBroken
     case WaitYourTurn
-    case CardPlayed(CardPlayer,PlayingCard)
-    case PlayerKnocked(CardPlayer)
+    case SuiteFinished(PlayingCard.Suite)
+    case CardPlayed(CardHolderBase,PlayingCard)
+    case PlayerKnocked(CardHolderBase)
+    case YouNeedToPlayThisFirst(PlayingCard)
     case YourTurn
     case NewGame
     case StartHand
     case NotYourTurn
+    case SomethingHasGoneWrong
     case DiscardWorstCards(Int)
+    
+    
+    var congrats : String  { return "Congratulatons!!!".local("Congratulatons") + "\n"}
+    var wow : String  { return "Wow!!!".local("Wow") + "\n" }
     
     var description : String?
         {
-        switch self
+            switch self
             {
             case WinTrick( let name ) :
-                return  name + " just Won the Trick"
+                return name.isYou
+                    ? "You just Won the Trick".localize_
+                    :  name + " " + "just Won the Trick".localize_
             case PlayerKnocked( let player ) :
-                return player.name=="You"
-                    ? "You can not Play\nYou have to Knock"
-                    : player.name + " Knocked"
+                return player.isYou
+                    ? "You can not Play".localize_ + "\n" + "You have to Knock"
+                    : player.name + " " + "Knocked".localize
+            case YouNeedToPlayThisFirst(let card) :
+                return "You Need to Play".localize_ + "\n" + String(format:"%@ First".local("You_Need_to_Play2"), card.description)
+            case SuiteFinished(let suite) :
+                return suite.description + " " + "Finished".localize
             case ShotTheMoon( let name ) :
-                return name=="You"
-                    ? "Congratulatons!!!\nYou just Shot the Moon"
-                    : "Wow!!!\n\(name) just Shot the Moon"
+                return name.isYou
+                    ? congrats + "You just Shot the Moon".localize_
+                    : wow + name + " " + "just Shot the Moon".localize_
             case WinGame( let name ) :
-                return name=="You"
-                    ? "Congratulatons!!!\nYou just Won the Game"
-                    : "Wow!!!\n\(name) just Won the Game"
+                return name.isYou
+                    ? congrats + "You just Won the Game".localize_
+                    : wow + name + " " + "just Won the Game".localize_
             case WinRicketyKate( let name ) :
-                return name=="You"
-                    ? name + " were kissed by\nRickety Kate. Poor " + name
-                    : name + " was kissed by\nRickety Kate. Poor " + name
+                return name.isYou
+                    ? "you were kissed by".localize_ + "\nRickety Kate. " + "Poor you".localize_ + "."
+                    : name + " " + "was kissed by".localize_ + "\nRickety Kate. " + "Poor".localize + " " + name + "."
             case WinHooligan( let name ) :
-                return name=="You"
-                    ? name + " were bashed by\nthe Hooligan. Poor " + name
-                    : name + " was bashed by\nthe Hooligan. Poor " + name
+                return name.isYou
+                    ? "you were bashed by".localize_ + "\n" + "the Hooligan".localize_ + ". " + "Poor you".localize_ + "."
+                    : name + " " + "was kissed by".localize_ + "\n" + "the Hooligan".localize_ + ". " + "Poor".localize + " " + name + "."
             case WinOmnibus( let name ) :
-                return name=="You"
-                   ? "Congratulatons!\nYou just Caught the Bus"
-                   : "Wow!\n\(name) just Caught the Bus"
+                return name.isYou
+                    ? congrats + "You just Caught the Bus".localize_
+                    : wow + name + " " + "just Caught the Bus".localize_
             case WinSpades( let name, let noOfSpades ) :
-                return  noOfSpades == 1
-                    ? name + " won a \(GameSettings.sharedInstance.rules.trumpSuiteSingular)\nBad Luck"
-                    : name + " won \(noOfSpades) \(GameSettings.sharedInstance.rules.trumpSuite.description)\nBad Luck"
+                let start = name.isYou ? "You won".localize_ : name + " " + "has won".localize_ +  " "
+      
+                let middle = (noOfSpades == 1)
+                ? ("a".localize + " " +  GameSettings.sharedInstance.rules.trumpSuiteSingular)  :
+                (noOfSpades.description + " " + GameSettings.sharedInstance.rules.trumpSuite.description)
+            
+                let end = "\n" + "Bad Luck".localize_ + "."
+                return  start + middle + end
+                
+                
             case NewHand :
                 return nil
+            case SomethingHasGoneWrong :
+                return nil
             case YourTurn :
-                return "Your Turn"
+                return "Your Turn".localize_
             case NewGame :
-                return "Game On"
+                return "Game On".localize_
             case StartHand :
                 return nil
             case CardPlayed :
@@ -76,21 +90,20 @@ public enum GameEvent : Equatable
             case NotYourTurn :
                 return ""
             case TrumpsHaveNotBeenBroken :
-                return "Can not Lead with a " + GameSettings.sharedInstance.rules.trumpSuiteSingular +
-                "\nAs " + GameSettings.sharedInstance.rules.trumpSuitePlural + " Have Not Been Broken"
+                return "Can not Lead with a spade"
             case CardDoesNotFollowSuite :
                 return "Card Does Not\nFollow Suite"
             case WaitYourTurn :
-                return "Wait your turn"
+                return "Wait your turn".localize_
             case DiscardWorstCards(let noOfCardsLeft) :
                 switch noOfCardsLeft
                 {
                 case 3 :
-                    return "Discard Your\nThree Worst Cards"
+                    return "Discard Your".localize_ + "\n" + "Three Worst Cards".localize_
                 case 1 :
-                    return "Discard one more card\nYour worst card"
+                    return "Discard one more card".localize_ + "\n" + "Your worst card".localize_
                 default :
-                    return "Discard \(noOfCardsLeft) more cards\nYour worst cards"
+                    return "Discard two more cards".localize_ + "\n" + "Your worst cards".localize_
                 }
             }
     }

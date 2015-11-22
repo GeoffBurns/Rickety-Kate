@@ -56,7 +56,8 @@ class CardDisplayScreen: Popup, HasDiscardArea {
           self.gameScene = scene
             
           setupDiscardArea()
-            
+          discardPile.isUp = true
+          discardPile.speed = GameSettings.instance!.tossDuration*0.5
           color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
           size = scene.frame.size
           position = CGPointZero
@@ -152,23 +153,29 @@ class CardDisplayScreen: Popup, HasDiscardArea {
     {
         
         let fontsize : CGFloat = FontSize.Smallest.scale
-        for (i,slide) in slides.enumerate()
+        for slide in slides
         {
-            if  i+suiteStart < GameSettings.sharedInstance.deck!.suitesInDeck.count
+        slide.discardAll()
+        }
+        self.schedule(delay: GameSettings.instance!.tossDuration*0.7)
             {
-                let suite = cards.filter { $0.suite == GameSettings.sharedInstance.deck!.suitesInDeck[i+suiteStart]}
+        for (i,slide) in self.slides.enumerate()
+        {
+            if  i+self.suiteStart < GameSettings.sharedInstance.deck!.suitesInDeck.count
+            {
+                let suite = self.cards.filter { $0.suite == GameSettings.sharedInstance.deck!.suitesInDeck[i+self.suiteStart]}
                 
                 if suite.count > 0
                 {
                     let l = SKLabelNode(fontNamed:"Verdana")
                     l.fontSize = fontsize
-                    l.position = CGPointMake(size.width * 0.10, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
+                    l.position = CGPointMake(self.size.width * 0.10, self.size.height * (0.83 - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
                     l.text = "High Cards".localize_
                     l.name = "label"
                     
                     let m = SKLabelNode(fontNamed:"Verdana")
                     m.fontSize = fontsize
-                    m.position = CGPointMake(size.width * 0.93, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
+                    m.position = CGPointMake(self.size.width * 0.93, self.size.height * (0.83 - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
                     m.text = "Low Cards".localize_
                     
                     m.name = "label"
@@ -176,10 +183,7 @@ class CardDisplayScreen: Popup, HasDiscardArea {
                     self.addChild(l)
                     self.addChild(m)
                     
-                    
-           
-                      slide.discardAll()
-                      slide.replaceWithContentsOf(suite)
+                    slide.replaceWithContentsOf(suite)
                     slide.rearrange()
      
                     
@@ -187,12 +191,12 @@ class CardDisplayScreen: Popup, HasDiscardArea {
                 }
             }
 
-              slide.discardAll()
-           
-              slide.clear()
-              slide.rearrange()
+            
+            //  slide.clear()
+           //   slide.rearrange()
  
             
+        }
         }
     }
     

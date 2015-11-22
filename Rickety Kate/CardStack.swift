@@ -102,7 +102,8 @@ class CardStack : CardPile
     }
     func playBefore(card:PlayingCard) -> PlayingCard?
     {
-        if baseCard == nil { return nil }
+        if baseCard == nil {
+            return nil }
         if baseCard!.suite != card.suite { return nil }
         
         if let next = nextCard()
@@ -111,10 +112,19 @@ class CardStack : CardPile
             {
             return next
             }
-        return nil
+        
+        if let lower = lowerStack,
+            next = lower.nextCard()
+            where next != card
+                && Set(lower.validNextCardsCalculator ( next )).contains(card)
+        {
+            return next
+        }
+        
+        return baseCard
         
     }
-  
+    
     func addLower() ->CardStack
     {
         lowerStack = CardStack(name: CardPileType.Stack.description)

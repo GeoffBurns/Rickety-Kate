@@ -398,9 +398,10 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     }
     func buttonTouched(positionInScene:CGPoint) -> Bool
     {
-        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
+        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode,
+            touchName = touchedNode.name
         {
-            switch touchedNode.name!
+            switch touchName
             {
             /// play button
             case "Play" :
