@@ -92,7 +92,7 @@ public enum GameEvent : Equatable
             case TrumpsHaveNotBeenBroken :
                 return "Can not Lead with a spade"
             case CardDoesNotFollowSuite :
-                return "Card Does Not\nFollow Suite"
+                return "Card Does Not Follow Suite".localize_
             case WaitYourTurn :
                 return "Wait your turn".localize_
             case DiscardWorstCards(let noOfCardsLeft) :
