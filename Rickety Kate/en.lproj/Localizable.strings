@@ -28,6 +28,7 @@ Trump="Trump";
 Joker="Joker";
 Not_Applicable="Not Applicable";
 None="None";
+__of__="%1$@ of %2$@";
 Of=" of ";
 Jack="Jack";
 Knight="Knight";

@@ -29,6 +29,7 @@ Joker="Bouffon";
 Not_Applicable="N'est pas applicable";
 None="Aucun";
 Of=" de ";
+__of__="%1$@ de %2$@";
 Jack="Valet";
 Knight="Chevalier";
 Archer="Archer";

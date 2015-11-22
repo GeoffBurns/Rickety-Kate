@@ -175,6 +175,9 @@
 		ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitScreen.swift; sourceTree = "<group>"; };
 		ACCB13351BAB1D5700196393 /* Scorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scorer.swift; sourceTree = "<group>"; };
 		ACCB13371BAD16E600196393 /* Awarder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Awarder.swift; sourceTree = "<group>"; };
+		ACDCA6BA1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		ACDCA6BB1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		ACDCA6BC1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ACE6DFB01BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIvenAEarlyLeadingStrategy.swift; sourceTree = "<group>"; };
 		ACE6DFB51BAA32AB005B5424 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrickPlayingStrategy.swift; sourceTree = "<group>"; };
@@ -424,6 +427,7 @@
 				en,
 				Base,
 				fr,
+				de,
 			);
 			mainGroup = AC62B68A1BA1564800B0EDAE;
 			productRefGroup = AC62B6941BA1564800B0EDAE /* Products */;
@@ -599,6 +603,7 @@
 			children = (
 				AC5CB3B11BFE8445007C5AFD /* en */,
 				AC5CB3B51BFE84A9007C5AFD /* fr */,
+				ACDCA6BC1C01F18C00ABA366 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -608,6 +613,7 @@
 			children = (
 				AC62B6A11BA1564800B0EDAE /* Base */,
 				AC5CB3B41BFE84A8007C5AFD /* fr */,
+				ACDCA6BB1C01F18C00ABA366 /* de */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -617,6 +623,7 @@
 			children = (
 				AC62B6A61BA1564800B0EDAE /* Base */,
 				AC5CB3B31BFE84A8007C5AFD /* fr */,
+				ACDCA6BA1C01F18C00ABA366 /* de */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";

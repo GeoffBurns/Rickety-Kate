@@ -234,7 +234,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case 1 : return "Joker Light (1)".local("Joker1")
                 case 2 : return "Joker Dark (2)".local("Joker2")
                 default:
-                    return value.description + " of ".local("Of") +  suite.description
+                    return  "_ of _".localizeWith(value.description,suite.description)
                 }
             case PlayingCard.Suite.Trumps:
                 switch value.rank
@@ -261,13 +261,13 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case 20 : return "Judgement".localize
                 case 21 : return "The World".local("World")
                 default:
-                    return value.description + " of ".local("Of")
-                        +  suite.description
+                    return  "_ of _".localizeWith(value.description,suite.description)
                 }
             default:
-                return value.description + " of ".local("Of") +  suite.description
+                return  "_ of _".localizeWith(value.description,suite.description)
             }
     }
+    
     
     public var hashValue: Int
         {
