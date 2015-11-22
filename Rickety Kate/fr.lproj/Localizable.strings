@@ -103,6 +103,7 @@ __just_Won_the_Trick="%@ vient de remporter\nle Tour";
 You_can_not_Play_You_have_to_Knock="Vous ne pouvez pas jouer\nVous devez passer";
 __Knocked="%@ passé";
 Card_Does_Not_Follow_Suite="Carte n'a pas\nSuivez Suite";
+Can_not_Lead_with_a__="Ne peut pas conduire\navec une %@";
 Game_On="Jeu a commencé";
 Discard_Your="Jeter Vos";
 Three_Worst_Cards="trois pires cartes";
