@@ -141,7 +141,7 @@ __Points="%d Punkte";
 Total_Points_for_Hand_can_not_Fall_Below_Zero="Total Points for Hand can not Fall Below Zero";
 Your_score_is__="Ihr Ergebnis ist %d";
 __score_is__="%@s-Score ist %d";
-Your_Score__ n___Wins="Ihre Punktewertung: %d & %d Siege";
-__Score__ n___Wins="%@s Score : %d & %d Siege";
+Your_Score___n___Wins="Ihre Punktewertung: %d & %d Siege";
+__Score___n___Wins="%@s Score : %d & %d Siege";
 
 

@@ -147,5 +147,5 @@ __Points="%d Points";
 Total_Points_for_Hand_can_not_Fall_Below_Zero="Total des points pour la main ne peuvent pas tomber à moins de zéro";
 Your_score_is__="Ton score est %d";
 __score_is__="Le score de %@ est %d";
-Your_Score__ n___Wins="Votre score: %d & %d Victoires";
-__Score__ n___Wins="De %@ Score: %d & %d Victoires";
+Your_Score___n___Wins="Votre score: %d & %d Victoires";
+__Score___n___Wins="De %@ Score: %d & %d Victoires";
