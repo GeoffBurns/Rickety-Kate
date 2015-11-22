@@ -90,7 +90,7 @@ public enum GameEvent : Equatable
             case NotYourTurn :
                 return ""
             case TrumpsHaveNotBeenBroken :
-                return "Can not Lead with a spade"
+                return "Can not Lead with a _".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
             case CardDoesNotFollowSuite :
                 return "Card Does Not Follow Suite".localize_
             case WaitYourTurn :

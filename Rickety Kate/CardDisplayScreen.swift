@@ -57,7 +57,7 @@ class CardDisplayScreen: Popup, HasDiscardArea {
             
           setupDiscardArea()
           discardPile.isUp = true
-          discardPile.speed = GameSettings.instance!.tossDuration*0.5
+          discardPile.speed = GameSettings.sharedInstance.tossDuration*0.5
           color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
           size = scene.frame.size
           position = CGPointZero
@@ -157,7 +157,7 @@ class CardDisplayScreen: Popup, HasDiscardArea {
         {
         slide.discardAll()
         }
-        self.schedule(delay: GameSettings.instance!.tossDuration*0.7)
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.7)
             {
         for (i,slide) in self.slides.enumerate()
         {
