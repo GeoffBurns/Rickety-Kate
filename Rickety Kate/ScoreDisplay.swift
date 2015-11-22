@@ -117,7 +117,7 @@ class ScoreDisplay
                        {
                             return "Your score is _".localizeWith(score)
                         }
-                       return  "_ score is _".localizeWith(score)
+                       return  "_ score is _".localizeWith(name, score)
                     }
                  
                      return  ((name.isYou)
