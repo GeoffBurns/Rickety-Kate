@@ -362,7 +362,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             player = cardsprite.player
             where (fan.name == CardPileType.Passing.description ||
                 fan.name == CardPileType.Hand.description) &&
-                player.name == "You"
+                player.isYou
         {
             return true
         }
