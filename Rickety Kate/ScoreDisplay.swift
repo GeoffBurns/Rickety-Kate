@@ -117,12 +117,12 @@ class ScoreDisplay
                        {
                             return "Your score is _".localizeWith(score)
                         }
-                       return  String(format: "score is".localize_, name) + " " + score.description
+                       return  "_ score is _".localizeWith(score)
                     }
                  
-                     return  ((name.isYou) ?
-                            String(format: "Your score wins".localize_, score, wins)
-                            : String(format: "name score wins".localize_, name, score, wins))
+                     return  ((name.isYou)
+                        ? "Your Score _ n _ Wins".localizeWith(score, wins)
+                        : "_ Score _ n _ Wins".localizeWith( name, score, wins))
                   
                     
             }

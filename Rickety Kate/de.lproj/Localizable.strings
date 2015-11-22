@@ -139,9 +139,9 @@ __Points_Each="Jeweils %d Punkte";
 Points="Punkte";
 __Points="%d Punkte";
 Total_Points_for_Hand_can_not_Fall_Below_Zero="Total Points for Hand can not Fall Below Zero";
-Your_Score_is="Your score is";
-score_is="%@'s score is";
-Your_score_wins="Your Score : %d & %d Wins";
-name_score_wins="%@'s Score : %d & %d Wins";
+Your_score_is__="Ihr Ergebnis ist %d";
+__score_is__="%@s-Score ist %d";
+Your_Score__ n___Wins="Ihre Punktewertung: %d & %d Siege";
+__Score__ n___Wins="%@s Score : %d & %d Siege";
 
 
