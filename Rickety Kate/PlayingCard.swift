@@ -92,10 +92,9 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         case Pip(Int)
         case Ace
         
-        
         var imageCode : String
-            // Used to help create imagename for a card
-            {
+        // Used to help create imagename for a card
+        {
                 switch(self)
                 {
                 case CourtCard(let cardLetter): return cardLetter
@@ -103,7 +102,38 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case Ace: return "A"
                 }
         }
-        
+        var localLetterRaw : String
+        {
+                switch(self)
+                {
+                case CourtCard(let cardLetter):
+                    
+                    switch cardLetter
+                    {
+                    case "J" : return "Jack_Letter".localize
+                    case "KN" : return "Knight_Letter".localize
+                    case "AR" : return "Archer_Letter".localize
+                    case "PS" : return "Princess_Letter".localize
+                    case "PR" : return "Prince_Letter".localize
+                    case "Q" : return "Queen_Letter".localize
+                    case "K" : return "King_Letter".localize
+                    default : return ""
+                    }
+                default : return ""
+                }
+        }
+        var localLetter : String
+        {
+            let raw = localLetterRaw
+
+            if raw == "" { return ""}
+            switch(self)
+               {
+               case CourtCard(let cardLetter):
+                      return cardLetter==raw ? "" : raw
+               default : return ""
+            }
+        }
         var description : String
             // Used to help create imagename for a card
             {

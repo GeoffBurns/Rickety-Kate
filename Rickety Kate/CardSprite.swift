@@ -122,7 +122,6 @@ class CardSprite : SKSpriteNode
     /// the user has just stopped dragging the sprite
     func setdown()
     {
-        
         removeLabel()
         state = CardState.AtRest
         updateAnchorPoint(originalCardAnchor)
@@ -157,6 +156,7 @@ class CardSprite : SKSpriteNode
     func liftUpQuick(positionInScene:CGPoint)
     {
         removeAllActions()
+        
         addLabel()
         
         state = CardState.Dragged
@@ -175,8 +175,10 @@ class CardSprite : SKSpriteNode
     /// the user has just switched which sprite they are dragging
     func setdownQuick()
     {
-        removeAllActions()
+        
         removeLabel()
+
+        removeAllActions()
         state = CardState.AtRest
         self.anchorPoint = originalCardAnchor
         self.zPosition = originalCardZPosition

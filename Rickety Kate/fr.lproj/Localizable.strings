@@ -3,7 +3,7 @@
  Sevens
  
  Created by Geoff Burns on 18/11/2015.
- Copyright © 2015 Nereids Gold. All rights reserved.
+ Copyright © 2015 Geoff Burns. All rights reserved.
  */
 
 Spades="Piques";
@@ -39,6 +39,14 @@ Queen="Dame";
 King="Roi";
 Page="Page";
 Ace="As";
+Jack_Letter="V";
+Knight_Letter="C";
+Archer_Letter="Ar";
+Princess_Letter="Ps";
+Prince_Letter="Pr";
+Queen_Letter="D";
+King_Letter="R";
+Ace_Letter="A";
 Fool="L'idiot";
 Joker1="Bouffon Pâle (1)";
 Joker2="Bouffon Foncé (2)";
@@ -150,3 +158,6 @@ Your_score_is__="Ton score est %d";
 __score_is__="Le score de %@ est %d";
 Your_Score___n___Wins="Votre score: %d & %d Victoires";
 __Score___n___Wins="De %@ Score: %d & %d Victoires";
+You_have___Wins="Vous avez %d Victoires";
+____Wins="%@ : %d Victoires";
+

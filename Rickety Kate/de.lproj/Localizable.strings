@@ -3,7 +3,7 @@
  Sevens
  
  Created by Geoff Burns on 18/11/2015.
- Copyright © 2015 Nereids Gold. All rights reserved.
+ Copyright © 2015 Geoff Burns. All rights reserved.
  */
 
 Spades="Pik";
@@ -39,6 +39,14 @@ Queen="Dame";
 King="König";
 Page="Seite";
 Ace="Ass";
+Jack_Letter="U";
+Knight_Letter="O";
+Archer_Letter="S";
+Princess_Letter="Ps";
+Prince_Letter="Pr";
+Queen_Letter="D";
+King_Letter="K";
+Ace_Letter="A";
 Fool="Der Narr";
 Joker1="Joker Licht (1)";
 Joker2="Joker Dunkel (2)";
@@ -123,7 +131,7 @@ You_just_Shot_the_Moon="Sie haben Aufnahme der Mond";
 You_were_kissed_by_Rickety_Kate_Poor_you="Sie wurden von Rickety Kate\ngeküsst. Du Armer.";
 __was_kissed_by_Rickety_Kate_Poor__="%@ wurde von der Rickety\nKate geküsst. Schlechte %@.";
 You_were_bashed_by_the_Hooligan_Poor_you="Sie wurden von der Hooligan\neingeschlagen. Du Armer.";
-__was_bashed_by_the_Hooligan_Poor__="%@ wurde von der Hooligan\neingeschlagen. Schlechte  %@.";
+__was_bashed_by_the_Hooligan_Poor__="%@ wurde von der Hooligan\neingeschlagen. Schlechte %@.";
 You_just_Caught_the_Bus="Die ihr gerade gefangen dem Bus";
 just_Caught_the_Bus="gerade gefangen den Bus";
 Wow="Wow!!!";
@@ -137,7 +145,6 @@ You_won____="Sie %d %@ gewonnen haben";
 __won_a__="%@ hat ein %@ gewonnen";
 __won____="%@ hat %d %@ gewonnen";
 Seven_Rules="Der Spieler mit den %@ beginnt. Spieler öffnen jede Suite mit %@ of that suite. After the suite has been openned the players lay out the cards of the suite above and below the %@ in order, adding cards in sequence down to the ace and up to the king. If a player can not lay down a card then they 'Knock' and the turn passes to the next player. The first player to run out of cards wins the hand.";
-
 Rickety_Kate_Spades="Rickety Kate ist ein Trick unter Kartenspiel. Das bedeutet, jeder Spieler wirft in einer Karte und der Spieler mit der höchsten Karte in der gleichen Suite als die erste Karte gewinnt den Stich und die Karten. Aber warte! die Person, die mit den niedrigsten Betriebs Punktzahl gewinnt. So gewinnen einen Trick ist nicht unbedingt gut. Die Pik-Dame (Rickety Kate) gibt es 10 Punkte gegen Sie und in der Spades Variation des Spiels die anderen Pik 1 Punkt gegen Sie. Wenn Sie aus Karten laufen Sie eine andere Hand ausgeteilt werden. Wenn Sie alle Spaten in der Hand zu erreichen, wird als 'Dreharbeiten für den Mond' und Ihre Gäste auf Null fällt. Zu Beginn jeder Hand der Spieler geben ihre drei schlechtesten Karten, um ihre Nachbarn. Asse und König sind die schlechtesten Karten.";
 Rickety_Kate_Jacks="Rickety Kate ist ein Trick unter Kartenspiel. Das bedeutet, jeder Spieler wirft in einer Karte und der Spieler mit der höchsten Karte in der gleichen Suite als die erste Karte gewinnt den Stich und die Karten. Aber warte! die Person, die mit den niedrigsten Betriebs Punktzahl gewinnt. So gewinnen einen Trick ist nicht unbedingt gut. Die Pik-Dame (Rickety Kate) gibt es 10 Punkte gegen Sie und in der Jacks Variation des Spiels jeweils Jack ist zwei Punkte wert gegen Sie. Wenn Sie aus Karten laufen Sie eine andere Hand ausgeteilt werden. Wenn Sie alle Spaten in der Hand zu erreichen, wird als 'Dreharbeiten für den Mond' und Ihre Gäste auf Null fällt. Zu Beginn jeder Hand der Spieler geben ihre drei schlechtesten Karten, um ihre Nachbarn. Asse und König sind die schlechtesten Karten.";
 Rickety_Kate_Hearts="Rickety Kate ist ein Trick unter Kartenspiel. Das bedeutet, jeder Spieler wirft in einer Karte und der Spieler mit der höchsten Karte in der gleichen Suite als die erste Karte gewinnt den Stich und die Karten. Aber warte! die Person, die mit den niedrigsten Betriebs Punktzahl gewinnt. So gewinnen einen Trick ist nicht unbedingt gut. Die Pik-Dame (Rickety Kate) ist es wert 13 Punkte gegen Sie und in den Herzen Variation die Herzen Wert sind auch Punkte gegen Sie. Wenn Sie aus Karten laufen Sie eine andere Hand ausgeteilt werden. Wenn Sie alle Spaten in der Hand zu erreichen, wird als 'Dreharbeiten für den Mond' und Ihre Gäste auf Null fällt. Zu Beginn jeder Hand der Spieler geben ihre drei schlechtesten Karten, um ihre Nachbarn. Asse und König sind die schlechtesten Karten.";
@@ -150,5 +157,7 @@ Your_score_is__="Ihr Ergebnis ist %d";
 __score_is__="%@s-Score ist %d";
 Your_Score___n___Wins="Ihre Punktewertung: %d & %d Siege";
 __Score___n___Wins="%@s Score : %d & %d Siege";
+You_have___Wins="Sie haben %d Siege";
+___Wins="%@ : %d Siege";
 
 

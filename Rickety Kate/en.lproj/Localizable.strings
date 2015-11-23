@@ -3,7 +3,7 @@
  Sevens
  
  Created by Geoff Burns on 18/11/2015.
- Copyright © 2015 Nereids Gold. All rights reserved.
+ Copyright © 2015 NGeoff Burns. All rights reserved.
  */
 
 Spades="Spades";
@@ -39,6 +39,14 @@ Queen="Queen";
 King="King";
 Page="Page";
 Ace="Ace";
+Jack_Letter="J";
+Knight_Letter="Kn";
+Archer_Letter="Ar";
+Princess_Letter="Ps";
+Prince_Letter="Pr";
+Queen_Letter="Q";
+King_Letter="K";
+Ace_Letter="A";
 Fool="The Fool";
 Joker1="Joker Light (1)";
 Joker2="Joker Dark (2)";
@@ -100,7 +108,6 @@ Very_Fast="Very Fast";
 Card_Rankings="Card Rankings";
 High_Cards="High Cards";
 Low_Cards="Low Cards";
-Low_Cards="Low Cards";
 __just_Won_the_Trick="%@ just Won the Trick";
 You_can_not_Play_You_have_to_Knock="You can not Play\nYou have to Knock";
 __Knocked="%@ Knocked";
@@ -152,3 +159,7 @@ Your_score_is__="Your score is %d";
 __score_is__="%@'s score is %d";
 Your_Score___n___Wins="Your Score : %d & %d Wins";
 __Score___n___Wins="%@'s Score : %d & %d Wins";
+You_have___Wins="You have %d Wins";
+____Wins="%@ : %d Wins";
+
+

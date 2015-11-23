@@ -149,6 +149,7 @@ public class CardPile
             {
                 sprite.zPosition = 140
                 sprite.state = CardState.AtRest
+                sprite.removeAllChildren()
             }
             
             

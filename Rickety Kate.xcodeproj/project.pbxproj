@@ -178,6 +178,9 @@
 		ACDCA6BA1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		ACDCA6BB1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		ACDCA6BC1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ACDCA6C01C029C2900ABA366 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		ACDCA6C11C029C2900ABA366 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		ACDCA6C21C029C2900ABA366 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ACE6DFB01BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIvenAEarlyLeadingStrategy.swift; sourceTree = "<group>"; };
 		ACE6DFB51BAA32AB005B5424 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrickPlayingStrategy.swift; sourceTree = "<group>"; };
@@ -247,8 +250,6 @@
 		AC62B6951BA1564800B0EDAE /* Rickety Kate */ = {
 			isa = PBXGroup;
 			children = (
-				AC5CB4001BFFD554007C5AFD /* stringExtensions.swift */,
-				AC5CB3B01BFE8445007C5AFD /* Localizable.strings */,
 				AC62B6981BA1564800B0EDAE /* AppDelegate.swift */,
 				ACB20F9B1BE0C5F500718CC0 /* ArrayExtensions.swift */,
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
@@ -298,6 +299,7 @@
 				AC62B6A31BA1564800B0EDAE /* Images.xcassets */,
 				ACA1A1341BDDBFD20010BB0B /* Label.swift */,
 				AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */,
+				AC5CB3B01BFE8445007C5AFD /* Localizable.strings */,
 				AC62B6A01BA1564800B0EDAE /* Main.storyboard */,
 				ACE6DFB71BAA32AB005B5424 /* MathExtention.swift */,
 				ACE6DFB81BAA32AB005B5424 /* Multi-Line.swift */,
@@ -320,6 +322,7 @@
 				AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */,
 				ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */,
 				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
+				AC5CB4001BFFD554007C5AFD /* stringExtensions.swift */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 			);
@@ -428,6 +431,7 @@
 				Base,
 				fr,
 				de,
+				es,
 			);
 			mainGroup = AC62B68A1BA1564800B0EDAE;
 			productRefGroup = AC62B6941BA1564800B0EDAE /* Products */;
@@ -604,6 +608,7 @@
 				AC5CB3B11BFE8445007C5AFD /* en */,
 				AC5CB3B51BFE84A9007C5AFD /* fr */,
 				ACDCA6BC1C01F18C00ABA366 /* de */,
+				ACDCA6C21C029C2900ABA366 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -614,6 +619,7 @@
 				AC62B6A11BA1564800B0EDAE /* Base */,
 				AC5CB3B41BFE84A8007C5AFD /* fr */,
 				ACDCA6BB1C01F18C00ABA366 /* de */,
+				ACDCA6C11C029C2900ABA366 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -624,6 +630,7 @@
 				AC62B6A61BA1564800B0EDAE /* Base */,
 				AC5CB3B31BFE84A8007C5AFD /* fr */,
 				ACDCA6BA1C01F18C00ABA366 /* de */,
+				ACDCA6C01C029C2900ABA366 /* es */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
