@@ -25,8 +25,8 @@ public enum GameEvent : Equatable
     case DiscardWorstCards(Int)
     
     
-    var congrats : String  { return "Congratulatons".localize + "\n"}
-    var wow : String  { return "Wow!".localize  + "\n" }
+    var congrats : String  { return "Congratulatons".localize }
+    var wow : String  { return "Wow".localize   }
     
     var description : String?
         {

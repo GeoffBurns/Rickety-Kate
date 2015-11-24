@@ -842,38 +842,6 @@
             endingLineNumber = "126"
             landmarkName = "==(_:_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Rickety_Kate.== infix (Rickety_Kate.GameEvent, Rickety_Kate.GameEvent) -&gt; Swift.Bool"
-                  moduleName = "Rickety Kate"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20Kate/GameEvent.swift"
-                  timestampString = "469971010.548802"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "126"
-                  endingLineNumber = "126"
-                  offsetFromSymbolStart = "1680">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Rickety_Kate.== infix (Rickety_Kate.GameEvent, Rickety_Kate.GameEvent) -&gt; Swift.Bool"
-                  moduleName = "Rickety Kate"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/geoffburns/Documents/projects/PROJECT/xcode/Rickety%20Kate/Rickety%20Kate/GameEvent.swift"
-                  timestampString = "469971010.549244"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "126"
-                  endingLineNumber = "126"
-                  offsetFromSymbolStart = "4492">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
