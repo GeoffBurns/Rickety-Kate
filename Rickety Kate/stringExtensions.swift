@@ -12,9 +12,9 @@ import Foundation
 
 extension String
 {
-    func local(key:String) -> String
+    func localizeAs(key:String) -> String
     {
-        return NSLocalizedString(key, comment: self)
+        return NSLocalizedString(key.underscore, comment: self)
     }
     var underscore : String
         {
@@ -22,17 +22,13 @@ extension String
     }
     func localizeWith(arguements:CVarArgType...) -> String
     {
-        return String(format: self.localize_, arguments: arguements)
+        return String(format: self.localize, arguments: arguements)
     }
     func localizeWith2(arguements:[CVarArgType]) -> String
     {
-        return String(format: self.localize_, arguments: arguements)
+        return String(format: self.localize, arguments: arguements)
     }
     var localize : String
-        {
-            return NSLocalizedString(self, comment: self)
-    }
-    var localize_ : String
         {
             return NSLocalizedString(self.underscore, comment: self)
     }

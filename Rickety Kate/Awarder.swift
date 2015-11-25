@@ -145,7 +145,7 @@ class SpadesAwarder : AwarderBase, IAwarder
     var trumpSuiteSingular = "Spade".localize
     var trumpSuitePlural : String  { return trumpSuite.description }
 
-    var description = "Rickety Kate (Spade Variant) is a trick taking card game.".local("Rickety_Kate_Spades")
+    var description = "Rickety Kate (Spade Variant) is a trick taking card game.".localizeAs("Rickety_Kate_Spades")
     
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
@@ -175,7 +175,7 @@ class SpadesAwarder : AwarderBase, IAwarder
 /// Used by the Scorer
 class HeartsAwarder : AwarderBase, IAwarder
 {
-    var description = "Rickety Kate (Hearts Variant) is a trick taking card game.".local("Rickety_Kate_Hearts")
+    var description = "Rickety Kate (Hearts Variant) is a trick taking card game.".localizeAs("Rickety_Kate_Hearts")
 
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
@@ -221,7 +221,7 @@ class HeartsAwarder : AwarderBase, IAwarder
 /// Used by the Scorer
 class JacksAwarder : AwarderBase, IAwarder
 {
-    var description = "Rickety Kate (Jacks Variant) is a trick taking card game".local("Rickety_Kate_Jacks")
+    var description = "Rickety Kate (Jacks Variant) is a trick taking card game".localizeAs("Rickety_Kate_Jacks")
     override var omnibus_ : PlayingCard { return CardName.Queen.of(PlayingCard.Suite.Diamonds)! }
 
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>

@@ -39,14 +39,14 @@ class ExitScreen: Popup {
         
         let midWidth = CGRectGetMidX(scene.frame)
         
-        exitLabel.text = "Are you sure".localize_
+        exitLabel.text = "Are you sure".localize
         exitLabel.fontSize = fontsize;
         exitLabel.position = CGPoint(x:midWidth, y:self.frame.size.height * 0.7);
         
         self.addChild(exitLabel)
         
         
-        exitLabel2.text = "you want to exit?".local("you_want_to_exit")
+        exitLabel2.text = "you_want_to_exit".localize
         exitLabel2.fontSize = fontsize;
         exitLabel2.position = CGPoint(x:midWidth, y:self.frame.size.height * 0.57);
         

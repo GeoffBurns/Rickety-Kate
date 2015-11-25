@@ -34,11 +34,11 @@ public enum GameEvent : Equatable
             {
             case WinTrick( let name ) :
                 return name.isYou
-                    ? "You just Won the Trick".localize_
+                    ? "You just Won the Trick".localize
                     : "_ just Won the Trick".localizeWith(name)
             case PlayerKnocked( let player ) :
                 return player.isYou
-                    ? "You can not Play You have to Knock".localize_
+                    ? "You can not Play You have to Knock".localize
                     : "_ Knocked".localizeWith(player.name )
             case YouNeedToPlayThisFirst(let card) :
                 return "You Need to Play _ First".localizeWith(card.description)
@@ -46,25 +46,25 @@ public enum GameEvent : Equatable
                 return suite.description + " " + "Finished".localize
             case ShotTheMoon( let name ) :
                 return name.isYou
-                    ? congrats + "You just Shot the Moon".localize_
-                    : wow + name + " " + "just Shot the Moon".localize_
+                    ? congrats + "You just Shot the Moon".localize
+                    : wow + name + " " + "just Shot the Moon".localize
             case WinGame( let name ) :
                 return name.isYou
-                    ? congrats + "You just Won the Game".localize_
-                    : wow + name + " " + "just Won the Game".localize_
+                    ? congrats + "You just Won the Game".localize
+                    : wow + name + " " + "just Won the Game".localize
             case WinRicketyKate( let name ) :
                 return name.isYou
-                    ? "You were kissed by Rickety Kate Poor you".localize_
+                    ? "You were kissed by Rickety Kate Poor you".localize
                     : "_ was kissed by Rickety Kate Poor _".localizeWith(name,name)
             
             case WinHooligan( let name ) :
                 return name.isYou
-                    ? "You were bashed by the Hooligan Poor you".localize_
+                    ? "You were bashed by the Hooligan Poor you".localize
                     : "_ was bashed by the Hooligan Poor _".localizeWith(name,name)
             case WinOmnibus( let name ) :
                 return name.isYou
-                    ? congrats + "You just Caught the Bus".localize_
-                    : wow + name + " " + "just Caught the Bus".localize_
+                    ? congrats + "You just Caught the Bus".localize
+                    : wow + name + " " + "just Caught the Bus".localize
             case WinSpades( let name, let noOfSpades ) :
                 var start = ""
                 if name.isYou
@@ -79,7 +79,7 @@ public enum GameEvent : Equatable
                         ?  "_ won a _".localizeWith(name,GameSettings.sharedInstance.rules.trumpSuiteSingular)
                         :  "_ won _ _".localizeWith(name,noOfSpades,GameSettings.sharedInstance.rules.trumpSuiteSingular)
                 }
-                return  start + "\n" + "Bad Luck".localize_ + "."
+                return  start + "\n" + "Bad Luck".localize + "."
                 
                 
             case NewHand :
@@ -87,9 +87,9 @@ public enum GameEvent : Equatable
             case SomethingHasGoneWrong :
                 return nil
             case YourTurn :
-                return "Your Turn".localize_
+                return "Your Turn".localize
             case NewGame :
-                return "Game On".localize_
+                return "Game On".localize
             case StartHand :
                 return nil
             case CardPlayed :
@@ -99,18 +99,18 @@ public enum GameEvent : Equatable
             case TrumpsHaveNotBeenBroken :
                 return "Can not Lead with a _".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
             case CardDoesNotFollowSuite :
-                return "Card Does Not Follow Suite".localize_
+                return "Card Does Not Follow Suite".localize
             case WaitYourTurn :
-                return "Wait your turn".localize_
+                return "Wait your turn".localize
             case DiscardWorstCards(let noOfCardsLeft) :
                 switch noOfCardsLeft
                 {
                 case 3 :
-                    return "Discard Your".localize_ + "\n" + "Three Worst Cards".localize_
+                    return "Discard Your".localize + "\n" + "Three Worst Cards".localize
                 case 1 :
-                    return "Discard one more card".localize_ + "\n" + "Your worst card".localize_
+                    return "Discard one more card".localize + "\n" + "Your worst card".localize
                 default :
-                    return "Discard two more cards".localize_ + "\n" + "Your worst cards".localize_
+                    return "Discard two more cards".localize + "\n" + "Your worst cards".localize
                 }
             }
     }

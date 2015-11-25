@@ -12,24 +12,24 @@ import SpriteKit
 /// Game Option Setting Screen
 class OptionScreen: Popup {
     
-    var noOfSuites = NumberRangeToggle(min: 3, max: 8, current: 6, text: "Number Of Suites in Deck".local("Number_Of_Suites"))
-    var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 18, current: 14, text: "Number Of Cards in Suite".local("Number_In_Suite"))
-    var noOfPlayers = NumberRangeToggle(min: 3, max:(GameSettings.isPad ? 7 : 6), current: 4, text: "Number Of Players At Table".local("Number_Of_Players"))
+    var noOfSuites = NumberRangeToggle(min: 3, max: 8, current: 6, text: "Number_Of_Suites".localize)
+    var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 18, current: 14, text: "Number_In_Suite".localize)
+    var noOfPlayers = NumberRangeToggle(min: 3, max:(GameSettings.isPad ? 7 : 6), current: 4, text: "Number_Of_Players".localize)
     
-    var hasJokers = BinaryToggle(current: false, text: "Include Jokers?".local("Include_Jokers") )
-    var hasTrumps = BinaryToggle(current: false, text: "Include Tarot Trumps?".local("Include_Tarot_Trumps"))
-    var willPassCards = BinaryToggle(current: false, text: "Pass Worst Cards?".local("Pass_Worst_Cards"))
-    var includeHooligan = BinaryToggle(current: false, text: "Include Hooligan?" .local("Include_Hooligan"))
-    var includeOmnibus = BinaryToggle(current: false, text: "Include Omnibus?".local("Include_Omnibus"))
-    var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow Breaking Trumps?".local("Allow_Breaking_Trumps") )
-    var speedOfToss = ListToggle(list: ["Very Slow".localize_,
+    var hasJokers = BinaryToggle(current: false, text: "Include_Jokers".localize)
+    var hasTrumps = BinaryToggle(current: false, text: "Include_Tarot_Trumps".localize)
+    var willPassCards = BinaryToggle(current: false, text: "Pass_Worst_Cards".localize)
+    var includeHooligan = BinaryToggle(current: false, text: "Include_Hooligan".localize)
+    var includeOmnibus = BinaryToggle(current: false, text: "Include_Omnibus".localize)
+    var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow_Breaking_Trumps".localize)
+    var speedOfToss = ListToggle(list: ["Very Slow".localize,
         "Slow".localize,
         "Normal".localize,
         "Fast".localize,
-        "Very Fast".localize_
-        ], current: 3, text: "Speed of Tossed Cards".local("Speed_Of_Cards"))
-    var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game Finishing Score".local("Game_Finishing_Score") )
-    var ruleSet = ListToggle(list: ["Spades".localize,"Hearts".localize,"Jacks".localize],  current: 1, text: "Rule Set".localize_ )
+        "Very Fast".localize
+        ], current: 3, text: "Speed_Of_Cards".localize)
+    var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game_Finishing_Score".localize)
+    var ruleSet = ListToggle(list: ["Spades".localize,"Hearts".localize,"Jacks".localize],  current: 1, text: "Rule Set".localize )
  
 
 

@@ -68,7 +68,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case .Picks : return "Picks".localize
                 case .Trumps : return "Trumps".localize
                 case .Jokers : return "Jokers".localize
-                case .NoOfSuites : return "Not Applicable".local("Not_Applicable")
+                case .NoOfSuites : return "Not_Applicable".localize
                 case .None : return "None".localize
                 }
         }
@@ -260,36 +260,36 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case PlayingCard.Suite.Jokers:
                 switch value.rank
                 {
-                case 0 : return "The Fool".local("Fool")
-                case 1 : return "Joker Light (1)".local("Joker1")
-                case 2 : return "Joker Dark (2)".local("Joker2")
+                case 0 : return "Fool".localize
+                case 1 : return "Joker1".localize
+                case 2 : return "Joker2".localize
                 default:
                     return  "_ of _".localizeWith(value.description,suite.description)
                 }
             case PlayingCard.Suite.Trumps:
                 switch value.rank
                 {
-                case 1 : return "The Magician".local("Magician")
-                case 2 : return "The High Priestess".local("Priestess")
-                case 3 : return "The Empress".local("Empress")
-                case 4 : return "The Emperor".local("Emperor")
-                case 5 : return "The Hierophant".local("Hierophant")
-                case 6 : return "The Lovers".local("Lovers")
-                case 7 : return "The Chariot".local("Chariot")
+                case 1 : return "Magician".localize
+                case 2 : return "Priestess".localize
+                case 3 : return "Empress".localize
+                case 4 : return "Emperor".localize
+                case 5 : return "Hierophant".localize
+                case 6 : return "Lovers".localize
+                case 7 : return "Chariot".localize
                 case 8 : return "Strength".localize
-                case 9 : return "The Hermit".local("Hermit")
-                case 10 : return "Wheel of Fortune".local("Fortune")
+                case 9 : return "Hermit".localize
+                case 10 : return "Fortune".localize
                 case 11 : return "Justice".localize
-                case 12 : return "The Hanged Man".local("Hanged_Man")
+                case 12 : return "Hanged_Man".localize
                 case 13 : return "Death".localize
                 case 14 : return "Temperance".localize
-                case 15 : return "The Devil".local("Devil")
-                case 16 : return "The Tower".local("Tower")
-                case 17 : return "The Star".local("The_Star")
-                case 18 : return "The Moon".local("Moon")
-                case 19 : return "The Sun".local("The_Sun")
+                case 15 : return "Devil".localize
+                case 16 : return "Tower".localize
+                case 17 : return "The_Star".localize
+                case 18 : return "Moon".localize
+                case 19 : return "The_Sun".localize
                 case 20 : return "Judgement".localize
-                case 21 : return "The World".local("World")
+                case 21 : return "World".localize
                 default:
                     return  "_ of _".localizeWith(value.description,suite.description)
                 }
