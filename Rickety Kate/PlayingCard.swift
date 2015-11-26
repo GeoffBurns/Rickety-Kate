@@ -6,12 +6,27 @@
 //  Copyright (c) 2015 Geoff Burns. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public protocol Deck
 {
     var cards: [PlayingCard] {get}
     func dealFor(numberOfPlayers:Int) -> [[PlayingCard]]
+}
+
+extension UIColor
+{
+    class func colorFromHexString(hexString: String) -> UIColor
+    {
+        if let rgbValue = UInt32(hexString, radix: 16)
+        {
+            let red : CGFloat = CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0
+            let green : CGFloat = CGFloat((rgbValue & 0xFF00) >> 8) / 255.0
+            let blue : CGFloat  = CGFloat(rgbValue & 0xFF) / 255.0
+            return UIColor(red:red, green:green, blue:blue, alpha:1.0);
+        }
+        return UIColor.blackColor()
+    }
 }
 
 public struct PlayingCard : Equatable, Comparable, Hashable
@@ -72,7 +87,24 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case .None : return "None".localize
                 }
         }
-        
+        var color : UIColor
+            {
+                switch(self)
+                {
+                case .Spades: return UIColor.blackColor()
+                case .Hearts: return UIColor.colorFromHexString("df0000")
+                case .Clubs:  return UIColor.colorFromHexString("1ea820")
+                case .Diamonds: return UIColor.colorFromHexString("16b4b7")
+                case .Suns: return UIColor.colorFromHexString("ffb002")
+                case .Anchors: return UIColor.colorFromHexString("0044cd")
+                case .Stars : return UIColor.colorFromHexString("ff6600")
+                case .Picks : return UIColor.colorFromHexString("841c00")
+                case .Trumps : return UIColor.colorFromHexString("5600b6")
+                case .Jokers : return UIColor.colorFromHexString("fb47f3")
+                case .NoOfSuites : return UIColor.blackColor()
+                case .None : return UIColor.blackColor()
+                }
+        }
         static var standardSuites : [Suite]
         {
             return [Spades,Hearts,Clubs,Diamonds]
@@ -123,16 +155,16 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 }
         }
         var localLetter : String
-        {
-            let raw = localLetterRaw
-
-            if raw == "" { return ""}
-            switch(self)
-               {
-               case CourtCard(let cardLetter):
-                      return cardLetter==raw ? "" : raw
-               default : return ""
-            }
+            {
+                let raw = localLetterRaw
+                
+                if raw == "" { return ""}
+                switch(self)
+                {
+                case CourtCard(let cardLetter):
+                    return cardLetter.lowercaseString == raw.lowercaseString ? "" : raw
+                default : return ""
+                }
         }
         var description : String
             // Used to help create imagename for a card

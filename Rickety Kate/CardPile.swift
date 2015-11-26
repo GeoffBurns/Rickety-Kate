@@ -158,19 +158,24 @@ public class CardPile
             sprite.positionInSpread = positionInSpread
             
             // PlayerOne's cards are larger
-           
             let newScale =  sizeOfCards.scale
             
             let newHeight = newScale * sprite.size.height / sprite.yScale
-            sprite.updateAnchorPoint(cardAnchorPoint)
-            sprite.color = UIColor.whiteColor()
-            sprite.colorBlendFactor = 0
+            
+            sprite.removeTint()
+            
             
             var flipAction = (SKAction.scaleTo(sizeOfCards.scale, duration: speed))
-            let newPosition =  positionOfCard(positionInSpread, spriteHeight: newHeight, fullHand:fullHand)
-            let moveAction = (SKAction.moveTo(newPosition, duration:(speed*0.8)))
+            
             let rotationAngle = rotationOfCard(positionInSpread, fullHand:fullHand)
             let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(speed*0.8)))
+            let newPosition =  sprite.rotateAboutPoint(
+                positionOfCard(positionInSpread, spriteHeight: newHeight, fullHand:fullHand),
+                rotatePoint:cardAnchorPoint,
+                zRotation:rotationAngle,
+                newScale:sizeOfCards.scale)
+            
+            let moveAction = (SKAction.moveTo(newPosition, duration:(speed*0.8)))
             let scaleAction =  (SKAction.scaleTo(sizeOfCards.scale, duration: speed))
             let scaleYAction =  SKAction.scaleYTo(sizeOfCards.scale, duration: speed)
             var groupAction = SKAction.group([moveAction,rotateAction,scaleAction])
@@ -182,8 +187,9 @@ public class CardPile
                     SKAction.scaleXTo(0.0, duration: speed*0.5),
                     SKAction.runBlock({ [unowned sprite] in
                         sprite.flipUp()
-                    }) ,
-                    SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.5)
+                        }) ,
+                    SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.4)
+                    
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
@@ -193,18 +199,21 @@ public class CardPile
                 flipAction = (SKAction.sequence([
                     SKAction.scaleXTo(0.0, duration: speed*0.5),
                     SKAction.runBlock({ [unowned sprite] in
+           
                         sprite.flipDown()
-                    }) ,
-                    SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.5)
+                        }) ,
+                    SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.4)
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
             
             sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({ [unowned sprite, unowned self] in
                 sprite.zPosition = self.zPositon + positionInSpread
-            }) ]))
-          
-         
+                
+                
+                }) ]))
+            
+            
         }
     }
     func rearrangeCardsAtRest()

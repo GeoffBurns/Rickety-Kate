@@ -525,8 +525,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     
     func doesNotFollowSuite(cardsprite:CardSprite)
     {
-    cardsprite.color = UIColor.redColor()
-    cardsprite.colorBlendFactor = 0.2
+    cardsprite.tintRed()
     
     Bus.sharedInstance.send(GameEvent.CardDoesNotFollowSuite)
     }
@@ -571,8 +570,8 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                                doesNotFollowSuite(cardsprite)
                         
                           default:
-                               cardsprite.color = UIColor.redColor()
-                               cardsprite.colorBlendFactor = 0.2
+                               cardsprite.tintRed()
+
                                Bus.sharedInstance.send(gameEvent)
                           
                           }
