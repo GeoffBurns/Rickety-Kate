@@ -35,12 +35,12 @@ extension String
 
     var symbol : String
         { 
-            if let codeObj = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode),
+       /*     if let codeObj = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode),
                 code = codeObj as? String
              where code=="en"
             {
             return self
-            }
+            }*/
             return self+"_symbol"
     }
     var isYou : Bool{

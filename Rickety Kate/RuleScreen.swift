@@ -9,11 +9,12 @@
 import SpriteKit
 
 // Help Screen
-class RuleScreen: Popup {
+class RuleScreen: MultiPagePopup {
     
     var rulesText : SKMultilineLabel? = nil
-
-
+    var cardDisplay = CardDisplayScreen()
+      var isSetup = false
+    
     override func setup(scene:SKNode)
     {
         self.gameScene = scene
@@ -23,8 +24,19 @@ class RuleScreen: Popup {
         anchorPoint = CGPointZero
         let fontsize : CGFloat = FontSize.Medium.scale
         let leading : Int = Int(FontSize.Medium.scale)
-        
-        rulesText  = SKMultilineLabel(text: GameSettings.sharedInstance.rules.description, labelWidth: Int(scene.frame.width * 0.88), pos: CGPoint(x:CGRectGetMidX(scene.frame),y:scene.frame.size.height*0.8),fontSize:fontsize,fontColor:UIColor.whiteColor(),leading:leading)
+        userInteractionEnabled = true
+        if !isSetup
+        {
+        rulesText  = SKMultilineLabel(
+            text: GameSettings.sharedInstance.rules.description,
+            labelWidth: Int(scene.frame.width * 0.88),
+            maxHeight:scene.frame.height * 0.75,
+            pageBreak:scene.frame.height * 0.35,
+            pos: CGPoint(x:CGRectGetMidX(scene.frame),
+            y:scene.frame.size.height*0.8),
+            fontSize:fontsize,
+            fontColor:UIColor.whiteColor(),
+            leading:leading)
       
         name = "Rules Background"
   
@@ -32,9 +44,73 @@ class RuleScreen: Popup {
    
         rulesText!.name = "RulesText"
         rulesText!.userInteractionEnabled = false
- 
+        tabNames = ["Rules","Deck","Scores"]
         
-        Navigate.setupCardDisplayButton(self)
+      
+            displayButtons()
+            cardDisplay.setup(self)
+            isSetup = true
+        }
+  
 
+    }
+    override func noPageFor(tab:Int) -> Int
+    {
+
+        switch tab
+        {
+        case 0 :
+            if let rulelines = rulesText
+            {
+                return rulelines.noOfPages
+            }
+            return 1
+        case 1 :
+            return cardDisplay.noPageFor(1)
+        case 2 :
+            
+            return cardDisplay.noPageFor(2)
+            
+        default :
+            return 1
+        }
+        
+    }
+
+    override func newPage() {
+        if self.tabNo == 0
+        {
+           if self.pageNo >= rulesText!.noOfPages
+           {
+            self.tabNo++
+            self.pageNo = 0
+           }
+     
+            if self.pageNo < 0
+            {
+                self.tabNo = self.tabNames.count - 1
+                self.pageNo = 0
+            }
+        }
+        if self.tabNo > 0
+        {
+            cardDisplay.tabNo = self.tabNo
+            cardDisplay.pageNo = self.pageNo
+            cardDisplay.zPosition = 400
+            addChild(cardDisplay)
+            cardDisplay.newPage()
+            return
+        }
+        self.rulesText!.page = self.pageNo
+    }
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        /* Called when a touch begins */
+        
+        for touch in (touches )
+        {
+            let positionInScene = touch.locationInNode(self)
+            
+            if buttonTouched(positionInScene) { return }
+        }
     }
 }

@@ -8,16 +8,11 @@
 
 import SpriteKit
 
-enum CardDisplayTab
-{
-    case DeckTab
-    case ScoringTab
-}
 
 typealias ScorePairCollection = [(PlayingCard,Int)]
 
 // Help Screen
-class CardDisplayScreen: Popup, HasDiscardArea {
+class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     
     
     var discardPile = CardPile(name: CardPileType.Discard.description)
@@ -25,13 +20,15 @@ class CardDisplayScreen: Popup, HasDiscardArea {
     
     var isSetup = false
     var slides = [CardSlide]()
-    var orderedGroups : [(Int,ScorePairCollection)] = []
-    var activeTab = CardDisplayTab.DeckTab
-    var moreButton = SKSpriteNode(imageNamed: "More1".symbol)
-    var backButton = SKSpriteNode(imageNamed: "Back".symbol)
-    var deckButton = SKSpriteNode(imageNamed: "Deck2".symbol)
-    var scoreButton = SKSpriteNode(imageNamed: "Scores1".symbol)
-    var suiteStart = 0
+    var orderedGroups : [(Int,ScorePairCollection)] {
+        
+        let pointsGroups = GameSettings.sharedInstance.rules.cardScores.categorise {$0.1}
+        
+        return pointsGroups.sort { $0.0 > $1.0 }
+    }
+    
+
+    var tabNewPage = [ Exit, displayCardsInDeck, displayScoringCards ]
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
     let noOfSlides = GameSettings.isPad ? 3 : 2
@@ -49,12 +46,22 @@ class CardDisplayScreen: Popup, HasDiscardArea {
         super.onExit()
    
     }
+    func Exit()
+    {
+    // onExit()
+    if let ruleScreen = parent as? MultiPagePopup
+        {
+        ruleScreen.tabNo = 0
+        }
+    removeFromParent()
+    }
+    
     override func setup(scene:SKNode)
     {
         if !isSetup
           {
           self.gameScene = scene
-            
+          self.tabNames = ["Rules","Deck","Scores"]
           setupDiscardArea()
           discardPile.isUp = true
           discardPile.speed = GameSettings.sharedInstance.tossDuration*0.5
@@ -77,10 +84,9 @@ class CardDisplayScreen: Popup, HasDiscardArea {
            isSetup = true
           }
 
-        suiteStart = 0
         displayPage() 
     }
-    
+
     func displayPage()
     {
         let fontsize : CGFloat = FontSize.Small.scale
@@ -90,83 +96,59 @@ class CardDisplayScreen: Popup, HasDiscardArea {
         title.text = "Card Rankings".localize
         self.addChild(title)
         
-        switch activeTab
+
+  //      tabNewPage[tabNo](self)()
+        
+        displayButtons()
+    }
+    
+    
+    override func noPageFor(tab:Int) -> Int
+    {
+        var itemcount = 1
+        switch tab
         {
-        case .DeckTab : displayCardsInDeck()
-        case .ScoringTab : displayScoringCards()
+        case 0 :
+            if let ruleScreen = parent as? MultiPagePopup
+            {
+                return ruleScreen.noPageFor(0)
+            }
+             return 1
+        case 1 :
+           itemcount = GameSettings.sharedInstance.deck!.suitesInDeck.count
+        case 2 :
+            itemcount = self.orderedGroups.count
+         
+        default :
+            return 1
         }
-      
         
-        moreButton.setScale(ButtonSize.Small.scale)
-        moreButton.anchorPoint = CGPoint(x: 2.0, y: 0.0)
-        moreButton.position = CGPoint(x:self.frame.size.width,y:0.0)
-        
-        moreButton.name = "More"
-        
-        moreButton.zPosition = 300
-        moreButton.userInteractionEnabled = false
-        
-        self.addChild(moreButton)
-        
-        backButton.setScale(ButtonSize.Small.scale)
-        backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-        backButton.position = CGPoint(x:0.0,y:0.0)
-        
-        backButton.name = "Back"
-        
-        backButton.zPosition = 300
-        backButton.userInteractionEnabled = false
-        backButton.alpha = 0.0
-        self.addChild(backButton)
-        
-        
-        deckButton.setScale(ButtonSize.Small.scale)
-        deckButton.anchorPoint = CGPoint(x: 2.0, y: 1.0)
-        deckButton.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height)
-        
-        deckButton.name = "Deck"
-        
-        deckButton.zPosition = 300
-        deckButton.userInteractionEnabled = false
-        
-        self.addChild(deckButton)
-        
-        scoreButton.setScale(ButtonSize.Small.scale)
-        scoreButton.anchorPoint = CGPoint(x: 1.0, y: 1.0)
-        scoreButton.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height)
-        
-        scoreButton.name = "Score"
-        
-        scoreButton.zPosition = 300
-        scoreButton.userInteractionEnabled = false
-        
-        self.addChild(scoreButton)
-        
-        let nextStart = noOfSlides
-        switch activeTab
-        {
-        case .DeckTab :  moreButton.alpha = nextStart >= GameSettings.sharedInstance.deck!.suitesInDeck.count ? 0.0 : 1.0
-        case .ScoringTab : moreButton.alpha = nextStart >=  self.orderedGroups.count ? 0.0 : 1.0
-        }
+        return (itemcount / noOfSlides) + (itemcount % noOfSlides == 0 ? 0 : 1)
     }
     func displayCardsInDeck()
     {
         
         let fontsize : CGFloat = FontSize.Smallest.scale
-        for slide in slides
-        {
-        slide.discardAll()
-        }
+        for slide in slides { slide.discardAll() }
+        
         self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.7)
             {
-        for (i,slide) in self.slides.enumerate()
-        {
-            if  i+self.suiteStart < GameSettings.sharedInstance.deck!.suitesInDeck.count
-            {
-                let suite = self.cards.filter { $0.suite == GameSettings.sharedInstance.deck!.suitesInDeck[i+self.suiteStart]}
                 
-                if suite.count > 0
-                {
+             let cardsBeingDisplayed = GameSettings.sharedInstance.deck!
+                    .suitesInDeck
+                    .enumerate()
+                    .filter { (i,_) in i >= self.noOfSlides*self.pageNo &&
+                        i < self.noOfSlides*(self.pageNo+1)}
+                    .map { (_,suite) in  self.cards.filter { $0.suite == suite} }
+                    .filter { cards in cards.count > 0 }
+                
+
+             for (i,(slide, cards)) in Zip2Sequence(
+                                            self.slides,
+                                            cardsBeingDisplayed)
+                                            .enumerate() {
+       
+       
                     let l = SKLabelNode(fontNamed:"Verdana")
                     l.fontSize = fontsize
                     l.position = CGPointMake(self.size.width * 0.10, self.size.height * (0.83 - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
@@ -183,20 +165,10 @@ class CardDisplayScreen: Popup, HasDiscardArea {
                     self.addChild(l)
                     self.addChild(m)
                     
-                    slide.replaceWithContentsOf(suite)
+                    slide.replaceWithContentsOf(cards)
                     slide.rearrange()
-     
-                    
-                    continue
-                }
+            
             }
-
-            
-            //  slide.clear()
-           //   slide.rearrange()
- 
-            
-        }
         }
     }
     
@@ -205,43 +177,41 @@ class CardDisplayScreen: Popup, HasDiscardArea {
         
         let fontsize : CGFloat = FontSize.Smallest.scale
         
-        let pointsGroups = GameSettings.sharedInstance.rules.cardScores.categorise {$0.1}
-        
-        self.orderedGroups = pointsGroups.sort { $0.0 > $1.0 }
-        
-        
-        for (i,slide) in slides.enumerate()
-        {
-         slide.discardAll()
-         if  i+suiteStart < orderedGroups.count
-            {
-                
-            let group = orderedGroups[i+suiteStart]
-            let cards = group.1.map { $0.0 }
+        let penaltyCardsBeingDisplayed = orderedGroups
+            .enumerate()
+            .filter { (i,_) in i >= self.noOfSlides*self.pageNo &&
+                i < self.noOfSlides*(self.pageNo+1)}
+            .map { (_,group) in  (group.0, group.1.map { $0.0 }) }
             
-            if cards.count > 0
-              {
+            .filter { (_,cards) in cards.count > 0 }
+
+        for slide in slides {
+            slide.discardAll()
+            slide.clear() }
+        
+        for (i,(slide, (points, cards))) in Zip2Sequence(
+            self.slides,
+            penaltyCardsBeingDisplayed)
+            .enumerate() {
+                
+         
               let l = SKLabelNode(fontNamed:"Verdana")
               l.fontSize = fontsize
               l.horizontalAlignmentMode = .Left
               l.position = CGPointMake(size.width * 0.05, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
-              if cards.count > 1 { l.text = "_ Points Each".localizeWith(group.0) }
-              else if group.0 > 0 { l.text = "_ Points".localizeWith(group.0) }
-              else  { l.text = "_ Points".localizeWith(group.0) +
+              if cards.count > 1 { l.text = "_ Points Each".localizeWith(points) }
+              else if points > 0 { l.text = "_ Points".localizeWith(points) }
+              else  { l.text = "_ Points".localizeWith(points) +
                 " (" + "Total Points for Hand can not Fall Below Zero".localize + ")" }
               l.name = "label"
               self.addChild(l)
  
               slide.replaceWithContentsOf(cards)
                 
-              continue
               }
-            }
-        slide.clear()
-        }
     }
     
-    func newPage()
+    override func newPage()
     {
         var l = self.childNodeWithName("label")
         while l != nil
@@ -251,78 +221,15 @@ class CardDisplayScreen: Popup, HasDiscardArea {
         }
         
         
+        let renderPage = self.tabNewPage[self.tabNo](self)
         self.schedule(delay: 0.3)
         {
-          switch self.activeTab
-             {
-             case .DeckTab : self.displayCardsInDeck()
-             case .ScoringTab : self.displayScoringCards()
-             }
-            let nextStart = self.suiteStart +  self.noOfSlides
-            
-            switch self.activeTab
-            {
-            case .DeckTab :  self.moreButton.alpha = nextStart >= GameSettings.sharedInstance.deck!.suitesInDeck.count ? 0.0 : 1.0
-            case .ScoringTab : self.moreButton.alpha = nextStart >=  self.orderedGroups.count ? 0.0 : 1.0
-            }
+            renderPage()
+        }
+        
+    }
+    
 
-        }
-        
-        backButton.alpha = suiteStart == 0 ? 0.0 : 1.0
-    }
-    func buttonTouched(positionInScene:CGPoint) -> Bool
-    {
-        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode,
-        nodeName =  touchedNode.name
-        {
-            switch nodeName
-            {
-            case "Deck" :
-                
-                if activeTab != .DeckTab
-                {
-                    self.suiteStart = 0
-                    deckButton.texture = SKTexture(imageNamed: "Deck2".symbol)
-                    scoreButton.texture = SKTexture(imageNamed: "Scores1".symbol)
-                    activeTab = .DeckTab
-                    newPage()
-                }
-                return true
-            case "Score" :
-                
-                if activeTab != .ScoringTab
-                {
-                    self.suiteStart = 0
-                    deckButton.texture = SKTexture(imageNamed: "Deck1".symbol)
-                    scoreButton.texture = SKTexture(imageNamed: "Scores2".symbol)
-                    activeTab = .ScoringTab
-                    newPage()
-                }
-                return true
-            case "More" :
-                self.suiteStart += noOfSlides
-                newPage()
-                
-                return true
-            case "Back" :
-                
-                self.suiteStart -= noOfSlides
-                
-                if self.suiteStart < 0
-                {
-                    self.suiteStart = 0
-                }
-                newPage()
-                
-                return true
-            default:
-                return false
-                
-            }
-        }
-        
-        return false
-    }
     func storeDraggedNode(node:CardSprite)
     {
         draggedNode = node;

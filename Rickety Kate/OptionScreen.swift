@@ -38,8 +38,11 @@ class OptionScreen: Popup {
     var moreButton = SKSpriteNode(imageNamed: "More1".symbol)
     var backButton = SKSpriteNode(imageNamed: "Back".symbol)
     let isBigDevice = GameSettings.isBigDevice
-    var noOfSettings : Int { return isBigDevice ? 5 : 3 }
-    var settingStart = 0
+    var noOfItemsOnPage : Int { return isBigDevice ? 5 : 3 }
+    var separationOfItems :  Float { return isBigDevice ? 0.15 : 0.2 }
+    var startHeight :  Float { return isBigDevice ? 0.77 : 0.7 }
+
+    var pageStart = 0
     
     override func onEnter() {
         self.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
@@ -118,52 +121,52 @@ class OptionScreen: Popup {
            optionSetting.removeFromParent()
            }
         }
-        if (settingStart < optionSettings.count)
+        if (pageStart < optionSettings.count)
         {
-        optionSettings[settingStart].name = "Setting1"
-        optionSettings[settingStart].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.77 : 0.7))
-        self.addChild(optionSettings[settingStart])
+        optionSettings[pageStart].name = "Setting1"
+        optionSettings[pageStart].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.77 : 0.7))
+        self.addChild(optionSettings[pageStart])
         }
         
-        if (settingStart+1 < optionSettings.count)
+        if (pageStart+1 < optionSettings.count)
         {
-        optionSettings[settingStart+1].name = "Setting2"
-        optionSettings[settingStart+1].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.62 : 0.5))
-        self.addChild(optionSettings[settingStart+1])
+        optionSettings[pageStart+1].name = "Setting2"
+        optionSettings[pageStart+1].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.62 : 0.5))
+        self.addChild(optionSettings[pageStart+1])
         }
         
-        if (settingStart+2 < optionSettings.count)
+        if (pageStart+2 < optionSettings.count)
         {
-        optionSettings[settingStart+2].name = "Setting3"
-        optionSettings[settingStart+2].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.47 : 0.3))
-        self.addChild(optionSettings[settingStart+2])
+        optionSettings[pageStart+2].name = "Setting3"
+        optionSettings[pageStart+2].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.47 : 0.3))
+        self.addChild(optionSettings[pageStart+2])
         }
  
         
         if(isBigDevice)
         {
 
-        if (settingStart+3 < optionSettings.count)
+        if (pageStart+3 < optionSettings.count)
             {
-            optionSettings[settingStart+3].name = "Setting4"
-            optionSettings[settingStart+3].position = CGPoint(x:midWidth,y:scene.frame.height *  0.32)
-            self.addChild(optionSettings[settingStart+3])
+            optionSettings[pageStart+3].name = "Setting4"
+            optionSettings[pageStart+3].position = CGPoint(x:midWidth,y:scene.frame.height *  0.32)
+            self.addChild(optionSettings[pageStart+3])
             }
             
-        if (settingStart+4 < optionSettings.count)
+        if (pageStart+4 < optionSettings.count)
             {
-            optionSettings[settingStart+4].name = "Setting5"
-            optionSettings[settingStart+4].position = CGPoint(x:midWidth,y:scene.frame.height *  0.17)
-            self.addChild(optionSettings[settingStart+4])
+            optionSettings[pageStart+4].name = "Setting5"
+            optionSettings[pageStart+4].position = CGPoint(x:midWidth,y:scene.frame.height *  0.17)
+            self.addChild(optionSettings[pageStart+4])
             }
             
         
         }
         
-        let nextStart = settingStart +  noOfSettings
+        let nextStart = pageStart +  noOfItemsOnPage
         
         moreButton.alpha = nextStart >= optionSettings.count ? 0.0 : 1.0
-        backButton.alpha = settingStart == 0 ? 0.0 : 1.0
+        backButton.alpha = pageStart == 0 ? 0.0 : 1.0
     }
     
     func settupButtons()
@@ -200,17 +203,17 @@ class OptionScreen: Popup {
             switch nodeName
             {
             case "More" :
-                self.settingStart += noOfSettings
+                self.pageStart += noOfItemsOnPage
                 newPage()
                 
                 return true
             case "Back" :
                 
-                self.settingStart -= noOfSettings
+                self.pageStart -= noOfItemsOnPage
                 
-                if self.settingStart < 0
+                if self.pageStart < 0
                 {
-                    self.settingStart = 0
+                    self.pageStart = 0
                 }
                 newPage()
                 
@@ -231,7 +234,6 @@ class OptionScreen: Popup {
             let positionInScene = touch.locationInNode(self)
             
             if buttonTouched(positionInScene) { return }
-         //   if cardTouched(positionInScene) { return }
         }
     }
 }

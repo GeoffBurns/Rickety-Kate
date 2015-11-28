@@ -19,6 +19,9 @@ class SKMultilineLabel: SKNode {
     //props
     var labelWidth:Int {didSet {update()}}
     var labelHeight:Int = 0
+    var labelHeightMax:CGFloat = 0.0
+    var pageBreak : CGFloat = 0.0
+    var pageLength : CGFloat = 0.0
     var text:String {didSet {update()}}
     var fontName:String {didSet {update()}}
     var fontSize:CGFloat {didSet {update()}}
@@ -31,8 +34,11 @@ class SKMultilineLabel: SKNode {
     //display objects
     var rect:SKShapeNode?
     var labels:[SKLabelNode] = []
+    var page:Int {didSet {update()}}
+    var noOfPages = 0
+
     
-    init(text:String, labelWidth:Int, pos:CGPoint, fontName:String="Verdana",fontSize:CGFloat=10,fontColor:UIColor=UIColor.blackColor(),leading:Int=10, alignment:SKLabelHorizontalAlignmentMode = .Center, shouldShowBorder:Bool = false)
+    init(text:String, labelWidth:Int, maxHeight:CGFloat, pageBreak:CGFloat, pos:CGPoint, fontName:String="Verdana",fontSize:CGFloat=10,fontColor:UIColor=UIColor.blackColor(),leading:Int=10, alignment:SKLabelHorizontalAlignmentMode = .Center, shouldShowBorder:Bool = false)
     {
         self.text = text
         self.labelWidth = labelWidth
@@ -43,7 +49,10 @@ class SKMultilineLabel: SKNode {
         self.leading = leading
         self.shouldShowBorder = shouldShowBorder
         self.alignment = alignment
-        
+        self.labelHeightMax = maxHeight
+        self.pageBreak = pageBreak
+        self.pageLength = maxHeight+pageBreak
+        self.page = 0
         super.init()
         
         self.update()
@@ -66,10 +75,13 @@ class SKMultilineLabel: SKNode {
         let separators = NSCharacterSet.whitespaceAndNewlineCharacterSet()
         let words = text.componentsSeparatedByCharactersInSet(separators)
         
-  
         var finalLine = false
         var wordCount = -1
         var lineCount = 0
+        var yPos : CGFloat = 0.0
+        var yPosWithBreak : CGFloat = 0.0
+        var pageCount : CGFloat = 0.0
+        var pagesSoFar : CGFloat = 0.0
         while (!finalLine) {
             lineCount++
             var lineLength = CGFloat(0)
@@ -83,7 +95,8 @@ class SKMultilineLabel: SKNode {
             label.horizontalAlignmentMode = alignment
             label.fontSize = fontSize
             label.fontColor = UIColor.whiteColor()
-            
+ 
+
             while lineLength < CGFloat(labelWidth)
             {
                 wordCount++
@@ -113,7 +126,12 @@ class SKMultilineLabel: SKNode {
                 } else if (alignment == .Right) {
                     linePos.x += CGFloat(labelWidth / 2)
                 }
-                linePos.y += CGFloat(-leading * lineCount)
+                yPos = CGFloat(leading * lineCount)
+                pageCount = ceil(yPos / self.labelHeightMax)
+                pagesSoFar = floor(yPos / self.labelHeightMax)
+                yPosWithBreak = yPos + pagesSoFar * self.pageBreak
+                let labelhiegth =  CGFloat(pos.y) -  CGFloat(yPosWithBreak) + CGFloat(page) *  CGFloat(pageLength)
+                linePos.y = labelhiegth
                 label.position = CGPointMake( linePos.x , linePos.y )
                 self.addChild(label)
                 labels.append(label)
@@ -121,21 +139,26 @@ class SKMultilineLabel: SKNode {
             }
             
         }
+        noOfPages = Int(pageCount)
         labelHeight = lineCount * leading
-        showBorder()
+      
     }
+    func insurePageIsInRange() {
+        if page < 0 { page = 0}
+        if page >= noOfPages { page = noOfPages-1 }
+        
+    }
+    /*
+    func isOnPage(line:Int) -> Bool {
+      
+        if line < pageStart[page] { return false }
+        if page == pageStart.count-1 { return true }
+        if line >= pageStart[page+1]  { return false }
+        return true
+    }*/
+    
     func showBorder() {
-/*        if (!shouldShowBorder) {return}
-        if let rect = self.rect {
-            self.removeChildrenInArray([rect])
-        }
-        self.rect = SKShapeNode(rectOfSize: CGSize(width: labelWidth, height: labelHeight))
-        if let rect = self.rect {
-            rect.strokeColor = UIColor.whiteColor()
-            rect.lineWidth = 1
-            rect.position = CGPoint(x: pos.x, y: pos.y - (CGFloat(labelHeight) / 2.0))
-            self.addChild(rect)
-        }*/
+
 
     }
 }
