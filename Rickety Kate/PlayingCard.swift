@@ -560,6 +560,22 @@ extension Int
     {
         return PlayingCard.CardValue.Pip(self)
     }
+    public var letterDescription :String
+    {
+        switch self
+        {
+        case 3 : return "Three".localize
+        case 4 : return "Four".localize
+        case 5 : return "Five".localize
+        case 6 : return "Six".localize
+        case 7 : return "Seven".localize
+        case 8 : return "Eight".localize
+        case 9 : return "Nine".localize
+        case 10 : return "Ten".localize
+        case 11 : return "Eleven".localize
+        default : return self.description
+        }
+    }
 }
 
 public enum CardName

@@ -36,7 +36,7 @@ public protocol IGameSettings
     var rules : IAwarder { get  }
     var tossDuration : NSTimeInterval { get  }
     var gameWinningScoreIndex : Int { get }
- 
+    var gameType : String { get }
     
     func changeSettings(
         noOfSuitesInDeck:Int,
@@ -258,7 +258,34 @@ class LiveGameSettings : IGameSettings
         }
     
     }
-
+    var gameType : String {
+        
+        let gameType = self.rules.trumpSuitePlural
+        
+        if includeHooligan
+        {
+            if includeOmnibus
+            {
+                return "Soccer _".localizeWith( gameType )
+            }
+            
+            return "Hooligan _".localizeWith( gameType )
+        
+        }
+        
+        if includeOmnibus
+            {
+               return "Bussing _".localizeWith( gameType )
+            }
+        if let no = self.deck?.normalSuitesInDeck.count
+             where self.rules.trumpSuite == PlayingCard.Suite.None
+        {
+            return no.letterDescription + " " + gameType
+        }
+            
+            return gameType
+   
+    }
     
     var awarder : IAwarder? = nil
     var rules : IAwarder {
@@ -390,6 +417,8 @@ public class FakeGameSettings : IGameSettings
     public var makeDeckEvenlyDevidable  = true
     public var deck  : PlayingCard.BuiltCardDeck? = nil
     public var gameWinningScoreIndex = 1
+    public var gameType = "Spades"
+
     var awarder : IAwarder? = nil
     public var rules : IAwarder {
         if awarder == nil{

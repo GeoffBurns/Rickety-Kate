@@ -80,8 +80,7 @@ public enum GameEvent : Equatable
                         :  "_ won _ _".localizeWith(name,noOfSpades,GameSettings.sharedInstance.rules.trumpSuiteSingular)
                 }
                 return  start + "\n" + "Bad Luck".localize + "."
-                
-                
+            
             case NewHand :
                 return nil
             case SomethingHasGoneWrong :
@@ -89,7 +88,7 @@ public enum GameEvent : Equatable
             case YourTurn :
                 return "Your Turn".localize
             case NewGame :
-                return "Game On".localize
+                return "_ Game On".localizeWith(GameSettings.sharedInstance.gameType)
             case StartHand :
                 return nil
             case CardPlayed :
@@ -106,7 +105,8 @@ public enum GameEvent : Equatable
                 switch noOfCardsLeft
                 {
                 case 3 :
-                    return "Discard Your".localize + "\n" + "Three Worst Cards".localize
+                  //  return "Discard Your".localize + "\n" + "Three Worst Cards".localize
+                    return GameSettings.sharedInstance.gameType + "\n" + "Discard 3 cards".localize
                 case 1 :
                     return "Discard one more card".localize + "\n" + "Your worst card".localize
                 default :

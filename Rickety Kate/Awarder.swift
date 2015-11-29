@@ -33,7 +33,6 @@ class AwarderBase
     var hooligan_ = 7.of(PlayingCard.Suite.Clubs)
     var omnibus : PlayingCard? = nil
     var hooligan : PlayingCard? = nil
-    // Overriden in derived class
 
     lazy var cardScores : Dictionary<PlayingCard,Int>  = self.createCardScores()
     lazy var allPoints : Int  = { return self.cardScores.reduce(0) { $0 + ($1.1 > 0 ? $1.1:0)} }()
@@ -85,8 +84,6 @@ class AwarderBase
     func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
         return Dictionary<PlayingCard,Int>()
-    
-
     }
    
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
@@ -112,7 +109,6 @@ class AwarderBase
         {
             Bus.sharedInstance.send(GameEvent.WinHooligan(winnersName))
         }
-            
         else if noTrumps > 0
         {
             Bus.sharedInstance.send(GameEvent.WinSpades(winnersName,noTrumps))

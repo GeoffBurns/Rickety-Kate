@@ -28,7 +28,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     }
     
 
-    var tabNewPage = [ Exit, displayCardsInDeck, displayScoringCards ]
+    var tabNewPage = [ rules, displayCardsInDeck, displayScoringCards ]
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
     let noOfSlides = GameSettings.isPad ? 3 : 2
@@ -46,7 +46,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
         super.onExit()
    
     }
-    func Exit()
+    func rules()
     {
     // onExit()
     if let ruleScreen = parent as? MultiPagePopup
@@ -55,7 +55,16 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
         }
     removeFromParent()
     }
-    
+    func exit()
+    {
+        // onExit()
+        if let ruleScreen = parent as? MultiPagePopup
+        {
+            removeFromParent()
+            ruleScreen.removeFromParent()
+        }
+       
+    }
     override func setup(scene:SKNode)
     {
         if !isSetup
@@ -249,7 +258,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
         label.zPosition = CardSize.Huge.zOrder + 100.0
         node.addChild(label)
     }
-    func cardTouched(positionInScene:CGPoint) -> Bool
+    override func cardTouched(positionInScene:CGPoint) -> Bool
     {
        // let width = self.frame.size.width
     
@@ -298,6 +307,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
         }
     }
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+       super.touchesEnded(touches, withEvent: event)
        restoreDraggedNode()
     }
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {

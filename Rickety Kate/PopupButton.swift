@@ -32,7 +32,6 @@ class PopupButton : SKSpriteNode
         fatalError("init(coder:) has not been implemented")
     }
     
-  
     func press()
     {
         popupScene!.setup(self.parent!)
@@ -51,7 +50,6 @@ class PopupButton : SKSpriteNode
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
-        
         
         if popupScene!.parent == nil
         {

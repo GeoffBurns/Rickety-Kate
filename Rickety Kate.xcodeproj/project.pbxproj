@@ -107,6 +107,9 @@
 
 /* Begin PBXFileReference section */
 		AC0304031BAEDE7C005263C7 /* RuleScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuleScreen.swift; sourceTree = "<group>"; };
+		AC0E20581C0AE430004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		AC0E20591C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Main.strings"; sourceTree = "<group>"; };
+		AC0E205A1C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		AC1CF69C1BB4238300001024 /* buttons.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = buttons.atlas; sourceTree = "<group>"; };
 		AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Extra.atlas; sourceTree = "<group>"; };
 		AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIdeOfTable.swift; sourceTree = "<group>"; };
@@ -432,6 +435,7 @@
 				fr,
 				de,
 				es,
+				"pt-PT",
 			);
 			mainGroup = AC62B68A1BA1564800B0EDAE;
 			productRefGroup = AC62B6941BA1564800B0EDAE /* Products */;
@@ -609,6 +613,7 @@
 				AC5CB3B51BFE84A9007C5AFD /* fr */,
 				ACDCA6BC1C01F18C00ABA366 /* de */,
 				ACDCA6C21C029C2900ABA366 /* es */,
+				AC0E205A1C0AE431004D74AA /* pt-PT */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -620,6 +625,7 @@
 				AC5CB3B41BFE84A8007C5AFD /* fr */,
 				ACDCA6BB1C01F18C00ABA366 /* de */,
 				ACDCA6C11C029C2900ABA366 /* es */,
+				AC0E20591C0AE431004D74AA /* pt-PT */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -631,6 +637,7 @@
 				AC5CB3B31BFE84A8007C5AFD /* fr */,
 				ACDCA6BA1C01F18C00ABA366 /* de */,
 				ACDCA6C01C029C2900ABA366 /* es */,
+				AC0E20581C0AE430004D74AA /* pt-PT */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";

@@ -8,13 +8,29 @@
 
 import SpriteKit
 
+public extension CGPoint {
+
+    public func length() -> CGFloat {
+        return sqrt(x*x + y*y)
+    }
+    
+
+    public func lengthSquared() -> CGFloat {
+        return x*x + y*y
+    }
+}
+    public func - (left: CGPoint, right: CGPoint) -> CGPoint {
+    return CGPoint(x: left.x - right.x, y: left.y - right.y)
+    }
+
+
 
 // Popup screen for user input
 class Popup: SKSpriteNode {
     
     weak var gameScene : SKNode? = nil
     weak var button :  PopupButton? = nil
-    
+    var startTouchPosition = CGPointZero
 
     
 
@@ -71,9 +87,10 @@ class MultiPagePopup : Popup {
     
     func displayButtons()
     {
+        moreButton = SKSpriteNode(imageNamed: "More1".symbol)
         moreButton.setScale(ButtonSize.Small.scale)
         moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
-        moreButton.position = CGPoint(x:self.frame.size.width,y:0.0)
+        moreButton.position = CGPoint(x:self.size.width,y:0.0)
         
         moreButton.name = "More"
         
@@ -81,6 +98,8 @@ class MultiPagePopup : Popup {
         moreButton.userInteractionEnabled = false
         
         self.addChild(moreButton)
+        
+        backButton = SKSpriteNode(imageNamed: "Back".symbol)
         
         backButton.setScale(ButtonSize.Small.scale)
         backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
@@ -119,7 +138,28 @@ class MultiPagePopup : Popup {
     {
         return 1
     }
-    
+    func nextPage()
+    {
+        self.pageNo++
+        if self.pageNo >= noPageFor(self.tabNo)
+        {
+            self.pageNo = 0
+            self.tabNo = self.tabNo+1 >= tabNames.count ? 0 : self.tabNo+1
+        }
+        newPage()
+        
+    }
+    func prevPage()
+    {
+        self.pageNo--
+        
+        if self.pageNo < 0
+        {
+            self.tabNo = self.tabNo <= 0 ?  tabNames.count-1 : self.tabNo-1
+            self.pageNo = noPageFor(self.tabNo) - 1
+        }
+        newPage()
+    }
     func buttonTouched(positionInScene:CGPoint) -> Bool
     {
         if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode,
@@ -142,25 +182,11 @@ class MultiPagePopup : Popup {
             switch nodeName
             {
             case "More" :
-                self.pageNo++
-                if self.pageNo >= noPageFor(self.tabNo)
-                {
-                    self.pageNo = 0
-                    self.tabNo = self.tabNo+1 >= tabNames.count ? 0 : self.tabNo+1
-                }
-                newPage()
-                
+                nextPage()
                 return true
             case "Back" :
-                
-                self.pageNo--
-                
-                if self.pageNo < 0
-                {
-                    self.tabNo = self.tabNo <= 0 ?  tabNames.count-1 : self.tabNo-1
-                    self.pageNo = noPageFor(self.tabNo) - 1
-                }
-                newPage()
+                prevPage()
+            
                 
                 return true
             default:
@@ -170,5 +196,51 @@ class MultiPagePopup : Popup {
         }
         
         return false
+    }
+    
+    func cardTouched(positionInScene:CGPoint) -> Bool
+    {
+        return false
+    }
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        /* Called when a touch begins */
+        
+        
+        if let t = touches.first
+        {
+            startTouchPosition = t.locationInNode(self)
+        }
+        for touch in (touches )
+        {
+            let positionInScene = touch.locationInNode(self)
+            
+            if buttonTouched(positionInScene) { return }
+            if cardTouched(positionInScene) { return }
+        }
+    }
+
+
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let t = touches.first
+        {
+          let  endTouchPosition = t.locationInNode(self)
+          let  displacement = endTouchPosition - startTouchPosition
+          if displacement.lengthSquared() > 4000 && 2*fabs(displacement.x) < fabs(displacement.y)
+          {
+            if displacement.y < 0
+            {
+                nextPage()
+            }
+            else
+            {
+                prevPage()
+            }
+          }
+        }
+    }
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        if let touches = touches {
+            touchesEnded(touches, withEvent: event)
+        }
     }
 }

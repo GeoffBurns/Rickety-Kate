@@ -103,14 +103,4 @@ class RuleScreen: MultiPagePopup {
         }
         self.rulesText!.page = self.pageNo
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        
-        for touch in (touches )
-        {
-            let positionInScene = touch.locationInNode(self)
-            
-            if buttonTouched(positionInScene) { return }
-        }
-    }
-}
+   }
