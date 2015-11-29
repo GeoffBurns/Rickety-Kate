@@ -10,7 +10,7 @@ import SpriteKit
 
 // Help Screen
 class RuleScreen: MultiPagePopup {
-    
+    override var pageNo : Int  { didSet { if let text = rulesText { text.page = pageNo }}}
     var rulesText : SKMultilineLabel? = nil
     var cardDisplay = CardDisplayScreen()
       var isSetup = false
