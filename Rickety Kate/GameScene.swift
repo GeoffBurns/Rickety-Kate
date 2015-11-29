@@ -150,7 +150,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     
     var backgroundFan = CardFan(name: CardPileType.Background.description)
     var playButton1 =  SKSpriteNode(imageNamed:"Play1".symbol)
-    var playButton2 =  SKSpriteNode(imageNamed:"Play1".symbol)
+    var playButton2 =  SKSpriteNode(imageNamed:"Random1".symbol)
     var arePassingCards : Bool { return  GameSettings.sharedInstance.willPassCards && !table.isInDemoMode }
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
     var isYourTurn = false;
@@ -279,7 +279,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         self.addChild(playButton1)
         playButton2.position = CGPoint(x:self.frame.size.width*0.75,y:self.frame.size.height*0.5)
             
-        playButton2.name = "Play"
+        playButton2.name = "Random"
         playButton2.setScale(ButtonSize.Big.scale)
         playButton2.zPosition = 200
         playButton2.userInteractionEnabled = false
@@ -406,6 +406,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             /// play button
             case "Play" :
                 touchedNode.texture = SKTexture(imageNamed: "Play2".symbol)
+                resetSceneWithInteractiveTable()
+                return true
+                /// play button
+            case "Random" :
+                touchedNode.texture = SKTexture(imageNamed: "Random2".symbol)
+                GameSettings.sharedInstance.random()
                 resetSceneWithInteractiveTable()
                 return true
             default : break

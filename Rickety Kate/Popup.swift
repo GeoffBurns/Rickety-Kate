@@ -87,7 +87,7 @@ class MultiPagePopup : Popup {
     
     func displayButtons()
     {
-        moreButton = SKSpriteNode(imageNamed: "More1".symbol)
+     //   moreButton = SKSpriteNode(imageNamed: "More1".symbol)
         moreButton.setScale(ButtonSize.Small.scale)
         moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
         moreButton.position = CGPoint(x:self.size.width,y:0.0)
@@ -98,8 +98,8 @@ class MultiPagePopup : Popup {
         moreButton.userInteractionEnabled = false
         
         self.addChild(moreButton)
-        
-        backButton = SKSpriteNode(imageNamed: "Back".symbol)
+    //
+      //  backButton = SKSpriteNode(imageNamed: "Back".symbol)
         
         backButton.setScale(ButtonSize.Small.scale)
         backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)

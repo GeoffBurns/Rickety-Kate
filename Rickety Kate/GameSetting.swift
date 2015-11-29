@@ -38,6 +38,8 @@ public protocol IGameSettings
     var gameWinningScoreIndex : Int { get }
     var gameType : String { get }
     
+    func random()
+    
     func changeSettings(
         noOfSuitesInDeck:Int,
         noOfPlayersAtTable:Int,
@@ -286,7 +288,30 @@ class LiveGameSettings : IGameSettings
             return gameType
    
     }
-    
+    var coin : Bool
+    {
+        return 0 == 2.random
+    }
+     func random()
+     {
+        ruleSet = 1 + 3.random
+        includeOmnibus = coin
+        includeHooligan = coin
+        willPassCards = coin
+        hasJokers = coin
+        hasTrumps = coin
+        
+        if coin
+        {
+            noOfCardsInASuite = 14 + 5.random
+            noOfSuitesInDeck = 3 + 3.random
+          
+        } else {
+            noOfCardsInASuite = 10 + 5.random
+            noOfSuitesInDeck = 5 + 4.random
+        }
+        
+    }
     var awarder : IAwarder? = nil
     var rules : IAwarder {
         if awarder == nil {
@@ -436,7 +461,7 @@ public class FakeGameSettings : IGameSettings
         self.hasJokers = hasJokers
         deck  = PlayingCard.BuiltCardDeck(gameSettings: self)
     }
-    
+    public func random() {}
     public func changeSettings(
         noOfSuitesInDeck:Int,
         noOfPlayersAtTable:Int,
