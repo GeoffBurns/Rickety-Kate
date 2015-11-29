@@ -112,8 +112,8 @@ class MultiPagePopup : Popup {
         self.addChild(backButton)
         
         exitButton.setScale(ButtonSize.Small.scale)
-        exitButton.anchorPoint = CGPoint(x: 0.0, y: 1.0)
-        exitButton.position = CGPoint(x:0.0,y:self.size.height)
+        exitButton.anchorPoint = CGPoint(x: 1.0, y: 1.0)
+        exitButton.position = CGPoint(x:self.frame.size.width,y:self.size.height)
         
         exitButton.name = "Exit"
         
@@ -121,14 +121,14 @@ class MultiPagePopup : Popup {
         exitButton.userInteractionEnabled = false
         
         self.addChild(exitButton)
-        let tabcount = tabNames.count
+       
         for (i,tabName) in tabNames.enumerate()
         {
             let imageName = tabName + (i == tabNo ? "2" : "1")
             let tabButton = SKSpriteNode(imageNamed: imageName.symbol)
             tabButton.setScale(ButtonSize.Small.scale)
-            tabButton.anchorPoint = CGPoint(x: CGFloat(tabcount-i), y: 1.0)
-            tabButton.position = CGPoint(x:self.frame.size.width,y:self.frame.size.height)
+            tabButton.anchorPoint = CGPoint(x: CGFloat(-i), y: 1.0)
+            tabButton.position = CGPoint(x:0.0,y:self.frame.size.height)
             
             tabButton.name = tabName
             
