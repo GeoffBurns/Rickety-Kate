@@ -65,6 +65,8 @@ class Popup: SKSpriteNode {
 class MultiPagePopup : Popup {
     var moreButton = SKSpriteNode(imageNamed: "More1".symbol)
     var backButton = SKSpriteNode(imageNamed: "Back".symbol)
+    var exitButton = SKSpriteNode(imageNamed: "Exit".symbol)
+    
     var tabButtons : [SKSpriteNode] = []
     var tabNo = 0 { didSet { updateTab()   }}
     var pageNo = 0
@@ -132,7 +134,10 @@ class MultiPagePopup : Popup {
     func newPage()
     {
     }
-    
+    func exit()
+    {
+        removeFromParent()
+    }
     // overriden in derived class
     func noPageFor(tab:Int) -> Int
     {
@@ -186,8 +191,9 @@ class MultiPagePopup : Popup {
                 return true
             case "Back" :
                 prevPage()
-            
-                
+                return true
+            case "Exit" :
+                exit()
                 return true
             default:
                 return false

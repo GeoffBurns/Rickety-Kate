@@ -48,16 +48,16 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     }
     func rules()
     {
-    // onExit()
     if let ruleScreen = parent as? MultiPagePopup
-        {
+    {
+        ruleScreen.pageNo = self.pageNo
         ruleScreen.tabNo = 0
         }
     removeFromParent()
     }
-    func exit()
+    override func exit()
     {
-        // onExit()
+        
         if let ruleScreen = parent as? MultiPagePopup
         {
             removeFromParent()
@@ -106,8 +106,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
         self.addChild(title)
         
 
-  //      tabNewPage[tabNo](self)()
-        
         displayButtons()
     }
     

@@ -71,13 +71,13 @@ public enum GameEvent : Equatable
                 {
                   start = (noOfSpades == 1)
                         ?  "You won a _".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
-                        :  "You won _ _".localizeWith(noOfSpades,GameSettings.sharedInstance.rules.trumpSuiteSingular)
+                        :  "You won _ _".localizeWith(noOfSpades,GameSettings.sharedInstance.rules.trumpSuitePlural)
                 }
                 else
                 {
                     start = (noOfSpades == 1)
                         ?  "_ won a _".localizeWith(name,GameSettings.sharedInstance.rules.trumpSuiteSingular)
-                        :  "_ won _ _".localizeWith(name,noOfSpades,GameSettings.sharedInstance.rules.trumpSuiteSingular)
+                        :  "_ won _ _".localizeWith(name,noOfSpades,GameSettings.sharedInstance.rules.trumpSuitePlural)
                 }
                 return  start + "\n" + "Bad Luck".localize + "."
             
