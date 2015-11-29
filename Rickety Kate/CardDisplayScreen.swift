@@ -269,17 +269,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
           
         return false
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        
-        for touch in (touches )
-        {
-            let positionInScene = touch.locationInNode(self)
-            
-            if buttonTouched(positionInScene) { return }
-            if cardTouched(positionInScene) { return }
-        }
-    }
+
     func restoreDraggedNode()
     {
         if let cardsprite = draggedNode
@@ -307,11 +297,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
        super.touchesEnded(touches, withEvent: event)
        restoreDraggedNode()
-    }
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        if let touches = touches {
-            touchesEnded(touches, withEvent: event)
-        }
     }
 
 }
