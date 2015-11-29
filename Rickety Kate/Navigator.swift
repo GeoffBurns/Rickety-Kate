@@ -12,18 +12,11 @@ import SpriteKit
 class Navigate {
     
    
-    static func setupCardDisplayButton(scene:SKNode)
-    {
-        let cardDisplayButton = PopupButton(imageNamed:"More1".symbol, altNamed:"Rules1".symbol,popup:CardDisplayScreen())
-        cardDisplayButton.setScale(ButtonSize.Small.scale)
-        cardDisplayButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
-        cardDisplayButton.position = CGPoint(x:scene.frame.size.width,y:0.0)
-        scene.addChild(cardDisplayButton)
-    }
+
     static func setupRulesButton(scene:SKNode)
     {
    
-        let rulesButton = PopupButton(imageNamed:"Rules1".symbol, altNamed:"X",popup:RuleScreen())
+        let rulesButton = PopupButton(imageNamed:"Rules1".symbol, altNamed:"",popup:RuleScreen())
         rulesButton.setScale(ButtonSize.Small.scale)
         rulesButton.anchorPoint = CGPoint(x: 0.0, y: 1.0)
         rulesButton.position = CGPoint(x:0.0,y:scene.frame.size.height * 0.97)

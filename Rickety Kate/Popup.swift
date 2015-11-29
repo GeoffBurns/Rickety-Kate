@@ -111,6 +111,16 @@ class MultiPagePopup : Popup {
         backButton.userInteractionEnabled = false
         self.addChild(backButton)
         
+        exitButton.setScale(ButtonSize.Small.scale)
+        exitButton.anchorPoint = CGPoint(x: 0.0, y: 1.0)
+        exitButton.position = CGPoint(x:0.0,y:self.size.height)
+        
+        exitButton.name = "Exit"
+        
+        exitButton.zPosition = 100
+        exitButton.userInteractionEnabled = false
+        
+        self.addChild(exitButton)
         let tabcount = tabNames.count
         for (i,tabName) in tabNames.enumerate()
         {

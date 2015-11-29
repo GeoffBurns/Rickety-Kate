@@ -37,14 +37,16 @@ class PopupButton : SKSpriteNode
         popupScene!.setup(self.parent!)
         popupScene!.zPosition = 400
         self.parent?.addChild(popupScene!)
+        
+        if pressed != ""
+        {
         self.texture =  SKTexture(imageNamed: pressed)
-        popupScene!.onEnter()
         zPosition = 450
+        }
     }
     func unpress()
     {
         zPosition = 350
-        popupScene!.onExit()
         self.texture =  SKTexture(imageNamed: unpressed)
         popupScene?.removeFromParent()
     }
