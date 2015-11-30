@@ -156,13 +156,20 @@ class MultiPagePopup : Popup {
     func nextPage()
     {
         self.pageNo++
-        if self.pageNo >= noPageFor(self.tabNo)
+     
+       if self.pageNo >= noPageFor(self.tabNo)
         {
+            if  tabNames.count == 0
+            {
+                self.pageNo = 0
+            }
+            else
+            {
             self.pageNo = 0
             self.tabNo = self.tabNo+1 >= tabNames.count ? 0 : self.tabNo+1
+            }
         }
         newPage()
-        
     }
     func prevPage()
     {
@@ -170,8 +177,16 @@ class MultiPagePopup : Popup {
         
         if self.pageNo < 0
         {
+            
+            if  tabNames.count > 0
+            {
             self.tabNo = self.tabNo <= 0 ?  tabNames.count-1 : self.tabNo-1
             self.pageNo = noPageFor(self.tabNo) - 1
+            }
+            else
+            {
+                self.pageNo = noPageFor(0) - 1
+            }
         }
         newPage()
     }

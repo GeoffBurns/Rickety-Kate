@@ -10,8 +10,8 @@ import SpriteKit
 
 
 /// Game Option Setting Screen
-class OptionScreen: Popup {
-    
+class OptionScreen: MultiPagePopup {
+    var isSetup = false
     var noOfSuites = NumberRangeToggle(min: 3, max: 8, current: 6, text: "Number_Of_Suites".localize)
     var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 18, current: 14, text: "Number_In_Suite".localize)
     var noOfPlayers = NumberRangeToggle(min: 3, max:(GameSettings.isPad ? 7 : 6), current: 4, text: "Number_Of_Players".localize)
@@ -35,14 +35,15 @@ class OptionScreen: Popup {
 
  
     var optionSettings = [SKNode]()
-    var moreButton = SKSpriteNode(imageNamed: "More1".symbol)
-    var backButton = SKSpriteNode(imageNamed: "Back".symbol)
     let isBigDevice = GameSettings.isBigDevice
     var noOfItemsOnPage : Int { return isBigDevice ? 5 : 3 }
     var separationOfItems :  Float { return isBigDevice ? 0.15 : 0.2 }
     var startHeight :  Float { return isBigDevice ? 0.77 : 0.7 }
 
-    var pageStart = 0
+    var settingStart = 0
+    
+    var noOfSettings : Int { return GameSettings.isBigDevice ? 5 : 3 }
+
     
     override func onEnter() {
         self.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
@@ -103,138 +104,53 @@ class OptionScreen: Popup {
         
         optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps]
         
-        settupButtons()
-        newPage()
-        
+        if !isSetup
+        {
+            displayButtons()
+            newPage()
+            isSetup = true
+        }
     }
-
-    func newPage()
+        
+    override func newPage()
     {
+        
+        self.settingStart = noOfSettings*self.pageNo
+        let optionSettingsDisplayed = optionSettings
+            .enumerate()
+            .filter { (i,_) in i >= self.noOfSettings*self.pageNo &&
+                i < self.noOfSettings*(self.pageNo+1)}
+            .map { (_,suite) in  suite }
+        
+        
+        
+        
+        let startpos : CGFloat = GameSettings.isBigDevice ? 0.77 : 0.7
+        let seperation : CGFloat =  GameSettings.isBigDevice ? 0.15 : 0.2
+        
+
         let scene = gameScene!
         let midWidth = CGRectGetMidX(gameScene!.frame)
         
         for optionSetting in optionSettings
         {
             
-        if(optionSetting.parent != nil)
-           {
-           optionSetting.removeFromParent()
-           }
-        }
-        if (pageStart < optionSettings.count)
-        {
-        optionSettings[pageStart].name = "Setting1"
-        optionSettings[pageStart].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.77 : 0.7))
-        self.addChild(optionSettings[pageStart])
+            if(optionSetting.parent != nil)
+            {
+                optionSetting.removeFromParent()
+            }
         }
         
-        if (pageStart+1 < optionSettings.count)
+        for (i, optionSetting) in optionSettingsDisplayed.enumerate()
         {
-        optionSettings[pageStart+1].name = "Setting2"
-        optionSettings[pageStart+1].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.62 : 0.5))
-        self.addChild(optionSettings[pageStart+1])
+            optionSetting.name = "Setting" + (i + 1).description
+            optionSetting.position = CGPoint(x:midWidth,y:scene.frame.height * (startpos - seperation * CGFloat(i)))
+            self.addChild(optionSetting)
         }
         
-        if (pageStart+2 < optionSettings.count)
-        {
-        optionSettings[pageStart+2].name = "Setting3"
-        optionSettings[pageStart+2].position = CGPoint(x:midWidth,y:scene.frame.height * (isBigDevice ? 0.47 : 0.3))
-        self.addChild(optionSettings[pageStart+2])
-        }
- 
-        
-        if(isBigDevice)
-        {
+    }
 
-        if (pageStart+3 < optionSettings.count)
-            {
-            optionSettings[pageStart+3].name = "Setting4"
-            optionSettings[pageStart+3].position = CGPoint(x:midWidth,y:scene.frame.height *  0.32)
-            self.addChild(optionSettings[pageStart+3])
-            }
-            
-        if (pageStart+4 < optionSettings.count)
-            {
-            optionSettings[pageStart+4].name = "Setting5"
-            optionSettings[pageStart+4].position = CGPoint(x:midWidth,y:scene.frame.height *  0.17)
-            self.addChild(optionSettings[pageStart+4])
-            }
-            
-        
-        }
-        
-        let nextStart = pageStart +  noOfItemsOnPage
-        
-        moreButton.alpha = nextStart >= optionSettings.count ? 0.0 : 1.0
-        backButton.alpha = pageStart == 0 ? 0.0 : 1.0
+ 
     }
     
-    func settupButtons()
-    {
-        
-        moreButton.setScale(ButtonSize.Small.scale)
-        moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
-        moreButton.position = CGPoint(x:self.frame.size.width,y:0.0)
-        
-        moreButton.name = "More"
-        
-        moreButton.zPosition = 300
-        moreButton.userInteractionEnabled = false
-        
-        self.addChild(moreButton)
-        
-        backButton.setScale(ButtonSize.Small.scale)
-        backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-        backButton.position = CGPoint(x:0.0,y:0.0)
-        
-        backButton.name = "Back"
-        
-        backButton.zPosition = 300
-        backButton.userInteractionEnabled = false
-        backButton.alpha = 0.0
-        self.addChild(backButton)
-        
-    }
-    func buttonTouched(positionInScene:CGPoint) -> Bool
-    {
-        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode,
-            nodeName =  touchedNode.name
-        {
-            switch nodeName
-            {
-            case "More" :
-                self.pageStart += noOfItemsOnPage
-                newPage()
-                
-                return true
-            case "Back" :
-                
-                self.pageStart -= noOfItemsOnPage
-                
-                if self.pageStart < 0
-                {
-                    self.pageStart = 0
-                }
-                newPage()
-                
-                return true
-            default:
-                return false
-                
-            }
-        }
-        
-        return false
-    }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        
-        for touch in (touches )
-        {
-            let positionInScene = touch.locationInNode(self)
-            
-            if buttonTouched(positionInScene) { return }
-        }
-    }
-}
-
+ 

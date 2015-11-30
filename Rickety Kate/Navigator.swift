@@ -24,7 +24,7 @@ class Navigate {
     }
     static func setupOptionButton(scene:SKNode)
     {
-        let optionsButton = PopupButton(imageNamed:"Options1".symbol, altNamed:"X",popup:OptionScreen())
+        let optionsButton = PopupButton(imageNamed:"Options1".symbol, altNamed:"",popup:OptionScreen())
         optionsButton.setScale(ButtonSize.Small.scale)
         optionsButton.anchorPoint = CGPoint(x: 1.0,  y: 1.0)
         optionsButton.position = CGPoint(x:scene.frame.size.width,y:scene.frame.size.height * 0.97)

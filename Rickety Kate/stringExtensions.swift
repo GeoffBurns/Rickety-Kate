@@ -24,12 +24,9 @@ extension String
     {
         return String(format: self.localize, arguments: arguements)
     }
-    func localizeWith2(arguements:[CVarArgType]) -> String
-    {
-        return String(format: self.localize, arguments: arguements)
-    }
+
     var localize : String
-        {
+    {
             return NSLocalizedString(self.underscore, comment: self)
     }
 

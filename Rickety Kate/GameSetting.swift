@@ -292,7 +292,7 @@ class LiveGameSettings : IGameSettings
     {
         return 0 == 2.random
     }
-     func random()
+    func random()
      {
         ruleSet = 1 + 3.random
         includeOmnibus = coin

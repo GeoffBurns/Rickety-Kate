@@ -143,10 +143,8 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
                 
              let cardsBeingDisplayed = GameSettings.sharedInstance.deck!
                     .suitesInDeck
-                    .enumerate()
-                    .filter { (i,_) in i >= self.noOfSlides*self.pageNo &&
-                        i < self.noOfSlides*(self.pageNo+1)}
-                    .map { (_,suite) in  self.cards.filter { $0.suite == suite} }
+                    .from(self.noOfSlides*self.pageNo, forLength: self.noOfSlides)
+                    .map { suite in  self.cards.filter { $0.suite == suite} }
                     .filter { cards in cards.count > 0 }
                 
 
@@ -185,10 +183,9 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
         let fontsize : CGFloat = FontSize.Smallest.scale
         
         let penaltyCardsBeingDisplayed = orderedGroups
-            .enumerate()
-            .filter { (i,_) in i >= self.noOfSlides*self.pageNo &&
-                i < self.noOfSlides*(self.pageNo+1)}
-            .map { (_,group) in  (group.0, group.1.map { $0.0 }) }
+            
+            .from(self.noOfSlides*self.pageNo, forLength: self.noOfSlides)
+            .map { group in  (group.0, group.1.map { $0.0 }) }
             
             .filter { (_,cards) in cards.count > 0 }
 

@@ -20,4 +20,22 @@ public extension SequenceType {
         }
         return dict
     }
+    
+    public func from(n: Int, forLength: Int) -> [Generator.Element] {
+        
+        var result : [Generator.Element]
+        result = []
+        result.reserveCapacity(forLength)
+        
+        var g = generate()
+        for _ in 0..<n {
+            if let _ = g.next() { /* skip */ } else { return [] }
+        }
+        for _ in 0..<forLength {
+            if let e = g.next() { result.append(e) } else { return result }
+        }
+        
+        return result
+    }
+
 }
