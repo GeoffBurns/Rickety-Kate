@@ -111,17 +111,18 @@ class OptionScreen: MultiPagePopup {
             isSetup = true
         }
     }
-        
+    override func noPageFor(tab:Int) -> Int
+    {
+        return optionSettings.count / noOfSettings + (optionSettings.count % noOfSettings == 0 ? 0 : 1)
+    }
+    
     override func newPage()
     {
         
         self.settingStart = noOfSettings*self.pageNo
         let optionSettingsDisplayed = optionSettings
-            .enumerate()
-            .filter { (i,_) in i >= self.noOfSettings*self.pageNo &&
-                i < self.noOfSettings*(self.pageNo+1)}
-            .map { (_,suite) in  suite }
-        
+            .from(self.settingStart, forLength: noOfSettings)
+      
         
         
         
