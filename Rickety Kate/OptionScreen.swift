@@ -107,13 +107,10 @@ class OptionScreen: MultiPagePopup {
         pageNo = 0
         
 
-        
-        if !isSetup
-        {
             optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps]
             displayButtons()
-            isSetup = true
-        }
+        
+        newPage()
     }
     override func noPageFor(tab:Int) -> Int
     {
@@ -131,7 +128,6 @@ class OptionScreen: MultiPagePopup {
         let startpos : CGFloat = GameSettings.isBigDevice ? 0.77 : 0.7
         let seperation : CGFloat =  GameSettings.isBigDevice ? 0.15 : 0.2
         
-
         let scene = gameScene!
         let midWidth = CGRectGetMidX(gameScene!.frame)
         
