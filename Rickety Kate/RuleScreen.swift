@@ -25,6 +25,7 @@ class RuleScreen: MultiPagePopup {
         let fontsize : CGFloat = FontSize.Medium.scale
         let leading : Int = Int(FontSize.Medium.scale)
         userInteractionEnabled = true
+        pageNo = 0
         if !isSetup
         {
         rulesText  = SKMultilineLabel(

@@ -40,7 +40,6 @@ class OptionScreen: MultiPagePopup {
     var separationOfItems :  Float { return isBigDevice ? 0.15 : 0.2 }
     var startHeight :  Float { return isBigDevice ? 0.77 : 0.7 }
 
-    var settingStart = 0
     
     var noOfSettings : Int { return GameSettings.isBigDevice ? 5 : 3 }
 
@@ -60,6 +59,12 @@ class OptionScreen: MultiPagePopup {
         self.includeOmnibus.current = GameSettings.sharedInstance.includeOmnibus
         
         }
+    
+    override func exit()
+    {
+        onExit()
+        removeFromParent()
+    }
     
     override func onExit()
     {
@@ -87,7 +92,6 @@ class OptionScreen: MultiPagePopup {
     }
 
     
-
     override func  setup(scene:SKNode)
     {
         
@@ -100,14 +104,14 @@ class OptionScreen: MultiPagePopup {
         userInteractionEnabled = true
         
         name = "Option Background"
-
+        pageNo = 0
         
-        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps]
+
         
         if !isSetup
         {
+            optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps]
             displayButtons()
-            newPage()
             isSetup = true
         }
     }
@@ -119,12 +123,10 @@ class OptionScreen: MultiPagePopup {
     override func newPage()
     {
         
-        self.settingStart = noOfSettings*self.pageNo
+        let settingStart = noOfSettings*self.pageNo
         let optionSettingsDisplayed = optionSettings
-            .from(self.settingStart, forLength: noOfSettings)
+            .from(settingStart, forLength: noOfSettings)
       
-        
-        
         
         let startpos : CGFloat = GameSettings.isBigDevice ? 0.77 : 0.7
         let seperation : CGFloat =  GameSettings.isBigDevice ? 0.15 : 0.2
@@ -135,7 +137,6 @@ class OptionScreen: MultiPagePopup {
         
         for optionSetting in optionSettings
         {
-            
             if(optionSetting.parent != nil)
             {
                 optionSetting.removeFromParent()
@@ -148,10 +149,8 @@ class OptionScreen: MultiPagePopup {
             optionSetting.position = CGPoint(x:midWidth,y:scene.frame.height * (startpos - seperation * CGFloat(i)))
             self.addChild(optionSetting)
         }
-        
     }
 
- 
     }
     
  

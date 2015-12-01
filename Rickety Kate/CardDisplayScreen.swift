@@ -67,6 +67,10 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     }
     override func setup(scene:SKNode)
     {
+        
+        pageNo = 0
+        cards = GameSettings.sharedInstance.deck!.orderedDeck
+        
         if !isSetup
           {
           self.gameScene = scene
@@ -79,7 +83,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
           position = CGPointZero
           anchorPoint = CGPointZero
           userInteractionEnabled = true
-          cards = GameSettings.sharedInstance.deck!.orderedDeck
    
 
           for i in 0..<noOfSlides
