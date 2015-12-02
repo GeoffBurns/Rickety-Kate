@@ -98,8 +98,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
 
         displayPage() 
     }
-
-    func displayPage()
+    func displayTitle()
     {
         let fontsize : CGFloat = FontSize.Small.scale
         let title = SKLabelNode(fontNamed:"Verdana")
@@ -107,9 +106,13 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
         title.position = CGPointMake(size.width * 0.50, size.height * 0.92 )
         title.text = "Card Rankings".localize
         self.addChild(title)
-        
-
-        displayButtons()
+ 
+    }
+    
+    func displayPage()
+    {
+       displayTitle()
+       displayButtons()
     }
     
     

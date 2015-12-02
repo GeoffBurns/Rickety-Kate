@@ -48,11 +48,11 @@ class RuleScreen: MultiPagePopup {
         tabNames = ["Rules","Deck","Scores"]
         
       
-            displayButtons()
             cardDisplay.setup(self)
             isSetup = true
         }
-  
+        
+        displayButtons()
 
     }
     override func noPageFor(tab:Int) -> Int

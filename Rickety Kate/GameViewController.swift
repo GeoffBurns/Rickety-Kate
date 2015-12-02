@@ -59,7 +59,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         scene.table = RicketyKateCardTable.makeDemo(scene)
             
         skView.presentScene(scene)
-        loadAds()
+      // loadAds()
      
     }
 
