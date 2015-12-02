@@ -188,7 +188,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     switch faceValue
                     {
                     case 2 : return "Deuce".localize
-                    case 3 : return "Three".localize
+                    case 3 : return "Trey".localize
                     case 4 : return "Four".localize
                     case 5 : return "Five".localize
                     case 6 : return "Six".localize
@@ -413,7 +413,8 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         public var setOfSuitesInDeck = Set<PlayingCard.Suite>()
         public var suitesInDeck : [PlayingCard.Suite] = []
         public var normalSuitesInDeck : [PlayingCard.Suite] = []
-    
+        public var valuesInSuite : [PlayingCard.CardValue] = []
+        
         var noOfPossibleCardsInDeck : Int {
             var result = (gameSettings!.noOfSuitesInDeck * gameSettings!.noOfCardsInASuite)
              if gameSettings!.hasTrumps
@@ -463,6 +464,17 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 noInSuites[PlayingCard.Suite.Jokers.rawValue]  += 2
             }
         }
+        
+        public func rankFor(card:PlayingCard) -> Int
+        {
+            switch card.value
+            {
+            case .Ace : return 1
+            case .Pip(let n) : return n
+            case .CourtCard :
+               return (valuesInSuite.indexOf(card.value)  ?? -1) + 1
+            }
+        }
         override public var orderedDeck:[PlayingCard]
             {
                 var deck = [PlayingCard]();
@@ -497,10 +509,11 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                   pip++
                 }
                 while removedSoFar < toRemove
-             
+                
+                valuesInSuite = PlayingCard.CardValue.valuesFor(gameSettings!.noOfCardsInASuite)
                 for s in normalSuitesInDeck
                 {
-                    for v in PlayingCard.CardValue.valuesFor(gameSettings!.noOfCardsInASuite)
+                    for v in valuesInSuite
                     {
                        let c = PlayingCard(suite: s, value: v)
                         if removedCards.contains(c)

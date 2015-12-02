@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "557"
-            endingLineNumber = "557"
+            startingLineNumber = "570"
+            endingLineNumber = "570"
             landmarkName = "Int"
             landmarkType = "3">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "581"
-            endingLineNumber = "581"
+            startingLineNumber = "594"
+            endingLineNumber = "594"
             landmarkName = "Int"
             landmarkType = "3">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/PlayingCard.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "620"
-            endingLineNumber = "620">
+            startingLineNumber = "633"
+            endingLineNumber = "633">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -296,11 +296,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
             landmarkName = "LiveGameSettings"
             landmarkType = "3">
          </BreakpointContent>
@@ -471,11 +471,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "447"
-            endingLineNumber = "447"
+            startingLineNumber = "466"
+            endingLineNumber = "466"
             landmarkName = "FakeGameSettings"
             landmarkType = "3">
          </BreakpointContent>
@@ -567,11 +567,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "GameSettings"
             landmarkType = "3">
          </BreakpointContent>
@@ -583,12 +583,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
-            landmarkName = "changeSettings(_:noOfPlayersAtTable:noOfCardsInASuite:hasTrumps:hasJokers:willPassCards:speedOfToss:gameWinningScoreIndex:ruleSet:allowBreakingTrumps:includeHooligan:includeOmnibus:)"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
+            landmarkName = "changeSettings(_:noOfPlayersAtTable:noOfCardsInASuite:hasTrumps:hasJokers:willPassCards:speedOfToss:gameWinningScoreIndex:ruleSet:allowBreakingTrumps:includeHooligan:includeOmnibus:useNumbersForCourtCards:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -885,11 +885,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/CardSprite.swift"
-            timestampString = "470268432.702699"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "addLocalLetter()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1045,11 +1045,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "LiveGameSettings"
             landmarkType = "3">
             <Locations>
@@ -1123,11 +1123,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
             landmarkName = "LiveGameSettings"
             landmarkType = "3">
          </BreakpointContent>
@@ -1139,11 +1139,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/GameSetting.swift"
-            timestampString = "470488142.195515"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
             landmarkName = "LiveGameSettings"
             landmarkType = "3">
          </BreakpointContent>
@@ -1203,11 +1203,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rickety Kate/OptionScreen.swift"
-            timestampString = "470699853.775229"
+            timestampString = "470785434.755997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "newPage()"
             landmarkType = "5">
          </BreakpointContent>

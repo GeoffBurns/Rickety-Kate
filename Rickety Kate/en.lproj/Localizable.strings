@@ -93,6 +93,7 @@ Include_Hooligan="Include Hooligan?";
 Include_Omnibus="Include Omnibus?";
 Allow_Breaking_Trumps="Allow Breaking Trumps?";
 Game_Finishing_Score= "Game Finishing Score";
+Use_Numbers_For_Court_Cards="Use Numbers For Court Cards?";
 Rule_Set="Scoring Cards";
 Yes="Yes";
 No="No";

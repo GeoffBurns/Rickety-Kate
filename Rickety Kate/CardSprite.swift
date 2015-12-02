@@ -172,9 +172,48 @@ class CardSprite : SKSpriteNode
         }
         self.colorBlendFactor = 0.0
     }
+    func addNumber()
+    {
+        if letterBackground != nil { return }
+        
+        switch card.value
+        {
+        case .CourtCard :
+            if let deck = GameSettings.sharedInstance.deck
+            {
+            let local = deck.rankFor(card)
+            if local == 0 { return }
+            let color = card.suite.color
+            localLabel = SKSpriteNode(imageNamed:"Number" + local.description)
+            
+            localLabel!.color = color
+            localLabel!.colorBlendFactor = 1.0
+            
+            localLabel!.position = CGPointZero
+            
+            localLabel!.zPosition =  0.1
+            letterBackground = SKSpriteNode(imageNamed:"letter")
+            letterBackground!.zPosition =  0.1
+            letterBackground!.anchorPoint=CGPoint(x: 0.5,y: 0.5)
+            
+            letterBackground!.position = CGPoint(x: -self.size.width*0.5+letterBackground!.size.width*0.5, y:  self.size.height*0.5-letterBackground!.size.height*0.5)
+            letterBackground!.addChild(localLabel!)
+            addChild(letterBackground!)
+            }
+        default : return
+        }
+
+        
+    }
     func addLocalLetter()
     {
         if letterBackground != nil { return }
+        
+        if GameSettings.sharedInstance.useNumbersForCourtCards
+        {
+            addNumber()
+            return
+        }
         
         let local = card.value.localLetter
         if local == "" { return }

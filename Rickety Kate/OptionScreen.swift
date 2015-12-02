@@ -22,6 +22,7 @@ class OptionScreen: MultiPagePopup {
     var includeHooligan = BinaryToggle(current: false, text: "Include_Hooligan".localize)
     var includeOmnibus = BinaryToggle(current: false, text: "Include_Omnibus".localize)
     var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow_Breaking_Trumps".localize)
+    var useNumbersForCourtCards = BinaryToggle(current: false, text: "Use Numbers For Court Cards".localize)
     var speedOfToss = ListToggle(list: ["Very Slow".localize,
         "Slow".localize,
         "Normal".localize,
@@ -57,7 +58,7 @@ class OptionScreen: MultiPagePopup {
         self.allowBreakingTrumps.current = GameSettings.sharedInstance.allowBreakingTrumps
         self.includeHooligan.current = GameSettings.sharedInstance.includeHooligan
         self.includeOmnibus.current = GameSettings.sharedInstance.includeOmnibus
-        
+        self.useNumbersForCourtCards.current = GameSettings.sharedInstance.useNumbersForCourtCards
         }
     
     override func exit()
@@ -80,7 +81,8 @@ class OptionScreen: MultiPagePopup {
             ruleSet:ruleSet.current,
             allowBreakingTrumps:allowBreakingTrumps.current,
             includeHooligan:includeHooligan.current,
-            includeOmnibus:includeOmnibus.current
+            includeOmnibus:includeOmnibus.current,
+            useNumbersForCourtCards:useNumbersForCourtCards.current
             )
         {
             if let scene = gameScene as? RicketyKateGameScene
@@ -106,8 +108,7 @@ class OptionScreen: MultiPagePopup {
         name = "Option Background"
         pageNo = 0
         
-
-            optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps]
+        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps,useNumbersForCourtCards]
             displayButtons()
         
         newPage()
