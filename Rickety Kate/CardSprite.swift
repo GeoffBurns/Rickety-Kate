@@ -233,13 +233,12 @@ class CardSprite : SKSpriteNode
             letterForeground.zPosition =  0.1
             letterBackground = SKSpriteNode(imageNamed:indexMaskingImageName)
             if let background = letterBackground
+                where background.frame.size.width > 2
             {
                 background.zPosition =  0.8
                 background.anchorPoint=CGPoint(x: 0.5,y: 0.5)
-      //          background.color = backgroundColor
-      //          background.colorBlendFactor = 1.0
-                
-                background.position = CGPoint(x: -self.size.width*0.5+background.size.width*0.5, y:  self.size.height*0.5-background.size.height*0.5)
+     
+                background.position = CGPoint(x: -self.size.width*0.5+background.frame.size.width*0.5, y:  self.size.height*0.5-background.frame.size.height*0.5)
                 background.addChild(letterForeground)
                 addChild(background)
             }
@@ -265,7 +264,8 @@ class CardSprite : SKSpriteNode
            letterForeground.anchorPoint=CGPoint(x: 0.5,y: 0.5)
            letterForeground.zPosition =  0.1
            letterBackground = SKSpriteNode(imageNamed:indexMaskingImageName)
-           if let background = letterBackground
+            if let background = letterBackground
+                where background.size.width > 2
             {
             background.zPosition =  0.8
             background.anchorPoint=CGPoint(x: 0.5,y: 0.5)
@@ -274,6 +274,12 @@ class CardSprite : SKSpriteNode
             background.position = CGPoint(x: -self.size.width*0.5+background.size.width*0.5, y:  self.size.height*0.5-background.size.height*0.5)
             background.addChild(letterForeground)
             addChild(background)
+            }
+            else
+            {
+                letterBackground = nil
+                localLabel = nil
+                
             }
         }
     }
@@ -440,30 +446,48 @@ class WhiteCardSprite : CardSprite
         shadow = SKSpriteNode(imageNamed:  card.whiteImageName)
         outlineShadow = SKSpriteNode(imageNamed:  "outline")
         
-        shadow!.color =  UIColor.blackColor()
-        outlineShadow!.color =  UIColor.blackColor()
-        blank!.color =  GameSettings.backgroundColor
+ /*
+        self.color =  GameSettings.backgroundColor
+        self.colorBlendFactor = 1.0
+  */
         
-        shadow!.colorBlendFactor = 1.0
-        outlineShadow!.colorBlendFactor = 1.0
-        blank!.colorBlendFactor = 1.0
+      if let b = blank
+        {
+            b.color =  GameSettings.backgroundColor
+            b.colorBlendFactor = 1.0
+            b.zPosition = 0.0
+            self.addChild(b)
+        }
+        if let s = shadow
+        {
+            
+            s.color = UIColor.blackColor()
+            s.colorBlendFactor = 1.0
+            s.zPosition = 0.1
+            s.position = CGPoint(x:2,y:-2)
+            self.addChild(s)
+        }
+        if let w = white
+        {
+            w.zPosition = 0.2
+            self.addChild(w)
+        }
+        if let os = outlineShadow
+        {
+            
+            os.color = UIColor.blackColor()
+            os.colorBlendFactor = 1.0
+            os.zPosition = 0.3
+            os.position = CGPoint(x:2,y:-2)
+            self.addChild(os)
+        }
+
+        if let o = outline
+        {
+            o.zPosition = 0.4
+            self.addChild(o)
+        }
         
-        shadow!.position = CGPoint(x:2,y:-2)
-        outlineShadow!.position = CGPoint(x:2,y:-2)
-        
-        blank!.zPosition = 0.0
-        white!.zPosition = 0.2
-        outline!.zPosition = 0.4
-        shadow!.zPosition = 0.1
-        outlineShadow!.zPosition = 0.3
-        
-        
-        
-        self.addChild(blank!)
-        self.addChild(white!)
-        self.addChild(outline!)
-        self.addChild(shadow!)
-        self.addChild(outlineShadow!)
         self.name = card.whiteImageName
     }
     
