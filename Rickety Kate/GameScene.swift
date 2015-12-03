@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import ReactiveCocoa
 
 public protocol HasDiscardArea : class
 {
@@ -26,8 +27,8 @@ extension HasDiscardArea
     {
         discardPile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
         discardWhitePile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
-        discardPile.isDiscard = true
-        discardWhitePile.isDiscard = true
+//        discardPile.isDiscard = true
+//        discardWhitePile.isDiscard = true
         discardWhitePile.isBackground = true
         discardWhitePile.speed = 0.1
     }
@@ -175,21 +176,18 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         for player in table.players
         {
             player._hand.update()
-            
         }
     }
 
     
     func StatusAreaFirstMessage()
     {
-
         if arePassingCards
         {
             Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
         }
         else
         {
-            
             Bus.sharedInstance.send(GameEvent.NewGame)
         }
     }
@@ -208,6 +206,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     func setupNewGameArrangement()
     {
         Bus.sharedInstance.gameSignal
+            .observeOn(UIScheduler())
             .filter { $0 == GameEvent.NewHand }
             .observeNext { [unowned self] _ in
    
@@ -227,6 +226,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
              self.startHand()
         }
         Bus.sharedInstance.gameSignal
+            .observeOn(UIScheduler())
             .filter { $0 == GameEvent.YourTurn }
             .observeNext { [unowned self] _ in
                 

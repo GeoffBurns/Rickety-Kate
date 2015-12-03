@@ -38,4 +38,15 @@ extension SKNode {
             handler()
         })])))
     }
+    
+    func addSafelyTo(newParent:SKNode)
+    {
+     if self.parent == nil
+      {
+      newParent.addChild(self)
+      }
+    }
+    
+    
+    
 }

@@ -89,7 +89,6 @@ class MultiPagePopup : Popup {
     
     func displayButtons()
     {
-     //   moreButton = SKSpriteNode(imageNamed: "More1".symbol)
         moreButton.setScale(ButtonSize.Small.scale)
         moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
         moreButton.position = CGPoint(x:self.size.width,y:0.0)
@@ -99,9 +98,7 @@ class MultiPagePopup : Popup {
         moreButton.zPosition = 100
         moreButton.userInteractionEnabled = false
         
-        self.addChild(moreButton)
-    //
-      //  backButton = SKSpriteNode(imageNamed: "Back".symbol)
+        moreButton.addSafelyTo(self)
         
         backButton.setScale(ButtonSize.Small.scale)
         backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
@@ -109,7 +106,8 @@ class MultiPagePopup : Popup {
         backButton.name = "Back"
         backButton.zPosition = 100
         backButton.userInteractionEnabled = false
-        self.addChild(backButton)
+        
+        backButton.addSafelyTo(self)
         
         exitButton.setScale(ButtonSize.Small.scale)
         exitButton.anchorPoint = CGPoint(x: 1.0, y: 1.0)
@@ -120,8 +118,12 @@ class MultiPagePopup : Popup {
         exitButton.zPosition = 100
         exitButton.userInteractionEnabled = false
         
-        self.addChild(exitButton)
        
+        exitButton.addSafelyTo(self)
+        
+        
+        if tabButtons.count == 0
+        {
         for (i,tabName) in tabNames.enumerate()
         {
             let imageName = tabName + (i == tabNo ? "2" : "1")
@@ -137,6 +139,7 @@ class MultiPagePopup : Popup {
             
             tabButtons.append(tabButton)
             self.addChild(tabButton)
+        }
         }
     }
     

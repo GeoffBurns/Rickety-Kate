@@ -148,7 +148,7 @@ class CardSprite : SKSpriteNode
         label!.fontName = "Verdana"
         label!.fontSize = 11
       
-        label!.zPosition =  0.5
+        label!.zPosition =  0.7
         self.addChild(label!)
     
     }
@@ -158,6 +158,16 @@ class CardSprite : SKSpriteNode
         if let letter = self.letterBackground
         {
             letter.color = UIColor.redColor()
+            letter.colorBlendFactor = 0.2
+        }
+        self.colorBlendFactor = 0.2
+    }
+    func tintGreen()
+    {
+        self.color = UIColor.greenColor()
+        if let letter = self.letterBackground
+        {
+            letter.color = UIColor.greenColor()
             letter.colorBlendFactor = 0.2
         }
         self.colorBlendFactor = 0.2
@@ -172,68 +182,99 @@ class CardSprite : SKSpriteNode
         }
         self.colorBlendFactor = 0.0
     }
-    func addNumber()
+
+    var rankOfCourtCard : Int
     {
-        if letterBackground != nil { return }
-        
         switch card.value
         {
         case .CourtCard :
             if let deck = GameSettings.sharedInstance.deck
             {
-            let local = deck.rankFor(card)
-            if local == 0 { return }
-            let color = card.suite.color
-            localLabel = SKSpriteNode(imageNamed:"Number" + local.description)
-            
-            localLabel!.color = color
-            localLabel!.colorBlendFactor = 1.0
-            
-            localLabel!.position = CGPointZero
-            
-            localLabel!.zPosition =  0.1
-            letterBackground = SKSpriteNode(imageNamed:"letter")
-            letterBackground!.zPosition =  0.1
-            letterBackground!.anchorPoint=CGPoint(x: 0.5,y: 0.5)
-            
-            letterBackground!.position = CGPoint(x: -self.size.width*0.5+letterBackground!.size.width*0.5, y:  self.size.height*0.5-letterBackground!.size.height*0.5)
-            letterBackground!.addChild(localLabel!)
-            addChild(letterBackground!)
+                return deck.rankFor(card)
             }
-        default : return
+            return 0
+        default : return 0
+        }
+    }
+
+    var needsNumber : Bool
+    {
+            return GameSettings.sharedInstance.useNumbersForCourtCards &&
+              rankOfCourtCard >= 8
+    }
+    var hasIndexAlready : Bool
+    {
+        return letterBackground != nil
+    }
+    var foregroundColor : UIColor
+    {
+        return card.suite.color
+    }
+    var backgroundColor : UIColor
+    {
+            return UIColor.whiteColor()
+    }
+    func addNumber()
+    {
+        
+        let local = rankOfCourtCard
+        localLabel = SKSpriteNode(imageNamed:"Number" + local.description)
+        
+        
+        if let letterForeground = localLabel {
+            
+            letterForeground.color = foregroundColor
+            letterForeground.colorBlendFactor = 1.0
+            letterForeground.anchorPoint=CGPoint(x: 0.5,y: 0.5)
+            letterForeground.position = CGPointZero
+            
+            letterForeground.zPosition =  0.1
+            letterBackground = SKSpriteNode(imageNamed:"letter")
+            if let background = letterBackground
+            {
+                background.zPosition =  0.6
+                background.anchorPoint=CGPoint(x: 0.5,y: 0.5)
+      //          background.color = backgroundColor
+      //          background.colorBlendFactor = 1.0
+                
+                background.position = CGPoint(x: -self.size.width*0.5+background.size.width*0.5, y:  self.size.height*0.5-background.size.height*0.5)
+                background.addChild(letterForeground)
+                addChild(background)
+            }
         }
 
+        
         
     }
     func addLocalLetter()
     {
-        if letterBackground != nil { return }
-        
-        if GameSettings.sharedInstance.useNumbersForCourtCards
-        {
-            addNumber()
-            return
-        }
-        
         let local = card.value.localLetter
-        if local == "" { return }
-        let color = card.suite.color
+   
+    
         localLabel = SKSpriteNode(imageNamed:local + "_letter")
  
-        localLabel!.color = color
-        localLabel!.colorBlendFactor = 1.0
+        if let letterForeground = localLabel {
+        
+           letterForeground.color = foregroundColor
+           letterForeground.colorBlendFactor = 1.0
 
-        localLabel!.position = CGPointZero
-        
-        localLabel!.zPosition =  0.1
-        letterBackground = SKSpriteNode(imageNamed:"letter")
-        letterBackground!.zPosition =  0.1
-        letterBackground!.anchorPoint=CGPoint(x: 0.5,y: 0.5)
-        
-        letterBackground!.position = CGPoint(x: -self.size.width*0.5+letterBackground!.size.width*0.5, y:  self.size.height*0.5-letterBackground!.size.height*0.5)
-        letterBackground!.addChild(localLabel!)
-        addChild(letterBackground!)
-       
+           letterForeground.position = CGPointZero
+            
+           letterForeground.anchorPoint=CGPoint(x: 0.5,y: 0.5)
+           letterForeground.zPosition =  0.1
+           letterBackground = SKSpriteNode(imageNamed:"letter")
+           if let background = letterBackground
+            {
+            background.zPosition =  0.6
+            background.anchorPoint=CGPoint(x: 0.5,y: 0.5)
+           // background.color = backgroundColor
+          //  background.colorBlendFactor = 1.0
+
+            background.position = CGPoint(x: -self.size.width*0.5+background.size.width*0.5, y:  self.size.height*0.5-background.size.height*0.5)
+            background.addChild(letterForeground)
+            addChild(background)
+            }
+        }
     }
     /// the user has just started dragging the sprite
     func liftUp(positionInScene:CGPoint)
@@ -309,19 +350,24 @@ class CardSprite : SKSpriteNode
    
     }
     
-    func needsLocalization() -> Bool
+    var needsLocalization : Bool
     {
         return card.value.localLetter != ""
     }
     func addLocalization()
     {
-        if !needsLocalization() { return }
+    if hasIndexAlready || (!needsLocalization && !needsNumber)  { return }
     let rotate = self.zRotation
         let xScale = self.xScale
         let yScale = self.yScale
     self.setScale(1.0)
     self.zRotation = 0
-    self.addLocalLetter()
+        
+        if needsNumber {
+            addNumber()
+        } else if needsLocalization {
+            self.addLocalLetter()
+        }
     self.zRotation = rotate
     self.setScale(yScale)
     self.xScale = xScale
@@ -387,12 +433,21 @@ class WhiteCardSprite : CardSprite
     var blank : SKSpriteNode? = nil
     var outline : SKSpriteNode? = nil
     var outlineShadow : SKSpriteNode? = nil
+    
+    override var foregroundColor : UIColor
+    {
+            return  UIColor.whiteColor()
+    }
+    override var backgroundColor : UIColor
+    {
+            return GameSettings.backgroundColor
+    }
+    
     private init(card:PlayingCard)
     {
         super.init(card:card, texture: SKTexture(imageNamed: "blank"))
         
         white = SKSpriteNode(imageNamed: card.whiteImageName)
-        
         blank = SKSpriteNode(imageNamed:  "blank")
         outline = SKSpriteNode(imageNamed:  "outline")
         shadow = SKSpriteNode(imageNamed:  card.whiteImageName)
@@ -409,12 +464,11 @@ class WhiteCardSprite : CardSprite
         shadow!.position = CGPoint(x:2,y:-2)
         outlineShadow!.position = CGPoint(x:2,y:-2)
         
- 
         blank!.zPosition = 0
-        white!.zPosition = 0.5
-        outline!.zPosition = 0.7
-        shadow!.zPosition = 0.4
-        outlineShadow!.zPosition = 0.6
+        white!.zPosition = 0.2
+        outline!.zPosition = 0.4
+        shadow!.zPosition = 0.1
+        outlineShadow!.zPosition = 0.3
         
         
         self.addChild(blank!)
@@ -433,6 +487,8 @@ class WhiteCardSprite : CardSprite
     static func createWhite(card:PlayingCard, scene:SKNode) -> CardSprite
     {
         let sprite = WhiteCardSprite(card: card)
+        
+        sprite.addLocalization()
         scene.addChild(sprite)
         self.currentScene = scene
         return sprite

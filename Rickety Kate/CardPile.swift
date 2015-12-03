@@ -17,7 +17,6 @@ public class CardPile
     static let defaultSpread = CGFloat(10)
     var cards = [PlayingCard]() { didSet { update() } }
     var isUp = false
-    var isDiscard = false
     var sizeOfCards = CardSize.Small
     weak var scene : SKNode? = nil
     weak var discardAreas : HasDiscardArea? = nil
@@ -28,7 +27,7 @@ public class CardPile
     var isFanClosed = false
     var isFanOpen :Bool { return !isFanClosed }
     var isBackground : Bool = false
-        { didSet {  createSprite = isBackground ? { $1.whiteCardSprite($0) } : { $1.cardSprite($0) }} }
+        { didSet {  createSprite = isBackground ? { $1.whiteCardSprite($0) } : { $1.cardSprite($0,isUp: self.isUp) }} }
     var name = ""
     var createSprite : CreateSprite = { $1.cardSprite($0) }
     var position = CGPointZero
@@ -55,13 +54,11 @@ public class CardPile
     
     func transferFrom(pile:CardPile)
     {
-       // if !isDiscard { pile.discardAll() }
         appendContentsOf(pile.cards)
         pile.clear()
     }
     func replaceFrom(pile:CardPile)
     {
-      //  if !isDiscard { pile.discardAll() }
         replaceWithContentsOf(pile.cards)
         pile.clear()
     }
@@ -143,15 +140,14 @@ public class CardPile
         if let cardScene = scene,
                sprite = createSprite(card,cardScene)
         {
+            sprite.removeLabel()
             if sprite.fan !== self { sprite.fan = self }
             
             if (sprite.state != CardState.AtRest)
             {
                 sprite.zPosition = 140
                 sprite.state = CardState.AtRest
-                sprite.removeAllChildren()
             }
-            
             
             // Stop all running animations before starting new ones
             sprite.removeAllActions()
@@ -161,12 +157,12 @@ public class CardPile
             let newScale =  sizeOfCards.scale
             
             let newHeight = newScale * sprite.size.height / sprite.yScale
-            
+
             sprite.removeTint()
-            
+
             
             var flipAction = (SKAction.scaleTo(sizeOfCards.scale, duration: speed))
-            
+         
             let rotationAngle = rotationOfCard(positionInSpread, fullHand:fullHand)
             let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(speed*0.8)))
             let newPosition =  sprite.rotateAboutPoint(
@@ -187,9 +183,9 @@ public class CardPile
                     SKAction.scaleXTo(0.0, duration: speed*0.5),
                     SKAction.runBlock({ [unowned sprite] in
                         sprite.flipUp()
-                        }) ,
+                    }) ,
                     SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.4)
-                    
+                
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
@@ -199,9 +195,9 @@ public class CardPile
                 flipAction = (SKAction.sequence([
                     SKAction.scaleXTo(0.0, duration: speed*0.5),
                     SKAction.runBlock({ [unowned sprite] in
-           
+              
                         sprite.flipDown()
-                        }) ,
+                    }) ,
                     SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.4)
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
@@ -209,11 +205,11 @@ public class CardPile
             
             sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({ [unowned sprite, unowned self] in
                 sprite.zPosition = self.zPositon + positionInSpread
-                
-                
-                }) ]))
-            
-            
+    
+    
+            }) ]))
+          
+         
         }
     }
     func rearrangeCardsAtRest()
@@ -242,8 +238,6 @@ public class CardPile
             {
                 rearrangeFor(card,positionInSpread:CGFloat(positionInSpread)+positionStart, fullHand:fullHand)
             }
-        
-            
         }
     }
 
