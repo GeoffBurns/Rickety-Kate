@@ -214,6 +214,8 @@ class CardSprite : SKSpriteNode
     {
             return UIColor.whiteColor()
     }
+    var indexMaskingImageName : String { return "letter" }
+    
     func addNumber()
     {
         
@@ -229,10 +231,10 @@ class CardSprite : SKSpriteNode
             letterForeground.position = CGPointZero
             
             letterForeground.zPosition =  0.1
-            letterBackground = SKSpriteNode(imageNamed:"letter")
+            letterBackground = SKSpriteNode(imageNamed:indexMaskingImageName)
             if let background = letterBackground
             {
-                background.zPosition =  0.6
+                background.zPosition =  0.8
                 background.anchorPoint=CGPoint(x: 0.5,y: 0.5)
       //          background.color = backgroundColor
       //          background.colorBlendFactor = 1.0
@@ -262,13 +264,12 @@ class CardSprite : SKSpriteNode
             
            letterForeground.anchorPoint=CGPoint(x: 0.5,y: 0.5)
            letterForeground.zPosition =  0.1
-           letterBackground = SKSpriteNode(imageNamed:"letter")
+           letterBackground = SKSpriteNode(imageNamed:indexMaskingImageName)
            if let background = letterBackground
             {
-            background.zPosition =  0.6
+            background.zPosition =  0.8
             background.anchorPoint=CGPoint(x: 0.5,y: 0.5)
-           // background.color = backgroundColor
-          //  background.colorBlendFactor = 1.0
+       
 
             background.position = CGPoint(x: -self.size.width*0.5+background.size.width*0.5, y:  self.size.height*0.5-background.size.height*0.5)
             background.addChild(letterForeground)
@@ -413,21 +414,6 @@ class CardSprite : SKSpriteNode
 class WhiteCardSprite : CardSprite
 {
     
-    override var  anchorPoint : CGPoint { didSet { if let w = white, b = blank, o = outline, s = shadow, os = outlineShadow {
-        w.anchorPoint = self.anchorPoint
-        b.anchorPoint = self.anchorPoint
-        o.anchorPoint = self.anchorPoint
-        s.anchorPoint = self.anchorPoint
-        os.anchorPoint = self.anchorPoint
-        } } }
-    override var  zPosition : CGFloat { didSet { if let w = white, b = blank, o = outline, s = shadow, os = outlineShadow {
-        w.zPosition = self.zPosition + 0.5
-        b.zPosition = self.zPosition
-        o.zPosition = self.zPosition  + 0.7
-        s.zPosition = self.zPosition  + 0.4
-        os.zPosition = self.zPosition  + 0.6
-        } } }
-    
     var white : SKSpriteNode? = nil
     var shadow : SKSpriteNode? = nil
     var blank : SKSpriteNode? = nil
@@ -443,6 +429,7 @@ class WhiteCardSprite : CardSprite
             return GameSettings.backgroundColor
     }
     
+    override var indexMaskingImageName : String { return "letterwhite" }
     private init(card:PlayingCard)
     {
         super.init(card:card, texture: SKTexture(imageNamed: "blank"))
@@ -464,11 +451,12 @@ class WhiteCardSprite : CardSprite
         shadow!.position = CGPoint(x:2,y:-2)
         outlineShadow!.position = CGPoint(x:2,y:-2)
         
-        blank!.zPosition = 0
+        blank!.zPosition = 0.0
         white!.zPosition = 0.2
         outline!.zPosition = 0.4
         shadow!.zPosition = 0.1
         outlineShadow!.zPosition = 0.3
+        
         
         
         self.addChild(blank!)
