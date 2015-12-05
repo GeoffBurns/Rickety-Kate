@@ -104,7 +104,7 @@ public class RicketyKateCardTable : CardTable, GameState
             
             displayedCard.player=player
             let playedCard = displayedCard.card
-            tricksPile.append(player:player,playedCard:playedCard)
+            tricksPile.append(TrickPlay(player:player,playedCard:playedCard))
             
         }
     }
@@ -241,7 +241,6 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
     
     func playTrick(playerWithTurn: CardPlayer)
     {
-       
         if let computerPlayer = playerWithTurn as? ComputerPlayer
         {
             if let card = computerPlayer.playCard( self)
@@ -255,7 +254,6 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
         }
         else
         {
-     
             self.bus.send(GameEvent.YourTurn)
         }
         
@@ -265,16 +263,9 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
    
     func playerThatWon() -> CardPlayer?
     {
-        if let trick = self.tricksPile.first
+        if let winningPlay = self.tricksPile.winningPlay
         {
-            let leadingSuite = trick.playedCard.suite
-            let followingTricks = self.tricksPile.filter { $0.playedCard.suite == leadingSuite }
-            
-            let orderedTricks = followingTricks.sort({ $0.playedCard.value > $1.playedCard.value })
-            if let highest = orderedTricks.first
-            {
-                return highest.player
-            }
+           return winningPlay.player
         }
         return nil
     }

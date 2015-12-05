@@ -232,7 +232,8 @@ public class PerfectKnowledgeStrategy : TrickPlayingStrategy
         let orderedCards = cardsInSuite.sort({$0.value > $1.value})
         
         // if you are not going to win a bad score go high
-        if gameState.scoreOfPile > 0
+        let score = gameState.scoreOfPile
+        if score <= 0
         {
             return orderedCards.first
         }

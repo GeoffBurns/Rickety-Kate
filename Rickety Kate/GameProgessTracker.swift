@@ -28,7 +28,7 @@ public class GameProgressTracker
         trumpsHaveBeenBroken = false
     }
     
-    func trackNotFollowingBehaviourForAIStrategy(first:(player:CardPlayer, playedCard:PlayingCard)?,player: CardPlayer, suite: PlayingCard.Suite )
+    func trackNotFollowingBehaviourForAIStrategy(first:TrickPlay?,player: CardPlayer, suite: PlayingCard.Suite )
     {
         if let firstcard = first //tricksPile.first
         {
@@ -40,7 +40,7 @@ public class GameProgressTracker
         }
     }
     
-    func trackProgress(first:(player:CardPlayer, playedCard:PlayingCard)?,player:CardPlayer, playedCard:PlayingCard)
+    func trackProgress(first:TrickPlay?,player:CardPlayer, playedCard:PlayingCard)
     {
         
         if playedCard.suite == GameSettings.sharedInstance.rules.trumpSuite

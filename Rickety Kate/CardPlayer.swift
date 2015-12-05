@@ -181,19 +181,14 @@ public class ComputerPlayer :CardPlayer
 
 public class FakeCardHolder : CardHolderBase
 {
-    let cardSource = CardSource.sharedInstance
+
     
     //////////
     // internal functions
     //////////
     public func addCardsToHand(cardCodes:[String])
     {
-        for code in cardCodes
-        {
-            let card : PlayingCard = cardSource[code]
-            
-            hand.append(card)
-        }
+        hand.appendContentsOf(cardCodes.map { $0.card } )
     }
     
     public init() {

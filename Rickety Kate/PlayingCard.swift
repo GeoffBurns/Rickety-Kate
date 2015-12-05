@@ -559,7 +559,45 @@ public struct PlayingCard : Equatable, Comparable, Hashable
  
 }
 
-
+extension String {
+    var suite : PlayingCard.Suite
+        {
+          switch(self)
+                    {
+                    case "S" : return .Spades
+                    case "H" : return .Hearts
+                    case "C" : return .Clubs
+                    case "D" : return .Diamonds
+                    case "U" : return .Suns
+                    case "A" : return .Anchors
+                    case "R" : return .Stars
+                    case "P" : return .Picks
+                    case "T" : return .Trumps
+                    case "J" : return .Jokers
+                    default : return .None
+                    }
+       
+    }
+    var cardvalue : PlayingCard.CardValue
+        {
+        
+        if self=="A" {
+            return PlayingCard.CardValue.Ace
+        } else if let num = Int(self) {
+            return PlayingCard.CardValue.Pip(num)
+        } else {
+            return PlayingCard.CardValue.CourtCard(self)
+        }
+    }
+    var card : PlayingCard
+    {
+     let index = self.endIndex.advancedBy(-1)
+     let v = self.substringToIndex(index)
+     let s = self.substringFromIndex(index)
+     return PlayingCard(suite: s.suite, value: v.cardvalue)
+    }
+}
+    
 extension Int
 {
     public func of(suite :PlayingCard.Suite) -> PlayingCard

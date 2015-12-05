@@ -32,10 +32,73 @@ public protocol GameState
    
 }
 
+public struct TrickPlay : Equatable, Comparable
+{
+    var player:CardPlayer
+    var playedCard:PlayingCard
+}
+public func ==(lhs: TrickPlay, rhs: TrickPlay) -> Bool
+{
+    return lhs.playedCard == rhs.playedCard
+}
+public func <=(lhs: TrickPlay, rhs: TrickPlay) -> Bool
+{
+  return lhs.playedCard <= rhs.playedCard
+}
+public func >=(lhs: TrickPlay, rhs: TrickPlay) -> Bool
+{
+    return lhs.playedCard >= rhs.playedCard
+}
+public func >(lhs: TrickPlay, rhs: TrickPlay) -> Bool
+{
+    return lhs.playedCard > rhs.playedCard
+}
+public func <(lhs: TrickPlay, rhs: TrickPlay) -> Bool
+{
+    return lhs.playedCard < rhs.playedCard
+}
+
+extension SequenceType where Generator.Element == TrickPlay {
+    
+    
+    var playsFollowingSuite : [TrickPlay]
+        {
+            if let first = self.head
+            {
+                let leadingSuite = first.playedCard.suite
+                return self.filter { $0.playedCard.suite == leadingSuite }
+                
+            }
+            return []
+    }
+    
+    var winningPlay : TrickPlay?
+        {
+        let followingTricks = playsFollowingSuite
+        let orderedTricks = followingTricks.sort({ $0.playedCard.value > $1.playedCard.value })
+        if let highest = orderedTricks.first
+            {
+                return highest
+            }
+        return nil
+        }
+    
+    public var score : Int {
+        return self.map { $0.playedCard }.score
+    }
+}
+
+extension SequenceType where Generator.Element == PlayingCard {
+    public var score : Int {
+        return self.reduce(0) { $0 + ( GameSettings.sharedInstance.rules.cardScores[$1] ?? 0) }
+    }
+}
+
+
 public class GameStateBase
 {
     var trickFan = CardFan(name: CardPileType.Trick.description)
-    var tricksPile = [(player:CardPlayer, playedCard:PlayingCard)]() { didSet { trickFan.cards = tricksPile.map { return $0.playedCard }}}
+    var tricksPile = [TrickPlay]() { didSet { trickFan.cards = tricksPile.map { return $0.playedCard }}}
     var gameTracker = GameProgressTracker()
     
     public var playedCardsInTrick : Int {
@@ -64,17 +127,12 @@ public class GameStateBase
     }
     
     public var cardsFollowingSuite : [PlayingCard] {
-        if  let suite = leadingSuite
-        {
-            return tricksPile
-                .filter { $0.playedCard.suite == suite }
-                .map {$0.playedCard}
-        }
-        return []
+ 
+        return tricksPile.playsFollowingSuite.map {$0.playedCard}
     }
     
     public var scoreOfPile : Int {
-        return tricksPile.reduce(0) { $0 + ( GameSettings.sharedInstance.rules.cardScores[$1.playedCard] ?? 0) }
+        return tricksPile.score
     }
     
     public func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
@@ -108,7 +166,6 @@ public class GameStateBase
 // Used for testing
 public class FakeGameState : GameStateBase, GameState
 {
-    let cardSource = CardSource.sharedInstance
 
     //////////
     // GameState Protocol
@@ -135,15 +192,14 @@ public var isLastPlayer : Bool {
     //////////
     // internal functions
     //////////
+    
+
     public func addCardsToTrickPile(cardCodes:[String])
     {
-        for code in cardCodes
-        {
-            let playedCard : PlayingCard = cardSource[code]
-            let player : CardPlayer =  HumanPlayer.sharedInstance
-            tricksPile.append(player:player,playedCard:playedCard)
-            
-        }
+     
+        let player : CardPlayer =  HumanPlayer.sharedInstance
+        tricksPile.appendContentsOf(cardCodes.map { TrickPlay(player:player,playedCard:$0.card) })
+     
     }
     public func addNotFollowed(suite:PlayingCard.Suite)
     {
