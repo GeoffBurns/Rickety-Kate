@@ -46,7 +46,7 @@ public class ParameterizedString
         }
     }
     
-    public func sayTo(name:String) -> ParameterizedString
+    public func sayTo(name:String) -> ParameterizedAlert
     {
         if name.isYou {
             return self.sayToYou
@@ -54,7 +54,7 @@ public class ParameterizedString
             var newArgs = arguements
       
             newArgs.append(name)
-            return ParameterizedString(format: format,arguements: newArgs)
+            return ParameterizedAlert(format: format,arguements: newArgs)
         }
 
     }
@@ -180,17 +180,14 @@ extension String
         return String(format: self.localize, arguments: arguements)
     }
 
-    public func sayCongratsTo(arguements:CVarArgType...) -> String
+    public func sayCongratsTo(name:String) -> String
     {
-        if let name = arguements.first as? String
-            where name.isYou
-        {
-            return "Congratulatons".localize + self.sayToYou(name,arguements: arguements)
-        }
-        return "Wow".localize + String(format: self.localize, arguments: arguements)
+        
+        return self.with.sayTo(name).congrats.localize
+       
     }
     
-    var localize : String
+    public var localize : String
     {
             return NSLocalizedString(self.underscore, comment: self)
     }
