@@ -25,7 +25,6 @@ public protocol IAwarder
     var hooligan : PlayingCard? { get }
     var backgroundCards : [PlayingCard] { get }
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
-    
 }
 
 class AwarderBase
@@ -62,6 +61,7 @@ class AwarderBase
         self.gameSettings = gameSettings
       
     }
+  
     // overriden in derived class
     func countTrumps(cards: [PlayingCard]) -> Int
     {

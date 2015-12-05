@@ -193,12 +193,16 @@ public var isLastPlayer : Bool {
     // internal functions
     //////////
     
-
+    public func createTrickPile(cardCodes:[String]) -> [TrickPlay]
+    {
+        
+        let player : CardPlayer =  HumanPlayer.sharedInstance
+        return cardCodes.map { TrickPlay(player:player,playedCard:$0.card) }
+        
+    }
     public func addCardsToTrickPile(cardCodes:[String])
     {
-     
-        let player : CardPlayer =  HumanPlayer.sharedInstance
-        tricksPile.appendContentsOf(cardCodes.map { TrickPlay(player:player,playedCard:$0.card) })
+        tricksPile.appendContentsOf(createTrickPile(cardCodes))
      
     }
     public func addNotFollowed(suite:PlayingCard.Suite)

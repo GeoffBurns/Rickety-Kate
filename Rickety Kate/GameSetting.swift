@@ -450,8 +450,8 @@ public class FakeGameSettings : IGameSettings
     public var hasTrumps = false
     public var hasJokers = false
     public var allowBreakingTrumps = true
-    public var includeHooligan  = false
-    public var includeOmnibus  = false
+    public var includeHooligan  = false { didSet { update() }}
+    public var includeOmnibus  = false { didSet { update() }}
     public var useNumbersForCourtCards  = false
     public var speedOfToss = 3
     public var willPassCards = false
@@ -464,12 +464,8 @@ public class FakeGameSettings : IGameSettings
     public var gameType = "Spades"
 
     var awarder : IAwarder? = nil
-    public var rules : IAwarder {
-        if awarder == nil{
-           awarder = SpadesAwarder(gameSettings: self)
-        }
-        return awarder!
-    }
+    public lazy var rules : IAwarder  = SpadesAwarder(gameSettings: self)
+    
     public var tossDuration : NSTimeInterval = 0.4
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)
     {
@@ -479,6 +475,10 @@ public class FakeGameSettings : IGameSettings
         self.hasTrumps = hasTrumps
         self.hasJokers = hasJokers
         deck  = PlayingCard.BuiltCardDeck(gameSettings: self)
+    }
+    public func update()
+    {
+        rules  = SpadesAwarder(gameSettings: self)
     }
     public func random() {}
     public func changeSettings(

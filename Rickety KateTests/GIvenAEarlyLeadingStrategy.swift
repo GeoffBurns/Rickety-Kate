@@ -12,7 +12,6 @@ import Rickety_Kate
 
 class GivenAEarlyLeadingStrategy: XCTestCase {
     var player = FakeCardHolder()
-    var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance;
     var gameState = FakeGameState(noPlayers: 4)
     var strategy = EarlyGameLeadingStrategy(margin:4)
     
