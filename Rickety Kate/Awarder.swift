@@ -127,6 +127,8 @@ class AwarderBase
 /// Used by the Scorer
 class SpadesAwarder : AwarderBase, IAwarder
 {
+    var shortDescription = "Spade"
+    
     var backgroundCards : [PlayingCard] {
     let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
         .filter { $0.suite == trumpSuite }
@@ -172,7 +174,7 @@ class SpadesAwarder : AwarderBase, IAwarder
 class HeartsAwarder : AwarderBase, IAwarder
 {
     var description = "Rickety Kate (Hearts Variant) is a trick taking card game.".localizeAs("Rickety_Kate_Hearts")
-
+    var shortDescription = "Heart"
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
         var result =  Dictionary<PlayingCard,Int>()
@@ -219,7 +221,8 @@ class JacksAwarder : AwarderBase, IAwarder
 {
     var description = "Rickety Kate (Jacks Variant) is a trick taking card game".localizeAs("Rickety_Kate_Jacks")
     override var omnibus_ : PlayingCard { return CardName.Queen.of(PlayingCard.Suite.Diamonds)! }
-
+    var shortDescription = "Jack"
+    
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
         var result =  Dictionary<PlayingCard,Int>()

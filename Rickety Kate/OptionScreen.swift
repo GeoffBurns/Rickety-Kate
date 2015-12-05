@@ -38,11 +38,9 @@ class OptionScreen: MultiPagePopup {
     var optionSettings = [SKNode]()
     let isBigDevice = GameSettings.isBigDevice
     var noOfItemsOnPage : Int { return isBigDevice ? 5 : 3 }
-    var separationOfItems :  Float { return isBigDevice ? 0.15 : 0.2 }
-    var startHeight :  Float { return isBigDevice ? 0.77 : 0.7 }
+    var separationOfItems :  CGFloat { return isBigDevice ? 0.15 : 0.2 }
+    var startHeight :  CGFloat { return isBigDevice ? 0.77 : 0.7 }
 
-    
-    var noOfSettings : Int { return GameSettings.isBigDevice ? 5 : 3 }
 
     
     override func onEnter() {
@@ -114,21 +112,21 @@ class OptionScreen: MultiPagePopup {
         
         newPage()
     }
+    
     override func noPageFor(tab:Int) -> Int
     {
-        return optionSettings.count / noOfSettings + (optionSettings.count % noOfSettings == 0 ? 0 : 1)
+        return optionSettings.numOfPagesOf(noOfItemsOnPage)
     }
+    
     
     override func newPage()
     {
         
-        let settingStart = noOfSettings*self.pageNo
+        let settingStart = noOfItemsOnPage*self.pageNo
         let optionSettingsDisplayed = optionSettings
-            .from(settingStart, forLength: noOfSettings)
+            .from(settingStart, forLength: noOfItemsOnPage)
       
-        
-        let startpos : CGFloat = GameSettings.isBigDevice ? 0.77 : 0.7
-        let seperation : CGFloat =  GameSettings.isBigDevice ? 0.15 : 0.2
+
         
         let scene = gameScene!
         let midWidth = CGRectGetMidX(gameScene!.frame)
@@ -144,7 +142,7 @@ class OptionScreen: MultiPagePopup {
         for (i, optionSetting) in optionSettingsDisplayed.enumerate()
         {
             optionSetting.name = "Setting" + (i + 1).description
-            optionSetting.position = CGPoint(x:midWidth,y:scene.frame.height * (startpos - seperation * CGFloat(i)))
+            optionSetting.position = CGPoint(x:midWidth,y:scene.frame.height * (startHeight - separationOfItems * CGFloat(i)))
             self.addChild(optionSetting)
         }
     }

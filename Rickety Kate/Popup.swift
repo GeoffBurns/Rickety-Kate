@@ -123,9 +123,9 @@ class MultiPagePopup : Popup {
         
         
         if tabButtons.count == 0
-        {
-        for (i,tabName) in tabNames.enumerate()
-        {
+         {
+          for (i,tabName) in tabNames.enumerate()
+           {
             let imageName = tabName + (i == tabNo ? "2" : "1")
             let tabButton = SKSpriteNode(imageNamed: imageName.symbol)
             tabButton.setScale(ButtonSize.Small.scale)
@@ -139,8 +139,8 @@ class MultiPagePopup : Popup {
             
             tabButtons.append(tabButton)
             self.addChild(tabButton)
-        }
-        }
+           }
+         }
     }
     
     // overriden in derived class

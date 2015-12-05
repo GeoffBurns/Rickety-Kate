@@ -37,5 +37,21 @@ public extension SequenceType {
         
         return result
     }
+    
+    public var tail : [Generator.Element] {
+        
+        var result : [Generator.Element]
+        result = []
+        result.reserveCapacity(self.underestimateCount())
+        
+        var g = generate()
+      
+        if let _ = g.next() { /* skip */ } else { return [] }
+      
+        repeat {
+            if let e = g.next() { result.append(e) } else { return result }
+        } while true
+        
+    }
 
 }

@@ -33,9 +33,7 @@ public enum GameEvent : Equatable
             switch self
             {
             case WinTrick( let name ) :
-                return name.isYou
-                    ? "You just Won the Trick".localize
-                    : "_ just Won the Trick".localizeWith(name)
+                return  "_ just Won the Trick".sayTo(name)
             case PlayerKnocked( let player ) :
                 return player.isYou
                     ? "You can not Play You have to Knock".localize
@@ -45,13 +43,9 @@ public enum GameEvent : Equatable
             case SuiteFinished(let suite) :
                 return suite.description + " " + "Finished".localize
             case ShotTheMoon( let name ) :
-                return name.isYou
-                    ? congrats + "You just Shot the Moon".localize
-                    : wow + name + " " + "just Shot the Moon".localize
+                return "_ just Shot the Moon".sayCongratsTo(name)
             case WinGame( let name ) :
-                return name.isYou
-                    ? congrats + "You just Won the Game".localize
-                    : wow + name + " " + "just Won the Game".localize
+                return "_ just Won the Game".sayCongratsTo(name)
             case WinRicketyKate( let name ) :
                 return name.isYou
                     ? "You were kissed by Rickety Kate Poor you".localize
@@ -62,9 +56,7 @@ public enum GameEvent : Equatable
                     ? "You were bashed by the Hooligan Poor you".localize
                     : "_ was bashed by the Hooligan Poor _".localizeWith(name,name)
             case WinOmnibus( let name ) :
-                return name.isYou
-                    ? congrats + "You just Caught the Bus".localize
-                    : wow + name + " " + "just Caught the Bus".localize
+                return "_ just Caught the Bus".sayCongratsTo(name)
             case WinSpades( let name, let noOfSpades ) :
                 var start = ""
                 if name.isYou

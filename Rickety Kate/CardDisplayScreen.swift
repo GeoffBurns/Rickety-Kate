@@ -118,7 +118,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     
     override func noPageFor(tab:Int) -> Int
     {
-        var itemcount = 1
         switch tab
         {
         case 0 :
@@ -128,15 +127,14 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
             }
              return 1
         case 1 :
-           itemcount = GameSettings.sharedInstance.deck!.suitesInDeck.count
+           return GameSettings.sharedInstance.deck!.suitesInDeck.numOfPagesOf(noOfSlides)
         case 2 :
-            itemcount = self.orderedGroups.count
+           return self.orderedGroups.numOfPagesOf(noOfSlides)
          
         default :
             return 1
         }
         
-        return (itemcount / noOfSlides) + (itemcount % noOfSlides == 0 ? 0 : 1)
     }
     func displayCardsInDeck()
     {

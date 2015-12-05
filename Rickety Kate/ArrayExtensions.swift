@@ -11,6 +11,12 @@ import Foundation
 import GameplayKit
 
 extension Array {
+    
+    func numOfPagesOf(noOfItemsOnPage:Int) -> Int
+    {
+        return self.count / noOfItemsOnPage + (self.count % noOfItemsOnPage == 0 ? 0 : 1)
+        
+    }
     var randomItem: Element? {
   
         switch self.count
