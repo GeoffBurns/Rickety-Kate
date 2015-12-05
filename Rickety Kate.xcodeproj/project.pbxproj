@@ -53,6 +53,7 @@
 		AC7C9FCC1BB3850A0086AC02 /* CardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FCB1BB3850A0086AC02 /* CardState.swift */; };
 		AC7C9FCE1BB385CA0086AC02 /* Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FCD1BB385CA0086AC02 /* Popup.swift */; };
 		AC7C9FD01BB3886D0086AC02 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FCF1BB3886D0086AC02 /* Direction.swift */; };
+		AC8F592F1C12BA7A0067C02A /* GivenAString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F592E1C12BA7A0067C02A /* GivenAString.swift */; };
 		AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */; };
 		AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BD1BA686C40064870C /* CardPlayer.swift */; };
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
@@ -160,6 +161,7 @@
 		AC7C9FCB1BB3850A0086AC02 /* CardState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardState.swift; sourceTree = "<group>"; };
 		AC7C9FCD1BB385CA0086AC02 /* Popup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Popup.swift; sourceTree = "<group>"; };
 		AC7C9FCF1BB3886D0086AC02 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
+		AC8F592E1C12BA7A0067C02A /* GivenAString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAString.swift; sourceTree = "<group>"; };
 		AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgessTracker.swift; sourceTree = "<group>"; };
 		AC9E82BD1BA686C40064870C /* CardPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPlayer.swift; sourceTree = "<group>"; };
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 				ACE6DFC01BAA4217005B5424 /* GivenALateLeadingStrategy.swift */,
 				ACE6DFC21BAA4483005B5424 /* GivenAEarlyFollowingStrategy.swift */,
 				ACE6DFC41BAA46F4005B5424 /* GivenALateGameFollowingStrategy.swift */,
+				AC8F592E1C12BA7A0067C02A /* GivenAString.swift */,
 			);
 			path = "Rickety KateTests";
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				AC627E8F1BA30D80003E9A8F /* GivenTwoCards.swift in Sources */,
 				ACE6DFC11BAA4217005B5424 /* GivenALateLeadingStrategy.swift in Sources */,
 				AC627E8D1BA30840003E9A8F /* GivenACardTable.swift in Sources */,
+				AC8F592F1C12BA7A0067C02A /* GivenAString.swift in Sources */,
 				AC627E891BA30766003E9A8F /* GivenADeck.swift in Sources */,
 				ACE6DFC31BAA4483005B5424 /* GivenAEarlyFollowingStrategy.swift in Sources */,
 				AC627E8B1BA30807003E9A8F /* GivenAPlayer.swift in Sources */,

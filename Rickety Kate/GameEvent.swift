@@ -47,30 +47,20 @@ public enum GameEvent : Equatable
             case WinGame( let name ) :
                 return "_ just Won the Game".sayCongratsTo(name)
             case WinRicketyKate( let name ) :
-                return name.isYou
-                    ? "You were kissed by Rickety Kate Poor you".localize
-                    : "_ was kissed by Rickety Kate Poor _".localizeWith(name,name)
+                return  "_ was kissed by Rickety Kate Poor _".sayTwiceTo(name)
             
             case WinHooligan( let name ) :
-                return name.isYou
-                    ? "You were bashed by the Hooligan Poor you".localize
-                    : "_ was bashed by the Hooligan Poor _".localizeWith(name,name)
+                return  "_ was bashed by the Hooligan Poor _".sayTwiceTo(name)
             case WinOmnibus( let name ) :
                 return "_ just Caught the Bus".sayCongratsTo(name)
             case WinSpades( let name, let noOfSpades ) :
-                var start = ""
-                if name.isYou
-                {
-                  start = (noOfSpades == 1)
-                        ?  "You won a _".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
-                        :  "You won _ _".localizeWith(noOfSpades,GameSettings.sharedInstance.rules.trumpSuitePlural)
-                }
-                else
-                {
-                    start = (noOfSpades == 1)
-                        ?  "_ won a _".localizeWith(name,GameSettings.sharedInstance.rules.trumpSuiteSingular)
-                        :  "_ won _ _".localizeWith(name,noOfSpades,GameSettings.sharedInstance.rules.trumpSuitePlural)
-                }
+                
+                let start = "_ won * _"
+                    .with
+                    .sayTo(name)
+                    .pluralize(noOfSpades,arguements: GameSettings.sharedInstance.rules.shortDescription)
+                    .localize
+                
                 return  start + "\n" + "Bad Luck".localize + "."
             
             case NewHand :

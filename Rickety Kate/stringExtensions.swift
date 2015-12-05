@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ParameterizedString
+public class ParameterizedString
 {
     let format : String
     let arguements : [CVarArgType]
@@ -33,7 +33,7 @@ class ParameterizedString
         
         return  ParameterizedAlert(format: newFormat,arguements: arguements, isYou: true)
     }
-    func sayTwiceTo(name:String) -> ParameterizedAlert
+    public func sayTwiceTo(name:String) -> ParameterizedAlert
     {
             if name.isYou {
                 return self.sayTwiceToYou
@@ -46,7 +46,7 @@ class ParameterizedString
         }
     }
     
-    func sayTo(name:String) -> ParameterizedString
+    public func sayTo(name:String) -> ParameterizedString
     {
         if name.isYou {
             return self.sayToYou
@@ -58,7 +58,7 @@ class ParameterizedString
         }
 
     }
-    func pluralize(n:Int,arguements : String...) -> ParameterizedString
+    public func pluralize(n:Int,arguements : String...) -> ParameterizedString
     {
         if n==1 {
             
@@ -79,12 +79,12 @@ class ParameterizedString
             return ParameterizedString(format: newFormat,arguements: newArgs)
         }
     }
-    var localize : String
+    public var localize : String
     {
             return String(format: format.localize, arguments: arguements)
     }
 }
-struct WrappedParameterizedString
+public struct WrappedParameterizedString
 {
     var inner : ParameterizedString
     var outer : String
@@ -94,7 +94,7 @@ struct WrappedParameterizedString
     }
 }
 
-class ParameterizedAlert : ParameterizedString
+public class ParameterizedAlert : ParameterizedString
 {
     var isYou :Bool;
     
@@ -104,7 +104,7 @@ class ParameterizedAlert : ParameterizedString
         super.init(format: format,arguements: arguements)
       
     }
-    var congrats : WrappedParameterizedString
+    public var congrats : WrappedParameterizedString
     {
         if isYou
         {
@@ -121,41 +121,41 @@ class ParameterizedAlert : ParameterizedString
 extension String
 {
     
-    var with : ParameterizedString
+    public var with : ParameterizedString
     {
        return ParameterizedString(format: self, arguements: [])
     }
-    func localizeAs(key:String) -> String
+    public func localizeAs(key:String) -> String
     {
         return NSLocalizedString(key.underscore, comment: self)
     }
-    var underscore : String
+    public var underscore : String
         {
             return self.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
     }
-    func localizeWith(arguements:CVarArgType...) -> String
+    public func localizeWith(arguements:CVarArgType...) -> String
     {
         return String(format: self.localize, arguments: arguements)
     }
-    func localizeWith(arguements:[CVarArgType]) -> String
+    public func localizeWith(arguements:[CVarArgType]) -> String
     {
         return String(format: self.localize, arguments: arguements)
     }
-    func sayToYou(name:String, arguements:[CVarArgType]) -> String
+    public func sayToYou(name:String, arguements:[CVarArgType]) -> String
     {
         let index = self.startIndex.advancedBy(1)
         let format = "You" + self.substringFromIndex(index)
         
         return  format.localizeWith(arguements.tail)
     }
-    func sayTwiceToYou(name:String, arguements:[CVarArgType]) -> String
+    public func sayTwiceToYou(name:String, arguements:[CVarArgType]) -> String
     {
         let index = Range<Index>(start:self.startIndex.advancedBy(1), end:self.endIndex.advancedBy(-1))
         let format = "You" + self.substringWithRange(index) + "you"
         
         return  format.localizeWith(arguements.tail)
     }
-    func sayTwiceTo(arguements:CVarArgType...) -> String
+    public func sayTwiceTo(arguements:CVarArgType...) -> String
     {
         if let name = arguements.first as? String
         {
@@ -170,7 +170,7 @@ extension String
         return String(format: self.localize, arguments: arguements)
     }
 
-    func sayTo(arguements:CVarArgType...) -> String
+    public func sayTo(arguements:CVarArgType...) -> String
     {
         if let name = arguements.first as? String
             where name.isYou
@@ -180,7 +180,7 @@ extension String
         return String(format: self.localize, arguments: arguements)
     }
 
-    func sayCongratsTo(arguements:CVarArgType...) -> String
+    public func sayCongratsTo(arguements:CVarArgType...) -> String
     {
         if let name = arguements.first as? String
             where name.isYou

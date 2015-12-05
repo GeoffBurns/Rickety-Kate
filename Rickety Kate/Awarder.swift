@@ -16,7 +16,8 @@ public protocol IAwarder
     var trumpSuite : PlayingCard.Suite { get }
     var trumpSuiteSingular : String { get }
     var trumpSuitePlural : String  { get }
-    var description : String { get }
+    var description : String { get }    
+    var shortDescription : String { get }
     var cardScores : Dictionary<PlayingCard,Int> { get }
     var bonusCards : Set<PlayingCard> { get }
     var penaltyCards : Set<PlayingCard> { get }
