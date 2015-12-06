@@ -329,8 +329,8 @@
 				ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */,
 				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
 				AC5CB4001BFFD554007C5AFD /* stringExtensions.swift */,
-				AC62B6961BA1564800B0EDAE /* Supporting Files */,
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
+				AC62B6961BA1564800B0EDAE /* Supporting Files */,
 			);
 			path = "Rickety Kate";
 			sourceTree = "<group>";
