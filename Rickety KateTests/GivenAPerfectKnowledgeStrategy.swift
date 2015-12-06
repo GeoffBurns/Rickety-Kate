@@ -14,6 +14,7 @@ import Rickety_Kate
 class GivenAPerfectKnowledgeStrategy: XCTestCase {
     var player = FakeCardHolder()
     var gameState = FakeGameState(noPlayers: 4)
+    var strategy = PerfectKnowledgeStrategy.sharedInstance
     var settings = FakeGameSettings()
     override func setUp() {
         super.setUp()
@@ -28,18 +29,25 @@ class GivenAPerfectKnowledgeStrategy: XCTestCase {
         super.tearDown()
     }
     
-    func testScoring() {
+    func testCardChoiceIfNoSpades() {
         // This is an example of a functional test case.
         
-        let clubsTrick = gameState.createTrickPile(["QC","JC","7C","10C"])
-        XCTAssert(clubsTrick.score==0, "clubsTrick")
-
-        let ricketyTrick = gameState.createTrickPile(["QC","QS","7C","10C"])
-        XCTAssert(ricketyTrick.score==10, "ricketyTrick")
-
-        settings.includeHooligan=true
         
-        let hooliganTrick = gameState.createTrickPile(["QC","JC","7C","10C"])
-        XCTAssert(hooliganTrick.score==7, String(format: "hooliganTrick is scored %d instead of 7",  hooliganTrick.score))
+        ["QC","JC","9C"]
+        
+        let card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
+        XCTAssert(card?.imageName=="KC", "Pass")
+        
+        
+        
+    }
+    func testCardChoiceIfSpades() {
+        // This is an example of a functional test case.
+        
+        gameState.addCardsToTrickPile(["QC","QS","JC",])
+        let card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
+        XCTAssert(card?.imageName=="10C", "Pass")
+        
+        
     }
   }

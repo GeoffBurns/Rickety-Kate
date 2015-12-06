@@ -34,8 +34,8 @@ public protocol GameState
 
 public struct TrickPlay : Equatable, Comparable
 {
-    var player:CardPlayer
-    var playedCard:PlayingCard
+    public var player:CardPlayer
+    public var playedCard:PlayingCard
 }
 public func ==(lhs: TrickPlay, rhs: TrickPlay) -> Bool
 {
@@ -72,7 +72,7 @@ extension SequenceType where Generator.Element == TrickPlay {
             return []
     }
     
-    var winningPlay : TrickPlay?
+    public var winningPlay : TrickPlay?
         {
         let followingTricks = playsFollowingSuite
         let orderedTricks = followingTricks.sort({ $0.playedCard.value > $1.playedCard.value })
