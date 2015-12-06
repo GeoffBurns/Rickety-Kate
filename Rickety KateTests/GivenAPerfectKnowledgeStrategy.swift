@@ -19,7 +19,9 @@ class GivenAPerfectKnowledgeStrategy: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        player.addCardsToHand(["QS","QD","5D","2C","KC","10C"])
+        player.addCardsToHand(["QS","QD","JD","5D","2C","KC","10C"])
+     
+        self.gameState = FakeGameState(noPlayers: 4, gameSettings:settings)
         GameSettings.sharedInstance = settings
         
     }
@@ -33,10 +35,10 @@ class GivenAPerfectKnowledgeStrategy: XCTestCase {
         // This is an example of a functional test case.
         
         
-        ["QC","JC","9C"]
+        gameState.addCardsToTrickPile(["QC","JC","9C"])
         
         let card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
-        XCTAssert(card?.imageName=="KC", "Pass")
+        XCTAssert(card?.imageName=="KC", "IfNoSpades")
         
         
         
@@ -46,8 +48,37 @@ class GivenAPerfectKnowledgeStrategy: XCTestCase {
         
         gameState.addCardsToTrickPile(["QC","QS","JC",])
         let card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
-        XCTAssert(card?.imageName=="10C", "Pass")
+        XCTAssert(card?.imageName=="10C", "IfSpades")
         
+        
+    }
+    func testCardChoiceIfOmnibus() {
+        // This is an example of a functional test case.
+        
+        
+        gameState.addCardsToTrickPile(["4D","9D","KC"])
+        
+        var card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
+        XCTAssert(card?.imageName=="QD", "IfNotOmnibus")
+        
+        settings.includeOmnibus=true
+        gameState.reset()
+        
+        var bonusCount = gameState.bonusCards.count
+        XCTAssert(bonusCount==1, "1 bonusCards")
+        
+        let bonusCards =  gameState.bonusCardFor(PlayingCard.Suite.Diamonds)
+        bonusCount = bonusCards.count
+        XCTAssert(bonusCount==1, "1 bonusCards that are Daimonds")
+        
+        card =  strategy.chooseCard(player as CardHolder,gameState:gameState)
+        XCTAssert(card?.imageName=="JD", String("IfOmnibus choose %@",card?.imageName))
+        
+        
+        gameState.setTrickPile(["4D","KND","KC"])
+        
+        card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
+        XCTAssert(card?.imageName=="QD", "Pass")
         
     }
   }

@@ -218,9 +218,13 @@ public class PerfectKnowledgeStrategy : TrickPlayingStrategy
     {
     if let suite = gameState.leadingSuite where gameState.isLastPlayer
     {
-
+        let highcard = gameState.highestCardInTrick
         // give yourself a bonus card if you can
-        let bonus = gameState.bonusCardFor(suite).filter { $0.value > gameState.highestCardInTrick.value }
+        
+        
+        let bonus1 = Array(gameState.bonusCards)
+        let bonus2 = Array(gameState.bonusCardFor(suite))
+        let bonus = Array(gameState.bonusCardFor(suite).filter { $0.value > highcard.value })
         if let card = bonus.first,
             bonusScore =  GameSettings.sharedInstance.rules.cardScores[card]
             where gameState.scoreOfPile + bonusScore < 0

@@ -16,6 +16,16 @@ public class GameProgressTracker
     var notFollowing  = [Set<CardPlayer>]()
     var unplayedScoringCards = Set<PlayingCard>()
     var trumpsHaveBeenBroken = false
+    var gameSettings:IGameSettings
+    
+    public init(gameSettings:IGameSettings = GameSettings.sharedInstance)
+    {
+        self.gameSettings = gameSettings
+        for _ in cardCount
+        {
+            notFollowing.append( Set<CardPlayer>())
+        }
+    }
     
     public func reset()
     {
@@ -24,7 +34,7 @@ public class GameProgressTracker
         cardCount[i] = 0
         notFollowing[i].removeAll(keepCapacity: true)
         }
-        unplayedScoringCards = Set<PlayingCard>(GameSettings.sharedInstance.rules.cardScores.keys)
+        unplayedScoringCards = Set<PlayingCard>(gameSettings.rules.cardScores.keys)
         trumpsHaveBeenBroken = false
     }
     
@@ -67,11 +77,5 @@ public class GameProgressTracker
             self.notFollowing[index].insert(player)
      }
     
-     init() {
-
-        for _ in cardCount
-        {
-             notFollowing.append( Set<CardPlayer>())
-        }
-      }
+  
 }

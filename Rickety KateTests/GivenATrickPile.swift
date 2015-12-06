@@ -13,14 +13,18 @@ import Rickety_Kate
 
 class GivenATrickPile: XCTestCase {
     var player = FakeCardHolder()
-    var gameState = FakeGameState(noPlayers: 4)
-    var settings =  FakeGameSettings()
     
+    var settings =  FakeGameSettings()
+    var gameState = FakeGameState(noPlayers: 4)
+    
+ 
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         player.addCardsToHand(["QS","QD","5D","2C","KC","10C"])
-        GameSettings.sharedInstance = FakeGameSettings()
+         GameSettings.sharedInstance = settings
+        self.gameState = FakeGameState(noPlayers: 4, gameSettings:settings)
+     
         
     }
     
@@ -40,11 +44,13 @@ class GivenATrickPile: XCTestCase {
         XCTAssert(ricketyTrick.score==10, "ricketyTrick")
         
         settings.includeHooligan=true
+ 
         
         let hooliganTrick = gameState.createTrickPile(["QC","JC","7C","10C"])
         XCTAssert(hooliganTrick.score==7, String(format: "hooliganTrick is scored %d instead of 7",  hooliganTrick.score))
         
         settings.includeOmnibus=true
+    
         let busTrick = gameState.createTrickPile(["QD","JD","7D","10S"])
         XCTAssert(busTrick.score == -9, String(format: "busTrick is scored %d instead of -9",  busTrick.score))
     }
@@ -67,5 +73,49 @@ class GivenATrickPile: XCTestCase {
         
         let sunTrick = gameState.createTrickPile(["11U","JD","ARU","PSU"])
         XCTAssert(sunTrick.winningPlay?.playedCard.imageName=="PSU", "sunTrick" )
+    }
+    
+    func testScoringCards() {
+        // This is an example of a functional test case.
+        
+        gameState.reset()
+        
+        
+        var bonusCount = gameState.bonusCards.count
+        XCTAssert(bonusCount==0, String(format: "%d cards instead of no bonusCards",bonusCount))
+        
+        
+        var penaltyCount = gameState.penaltyCards.count
+        
+        XCTAssert(penaltyCount==13, String(format: "%d cards instead of 13 penaltyCards",penaltyCount))
+        settings.includeHooligan=true
+        
+        gameState.reset()
+        
+        penaltyCount = gameState.penaltyCards.count
+        
+        XCTAssert(penaltyCount==14, String(format: "%d cards instead of 14 penaltyCards",penaltyCount))
+        settings.includeOmnibus=true
+        
+        gameState.reset()
+      
+        bonusCount = gameState.bonusCards.count
+        penaltyCount = gameState.penaltyCards.count
+        XCTAssert(penaltyCount==14, "still 14 penaltyCards")
+        XCTAssert(bonusCount==1, "1 bonusCards")
+        
+        let bonusCards =  gameState.bonusCardFor(PlayingCard.Suite.Diamonds)
+        bonusCount = bonusCards.count
+        XCTAssert(bonusCount==1, "1 bonusCards that are Daimonds")
+       
+        let penaltyCards =  gameState.penaltyCardsFor(PlayingCard.Suite.Spades)
+        penaltyCount = penaltyCards.count
+        XCTAssert(penaltyCount==13,  String(format: "%d cards instead of 13 penaltyCards that are Spades",penaltyCount))
+        
+        
+        let penaltyCards2 =  gameState.penaltyCardsFor(PlayingCard.Suite.Clubs)
+        penaltyCount = penaltyCards2.count
+        XCTAssert(penaltyCount==1, String(format: "%d cards instead 1 penaltyCards that are Clubs",penaltyCount))
+        
     }
 }
