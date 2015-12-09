@@ -108,7 +108,7 @@ class OptionScreen: MultiPagePopup {
         
         optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps , useNumbersForCourtCards
         ]
-            displayButtons()
+        displayButtons()
         
         newPage()
     }

@@ -40,8 +40,7 @@ public extension SequenceType {
     
     public var head : Generator.Element? {
         
-        var result : Generator.Element?
-        result = nil
+
         
         var g = generate()
     

@@ -222,8 +222,6 @@ public class PerfectKnowledgeStrategy : TrickPlayingStrategy
         // give yourself a bonus card if you can
         
         
-        let bonus1 = Array(gameState.bonusCards)
-        let bonus2 = Array(gameState.bonusCardFor(suite))
         let bonus = Array(gameState.bonusCardFor(suite).filter { $0.value > highcard.value })
         if let card = bonus.first,
             bonusScore =  GameSettings.sharedInstance.rules.cardScores[card]
