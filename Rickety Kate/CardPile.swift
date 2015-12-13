@@ -11,12 +11,13 @@ import SpriteKit
 typealias CreateSprite = (PlayingCard,SKNode) -> CardSprite?
 
 /// How the cards are displayed in a pile
-public class CardPile
+public class CardPile : PositionedOnTable
 {
  
     static let defaultSpread = CGFloat(10)
     var cards = [PlayingCard]() { didSet { update() } }
-    var isUp = false
+    var tableSize : CGSize
+    var isUp = false { didSet { update() } }
     var sizeOfCards = CardSize.Small
     weak var scene : SKNode? = nil
     weak var discardAreas : HasDiscardArea? = nil
@@ -38,7 +39,7 @@ public class CardPile
     var sprites : [SKNode] { return cards.map { createSprite($0,scene!)! } }
     subscript(index: Int) -> PlayingCard { return cards[index] }
     
-    init(name:String,player:CardHolderBase? = nil) { self.name = name; self.player = player  }
+    init(name:String,player:CardHolderBase? = nil) { self.name = name; self.player = player;  tableSize = CGSize() }
  
     func setup(scene:HasDiscardArea, direction: Direction, position: CGPoint, isUp: Bool = false, sizeOfCards: CardSize = CardSize.Small)
     {
@@ -50,6 +51,7 @@ public class CardPile
         self.sizeOfCards = sizeOfCards
         self.isFanClosed = true
         self.zPositon = self.sizeOfCards.zOrder
+        tableSize = self.scene!.frame.size
     }
     
     func transferFrom(pile:CardPile)

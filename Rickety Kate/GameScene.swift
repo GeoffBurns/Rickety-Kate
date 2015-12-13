@@ -15,10 +15,11 @@ public protocol HasDiscardArea : class
     var discardWhitePile : CardPile { get }
 }
 
-public class CardScene : SKScene, HasDiscardArea {
+public class CardScene : SKScene, HasDiscardArea, PositionedOnTable  {
     
     public var discardPile = CardPile(name: CardPileType.Discard.description)
     public var discardWhitePile = CardPile(name: CardPileType.Discard.description)
+    public var tableSize = CGSize()
 }
 
 extension HasDiscardArea
@@ -38,6 +39,22 @@ protocol HasDealersArea : HasDiscardArea
     var dealtPiles : [CardPile] { get set }
     
 }
+protocol PositionedOnTable
+{
+     var tableSize : CGSize { get set }
+    
+}
+
+extension CGSize
+{
+      var isPortrait : Bool { return self.width < self.height }
+}
+
+extension PositionedOnTable
+{
+    var isPortrait : Bool { return tableSize.isPortrait }
+}
+
 extension HasDealersArea
 {
     func setupDealersAreaFor(noOfPlayers:Int,width: CGFloat , height: CGFloat )
@@ -91,7 +108,7 @@ class CardGameScene : CardScene, HasDealersArea {
     
     var table : RicketyKateCardTable!
     var dealtPiles = [CardPile]()
-    
+
     func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
     {
         setupDealersAreaFor(table.players.count,width: width , height: height )
@@ -141,14 +158,14 @@ extension HasDraggableCards
 }
 
 /// How game play is displayed
-class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCards {
+class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCards, Resizable{
 
     
     override var table : RicketyKateCardTable! {  didSet { setupPassYourThreeWorstCardsPhase() } }
     var originalTouch = CGPoint()
     var draggedNode: CardSprite? = nil;
     var cardScaleForSelected = CGFloat(1.05)
-    
+
     var backgroundFan = CardFan(name: CardPileType.Background.description)
     var playButton1 =  SKSpriteNode(imageNamed:"Play1".symbol)
     var playButton2 =  SKSpriteNode(imageNamed:"Random1".symbol)
@@ -163,11 +180,73 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     
     func seatPlayers()
     {
-        let seats = Seater.seatsFor(table.players.count)
+    
+        let seats = self.isPortrait ? Seater.portraitSeatsFor(table.players.count) : Seater.seatsFor(table.players.count)
         for (i,(player,seat)) in Zip2Sequence(table.players,seats).enumerate()
         {
-            player.setup(self, sideOfTable: seat, playerNo: i)
+            player.setup(self, sideOfTable: seat, playerNo: i,isPortrait: self.isPortrait)
         }
+    }
+    func arrangeLayoutFor(size:CGSize)
+    {
+       self.size = size
+       if  let exitButton = self.childNodeWithName("Exit".symbol)
+          {
+          exitButton.position = CGPoint(x:size.width,y:size.height * 0.97)
+          }
+
+       if let rulesButton = self.childNodeWithName("Rules1".symbol)
+          {
+          rulesButton.position = CGPoint(x:0.0,y:size.height * 0.97)
+          }
+        if let optionsButton = self.childNodeWithName("Options1".symbol)
+          {
+            optionsButton.position = CGPoint(x:size.width,y:size.height * 0.97)
+          }
+        
+        
+        playButton1.position = CGPoint(x:size.width*0.25,y:size.height*0.5)
+        playButton2.position = CGPoint(x:size.width*0.75,y:size.height*0.5)
+ 
+        backgroundFan.tableSize = size
+        backgroundFan.update()
+     
+        
+        table.trickFan.tableSize = size
+        table.trickFan.update()
+        
+        StatusDisplay.sharedInstance.arrangeLayoutFor(size)
+        
+        let seats = size.isPortrait ? Seater.portraitSeatsFor(table.players.count) : Seater.seatsFor(table.players.count)
+        for (player,seat) in Zip2Sequence(table.players,seats)
+        {
+            player.setPosition(size,sideOfTable: seat)
+        }
+        
+        for (player,score) in Zip2Sequence(table.players,ScoreDisplay.sharedInstance.scoreLabel)
+        {
+          score.position = ScoreDisplay.scorePosition(player.sideOfTable, scene: self)
+          score.zRotation = ScoreDisplay.scoreRotation(player.sideOfTable)
+        }
+        
+  
+        let nodeNeedingLayoutRearrangement = self
+            .children
+            .filter { $0 is MultiPagePopup }
+            .map { $0 as! MultiPagePopup }
+       
+        
+        for resizing in nodeNeedingLayoutRearrangement
+        {
+        resizing.arrangeLayoutFor(size)
+        }
+
+     /*
+        if let rules = self.childNodeWithName(PopupType.RulesScreen.description) as? RuleScreen
+        {
+           rules.arrangeLayoutFor(size)
+        }
+*/
     }
 
     

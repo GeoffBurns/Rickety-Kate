@@ -12,7 +12,7 @@ import SpriteKit
 typealias ScorePairCollection = [(PlayingCard,Int)]
 
 // Help Screen
-class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
+class CardDisplayScreen: MultiPagePopup, HasDiscardArea, Resizable {
     
     
     var discardPile = CardPile(name: CardPileType.Discard.description)
@@ -23,7 +23,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     var orderedGroups : [(Int,ScorePairCollection)] {
         
         let pointsGroups = GameSettings.sharedInstance.rules.cardScores.categorise {$0.1}
-        
         return pointsGroups.sort { $0.0 > $1.0 }
     }
     
@@ -31,9 +30,10 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     var tabNewPage = [ rules, displayCardsInDeck, displayScoringCards ]
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
-    let noOfSlides = GameSettings.isPad ? 3 : 2
-    let separationOfSlides = GameSettings.isPad ? 0.25 : 0.4
-    let slideStart : CGFloat = GameSettings.isPad ? 0.72 : 0.7
+    var noOfSlides =  2
+    var separationOfSlides = 0.4
+    var slideStart  =  CGFloat(0.7)
+    var slideLabelStart  =  CGFloat(0.83)
     var draggedNode : CardSprite? = nil
     var originalTouch = CGPointZero
     var originalScale = CGFloat(0)
@@ -44,17 +44,18 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
     }
     override func onExit() {
         super.onExit()
-   
     }
+    
     func rules()
     {
     if let ruleScreen = parent as? MultiPagePopup
-    {
+        {
         ruleScreen.pageNo = self.pageNo
         ruleScreen.tabNo = 0
         }
     removeFromParent()
     }
+    
     override func exit()
     {
         
@@ -65,6 +66,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
         }
        
     }
+    
     override func setup(scene:SKNode)
     {
         
@@ -84,19 +86,9 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
           anchorPoint = CGPointZero
           userInteractionEnabled = true
    
-
-          for i in 0..<noOfSlides
-           {
-            let slide = CardSlide(name: "slide")
-            slide.setup(self, slideWidth: size.width * 0.9)
-            slide.position = CGPointMake(size.width * 0.10, size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
-            slides.append(slide)
-           }
-            
            isSetup = true
           }
-
-        displayPage() 
+        arrangeLayoutFor(size)
     }
     func displayTitle()
     {
@@ -115,7 +107,45 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
        displayButtons()
     }
     
-    
+    override func arrangeLayoutFor(size:CGSize)
+    {
+        self.size = size
+        switch DeviceSettings.layout
+        {
+            case .Phone :
+                    noOfSlides =   2
+                    separationOfSlides =   0.4
+                    slideStart =  0.7
+                    slideLabelStart =  0.83
+            case .Pad :
+                  noOfSlides =   3
+                  separationOfSlides =   0.25
+                  slideStart =  0.72
+                  slideLabelStart =  0.83
+            case .Portrait :
+                  noOfSlides =   4
+                  separationOfSlides =   0.2
+                  slideStart = 0.78
+                  slideLabelStart =  0.865
+        }
+
+        super.arrangeLayoutFor(size)
+        if pageNo > noPageFor(tabNo) - 1
+        {
+            pageNo = noPageFor(tabNo) - 1
+        }
+        
+        slides = []
+        for i in 0..<noOfSlides
+        {
+            let slide = CardSlide(name: "slide")
+            slide.setup(self, slideWidth: size.width * 0.9)
+            slide.position = CGPointMake(size.width * 0.10, size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
+            slides.append(slide)
+        }
+        displayPage()
+    }
+  
     override func noPageFor(tab:Int) -> Int
     {
         switch tab
@@ -160,13 +190,13 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea {
        
                     let l = SKLabelNode(fontNamed:"Verdana")
                     l.fontSize = fontsize
-                    l.position = CGPointMake(self.size.width * 0.10, self.size.height * (0.83 - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
+                    l.position = CGPointMake(self.size.width * 0.10, self.size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
                     l.text = "High Cards".localize
                     l.name = "label"
                     
                     let m = SKLabelNode(fontNamed:"Verdana")
                     m.fontSize = fontsize
-                    m.position = CGPointMake(self.size.width * 0.93, self.size.height * (0.83 - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
+                    m.position = CGPointMake(self.size.width * 0.93, self.size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
                     m.text = "Low Cards".localize
                     
                     m.name = "label"

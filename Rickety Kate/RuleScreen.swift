@@ -26,7 +26,11 @@ class RuleScreen: MultiPagePopup {
         let leading : Int = Int(FontSize.Medium.scale)
         userInteractionEnabled = true
         pageNo = 0
-        if !isSetup
+        if isSetup
+        {
+            arrangeLayoutFor(size)
+        }
+        else
         {
         rulesText  = SKMultilineLabel(
             text: GameSettings.sharedInstance.rules.description,
@@ -39,7 +43,7 @@ class RuleScreen: MultiPagePopup {
             fontColor:UIColor.whiteColor(),
             leading:leading)
       
-        name = "Rules Background"
+        name = PopupType.RulesScreen.description
   
         self.addChild(rulesText!)
    
@@ -54,6 +58,33 @@ class RuleScreen: MultiPagePopup {
         
         displayButtons()
 
+    }
+    
+    override func arrangeLayoutFor(size:CGSize)
+    {
+        self.size = size
+        if let text = rulesText
+        {
+            text.dontUpdate = true
+            text.labelWidth =  Int(size.width * 0.88)
+            text.pos = CGPoint(x:size.width*0.5, y:size.height*0.8)
+            text.labelHeightMax = size.height * 0.75
+            text.pageBreak = size.height * 0.35
+            text.dontUpdate = false
+            text.update()
+        }
+        super.arrangeLayoutFor(size)
+        
+        let nodeNeedingLayoutRearrangement = self
+            .children
+            .filter { $0 is MultiPagePopup }
+            .map { $0 as! MultiPagePopup }
+        
+        
+        for resizing in nodeNeedingLayoutRearrangement
+        {
+            resizing.arrangeLayoutFor(size)
+        }
     }
     override func noPageFor(tab:Int) -> Int
     {

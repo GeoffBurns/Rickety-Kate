@@ -24,7 +24,24 @@ public extension CGPoint {
     }
 
 
+enum PopupType : CustomStringConvertible
+{
+    case RulesScreen
+    case OptionScreen
+    case ExitScreen
+    case CardDisplayScreen
 
+    
+    var description : String {
+        switch self {
+            
+        case .RulesScreen: return "RulesScreen"
+        case .OptionScreen: return "OptionScreen"
+        case .ExitScreen: return "ExitScreen"
+        case .CardDisplayScreen: return "CardDisplayScreen"
+   
+        }}
+}
 // Popup screen for user input
 class Popup: SKSpriteNode {
     
@@ -87,11 +104,23 @@ class MultiPagePopup : Popup {
         }
     }
     
+    func arrangeLayoutFor(size:CGSize)
+    {
+        moreButton.position = CGPoint(x:size.width,y:0.0)
+        backButton.position = CGPoint(x:0.0,y:0.0)
+        exitButton.position = CGPoint(x:size.width,y:size.height)
+        for tabButton in tabButtons
+        {
+            tabButton.position = CGPoint(x:0.0,y:self.frame.size.height)
+        }
+    }
+    
     func displayButtons()
     {
+        //arrangeLayoutFor(self.frame.size)
+        
         moreButton.setScale(ButtonSize.Small.scale)
         moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
-        moreButton.position = CGPoint(x:self.size.width,y:0.0)
         
         moreButton.name = "More"
         
@@ -102,7 +131,6 @@ class MultiPagePopup : Popup {
         
         backButton.setScale(ButtonSize.Small.scale)
         backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-        backButton.position = CGPoint(x:0.0,y:0.0)
         backButton.name = "Back"
         backButton.zPosition = 100
         backButton.userInteractionEnabled = false
@@ -111,7 +139,6 @@ class MultiPagePopup : Popup {
         
         exitButton.setScale(ButtonSize.Small.scale)
         exitButton.anchorPoint = CGPoint(x: 1.0, y: 1.0)
-        exitButton.position = CGPoint(x:self.frame.size.width,y:self.size.height)
         
         exitButton.name = "Exit"
         

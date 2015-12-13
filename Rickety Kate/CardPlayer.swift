@@ -64,6 +64,7 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
     //////////////////////////////////////
     // public var score : Int = 0
     var currentTotalScore  = MutableProperty<Int>(0)
+    var isSetup = false
     var noOfWins = MutableProperty<Int>(0)
     var scoreForCurrentHand = 0
     public var sideOfTable = SideOfTable.Bottom
@@ -93,20 +94,39 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
         return self.name.hashValue
     }
     
-    
+
     /////////////////////////////////
     /// Constructors and setup
     /////////////////////////////////
-    func setup(scene: CardScene, sideOfTable: SideOfTable, playerNo: Int)
+    func setup(scene: CardScene, sideOfTable: SideOfTable, playerNo: Int, isPortrait: Bool)
     {
+        
+        self.isSetup = true
         self.sideOfTable = sideOfTable
         self.playerNo = playerNo
         let isUp = sideOfTable == SideOfTable.Bottom
-        _hand.setup(scene, sideOfTable: sideOfTable, isUp: isUp, sizeOfCards: isUp ? CardSize.Big : CardSize.Small)
+        let cardSize = isUp ? (isPortrait ? CardSize.Medium :CardSize.Big) : CardSize.Small
+        _hand.setup(scene, sideOfTable: sideOfTable, isUp: isUp, sizeOfCards: cardSize)
         wonCards.setup(scene, direction: sideOfTable.direction, position: sideOfTable.positionOfWonCards(scene.frame.width, height: scene.frame.height))
     }
     
-    
+    func setPosition(size:CGSize, sideOfTable: SideOfTable)
+    {
+        if self.isSetup
+        {
+            _hand.tableSize = size
+            
+            self.sideOfTable = sideOfTable
+            _hand.sideOfTable = sideOfTable
+            let isPortrait = size.width < size.height
+            let isUp = sideOfTable == SideOfTable.Bottom
+            _hand.sizeOfCards = isUp ? (isPortrait ? CardSize.Medium :CardSize.Big) : CardSize.Small
+            wonCards.position = sideOfTable.positionOfWonCards(size.width, height: size.height)
+            wonCards.tableSize = size
+            wonCards.update()
+            _hand.update()
+        }
+    }
     ///////////////////////////////////
     /// Instance Methods
     ///////////////////////////////////

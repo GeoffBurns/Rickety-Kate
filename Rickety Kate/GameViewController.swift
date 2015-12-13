@@ -14,7 +14,7 @@ import iAd
 class GameViewController: UIViewController , ADBannerViewDelegate {
 
     var adBannerView: ADBannerView = ADBannerView(frame: CGRect.zero)
-    
+    var gameScene : RicketyKateGameScene? = nil
     func loadAds(){
         adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
         adBannerView.delegate = self
@@ -30,18 +30,14 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         
         // Detect the screensize
         let sizeRect = UIScreen.mainScreen().applicationFrame
-        var width = sizeRect.size.width * UIScreen.mainScreen().scale
-        var height = sizeRect.size.height * UIScreen.mainScreen().scale
-        
-        if width < height  // not needed on simulator but needed on real device
-        {
-            let temp = height
-            height = width
-            width = temp
-        }
+        let scale = UIScreen.mainScreen().scale
+        let width = sizeRect.size.width * scale
+        let height = sizeRect.size.height * scale
+        let size = CGSizeMake(width, height)
+
         // Scene should be shown in fullscreen mode
-        let scene = RicketyKateGameScene(size: CGSizeMake(width, height))
-    
+        let scene = RicketyKateGameScene(size: size)
+        scene.tableSize = size
 
         // Configure the view.
         let skView = self.view as! SKView
@@ -54,11 +50,15 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         skView.ignoresSiblingOrder = true
             
         /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .AspectFill
+        
+     
+        scene.scaleMode = .ResizeFill
      
         scene.table = RicketyKateCardTable.makeDemo(scene)
             
         skView.presentScene(scene)
+        
+        gameScene = scene
         loadAds()
      
     }
@@ -82,9 +82,41 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         return true
     }
     
-    //iAd
+   
+    override  func viewWillTransitionToSize( _ size: CGSize,
+        withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
     
+    {
+     resize(adBannerView,size: size);
+  
+    }
+    
+    
+   func resize(banner: ADBannerView, size:CGSize = UIScreen.mainScreen().applicationFrame.size) {
+        
+        var adHeight = CGFloat()
+        
+        if adBannerView.hidden == false
+        {
+            adHeight = adBannerView.frame.size.height
+        }
+        
+        if let scene = gameScene
+        {
+            let width = size.width //* UIScreen.mainScreen().scale
+            let height = (size.height -  adHeight)// * UIScreen.mainScreen().scale
+            let anchory = adHeight / height / 2.0
+            let size = CGSizeMake(width, height)
+            
+            scene.anchorPoint = CGPointMake(0.0, anchory)
+            scene.arrangeLayoutFor(size)
+        }
+    }
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
 
+        resize(adBannerView);
+    }
+ //iAd
     func bannerViewWillLoadAd(banner: ADBannerView!) {
         
 
@@ -93,17 +125,12 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         
-        
-     //   self.adBannerView.alpha = 1.0
-     //   adBannerView.hidden = false
-
-        
+       resize(banner);
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         
-        
-
+          resize(banner);
         
     }
     
@@ -117,7 +144,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         
-        
+         resize(banner);
     
 }
 }

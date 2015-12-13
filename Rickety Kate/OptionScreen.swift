@@ -14,7 +14,7 @@ class OptionScreen: MultiPagePopup {
     var isSetup = false
     var noOfSuites = NumberRangeToggle(min: 3, max: 8, current: 6, text: "Number_Of_Suites".localize)
     var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 18, current: 14, text: "Number_In_Suite".localize)
-    var noOfPlayers = NumberRangeToggle(min: 3, max:(GameSettings.isPad ? 7 : 6), current: 4, text: "Number_Of_Players".localize)
+    var noOfPlayers = NumberRangeToggle(min: 3, max:(DeviceSettings.isPad ? 7 : 6), current: 4, text: "Number_Of_Players".localize)
     
     var hasJokers = BinaryToggle(current: false, text: "Include_Jokers".localize)
     var hasTrumps = BinaryToggle(current: false, text: "Include_Tarot_Trumps".localize)
@@ -36,10 +36,9 @@ class OptionScreen: MultiPagePopup {
 
  
     var optionSettings = [SKNode]()
-    let isBigDevice = GameSettings.isBigDevice
-    var noOfItemsOnPage : Int { return isBigDevice ? 5 : 3 }
-    var separationOfItems :  CGFloat { return isBigDevice ? 0.15 : 0.2 }
-    var startHeight :  CGFloat { return isBigDevice ? 0.77 : 0.7 }
+    var noOfItemsOnPage = 3
+    var separationOfItems =  CGFloat(0.2)
+    var startHeight =  CGFloat(0.7)
 
 
     
@@ -108,9 +107,9 @@ class OptionScreen: MultiPagePopup {
         
         optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps , useNumbersForCourtCards
         ]
-        displayButtons()
         
-        newPage()
+        
+        arrangeLayoutFor(size)
     }
     
     override func noPageFor(tab:Int) -> Int
@@ -118,7 +117,43 @@ class OptionScreen: MultiPagePopup {
         return optionSettings.numOfPagesOf(noOfItemsOnPage)
     }
     
-    
+    override func arrangeLayoutFor(size:CGSize)
+    {
+        
+        
+        if DeviceSettings.isBigDevice
+        {
+            if DeviceSettings.isPortrait
+            {
+                
+                noOfItemsOnPage = 7
+                separationOfItems =  CGFloat(0.12)
+                startHeight = CGFloat(0.87)
+            }
+            else
+            {
+                
+                noOfItemsOnPage = 5
+                separationOfItems =  CGFloat(0.15)
+                startHeight = CGFloat(0.77)
+            }
+        }
+        else
+        {
+            noOfItemsOnPage = 3
+            separationOfItems =  CGFloat(0.2)
+            startHeight = CGFloat(0.7)
+        }
+        
+        super.arrangeLayoutFor(size)
+        if pageNo > noPageFor(tabNo) - 1
+        {
+            pageNo = noPageFor(tabNo) - 1
+        }
+        super.arrangeLayoutFor(size)
+        displayButtons()
+        newPage()
+    }
     override func newPage()
     {
         

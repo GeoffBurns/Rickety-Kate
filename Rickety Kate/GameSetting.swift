@@ -15,8 +15,13 @@ public enum DeviceType
     case BigPhone
     case BigPad
 }
-
-public protocol IGameSettings
+public enum LayoutType
+{
+    case Phone
+    case Pad
+    case Portrait
+}
+public protocol ICardGameSettings
 {
     var noOfSuitesInDeck : Int { get }
     var noOfPlayersAtTable  : Int { get }
@@ -24,13 +29,19 @@ public protocol IGameSettings
     var hasTrumps  : Bool { get }
     var hasJokers : Bool { get }
     var willPassCards  : Bool { get }
-    var allowBreakingTrumps  : Bool { get }
-    var includeHooligan  : Bool { get }
-    var includeOmnibus  : Bool { get }
     var useNumbersForCourtCards : Bool { get }
     var isAceHigh  : Bool { get }
     var makeDeckEvenlyDevidable  : Bool { get }
+    var deck  : PlayingCard.BuiltCardDeck? { get  }
     var speedOfToss  : Int { get }
+    var tossDuration : NSTimeInterval { get  }
+    
+}
+    public protocol IGameSettings : ICardGameSettings
+{
+    var allowBreakingTrumps  : Bool { get }
+    var includeHooligan  : Bool { get }
+    var includeOmnibus  : Bool { get }
     var ruleSet  : Int { get }
     var gameWinningScore  : Int { get  }
     var deck  : PlayingCard.BuiltCardDeck? { get  }
@@ -74,30 +85,19 @@ enum GameProperties : String
     case gameWinningScore = "gameWinningScore"
     case ruleSet = "ruleSet"
 }
+
 /// User controlled options for the game
-public class GameSettings
+public class DeviceSettings
 {
-    static var instance : IGameSettings? = nil
-    public static var sharedInstance : IGameSettings {
-        get{
-            if instance == nil
-            {
-                instance = LiveGameSettings()
-            }
-            return instance!
-        }
-        set{
-                instance = newValue
-        }
-    }
-    
-    static var backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
-    
     static var isPad : Bool
     {
         return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
     }
-    
+    static var isPortrait : Bool
+    {
+        let size = UIScreen.mainScreen().applicationFrame
+        return size.width < size.height
+    }
     static var isBigPhone : Bool
     {
         return   UIScreen.mainScreen().nativeScale > 2.5
@@ -115,6 +115,7 @@ public class GameSettings
     {
         return isBigPhone || isPad
     }
+    
     static  var device : DeviceType {
         
         if isPad
@@ -135,6 +136,44 @@ public class GameSettings
         return .Phone
         
     }
+    static  var layout : LayoutType {
+        
+        if isPad
+        {
+            if isPortrait
+            {
+                return .Portrait
+            }
+            
+            return .Pad
+        }
+    
+        
+        return .Phone
+        
+    }
+
+
+}
+/// User controlled options for the game
+public class GameSettings
+{
+    static var instance : IGameSettings? = nil
+    public static var sharedInstance : IGameSettings {
+        get{
+            if instance == nil
+            {
+                instance = LiveGameSettings()
+            }
+            return instance!
+        }
+        set{
+                instance = newValue
+        }
+    }
+    
+    static var backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
+    
     
 }
 /// User controlled options for the game
@@ -240,14 +279,30 @@ class LiveGameSettings : IGameSettings
     }
 
     var speedOfToss : Int {
+        get {
+            if __speedOfToss == nil
+            {
+                __speedOfToss = _speedOfToss
+            }
+            return __speedOfToss!
+        }
+        set (newValue) {
+            __speedOfToss = newValue
+            _speedOfToss = newValue
+        }
+    }
+    var __speedOfToss : Int? = nil
+    var _speedOfToss : Int {
         
         get {
-            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.speedOfToss.rawValue)
-            if result == 0
+            let defaults = NSUserDefaults.standardUserDefaults()
+            let key = GameProperties.speedOfToss.rawValue
+            let result = defaults.integerForKey(key)
+            if result > 0 && result < 8
             {
-                return 3
+                return result
             }
-            return result
+             return 3
         }
         set (newValue) {
             NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.speedOfToss.rawValue)
@@ -323,7 +378,6 @@ class LiveGameSettings : IGameSettings
             noOfCardsInASuite = 10 + 5.random
             noOfSuitesInDeck = 5 + 4.random
         }
-        
     }
     var awarder : IAwarder? = nil
     var rules : IAwarder {

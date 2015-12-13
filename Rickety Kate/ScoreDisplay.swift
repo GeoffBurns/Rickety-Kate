@@ -29,6 +29,10 @@ class ScoreDisplay
     static func scorePosition(side:SideOfTable, scene: SKNode) -> CGPoint
     {
         
+        
+        let top : CGFloat =  DeviceSettings.isPortrait ? 0.85 : 0.87
+        let bottom : CGFloat =  DeviceSettings.isPortrait ? 0.18 : 0.27
+        
       let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
       switch side
       {
@@ -39,11 +43,11 @@ class ScoreDisplay
       case .RightHigh:
         return CGPoint(x:scene.frame.size.width * 0.93, y:scene.frame.size.height * 0.70)
        case .Top:
-        return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height *  0.87 )
+        return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height *  top )
        case .TopMidRight:
-        return CGPoint(x:scene.frame.width * ( noOfPlayers == 6 ? 0.8 : 0.7), y:scene.frame.size.height *  0.87 )
+        return CGPoint(x:scene.frame.width * ( noOfPlayers == 6 ? 0.8 : 0.7), y:scene.frame.size.height *  top )
        case .TopMidLeft:
-          return CGPoint(x:scene.frame.width *  ( noOfPlayers == 6 ? 0.2 : 0.3), y:scene.frame.size.height *  0.87)
+          return CGPoint(x:scene.frame.width *  ( noOfPlayers == 6 ? 0.2 : 0.3), y:scene.frame.size.height *  top)
        case .Left:
         return CGPoint(x:scene.frame.size.width * 0.07, y:CGRectGetMidY(scene.frame))
       case .LeftLow:
@@ -51,7 +55,7 @@ class ScoreDisplay
       case .LeftHigh:
         return CGPoint(x:scene.frame.size.width * 0.07, y:scene.frame.size.height * 0.70)
        default:
-          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height *  0.27)
+          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height *  bottom)
        }
     }
     
@@ -93,10 +97,8 @@ class ScoreDisplay
             l.fontSize = fontsize
             l.name = player.name
   
-  
             let side = player.sideOfTable
             
-   
             l.position = ScoreDisplay.scorePosition(side, scene: scene)
             l.zPosition = 201
             l.zRotation = ScoreDisplay.scoreRotation(side)
@@ -120,11 +122,10 @@ class ScoreDisplay
                        return  "_ score is _".localizeWith(name, score)
                     }
                  
-                     return  ((name.isYou)
+                    return  ((name.isYou)
                         ? "Your Score _ n _ Wins".localizeWith(score, wins)
                         : "_ Score _ n _ Wins".localizeWith( name, score, wins))
-                  
-                    
+          
             }
 
             return l

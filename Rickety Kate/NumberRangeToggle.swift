@@ -33,15 +33,15 @@ class NumberRangeToggle: SKNode {
     let height = label.frame.size.height
     let width = label.frame.size.width
     let up =   SKSpriteNode(imageNamed:"triangle")
-    up.xScale = 0.35
-    up.yScale = 0.15
+    up.xScale = 0.25
+    up.yScale = 0.10
     up.anchorPoint = CGPoint(x: 1.0, y: 0.0)
-    up.position = CGPoint(x:width*0.5,y:height*0.6)
+    up.position = CGPoint(x:width*0.5,y:height*0.67)
     label.addChild(up)
      
     let down =   SKSpriteNode(imageNamed:"triangle")
     down.name = "down"
-    down.xScale = 0.35
+    down.xScale = 0.25
         
     /// This works on simulator but not on device
     /*
@@ -49,12 +49,12 @@ class NumberRangeToggle: SKNode {
     down.anchorPoint = CGPoint(x: 1.0, y: 1.0)
     */
     /// This works on simulator AND on device
-    down.yScale = 0.15
+    down.yScale = 0.10
     down.anchorPoint = CGPoint(x: 0.0, y: 1.0)
     down.zRotation = 180.degreesToRadians
     ////
         
-    down.position = CGPoint(x:width*0.5,y:-height*0.55)
+    down.position = CGPoint(x:width*0.5,y:-height*0.6)
     label.addChild(down)
     self.addChild(label)
     self.userInteractionEnabled = true
@@ -101,8 +101,7 @@ class NumberRangeToggle: SKNode {
                 return
             }
             
-            
-             if label.containsPoint(touchPoint) {
+            if label.containsPoint(touchPoint) {
     
             touchUp()
             return
@@ -132,7 +131,7 @@ class ListToggle: SKNode {
     {
         self.list = list
         self.current = current
-        label.fontSize = 45;
+        label.fontSize = FontSize.Big.scale
         self.text = text
         label.userInteractionEnabled = false
 
@@ -142,15 +141,15 @@ class ListToggle: SKNode {
         let height = label.frame.size.height
         let width = label.frame.size.width
         let up =   SKSpriteNode(imageNamed:"triangle")
-        up.xScale = 0.35
-        up.yScale = 0.15
+        up.xScale = 0.30
+        up.yScale = 0.11
         up.anchorPoint = CGPoint(x: 1.0, y: 0.0)
-        up.position = CGPoint(x:width*0.5,y:height*0.6)
+        up.position = CGPoint(x:width*0.5,y:height*0.62)
         label.addChild(up)
         
         let down =   SKSpriteNode(imageNamed:"triangle")
         down.name = "down"
-        down.xScale = 0.35
+        down.xScale = 0.30
         
         /// This works on simulator but not on device
         /*
@@ -158,12 +157,12 @@ class ListToggle: SKNode {
         down.anchorPoint = CGPoint(x: 1.0, y: 1.0)
         */
         /// This works on simulator AND on device
-        down.yScale = 0.15
+        down.yScale = 0.11
         down.anchorPoint = CGPoint(x: 0.0, y: 1.0)
         down.zRotation = 180.degreesToRadians
         ////
         
-        down.position = CGPoint(x:width*0.5,y:-height*0.55)
+        down.position = CGPoint(x:width*0.5,y:-height*0.57)
         label.addChild(down)
         self.addChild(label)
         self.userInteractionEnabled = true

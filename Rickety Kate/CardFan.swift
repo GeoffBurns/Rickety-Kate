@@ -26,8 +26,10 @@ class CardFan : CardPile
         self.sizeOfCards = sizeOfCards
         self.direction = sideOfTable.direction
         self.zPositon = self.sizeOfCards.zOrder
+        tableSize = self.scene!.frame.size
     }
 
+    
     override func append(card:PlayingCard)
     {
         var updatedCards = cards
@@ -42,7 +44,7 @@ class CardFan : CardPile
     override func positionOfCard(positionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
     {
         return sideOfTable.positionOfCard(positionInSpread, spriteHeight: spriteHeight,
-            width: scene!.frame.width, height: scene!.frame.height, fullHand:fullHand)
+            width: tableSize.width, height: tableSize.height, fullHand:fullHand)
     }
     override func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
     {

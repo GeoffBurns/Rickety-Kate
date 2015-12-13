@@ -9,8 +9,13 @@
 import SpriteKit
 import ReactiveCocoa
 
+
+protocol Resizable
+{
+      func arrangeLayoutFor(size:CGSize)
+}
 // Tells the game player what is going on
-class StatusDisplay
+class StatusDisplay : Resizable
 {
     var noticeLabel = Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
     var noticeLabel2 = Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
@@ -22,17 +27,24 @@ class StatusDisplay
     {
         StatusDisplay.sharedInstance.setupStatusArea(scene)
     }
+    
+    func arrangeLayoutFor(size:CGSize)
+    {
+        let fontsize : CGFloat = FontSize.Huge.scale
+        noticeLabel.position = CGPoint(x:size.width * 0.5, y:size.height * 0.33);
+    
+        noticeLabel2.position = CGPoint(x:size.width * 0.5, y:size.height * 0.68);
+        
+        
+        noticeLabel.fontSize = fontsize;
+        
+        noticeLabel2.fontSize = fontsize;
+    }
     func setupStatusArea(scene: SKNode)
     {
-    let fontsize : CGFloat = FontSize.Huge.scale
     noticeLabel.resetToScene(scene)
     noticeLabel2.resetToScene(scene)
-    noticeLabel.fontSize = fontsize;
-    noticeLabel.position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.33);
-    
-    noticeLabel2.fontSize = fontsize;
-    noticeLabel2.position = CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height * 0.68);
-   
+    arrangeLayoutFor(scene.frame.size)
 
     noticeLabel.rac_text <~ Bus.sharedInstance.gameSignal
         . filter { $0.description != nil }
