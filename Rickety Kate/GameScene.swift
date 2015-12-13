@@ -192,16 +192,16 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
        self.size = size
        if  let exitButton = self.childNodeWithName("Exit".symbol)
           {
-          exitButton.position = CGPoint(x:size.width,y:size.height * 0.97)
+          exitButton.position = CGPoint(x:size.width,y:size.height * 0.95)
           }
 
        if let rulesButton = self.childNodeWithName("Rules1".symbol)
           {
-          rulesButton.position = CGPoint(x:0.0,y:size.height * 0.97)
+          rulesButton.position = CGPoint(x:0.0,y:size.height * 0.95)
           }
         if let optionsButton = self.childNodeWithName("Options1".symbol)
           {
-            optionsButton.position = CGPoint(x:size.width,y:size.height * 0.97)
+            optionsButton.position = CGPoint(x:size.width,y:size.height * 0.95)
           }
         
         

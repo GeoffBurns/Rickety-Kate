@@ -134,7 +134,17 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea, Resizable {
         {
             pageNo = noPageFor(tabNo) - 1
         }
+   /*     let labels = self
+            .children
+            .filter { $0 is SKLabelNode }
+            .map { $0 as! SKLabelNode }
         
+        for label in labels
+        {
+            label.removeFromParent()
+        }
+        */
+        for slide in slides { slide.discardAll() }
         slides = []
         for i in 0..<noOfSlides
         {
@@ -144,6 +154,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea, Resizable {
             slides.append(slide)
         }
         displayPage()
+        newPage()
     }
   
     override func noPageFor(tab:Int) -> Int
@@ -236,7 +247,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea, Resizable {
               let l = SKLabelNode(fontNamed:"Verdana")
               l.fontSize = fontsize
               l.horizontalAlignmentMode = .Left
-              l.position = CGPointMake(size.width * 0.05, size.height * (0.83 - ( CGFloat(i) * CGFloat(separationOfSlides))))
+              l.position = CGPointMake(size.width * 0.05, size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
               if cards.count > 1 { l.text = "_ Points Each".localizeWith(points) }
               else if points > 0 { l.text = "_ Points".localizeWith(points) }
               else  { l.text = "_ Points".localizeWith(points) +
@@ -251,13 +262,15 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea, Resizable {
     
     override func newPage()
     {
-        var l = self.childNodeWithName("label")
-        while l != nil
-        {
-            l!.removeFromParent()
-            l = self.childNodeWithName("label")
-        }
+        let labels = self
+            .children
+            .filter { $0 is SKLabelNode }
+            .map { $0 as! SKLabelNode }
         
+        for label in labels
+        {
+            label.removeFromParent()
+        }
         
         let renderPage = self.tabNewPage[self.tabNo](self)
         self.schedule(delay: 0.3)

@@ -21,10 +21,10 @@ enum CardSize
         {
             switch self
             {
-            case .Huge : return CGFloat(1.2)
-            case .Big : return CGFloat(0.9)
-            case .Medium : return CGFloat(0.6)
-            case .Small : return CGFloat(0.45)
+            case .Huge : return DeviceSettings.isPhone ? CGFloat(0.6) : CGFloat(1.2)
+            case .Big : return DeviceSettings.isPhone ? CGFloat(0.45) :CGFloat(0.9)
+            case .Medium : return DeviceSettings.isPhone ? CGFloat(0.3) : CGFloat(0.6)
+            case .Small : return DeviceSettings.isPhone ? CGFloat(0.22) : CGFloat(0.45)
             }
     }
     var zOrder : CGFloat
@@ -49,8 +49,8 @@ enum ButtonSize
         {
             switch self
             {
-            case .Big : return  CGFloat(1.0)
-            case .Small : return CGFloat(0.5)
+            case .Big : return   DeviceSettings.isPhone ? CGFloat(0.5) : CGFloat(1.0)
+            case .Small : return  DeviceSettings.isPhone ? CGFloat(0.25) :CGFloat(0.5)
             }
     }
 }
@@ -74,7 +74,7 @@ enum FontSize
                 switch DeviceSettings.layout
                 {
                 case .Phone :
-                    return 65
+                    return 28
                 case .Pad :
                     return 55
                 case .Portrait :
@@ -86,7 +86,7 @@ enum FontSize
                 case .Portrait :
                     return 30
                 case .Phone :
-                    return 45
+                    return 22
                 case .Pad :
                     return 40
                 }
@@ -96,7 +96,7 @@ enum FontSize
                 case .Portrait :
                     return 30
                 case .Phone :
-                    return 45
+                    return 22
                 case .Pad :
                     return 45
                 }
@@ -106,7 +106,7 @@ enum FontSize
                 case .Portrait :
                     return 32
                 case .Phone :
-                    return 38
+                    return 19
                 case .Pad :
                     return 32
                 }
@@ -116,7 +116,7 @@ enum FontSize
                 case .Portrait :
                     return 25
                 case .Phone :
-                    return 30
+                    return 15
                 case .Pad :
                     return 25
                 }
@@ -127,7 +127,7 @@ enum FontSize
                 case .Portrait :
                     return 24
                 case .Phone :
-                    return 28
+                    return 14
                 case .Pad :
                     return 24
                 }
@@ -138,7 +138,7 @@ enum FontSize
                 case .Portrait :
                     return 18
                 case .Phone :
-                    return 20
+                    return 10
                 case .Pad :
                     return 18
                 }

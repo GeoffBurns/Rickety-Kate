@@ -93,6 +93,10 @@ public class DeviceSettings
     {
         return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
     }
+    static var isPhone : Bool
+    {
+        return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone
+    }
     static var isPortrait : Bool
     {
         let size = UIScreen.mainScreen().applicationFrame

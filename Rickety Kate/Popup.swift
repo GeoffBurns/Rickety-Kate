@@ -106,12 +106,15 @@ class MultiPagePopup : Popup {
     
     func arrangeLayoutFor(size:CGSize)
     {
+        let top : CGFloat = size.isPortrait ? 0.97 : 0.99
         moreButton.position = CGPoint(x:size.width,y:0.0)
         backButton.position = CGPoint(x:0.0,y:0.0)
-        exitButton.position = CGPoint(x:size.width,y:size.height)
+        exitButton.position = CGPoint(x:size.width,y:size.height * top)
+        
+   
         for tabButton in tabButtons
         {
-            tabButton.position = CGPoint(x:0.0,y:self.frame.size.height)
+            tabButton.position = CGPoint(x:0.0,y:self.frame.size.height * top)
         }
     }
     
