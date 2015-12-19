@@ -10,7 +10,7 @@ import SpriteKit
 import ReactiveCocoa
 
 
-protocol Resizable
+protocol Resizable : class
 {
       func arrangeLayoutFor(size:CGSize)
 }

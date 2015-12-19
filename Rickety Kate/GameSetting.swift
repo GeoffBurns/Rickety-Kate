@@ -35,6 +35,7 @@ public protocol ICardGameSettings
     var deck  : PlayingCard.BuiltCardDeck? { get  }
     var speedOfToss  : Int { get }
     var tossDuration : NSTimeInterval { get  }
+    var memoryWarning : Bool { get set }
     
 }
     public protocol IGameSettings : ICardGameSettings
@@ -44,9 +45,7 @@ public protocol ICardGameSettings
     var includeOmnibus  : Bool { get }
     var ruleSet  : Int { get }
     var gameWinningScore  : Int { get  }
-    var deck  : PlayingCard.BuiltCardDeck? { get  }
     var rules : IAwarder { get  }
-    var tossDuration : NSTimeInterval { get  }
     var gameWinningScoreIndex : Int { get }
     var gameType : String { get }
     
@@ -84,6 +83,7 @@ enum GameProperties : String
     case speedOfToss = "speedOfToss"
     case gameWinningScore = "gameWinningScore"
     case ruleSet = "ruleSet"
+    case memoryWarning = "memoryWarning"
 }
 
 /// User controlled options for the game
@@ -128,17 +128,13 @@ public class DeviceSettings
             {
                 return .BigPad
             }
-            
             return .Pad
         }
-        
         if isBigPhone
         {
             return .BigPhone
         }
-        
         return .Phone
-        
     }
     static  var layout : LayoutType {
         
@@ -148,16 +144,10 @@ public class DeviceSettings
             {
                 return .Portrait
             }
-            
             return .Pad
         }
-    
-        
         return .Phone
-        
     }
-
-
 }
 /// User controlled options for the game
 public class GameSettings
@@ -231,10 +221,18 @@ class LiveGameSettings : IGameSettings
         }
         set (newValue) {
             NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.NoOfCardsInASuite.rawValue)
-            
         }
     }
     
+    var memoryWarning : Bool {
+        
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.memoryWarning.rawValue)
+        }
+        set (newValue) {
+            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.memoryWarning.rawValue)
+        }
+    }
     var willPassCards : Bool {
         
         get {
@@ -516,6 +514,7 @@ public class FakeGameSettings : IGameSettings
     public var ruleSet = 1
     public var gameWinningScore = 1
     public var isAceHigh  = true
+    public var memoryWarning  = true
     public var makeDeckEvenlyDevidable  = true
     public var deck  : PlayingCard.BuiltCardDeck? = nil
     public var gameWinningScoreIndex = 1

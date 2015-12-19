@@ -50,7 +50,7 @@ public class CardPile : PositionedOnTable
         self.isUp = isUp
         self.sizeOfCards = sizeOfCards
         self.isFanClosed = true
-        self.zPositon = self.sizeOfCards.zOrder
+        self.zPositon = isBackground ? 3 : self.sizeOfCards.zOrder
         tableSize = self.scene!.frame.size
     }
     
@@ -147,8 +147,12 @@ public class CardPile : PositionedOnTable
             
             if (sprite.state != CardState.AtRest)
             {
-                sprite.zPosition = 140
+                sprite.zPosition = isBackground ? 3 : 140
                 sprite.state = CardState.AtRest
+            }
+            else
+            {
+                sprite.zPosition = self.zPositon
             }
             
             // Stop all running animations before starting new ones

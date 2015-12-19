@@ -26,11 +26,12 @@ extension HasDiscardArea
 {
     func setupDiscardArea()
     {
+        
+        discardWhitePile.isBackground = true
         discardPile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
         discardWhitePile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
 //        discardPile.isDiscard = true
 //        discardWhitePile.isDiscard = true
-        discardWhitePile.isBackground = true
         discardWhitePile.speed = 0.1
     }
 }
@@ -90,8 +91,8 @@ extension HasBackgroundSpread
 {
     func setupBackgroundSpread( )
     {
-        backgroundFan.setup(self, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
         backgroundFan.isBackground = true
+        backgroundFan.setup(self, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
         backgroundFan.zPositon = 0.0
         backgroundFan.speed = 0.1
     }
@@ -100,7 +101,6 @@ extension HasBackgroundSpread
         backgroundFan.discardAll()
         backgroundFan.replaceWithContentsOf(cards)
     }
-    
 }
 
 
@@ -190,24 +190,30 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     func arrangeLayoutFor(size:CGSize)
     {
        self.size = size
-       if  let exitButton = self.childNodeWithName("Exit".symbol)
-          {
-          exitButton.position = CGPoint(x:size.width,y:size.height * 0.95)
-          }
-
+    
        if let rulesButton = self.childNodeWithName("Rules1".symbol)
           {
           rulesButton.position = CGPoint(x:0.0,y:size.height * 0.95)
           }
+        if table.isInDemoMode
+        {
         if let optionsButton = self.childNodeWithName("Options1".symbol)
           {
             optionsButton.position = CGPoint(x:size.width,y:size.height * 0.95)
+            
+            playButton1.position = CGPoint(x:size.width*0.25,y:size.height*0.5)
+            playButton2.position = CGPoint(x:size.width*0.75,y:size.height*0.5)
+
           }
-        
-        
-        playButton1.position = CGPoint(x:size.width*0.25,y:size.height*0.5)
-        playButton2.position = CGPoint(x:size.width*0.75,y:size.height*0.5)
- 
+        }
+        else
+        {
+            if  let exitButton = self.childNodeWithName("Exit".symbol)
+            {
+                exitButton.position = CGPoint(x:size.width,y:size.height * 0.95)
+            }
+        }
+   
         backgroundFan.tableSize = size
         backgroundFan.update()
      
@@ -229,24 +235,17 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
           score.zRotation = ScoreDisplay.scoreRotation(player.sideOfTable)
         }
         
-  
         let nodeNeedingLayoutRearrangement = self
             .children
-            .filter { $0 is MultiPagePopup }
-            .map { $0 as! MultiPagePopup }
-       
+            .filter { $0 is Resizable }
+            .map { $0 as! Resizable }
+      //      .filter { $0 is MultiPagePopup }
+      //      .map { $0 as! MultiPagePopup }
         
         for resizing in nodeNeedingLayoutRearrangement
         {
         resizing.arrangeLayoutFor(size)
         }
-
-     /*
-        if let rules = self.childNodeWithName(PopupType.RulesScreen.description) as? RuleScreen
-        {
-           rules.arrangeLayoutFor(size)
-        }
-*/
     }
 
     
@@ -458,7 +457,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                 let transition = SKTransition.crossFadeWithDuration(0.5)
                 let scene = RicketyKateGameScene(size: self.scene!.size)
                 
-                scene.scaleMode = SKSceneScaleMode.AspectFill
+                scene.scaleMode = SKSceneScaleMode.ResizeFill
              
                 scene.table = isInteractive ?
                     RicketyKateCardTable.makeTable(scene) :

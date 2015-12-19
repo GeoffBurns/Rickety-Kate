@@ -28,7 +28,7 @@ class RuleScreen: MultiPagePopup {
         pageNo = 0
         if isSetup
         {
-            arrangeLayoutFor(size)
+         
         }
         else
         {
@@ -54,9 +54,10 @@ class RuleScreen: MultiPagePopup {
       
             cardDisplay.setup(self)
             isSetup = true
+            displayButtons()
         }
-        
-        displayButtons()
+    arrangeLayoutFor(size)
+       
 
     }
     

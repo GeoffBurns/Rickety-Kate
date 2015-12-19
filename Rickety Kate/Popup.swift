@@ -79,7 +79,7 @@ class Popup: SKSpriteNode {
     
 }
 
-class MultiPagePopup : Popup {
+class MultiPagePopup : Popup,  Resizable {
     var moreButton = SKSpriteNode(imageNamed: "More1".symbol)
     var backButton = SKSpriteNode(imageNamed: "Back".symbol)
     var exitButton = SKSpriteNode(imageNamed: "Exit".symbol)
@@ -91,6 +91,7 @@ class MultiPagePopup : Popup {
     
     func updateTab()
     {
+        if self.tabNo < 0 || tabButtons.count <= self.tabNo { return }
         let tabButton = tabButtons[self.tabNo]
         
         let textureName = (tabButton.name! + "2").symbol

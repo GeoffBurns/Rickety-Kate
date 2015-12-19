@@ -32,15 +32,10 @@ class OptionScreen: MultiPagePopup {
     var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game_Finishing_Score".localize)
     var ruleSet = ListToggle(list: ["Spades".localize,"Hearts".localize,"Jacks".localize],  current: 1, text: "Rule Set".localize )
  
-
-
- 
     var optionSettings = [SKNode]()
     var noOfItemsOnPage = 3
     var separationOfItems =  CGFloat(0.2)
     var startHeight =  CGFloat(0.7)
-
-
     
     override func onEnter() {
         self.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
@@ -108,7 +103,6 @@ class OptionScreen: MultiPagePopup {
         optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps , useNumbersForCourtCards
         ]
         
-        
         arrangeLayoutFor(size)
     }
     
@@ -161,8 +155,6 @@ class OptionScreen: MultiPagePopup {
         let optionSettingsDisplayed = optionSettings
             .from(settingStart, forLength: noOfItemsOnPage)
       
-
-        
         let scene = gameScene!
         let midWidth = CGRectGetMidX(gameScene!.frame)
         

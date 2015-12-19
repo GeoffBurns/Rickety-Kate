@@ -75,7 +75,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
+        GameSettings.sharedInstance.memoryWarning = true
     }
 
     override func prefersStatusBarHidden() -> Bool {
@@ -118,9 +118,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     }
  //iAd
     func bannerViewWillLoadAd(banner: ADBannerView!) {
-        
 
-        
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
@@ -136,9 +134,6 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         
-        
-        
-  
         return true 
     }
     

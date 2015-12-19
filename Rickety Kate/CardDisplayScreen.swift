@@ -12,7 +12,7 @@ import SpriteKit
 typealias ScorePairCollection = [(PlayingCard,Int)]
 
 // Help Screen
-class CardDisplayScreen: MultiPagePopup, HasDiscardArea, Resizable {
+class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     
     
     var discardPile = CardPile(name: CardPileType.Discard.description)
@@ -66,11 +66,35 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea, Resizable {
         }
        
     }
+     func presetup(scene:SKNode)
+    {
+        
+        pageNo = 0
+        tabNo = -1
+        cards = GameSettings.sharedInstance.deck!.orderedDeck
+        
+        if !isSetup
+        {
+            self.gameScene = scene
+            self.tabNames = ["Rules","Deck","Scores"]
+            setupDiscardArea()
+            discardPile.isUp = true
+            discardPile.speed = GameSettings.sharedInstance.tossDuration*0.5
+            color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
+            size = scene.frame.size
+            position = CGPointZero
+            anchorPoint = CGPointZero
+            userInteractionEnabled = true
+            
+            isSetup = true
+        }
+    }
     
     override func setup(scene:SKNode)
     {
         
         pageNo = 0
+        tabNo = -1
         cards = GameSettings.sharedInstance.deck!.orderedDeck
         
         if !isSetup
@@ -262,6 +286,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea, Resizable {
     
     override func newPage()
     {
+        if self.tabNo < 0 { return }
         let labels = self
             .children
             .filter { $0 is SKLabelNode }

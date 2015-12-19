@@ -11,9 +11,11 @@ import SpriteKit
 
 
 /// Are you sure screen
-class ExitScreen: Popup {
+class ExitScreen: Popup, Resizable {
     var exitLabel = SKLabelNode(fontNamed:"Chalkduster")
     var exitLabel2 = SKLabelNode(fontNamed:"Chalkduster")
+    let yesButton =  SKSpriteNode(imageNamed:"Yes".symbol)
+    let noButton =  SKSpriteNode(imageNamed:"No".symbol)
     var isSetup = false
     
     override init()
@@ -52,7 +54,7 @@ class ExitScreen: Popup {
         
         self.addChild(exitLabel2)
         
-        let yesButton =  SKSpriteNode(imageNamed:"Yes".symbol)
+
         yesButton.position = CGPoint(x:self.frame.width * 0.25,y:self.frame.height * 0.4)
         yesButton.setScale(ButtonSize.Small.scale)
         yesButton.zPosition = 100
@@ -61,7 +63,7 @@ class ExitScreen: Popup {
         
         
         
-        let noButton =  SKSpriteNode(imageNamed:"No".symbol)
+
         noButton.position = CGPoint(x:self.frame.width*0.75,y:self.frame.height * 0.4)
         noButton.setScale(ButtonSize.Small.scale)
         noButton.zPosition = 100
@@ -70,6 +72,15 @@ class ExitScreen: Popup {
         
         self.addChild(yesButton)
         self.addChild(noButton)
+    }
+    
+    func arrangeLayoutFor(size:CGSize)
+    {
+
+        noButton.position = CGPoint(x:size.width*0.75,y:size.height * 0.4)
+        
+        yesButton.position = CGPoint(x:size.width * 0.25,y:size.height * 0.4)
+    
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
