@@ -143,7 +143,7 @@ class CardSprite : SKSpriteNode
         label = SKLabelNode(text:self.card.description)
         // let originalScale = self.yScale
         
-        label!.position = CGPoint(x: 0.0, y:  self.size.height*(DeviceSettings.isBiggerDevice ? 0.18 : 0.37))
+        label!.position = CGPoint(x: 0.0, y:  self.size.height * 0.37)
         label!.fontColor = UIColor.blackColor()
         label!.fontName = "Verdana"
         label!.fontSize = 11

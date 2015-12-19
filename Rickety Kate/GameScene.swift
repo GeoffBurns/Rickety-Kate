@@ -246,6 +246,14 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         {
         resizing.arrangeLayoutFor(size)
         }
+        for (i,player) in table.players.enumerate()
+        {
+         self.schedule(delay: 0.4 * Double(i) )
+         {
+            player._hand.update()
+            player.wonCards.update()
+         }
+        }
     }
 
     

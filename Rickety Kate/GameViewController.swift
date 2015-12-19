@@ -139,7 +139,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         
-         resize(banner);
+      //   resize(banner);
     
 }
 }

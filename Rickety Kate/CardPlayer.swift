@@ -123,8 +123,8 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
             _hand.sizeOfCards = isUp ? (isPortrait ? CardSize.Medium :CardSize.Big) : CardSize.Small
             wonCards.position = sideOfTable.positionOfWonCards(size.width, height: size.height)
             wonCards.tableSize = size
-            wonCards.update()
-            _hand.update()
+      //      wonCards.update()
+      //      _hand.update()
         }
     }
     ///////////////////////////////////
