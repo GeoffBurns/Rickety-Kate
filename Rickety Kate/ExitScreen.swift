@@ -14,8 +14,8 @@ import SpriteKit
 class ExitScreen: Popup, Resizable {
     var exitLabel = SKLabelNode(fontNamed:"Chalkduster")
     var exitLabel2 = SKLabelNode(fontNamed:"Chalkduster")
-    let yesButton =  SKSpriteNode(imageNamed:"Yes".symbol)
-    let noButton =  SKSpriteNode(imageNamed:"No".symbol)
+    let yesButton =  SKSpriteNode(imageNamed:"Yes")
+    let noButton =  SKSpriteNode(imageNamed:"No")
     var isSetup = false
     
     override init()

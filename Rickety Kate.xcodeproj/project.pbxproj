@@ -61,6 +61,10 @@
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BF1BA686C40064870C /* PlayingCard.swift */; };
 		ACA1A1351BDDBFD20010BB0B /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA1A1341BDDBFD20010BB0B /* Label.swift */; };
+		ACAE53791C267FA2003F0BB4 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE53781C267FA2003F0BB4 /* GameKit.framework */; };
+		ACAE537C1C2682AE003F0BB4 /* GameKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE537B1C2682AE003F0BB4 /* GameKitHelper.swift */; };
+		ACAE53801C269840003F0BB4 /* RicketyKateNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */; };
+		ACAE53821C278AAC003F0BB4 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE53811C278AAC003F0BB4 /* Achievements.swift */; };
 		ACB20F9D1BE0C5F500718CC0 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9B1BE0C5F500718CC0 /* ArrayExtensions.swift */; };
 		ACB20F9E1BE0C5F500718CC0 /* SequenceTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9C1BE0C5F500718CC0 /* SequenceTypeExtensions.swift */; };
 		ACB20FA01BE0C64700718CC0 /* SKNodeExtensions2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */; };
@@ -170,6 +174,10 @@
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		AC9E82BF1BA686C40064870C /* PlayingCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		ACA1A1341BDDBFD20010BB0B /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		ACAE53781C267FA2003F0BB4 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		ACAE537B1C2682AE003F0BB4 /* GameKitHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameKitHelper.swift; sourceTree = "<group>"; };
+		ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RicketyKateNavigationController.swift; sourceTree = "<group>"; };
+		ACAE53811C278AAC003F0BB4 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievements.swift; sourceTree = "<group>"; };
 		ACB20F9B1BE0C5F500718CC0 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		ACB20F9C1BE0C5F500718CC0 /* SequenceTypeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTypeExtensions.swift; sourceTree = "<group>"; };
 		ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions2.swift; sourceTree = "<group>"; };
@@ -217,6 +225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACAE53791C267FA2003F0BB4 /* GameKit.framework in Frameworks */,
 				ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */,
 				ACB33B9E1BC210240019DC7C /* Result.framework in Frameworks */,
 			);
@@ -237,6 +246,8 @@
 		AC62B68A1BA1564800B0EDAE = {
 			isa = PBXGroup;
 			children = (
+				ACAE537A1C268288003F0BB4 /* GameKit */,
+				ACAE53781C267FA2003F0BB4 /* GameKit.framework */,
 				AC62B6941BA1564800B0EDAE /* Products */,
 				ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */,
 				ACB33B9D1BC210240019DC7C /* Result.framework */,
@@ -331,6 +342,7 @@
 				AC5CB4001BFFD554007C5AFD /* stringExtensions.swift */,
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
+				ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */,
 			);
 			path = "Rickety Kate";
 			sourceTree = "<group>";
@@ -368,6 +380,15 @@
 				AC62B6B11BA1564900B0EDAE /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ACAE537A1C268288003F0BB4 /* GameKit */ = {
+			isa = PBXGroup;
+			children = (
+				ACAE537B1C2682AE003F0BB4 /* GameKitHelper.swift */,
+				ACAE53811C278AAC003F0BB4 /* Achievements.swift */,
+			);
+			name = GameKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,6 +445,11 @@
 					AC62B6921BA1564800B0EDAE = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 5CUBLSA9G4;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
 					};
 					AC62B6AB1BA1564900B0EDAE = {
 						CreatedOnToolsVersion = 6.4;
@@ -542,6 +568,7 @@
 				AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */,
 				ACE6DFC91BAA5FD9005B5424 /* CardSprite.swift in Sources */,
 				AC7C9FCE1BB385CA0086AC02 /* Popup.swift in Sources */,
+				ACAE53821C278AAC003F0BB4 /* Achievements.swift in Sources */,
 				AC2AB4CE1BC4AD2A0042BCBC /* ScoreViewModel.swift in Sources */,
 				ACB20FE01BE258DB00718CC0 /* CardStack.swift in Sources */,
 				AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */,
@@ -559,9 +586,11 @@
 				AC7C9FC81BB380A00086AC02 /* CardFan.swift in Sources */,
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
 				AC5CB4011BFFD554007C5AFD /* stringExtensions.swift in Sources */,
+				ACAE537C1C2682AE003F0BB4 /* GameKitHelper.swift in Sources */,
 				AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */,
 				AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */,
 				AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */,
+				ACAE53801C269840003F0BB4 /* RicketyKateNavigationController.swift in Sources */,
 				AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */,
 				AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */,
 				AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */,
@@ -762,8 +791,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Geoff Burns (5CUBLSA9G4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Geoff Burns (5CUBLSA9G4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

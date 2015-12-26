@@ -24,7 +24,10 @@ public protocol IAwarder
     var omnibus : PlayingCard? { get }
     var hooligan : PlayingCard? { get }
     var backgroundCards : [PlayingCard] { get }
+    var leaderboard : LearderBoard { get }
     func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
+    func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
+   
 }
 
 class AwarderBase
@@ -33,7 +36,8 @@ class AwarderBase
     var hooligan_ = 7.of(PlayingCard.Suite.Clubs)
     var omnibus : PlayingCard? = nil
     var hooligan : PlayingCard? = nil
-
+ //   var leaderboard = LearderBoard.RicketyKate
+    
     lazy var cardScores : Dictionary<PlayingCard,Int>  = self.createCardScores()
     lazy var allPoints : Int  = { return self.cardScores.reduce(0) { $0 + ($1.1 > 0 ? $1.1:0)} }()
     var bonusCards : Set<PlayingCard> {
@@ -130,6 +134,8 @@ class SpadesAwarder : AwarderBase, IAwarder
 {
     var shortDescription = "Spade"
     
+    var leaderboard = LearderBoard.Spades
+    
     var backgroundCards : [PlayingCard] {
     let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
         .filter { $0.suite == trumpSuite }
@@ -146,6 +152,17 @@ class SpadesAwarder : AwarderBase, IAwarder
 
     var description = "Rickety Kate (Spade Variant) is a trick taking card game.".localizeAs("Rickety_Kate_Spades")
     
+    
+    func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
+        {
+            switch gameFlavor
+            {
+            case .Soccer : return .SoccerSpades
+            case .Hooligan : return .HooliganSpades
+            case .Bussing : return .BussingSpades
+            case .Straight : return .StraightSpades
+            }
+    }
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
         var result =  Dictionary<PlayingCard,Int>()
@@ -176,7 +193,19 @@ class HeartsAwarder : AwarderBase, IAwarder
 {
     var description = "Rickety Kate (Hearts Variant) is a trick taking card game.".localizeAs("Rickety_Kate_Hearts")
     var shortDescription = "Heart"
-    override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
+    var leaderboard = LearderBoard.Hearts
+    
+    func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
+    {
+        switch gameFlavor
+        {
+        case .Soccer : return .SoccerHearts
+        case .Hooligan : return .HooliganHearts
+        case .Bussing : return .BussingHearts
+        case .Straight : return .StraightHearts
+        }
+    }
+            override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
         var result =  Dictionary<PlayingCard,Int>()
         let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
@@ -223,6 +252,19 @@ class JacksAwarder : AwarderBase, IAwarder
     var description = "Rickety Kate (Jacks Variant) is a trick taking card game".localizeAs("Rickety_Kate_Jacks")
     override var omnibus_ : PlayingCard { return CardName.Queen.of(PlayingCard.Suite.Diamonds)! }
     var shortDescription = "Jack"
+    var leaderboard = LearderBoard.Jacks
+    
+    
+    func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
+    {
+        switch gameFlavor
+        {
+        case .Soccer : return .SoccerJacks
+        case .Hooligan : return .HooliganJacks
+        case .Bussing : return .BussingJacks
+        case .Straight : return .StraightJacks
+        }
+    }
     
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {

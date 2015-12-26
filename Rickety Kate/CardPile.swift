@@ -107,6 +107,15 @@ public class CardPile : PositionedOnTable
             rearrangeFor(card, positionInSpread: CGFloat(i+count),  fullHand: 1)
         }
     }
+    
+    func rearrange()
+    {
+        for (i,card) in cards.enumerate()
+        {
+            rearrangeFor(card, positionInSpread: CGFloat(i),  fullHand: 1)
+        }
+    }
+    
     func replaceWithContentsOf(newCards:[PlayingCard])
     {
         cards = newCards

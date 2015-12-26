@@ -37,6 +37,8 @@ class OptionScreen: MultiPagePopup {
     var separationOfItems =  CGFloat(0.2)
     var startHeight =  CGFloat(0.7)
     
+    var tabNewPage = [ displayOptions, gameCentre ]
+    
     override func onEnter() {
         self.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
         self.noOfPlayers.current = GameSettings.sharedInstance.noOfPlayersAtTable
@@ -103,12 +105,21 @@ class OptionScreen: MultiPagePopup {
         optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps , useNumbersForCourtCards
         ]
         
+        tabNames = ["Options","Gamecentre"]
+        
         arrangeLayoutFor(size)
     }
     
     override func noPageFor(tab:Int) -> Int
     {
-        return optionSettings.numOfPagesOf(noOfItemsOnPage)
+        switch tab
+        {
+        case 0:
+            return optionSettings.numOfPagesOf(noOfItemsOnPage)
+        default :
+            return 1
+            
+        }
     }
     
     override func arrangeLayoutFor(size:CGSize)
@@ -148,15 +159,21 @@ class OptionScreen: MultiPagePopup {
         displayButtons()
         newPage()
     }
-    override func newPage()
+    
+    func gameCentre()
     {
         
-        let settingStart = noOfItemsOnPage*self.pageNo
-        let optionSettingsDisplayed = optionSettings
-            .from(settingStart, forLength: noOfItemsOnPage)
-      
-        let scene = gameScene!
-        let midWidth = CGRectGetMidX(gameScene!.frame)
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate ,
+               controller = appDelegate.window?.rootViewController
+        {
+        GameKitHelper.sharedInstance.showGKGameCenterViewController(
+            controller) { self.tabNo = 0; self.pageNo = 0 ; self.newPage()}
+        }
+    }
+    
+    override func newPage()
+    {
+        if self.tabNo < 0 { return }
         
         for optionSetting in optionSettings
         {
@@ -166,6 +183,23 @@ class OptionScreen: MultiPagePopup {
             }
         }
         
+        
+        let renderPage = self.tabNewPage[self.tabNo](self)
+      
+        renderPage()
+      
+    }
+    func displayOptions()
+    {
+        
+        let settingStart = noOfItemsOnPage*self.pageNo
+        let optionSettingsDisplayed = optionSettings
+            .from(settingStart, forLength: noOfItemsOnPage)
+      
+        let scene = gameScene!
+        let midWidth = CGRectGetMidX(gameScene!.frame)
+        
+     
         for (i, optionSetting) in optionSettingsDisplayed.enumerate()
         {
             optionSetting.name = "Setting" + (i + 1).description

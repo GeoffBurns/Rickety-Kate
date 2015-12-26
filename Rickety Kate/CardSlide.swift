@@ -62,7 +62,7 @@ class CardSlide : CardPile
         let sortedHand = updatedCards.sort()
         cards = ( Array(sortedHand.reverse()))
     }
-    func rearrange()
+    override func rearrange()
     {
         if(scene==nil)
         {

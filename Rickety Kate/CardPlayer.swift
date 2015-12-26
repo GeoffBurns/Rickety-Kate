@@ -84,7 +84,7 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
     static func gamePlayers(noOfPlayers:Int) -> [CardPlayer]
     {
         let noOfComputerPlayers = noOfPlayers - 1
-        return [HumanPlayer.sharedInstance] + Array(computerPlayers[0..<noOfComputerPlayers])
+        return [HumanPlayer()] + Array(computerPlayers[0..<noOfComputerPlayers])
     }
     
     ///////////////////////////////////////
@@ -145,10 +145,10 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
 
 public class HumanPlayer :CardPlayer
 {
-    static let sharedInstance = HumanPlayer()
-    private init() {
+ //   lazy static let sharedInstance = HumanPlayer()
+    public init() {
 
-        super.init(name: "You".localize)
+        super.init(name: GameKitHelper.sharedInstance.displayName )
     }
 }
 

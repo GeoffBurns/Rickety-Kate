@@ -5,7 +5,9 @@
   Created by Geoff Burns on 18/11/2015.
   Copyright © 2015 Geoff Burns. All rights reserved.
 */
-
+Rickety="Raquítico";
+Jack="Sota";
+Jacks="Sotas";
 Spades="Espadas";
 Hearts="Copas";
 Clubs="Bastos";
@@ -30,8 +32,6 @@ Not_Applicable="No aplica";
 None="Ninguno";
 __of__="%1$@ de %2$@";
 Of=" of ";
-Jack="Sota";
-Jacks="Sotas";
 Knight="Caballo";
 Archer="Aarquero";
 Princess="Princesa";

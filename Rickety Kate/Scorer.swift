@@ -70,10 +70,34 @@ class Scorer
          player.currentTotalScore.value = 0
          hasShotMoon = true
          Bus.sharedInstance.send(GameEvent.ShotTheMoon(player.name))
+         GameKitHelper.sharedInstance.reportAchievement(Achievement.ShootingTheMoon)
         }
       }
     return hasShotMoon
     }
+    
+    
+    var leaderboardScore : Int64
+        {
+            
+            let ranked  = players
+                . sort {$0.currentTotalScore.value < $1.currentTotalScore.value}
+                . enumerate()
+            
+            let humans = ranked.filter { $0.1.playerNo == 0 }
+            
+            if let human = humans.first
+            {
+                
+                let beaten = ranked
+                    . map { $0.1.currentTotalScore.value }
+                    . filter { $0 > human.1.currentTotalScore.value}
+                let  beatenScore : Int = beaten.reduce(0) { $0 + $1 }
+                return Int64(GameSettings.sharedInstance.gameWinningScore -  human.1.currentTotalScore.value/2) * Int64(100) / Int64(human.0+1) + Int64(beatenScore)
+            }
+            return 1
+    }
+    
     
     /// Has a player gone over a 100 points
     func hasGameBeenWon()
@@ -106,7 +130,16 @@ class Scorer
     if isGameWon
       {
       recordTheScoresForAGameWin(winner!)
-    
+        
+   //     GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard: LearderBoard.RicketyKate)
+        GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard:  GameSettings.sharedInstance.rules.leaderboard)
+        
+      if winner?.playerNo == 0
+      {
+        GameKitHelper.sharedInstance.reportAchievement(GameSettings.sharedInstance.achievementForWin)
+       
+       
+      }
     
       Bus.sharedInstance.send(GameEvent.WinGame(winner!.name))
       }

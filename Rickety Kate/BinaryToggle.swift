@@ -6,8 +6,6 @@
 //  Copyright © 2015 Geoff Burns. All rights reserved.
 //
 
-
-
 import SpriteKit
 
 /// User input control for integers

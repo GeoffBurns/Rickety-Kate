@@ -21,6 +21,17 @@ public enum LayoutType
     case Pad
     case Portrait
 }
+
+public enum GameFlavor
+{
+    
+    case Hooligan
+    case Soccer
+    case Bussing
+    case Straight
+    
+}
+
 public protocol ICardGameSettings
 {
     var noOfSuitesInDeck : Int { get }
@@ -48,7 +59,7 @@ public protocol ICardGameSettings
     var rules : IAwarder { get  }
     var gameWinningScoreIndex : Int { get }
     var gameType : String { get }
-    
+    var achievementForWin : Achievement  { get }
     func random()
     
     func changeSettings(
@@ -149,6 +160,7 @@ public class DeviceSettings
         return .Phone
     }
 }
+
 /// User controlled options for the game
 public class GameSettings
 {
@@ -161,15 +173,13 @@ public class GameSettings
             }
             return instance!
         }
-        set{
+        set {
                 instance = newValue
         }
     }
-    
     static var backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
-    
-    
 }
+
 /// User controlled options for the game
 class LiveGameSettings : IGameSettings
 {
@@ -330,33 +340,52 @@ class LiveGameSettings : IGameSettings
         }
     
     }
+    
+    var achievementForWin : Achievement
+    {
+            return self.rules.AchievementForWin(gameFlavor)
+    }
+    var gameFlavor : GameFlavor
+        {
+            if includeHooligan
+            {
+                if includeOmnibus
+                {
+                    return .Soccer
+                }
+                
+                return .Hooligan
+                
+            }
+            
+            if includeOmnibus
+            {
+                return .Bussing
+            }
+            return .Straight
+    }
+
+    
+
     var gameType : String {
         
         let gameType = self.rules.trumpSuitePlural
         
-        if includeHooligan
+        switch gameFlavor
         {
-            if includeOmnibus
-            {
-                return "Soccer _".localizeWith( gameType )
-            }
-            
-            return "Hooligan _".localizeWith( gameType )
-        
+        case .Soccer : return "Soccer _".localizeWith( gameType )
+        case .Hooligan : return "Hooligan _".localizeWith( gameType )
+        case .Bussing : return "Bussing _".localizeWith( gameType )
+        case .Straight :
+               if let no = self.deck?.normalSuitesInDeck.count
+                  where self.rules.trumpSuite == PlayingCard.Suite.None
+                            {
+                                return no.letterDescription + " " + gameType
+                            }
+
+               return gameType
         }
-        
-        if includeOmnibus
-            {
-               return "Bussing _".localizeWith( gameType )
-            }
-        if let no = self.deck?.normalSuitesInDeck.count
-             where self.rules.trumpSuite == PlayingCard.Suite.None
-        {
-            return no.letterDescription + " " + gameType
-        }
-            
-            return gameType
-   
+
     }
     var coin : Bool
     {
@@ -519,6 +548,7 @@ public class FakeGameSettings : IGameSettings
     public var deck  : PlayingCard.BuiltCardDeck? = nil
     public var gameWinningScoreIndex = 1
     public var gameType = "Spades"
+    public var achievementForWin = Achievement.StraightSpades
 
     var awarder : IAwarder? = nil
     public lazy var rules : IAwarder  = SpadesAwarder(gameSettings: self)

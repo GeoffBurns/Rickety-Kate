@@ -14,7 +14,7 @@ public class CardTable: GameStateBase
 {
     public var players = [CardPlayer]()
     var scene : CardScene? = nil
-    var playerOne: CardPlayer = HumanPlayer.sharedInstance;
+    var playerOne: CardPlayer = HumanPlayer();
 
     var isInDemoMode = false
     
@@ -23,7 +23,7 @@ public class CardTable: GameStateBase
     private init(players: [CardPlayer],  scene:CardScene) {
         self.players = players
         playerOne = self.players[0]
-        isInDemoMode = !playerOne.isYou
+        isInDemoMode = !(playerOne is HumanPlayer)
         self.scene  = scene
         
 

@@ -76,7 +76,6 @@ class Popup: SKSpriteNode {
     {
         self.removeAllChildren()
     }
-    
 }
 
 class MultiPagePopup : Popup,  Resizable {
@@ -94,14 +93,14 @@ class MultiPagePopup : Popup,  Resizable {
         if self.tabNo < 0 || tabButtons.count <= self.tabNo { return }
         let tabButton = tabButtons[self.tabNo]
         
-        let textureName = (tabButton.name! + "2").symbol
+        let textureName = (tabButton.name! + "2")
         tabButton.texture = SKTexture(imageNamed: textureName)
         let otherTabs = tabButtons
             .filter { $0.name  != tabButton.name }
         
         for otherTab in otherTabs
         {
-            otherTab.texture = SKTexture(imageNamed: (otherTab.name! + "1").symbol)
+            otherTab.texture = SKTexture(imageNamed: (otherTab.name! + "1"))
         }
     }
     
@@ -158,7 +157,7 @@ class MultiPagePopup : Popup,  Resizable {
           for (i,tabName) in tabNames.enumerate()
            {
             let imageName = tabName + (i == tabNo ? "2" : "1")
-            let tabButton = SKSpriteNode(imageNamed: imageName.symbol)
+            let tabButton = SKSpriteNode(imageNamed: imageName)
             tabButton.setScale(ButtonSize.Small.scale)
             tabButton.anchorPoint = CGPoint(x: CGFloat(-i), y: 1.0)
             tabButton.position = CGPoint(x:0.0,y:self.frame.size.height)

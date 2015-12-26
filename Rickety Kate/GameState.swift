@@ -75,7 +75,7 @@ extension SequenceType where Generator.Element == TrickPlay {
     public var winningPlay : TrickPlay?
         {
         let followingTricks = playsFollowingSuite
-        let orderedTricks = followingTricks.sort({ $0.playedCard.value > $1.playedCard.value })
+        let orderedTricks = followingTricks.sort { $0.playedCard.value > $1.playedCard.value }
         if let highest = orderedTricks.first
             {
                 return highest
@@ -111,7 +111,7 @@ extension SequenceType where Generator.Element == PlayingCard {
     public var winningCard : PlayingCard?
         {
             let followingTricks = cardsFollowingSuite
-            let orderedTricks = followingTricks.sort({ $0.value > $1.value })
+            let orderedTricks = followingTricks.sort { $0.value > $1.value }
             if let highest = orderedTricks.first
             {
                 return highest
@@ -245,7 +245,7 @@ public var isLastPlayer : Bool {
     public func createTrickPile(cardCodes:[String]) -> [TrickPlay]
     {
         
-        let player : CardPlayer =  HumanPlayer.sharedInstance
+        let player : CardPlayer =  HumanPlayer()
         return cardCodes.map { TrickPlay(player:player,playedCard:$0.card) }
         
     }
@@ -260,7 +260,7 @@ public var isLastPlayer : Bool {
     }
     public func addNotFollowed(suite:PlayingCard.Suite)
     {
-        gameTracker.notFollowing[suite.rawValue].insert(HumanPlayer.sharedInstance)
+        gameTracker.notFollowing[suite.rawValue].insert(HumanPlayer())
     }
     
 }

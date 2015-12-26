@@ -191,13 +191,13 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
        self.size = size
     
-       if let rulesButton = self.childNodeWithName("Rules1".symbol)
+       if let rulesButton = self.childNodeWithName("Rules1")
           {
           rulesButton.position = CGPoint(x:0.0,y:size.height * 0.95)
           }
         if table.isInDemoMode
         {
-        if let optionsButton = self.childNodeWithName("Options1".symbol)
+        if let optionsButton = self.childNodeWithName("Options1")
           {
             optionsButton.position = CGPoint(x:size.width,y:size.height * 0.95)
             
@@ -215,11 +215,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         }
    
         backgroundFan.tableSize = size
-        backgroundFan.update()
+        backgroundFan.rearrange()
      
         
         table.trickFan.tableSize = size
-        table.trickFan.update()
+        table.trickFan.rearrange()
         
         StatusDisplay.sharedInstance.arrangeLayoutFor(size)
         
@@ -250,8 +250,8 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         {
          self.schedule(delay: 0.4 * Double(i) )
          {
-            player._hand.update()
-            player.wonCards.update()
+            player._hand.rearrange()
+            player.wonCards.rearrange()
          }
         }
     }
@@ -285,6 +285,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
 
         self.schedule(delay: GameSettings.sharedInstance.tossDuration*1.3) { [unowned self]  in
                 self.table.playTrick(self.table.players[self.table.startPlayerNo])
+         //    GameKitHelper.sharedInstance.reportAchievement(Achievement.HooliganHearts)
+            
+            
+     //       GameKitHelper.sharedInstance.reportScore(132, forLeaderBoard: LearderBoard.RicketyKate)
+            GameKitHelper.sharedInstance.reportScore(147, forLeaderBoard:  LearderBoard.Spades)
         }
 
     }
@@ -448,7 +453,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             player = cardsprite.player
             where (fan.name == CardPileType.Passing.description ||
                 fan.name == CardPileType.Hand.description) &&
-                player.isYou
+                player is HumanPlayer
         {
             return true
         }

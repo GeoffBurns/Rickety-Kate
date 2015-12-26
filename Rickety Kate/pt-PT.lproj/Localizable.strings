@@ -5,7 +5,9 @@
  Created by Geoff Burns on 18/11/2015.
  Copyright © 2015 Nereids Gold. All rights reserved.
  */
-
+Rickety="Raquítico";
+Jack="Valete";
+Jacks="Valetes";
 Spades="Espades";
 Hearts="Copas";
 Clubs="Paus";
@@ -30,8 +32,6 @@ Not_Applicable="Not Applicable";
 None="None";
 __of__="%1$@ de %2$@";
 Of=" de ";
-Jack="Valete";
-Jacks="Valetes";
 Knight="Cavaleiro";
 Archer="Arqueiro";
 Princess="Princesa";

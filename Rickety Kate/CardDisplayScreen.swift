@@ -158,16 +158,13 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         {
             pageNo = noPageFor(tabNo) - 1
         }
-   /*     let labels = self
-            .children
-            .filter { $0 is SKLabelNode }
-            .map { $0 as! SKLabelNode }
+        createSlides()
+        displayPage()
+        newPage()
+    }
+    func createSlides()
+    {
         
-        for label in labels
-        {
-            label.removeFromParent()
-        }
-        */
         for slide in slides { slide.discardAll() }
         slides = []
         for i in 0..<noOfSlides
@@ -177,10 +174,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
             slide.position = CGPointMake(size.width * 0.10, size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
             slides.append(slide)
         }
-        displayPage()
-        newPage()
     }
-  
     override func noPageFor(tab:Int) -> Int
     {
         switch tab

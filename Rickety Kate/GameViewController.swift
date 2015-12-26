@@ -34,7 +34,15 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         let width = sizeRect.size.width * scale
         let height = sizeRect.size.height * scale
         let size = CGSizeMake(width, height)
-
+        
+        
+        NSNotificationCenter.defaultCenter() .
+            addObserver(self, selector:
+                Selector("showAuthenticationViewController"), name:
+                PresentAuthenticationViewController, object: nil)
+        
+        GameKitHelper.sharedInstance.authenticateLocalPlayer()
+        
         // Scene should be shown in fullscreen mode
         let scene = RicketyKateGameScene(size: size)
         scene.tableSize = size
@@ -59,10 +67,24 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         skView.presentScene(scene)
         
         gameScene = scene
-        loadAds()
+       // loadAds()
      
     }
-
+    func showAuthenticationViewController() {
+        let gameKitHelper = GameKitHelper.sharedInstance
+        
+        if let authenticationViewController =
+            gameKitHelper.authenticationViewController {
+                
+              self  .
+                    presentViewController(authenticationViewController,
+                        animated: true,
+                        completion: nil)
+        }
+    }
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     override func shouldAutorotate() -> Bool {
         return true
     }

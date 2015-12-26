@@ -142,7 +142,7 @@ func bestEarlyGameCardFor(suite:PlayingCard.Suite,highCard:PlayingCard?, player:
         }
         cardsInChosenSuite = cardsInChosenSuite.filter { $0.value < min!.value }
     }
-    let orderedCards = cardsInChosenSuite.sort({$0.value > $1.value})
+    let orderedCards = cardsInChosenSuite.sort {$0.value > $1.value}
     
     return (orderedCards.first,safety)
 }
