@@ -67,7 +67,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         skView.presentScene(scene)
         
         gameScene = scene
-       // loadAds()
+        loadAds()
      
     }
     func showAuthenticationViewController() {

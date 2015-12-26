@@ -285,11 +285,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
 
         self.schedule(delay: GameSettings.sharedInstance.tossDuration*1.3) { [unowned self]  in
                 self.table.playTrick(self.table.players[self.table.startPlayerNo])
-         //    GameKitHelper.sharedInstance.reportAchievement(Achievement.HooliganHearts)
-            
-            
-     //       GameKitHelper.sharedInstance.reportScore(132, forLeaderBoard: LearderBoard.RicketyKate)
-            GameKitHelper.sharedInstance.reportScore(147, forLeaderBoard:  LearderBoard.Spades)
+
         }
 
     }
