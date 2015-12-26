@@ -131,8 +131,8 @@ class Scorer
       {
       recordTheScoresForAGameWin(winner!)
         
-   //     GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard: LearderBoard.RicketyKate)
-        GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard:  GameSettings.sharedInstance.rules.leaderboard)
+
+      GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard:  GameSettings.sharedInstance.rules.leaderboard)
         
       if winner?.playerNo == 0
       {
