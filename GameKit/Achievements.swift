@@ -27,8 +27,26 @@ public enum Achievement : String
     case EightsWin = "grp.EightsWin"
     case SevensWin = "grp.SevensWin"
     case SixesWin = "grp.SixesWin"
-    case FivesWin = "grp.SFivesWin"
+    case FivesWin = "grp.FivesWin"
+    case None = ""
 
+}
+
+extension Achievement
+{
+    func SevenAchieventFor(number:Int) -> Achievement
+    {
+   
+        switch number
+        {
+        case 5 : return Achievement.FivesWin
+        case 6 : return Achievement.SixesWin
+        case 7 : return Achievement.SevensWin
+        case 8 : return Achievement.EightsWin
+        case 9 : return Achievement.NinesWin
+        default: return Achievement.None
+        }
+    }
 }
 
 public enum LearderBoard : String
@@ -38,6 +56,6 @@ public enum LearderBoard : String
     case Jacks = "grp.Jacks"
     case RicketyKate = "grp.Rickety"
     case Sevens = "grp.Sevens"
-
+    case None = ""
 }
 
