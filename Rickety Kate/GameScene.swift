@@ -106,7 +106,7 @@ extension HasBackgroundSpread
 
 class CardGameScene : CardScene, HasDealersArea {
     
-    var table : RicketyKateCardTable!
+    var table : RicketyKateCardTable! 
     var dealtPiles = [CardPile]()
 
     func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
@@ -121,10 +121,10 @@ class CardGameScene : CardScene, HasDealersArea {
         for player in table.players
         {
             player._hand.discardAll()
-       
-        }
+         }
         table.trickFan.discardAll()
     }
+
 }
 
 protocol HasDraggableCards : class
@@ -172,6 +172,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     var arePassingCards : Bool { return  GameSettings.sharedInstance.willPassCards && !table.isInDemoMode }
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
     var isYourTurn = false;
+    var adHeight = CGFloat(0)
     
     func setupPassYourThreeWorstCardsPhase()
     {
@@ -189,7 +190,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     }
     func arrangeLayoutFor(size:CGSize)
     {
-       self.size = size
+          let width = size.width //* UIScreen.mainScreen().scale
+         let height = (size.height -  adHeight)// * UIScreen.mainScreen().scale
+      
+        let newSize = CGSizeMake(width, height)
+       self.size = newSize
     
        if let rulesButton = self.childNodeWithName("Rules1")
           {
@@ -197,12 +202,14 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
           }
         if table.isInDemoMode
         {
+            
+            playButton1.position = CGPoint(x:size.width*0.25,y:size.height*0.5)
+            playButton2.position = CGPoint(x:size.width*0.75,y:size.height*0.5)
+            
         if let optionsButton = self.childNodeWithName("Options1")
           {
             optionsButton.position = CGPoint(x:size.width,y:size.height * 0.95)
             
-            playButton1.position = CGPoint(x:size.width*0.25,y:size.height*0.5)
-            playButton2.position = CGPoint(x:size.width*0.75,y:size.height*0.5)
 
           }
         }
@@ -215,11 +222,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         }
    
         backgroundFan.tableSize = size
-        backgroundFan.rearrange()
+        backgroundFan.rearrangeFast()
      
         
         table.trickFan.tableSize = size
-        table.trickFan.rearrange()
+        table.trickFan.rearrangeFast()
         
         StatusDisplay.sharedInstance.arrangeLayoutFor(size)
         
@@ -250,7 +257,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         {
          self.schedule(delay: 0.4 * Double(i) )
          {
-            player._hand.rearrange()
+            player._hand.rearrangeFast()
             player.wonCards.rearrange()
          }
         }

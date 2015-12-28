@@ -41,6 +41,8 @@ public class CardTable: GameStateBase
     {
         dealtHands = self.dealHands()
     }
+    
+
 }
 
 /// controls the flow of the game

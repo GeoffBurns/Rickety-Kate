@@ -89,5 +89,32 @@ class CardFan : CardPile
             
         }
     }
+    override func rearrangeFast()
+    {
+        if(scene==nil)
+        {
+            return
+        }
+        var fullHand = CardPile.defaultSpread
+        let noCards = CGFloat(cards.count)
+        var positionInSpread = CGFloat(0)
+        
+        if isFanOpen
+        {
+            positionInSpread = (fullHand - noCards + 1) * 0.5
+            if fullHand < noCards
+            {
+                fullHand = noCards
+                positionInSpread = CGFloat(0)
+            }
+        }
+        for card in cards
+        {
+            rearrangeFastFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
+            positionInSpread++
+            
+        }
+    }
+   
 }
 

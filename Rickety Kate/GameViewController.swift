@@ -14,7 +14,7 @@ import iAd
 class GameViewController: UIViewController , ADBannerViewDelegate {
 
     var adBannerView: ADBannerView = ADBannerView(frame: CGRect.zero)
-    var gameScene : RicketyKateGameScene? = nil
+   // var gameScene : RicketyKateGameScene? = nil
     func loadAds(){
         adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
         adBannerView.delegate = self
@@ -34,7 +34,6 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         let width = sizeRect.size.width * scale
         let height = sizeRect.size.height * scale
         let size = CGSizeMake(width, height)
-        
         
         NSNotificationCenter.defaultCenter() .
             addObserver(self, selector:
@@ -59,17 +58,17 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
             
         /* Set the scale mode to scale to fit the window */
         
-     
         scene.scaleMode = .ResizeFill
-     
         scene.table = RicketyKateCardTable.makeDemo(scene)
             
         skView.presentScene(scene)
         
-        gameScene = scene
+
         loadAds()
      
     }
+    
+    
     func showAuthenticationViewController() {
         let gameKitHelper = GameKitHelper.sharedInstance
         
@@ -118,19 +117,23 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         
         var adHeight = CGFloat()
         
-        if adBannerView.hidden == false
+        if banner.hidden == false
         {
-            adHeight = adBannerView.frame.size.height
+            adHeight = banner.frame.size.height
         }
-        
-        if let scene = gameScene
+    let   skViews = self.view.subviews.filter { $0 is SKView }
+    if let uiView = skViews.first,
+        skView = uiView as? SKView,
+        scene = skView.scene as? RicketyKateGameScene
         {
-            let width = size.width //* UIScreen.mainScreen().scale
-            let height = (size.height -  adHeight)// * UIScreen.mainScreen().scale
-            let anchory = adHeight / height / 2.0
-            let size = CGSizeMake(width, height)
-            
+          //  let width = size.width //* UIScreen.mainScreen().scale
+           // let height = (size.height -  adHeight)// * UIScreen.mainScreen().scale
+            let anchory = -adHeight
+            //let size = CGSizeMake(width, height)
+           
+        
             scene.anchorPoint = CGPointMake(0.0, anchory)
+            scene.adHeight = adHeight
             scene.arrangeLayoutFor(size)
         }
     }

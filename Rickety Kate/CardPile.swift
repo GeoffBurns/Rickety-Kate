@@ -115,7 +115,13 @@ public class CardPile : PositionedOnTable
             rearrangeFor(card, positionInSpread: CGFloat(i),  fullHand: 1)
         }
     }
-    
+    func rearrangeFast()
+    {
+        for (i,card) in cards.enumerate()
+        {
+            rearrangeFastFor(card, positionInSpread: CGFloat(i),  fullHand: 1)
+        }
+    }
     func replaceWithContentsOf(newCards:[PlayingCard])
     {
         cards = newCards
@@ -227,6 +233,72 @@ public class CardPile : PositionedOnTable
          
         }
     }
+    
+    
+    func rearrangeFastFor(card:PlayingCard,positionInSpread:CGFloat,
+        fullHand:CGFloat)
+    {
+        if let cardScene = scene,
+            sprite = createSprite(card,cardScene)
+        {
+            sprite.removeLabel()
+            if sprite.fan !== self { sprite.fan = self }
+            
+            if (sprite.state != CardState.AtRest)
+            {
+                sprite.zPosition = isBackground ? 3 : 140
+                sprite.state = CardState.AtRest
+            }
+            else
+            {
+                sprite.zPosition = self.zPositon
+            }
+            
+            // Stop all running animations before starting new ones
+            sprite.removeAllActions()
+            sprite.positionInSpread = positionInSpread
+            
+            // PlayerOne's cards are larger
+            let newScale =  sizeOfCards.scale
+            
+            let newHeight = newScale * sprite.size.height / sprite.yScale
+            
+            sprite.removeTint()
+            
+            
+            
+            sprite.setScale(sizeOfCards.scale)
+            
+            let rotationAngle = rotationOfCard(positionInSpread, fullHand:fullHand)
+            sprite.zRotation = rotationAngle
+            sprite.position =  sprite.rotateAboutPoint(
+                positionOfCard(positionInSpread, spriteHeight: newHeight, fullHand:fullHand),
+                rotatePoint:cardAnchorPoint,                zRotation:rotationAngle,
+                newScale:sizeOfCards.scale)
+            
+            
+            if isUp && !sprite.isUp
+            {
+        
+                        sprite.flipUp()
+            
+            }
+            else if !isUp && sprite.isUp
+            {
+
+                        
+                        sprite.flipDown()
+                
+            }
+            
+                sprite.zPosition = self.zPositon + positionInSpread
+                
+            
+            
+            
+        }
+    }
+    
     func rearrangeCardsAtRest()
     {
         if(scene==nil)
