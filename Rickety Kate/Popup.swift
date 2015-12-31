@@ -79,9 +79,9 @@ class Popup: SKSpriteNode {
 }
 
 class MultiPagePopup : Popup,  Resizable {
-    var moreButton = SKSpriteNode(imageNamed: "More1".symbol)
-    var backButton = SKSpriteNode(imageNamed: "Back".symbol)
-    var exitButton = SKSpriteNode(imageNamed: "Exit".symbol)
+    var moreButton = SKSpriteNode(imageNamed: "More1")
+    var backButton = SKSpriteNode(imageNamed: "Back")
+    var exitButton = SKSpriteNode(imageNamed: "Exit")
     
     var tabButtons : [SKSpriteNode] = []
     var tabNo = 0 { didSet { updateTab()   }}

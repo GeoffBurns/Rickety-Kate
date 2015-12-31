@@ -8,8 +8,6 @@
 
 import SpriteKit
 
-
-
 /// Are you sure screen
 class ExitScreen: Popup, Resizable {
     var exitLabel = SKLabelNode(fontNamed:"Chalkduster")
@@ -47,23 +45,18 @@ class ExitScreen: Popup, Resizable {
         
         self.addChild(exitLabel)
         
-        
         exitLabel2.text = "you_want_to_exit".localize
         exitLabel2.fontSize = fontsize;
         exitLabel2.position = CGPoint(x:midWidth, y:self.frame.size.height * 0.57);
         
         self.addChild(exitLabel2)
         
-
         yesButton.position = CGPoint(x:self.frame.width * 0.25,y:self.frame.height * 0.4)
         yesButton.setScale(ButtonSize.Small.scale)
         yesButton.zPosition = 100
         yesButton.name = "Yes"
         yesButton.userInteractionEnabled = false
         
-        
-        
-
         noButton.position = CGPoint(x:self.frame.width*0.75,y:self.frame.height * 0.4)
         noButton.setScale(ButtonSize.Small.scale)
         noButton.zPosition = 100
@@ -76,11 +69,8 @@ class ExitScreen: Popup, Resizable {
     
     func arrangeLayoutFor(size:CGSize)
     {
-
         noButton.position = CGPoint(x:size.width*0.75,y:size.height * 0.4)
-        
         yesButton.position = CGPoint(x:size.width * 0.25,y:size.height * 0.4)
-    
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -91,25 +81,21 @@ class ExitScreen: Popup, Resizable {
             let positionInScene = touch.locationInNode(self)
 
             if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
-            {
-
-            if touchedNode.name == "No"
-            {
+              {
+              if touchedNode.name == "No"
+                {
                 button!.unpress()
-                
-            }
-            if touchedNode.name == "Yes"
-            {
+                }
+              if touchedNode.name == "Yes"
+                {
                 touchedNode.texture = SKTexture(imageNamed: "Yes2")
                 
                 if let scene = gameScene as? RicketyKateGameScene
-                {
+                    {
                     scene.resetSceneAsDemo()
-                }
+                    }
                 button!.unpress()
-    
-            }
-
+                }
             }
         }
     }

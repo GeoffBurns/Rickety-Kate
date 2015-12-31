@@ -3,7 +3,7 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 20/12/2015.
-//  Copyright © 2015 Nereids Gold. All rights reserved.
+//  Copyright © 2015 Geoff Burns. All rights reserved.
 //
 
 import GameKit
@@ -53,6 +53,13 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
             
         return localPlayer.alias ?? "You".localize
         }
+    
+    var gameCenterName : String?
+        {
+            let localPlayer = GKLocalPlayer.localPlayer()
+            
+            return localPlayer.alias
+    }
     func authenticateLocalPlayer () {
         
         //1

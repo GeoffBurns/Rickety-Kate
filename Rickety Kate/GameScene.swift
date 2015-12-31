@@ -1,4 +1,4 @@
-//
+ //
 //  GameScene.swift
 //  Rickety Kate
 //
@@ -167,8 +167,8 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     var cardScaleForSelected = CGFloat(1.05)
 
     var backgroundFan = CardFan(name: CardPileType.Background.description)
-    var playButton1 =  SKSpriteNode(imageNamed:"Play1".symbol)
-    var playButton2 =  SKSpriteNode(imageNamed:"Random1".symbol)
+    var playButton1 =  SKSpriteNode(imageNamed:"Play1")
+    var playButton2 =  SKSpriteNode(imageNamed:"Random1")
     var arePassingCards : Bool { return  GameSettings.sharedInstance.willPassCards && !table.isInDemoMode }
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
     var isYourTurn = false;
@@ -215,7 +215,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         }
         else
         {
-            if  let exitButton = self.childNodeWithName("Exit".symbol)
+            if  let exitButton = self.childNodeWithName("Exit")
             {
                 exitButton.position = CGPoint(x:size.width,y:size.height * 0.95)
             }
@@ -499,12 +499,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             {
             /// play button
             case "Play" :
-                touchedNode.texture = SKTexture(imageNamed: "Play2".symbol)
+                touchedNode.texture = SKTexture(imageNamed: "Play2")
                 resetSceneWithInteractiveTable()
                 return true
                 /// play button
             case "Random" :
-                touchedNode.texture = SKTexture(imageNamed: "Random2".symbol)
+                touchedNode.texture = SKTexture(imageNamed: "Random2")
                 GameSettings.sharedInstance.random()
                 resetSceneWithInteractiveTable()
                 return true

@@ -25,6 +25,8 @@
 		AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44D7D01BB203AA00DA92EC /* CardPile.swift */; };
 		AC5CB3B21BFE8445007C5AFD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC5CB3B01BFE8445007C5AFD /* Localizable.strings */; };
 		AC5CB4011BFFD554007C5AFD /* stringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5CB4001BFFD554007C5AFD /* stringExtensions.swift */; };
+		AC5ECDFE1C3506030072903C /* TIp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5ECDFD1C3506030072903C /* TIp.swift */; };
+		AC5ECE001C35091E0072903C /* Usher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5ECDFF1C35091E0072903C /* Usher.swift */; };
 		AC627E891BA30766003E9A8F /* GivenADeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E881BA30766003E9A8F /* GivenADeck.swift */; };
 		AC627E8B1BA30807003E9A8F /* GivenAPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */; };
 		AC627E8D1BA30840003E9A8F /* GivenACardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */; };
@@ -134,6 +136,8 @@
 		AC5CB3B41BFE84A8007C5AFD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		AC5CB3B51BFE84A9007C5AFD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AC5CB4001BFFD554007C5AFD /* stringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = stringExtensions.swift; sourceTree = "<group>"; };
+		AC5ECDFD1C3506030072903C /* TIp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TIp.swift; sourceTree = "<group>"; };
+		AC5ECDFF1C35091E0072903C /* Usher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Usher.swift; sourceTree = "<group>"; };
 		AC627E881BA30766003E9A8F /* GivenADeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenADeck.swift; sourceTree = "<group>"; };
 		AC627E8A1BA30807003E9A8F /* GivenAPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAPlayer.swift; sourceTree = "<group>"; };
 		AC627E8C1BA30840003E9A8F /* GivenACardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenACardTable.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 				AC7C9FCF1BB3886D0086AC02 /* Direction.swift */,
 				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
 				AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */,
+				AC5ECDFF1C35091E0072903C /* Usher.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
 				AC7C9FC61BB380A00086AC02 /* GameSetting.swift */,
@@ -341,6 +346,7 @@
 				ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */,
 				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
 				AC5CB4001BFFD554007C5AFD /* stringExtensions.swift */,
+				AC5ECDFD1C3506030072903C /* TIp.swift */,
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
 			);
@@ -584,6 +590,7 @@
 				ACE6DFBB1BAA32AB005B5424 /* TrickPlayingStrategy.swift in Sources */,
 				AC7C9FCC1BB3850A0086AC02 /* CardState.swift in Sources */,
 				AC7C9FC81BB380A00086AC02 /* CardFan.swift in Sources */,
+				AC5ECE001C35091E0072903C /* Usher.swift in Sources */,
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
 				AC5CB4011BFFD554007C5AFD /* stringExtensions.swift in Sources */,
 				AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */,
@@ -593,6 +600,7 @@
 				AC9E82C51BA686C40064870C /* PlayingCard.swift in Sources */,
 				AC7C9FC21BB378E60086AC02 /* CardPileType.swift in Sources */,
 				AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */,
+				AC5ECDFE1C3506030072903C /* TIp.swift in Sources */,
 				ACB20F9D1BE0C5F500718CC0 /* ArrayExtensions.swift in Sources */,
 				ACB20F9E1BE0C5F500718CC0 /* SequenceTypeExtensions.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,

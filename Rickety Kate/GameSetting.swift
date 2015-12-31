@@ -36,9 +36,11 @@ public protocol ICardGameSettings
 {
     var noOfSuitesInDeck : Int { get }
     var noOfPlayersAtTable  : Int { get }
+    var noOfHumanPlayers : Int { get }
     var noOfCardsInASuite  : Int { get }
     var hasTrumps  : Bool { get }
     var hasJokers : Bool { get }
+    var hasFool : Bool { get }
     var willPassCards  : Bool { get }
     var useNumbersForCourtCards : Bool { get }
     var isAceHigh  : Bool { get }
@@ -75,7 +77,8 @@ public protocol ICardGameSettings
         allowBreakingTrumps:Bool,
         includeHooligan:Bool,
         includeOmnibus:Bool,
-        useNumbersForCourtCards:Bool
+        useNumbersForCourtCards:Bool,
+        noOfHumanPlayers: Int
         ) -> Bool
 }
 enum GameProperties : String
@@ -183,9 +186,11 @@ public class GameSettings
 /// User controlled options for the game
 class LiveGameSettings : IGameSettings
 {
-  var deck : PlayingCard.BuiltCardDeck? = nil
-  var isAceHigh =  true
-  var makeDeckEvenlyDevidable =  true
+    var deck : PlayingCard.BuiltCardDeck? = nil
+    var isAceHigh =  true
+    internal var hasFool =  true
+    internal var noOfHumanPlayers : Int  = 1
+    internal var makeDeckEvenlyDevidable  =  true
     
   var noOfSuitesInDeck : Int {
         
@@ -303,9 +308,9 @@ class LiveGameSettings : IGameSettings
             _speedOfToss = newValue
         }
     }
+    
     var __speedOfToss : Int? = nil
     var _speedOfToss : Int {
-        
         get {
             let defaults = NSUserDefaults.standardUserDefaults()
             let key = GameProperties.speedOfToss.rawValue
@@ -325,7 +330,6 @@ class LiveGameSettings : IGameSettings
     var tossDuration : NSTimeInterval { return tossDurations[speedOfToss] }
     
     var ruleSet : Int {
-        
         get {
             let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.ruleSet.rawValue)
             if result == 0
@@ -338,30 +342,21 @@ class LiveGameSettings : IGameSettings
             NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.ruleSet.rawValue)
             awarder = nil
         }
-    
     }
     
     var achievementForWin : Achievement
     {
             return self.rules.AchievementForWin(gameFlavor)
     }
+    
     var gameFlavor : GameFlavor
         {
-            if includeHooligan
-            {
-                if includeOmnibus
-                {
-                    return .Soccer
-                }
-                
+            if includeHooligan  {
+                if includeOmnibus { return .Soccer }
                 return .Hooligan
-                
             }
             
-            if includeOmnibus
-            {
-                return .Bussing
-            }
+            if includeOmnibus { return .Bussing }
             return .Straight
     }
 
@@ -382,7 +377,6 @@ class LiveGameSettings : IGameSettings
                             {
                                 return no.letterDescription + " " + gameType
                             }
-
                return gameType
         }
 
@@ -421,7 +415,6 @@ class LiveGameSettings : IGameSettings
                 awarder = JacksAwarder(gameSettings: self)
             default :
                 awarder = SpadesAwarder(gameSettings: self)
-    
             }
             
         }
@@ -485,8 +478,8 @@ class LiveGameSettings : IGameSettings
         allowBreakingTrumps:Bool = true,
         includeHooligan:Bool  = false,
         includeOmnibus:Bool  = false,
-        useNumbersForCourtCards:Bool  = false
-        
+        useNumbersForCourtCards:Bool  = false,
+        noOfHumanPlayers: Int = 1
         ) -> Bool
     {
         if self.noOfSuitesInDeck != noOfSuitesInDeck ||
@@ -499,9 +492,9 @@ class LiveGameSettings : IGameSettings
             self.speedOfToss != speedOfToss ||
             self.ruleSet != ruleSet ||
             self.allowBreakingTrumps != allowBreakingTrumps ||
-        self.includeHooligan != includeHooligan ||
-        self.includeOmnibus != includeOmnibus ||
-        self.useNumbersForCourtCards != useNumbersForCourtCards
+            self.includeHooligan != includeHooligan ||
+            self.includeOmnibus != includeOmnibus ||
+            self.useNumbersForCourtCards != useNumbersForCourtCards
             
         {
             self.noOfSuitesInDeck = noOfSuitesInDeck
@@ -518,7 +511,7 @@ class LiveGameSettings : IGameSettings
             self.includeHooligan = includeHooligan
             self.includeOmnibus = includeOmnibus
             self.useNumbersForCourtCards = useNumbersForCourtCards
-            
+            self.noOfHumanPlayers = noOfHumanPlayers
             return true
         }
         return false
@@ -529,6 +522,8 @@ class LiveGameSettings : IGameSettings
 /// For testing
 public class FakeGameSettings : IGameSettings
 {
+    public var hasFool =  true
+    public var noOfHumanPlayers : Int  = 1
     public var noOfSuitesInDeck = 6
     public var noOfPlayersAtTable = 5
     public var noOfCardsInASuite = 15
@@ -581,7 +576,8 @@ public class FakeGameSettings : IGameSettings
         allowBreakingTrumps:Bool,
         includeHooligan:Bool,
         includeOmnibus:Bool,
-        useNumbersForCourtCards:Bool
+        useNumbersForCourtCards:Bool,
+        noOfHumanPlayers: Int = 1
         ) -> Bool
     {
         return false

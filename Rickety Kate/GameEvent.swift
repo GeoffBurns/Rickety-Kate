@@ -13,18 +13,19 @@ public enum GameEvent : Equatable
     case CardDoesNotFollowSuite
     case TrumpsHaveNotBeenBroken
     case WaitYourTurn
+    case TurnOverYourCards
     case SuiteFinished(PlayingCard.Suite)
     case CardPlayed(CardHolderBase,PlayingCard)
     case PlayerKnocked(CardHolderBase)
     case YouNeedToPlayThisFirst(PlayingCard)
+    case TurnFor(CardHolderBase)
     case YourTurn
     case NewGame
     case StartHand
     case NotYourTurn
     case SomethingHasGoneWrong
     case DiscardWorstCards(Int)
-    
-    
+
     var congrats : String  { return "Congratulatons".localize }
     var wow : String  { return "Wow".localize   }
     
@@ -53,16 +54,22 @@ public enum GameEvent : Equatable
                 return  "_ was bashed by the Hooligan Poor _".sayTwiceTo(name)
             case WinOmnibus( let name ) :
                 return "_ just Caught the Bus".sayCongratsTo(name)
-            case WinSpades( let name, let noOfSpades ) :
-                
+            case WinSpades( let name, let noOfSpades ) : 
                 let start = "_ won * _"
                     .with
                     .sayTo(name)
                     .pluralize(noOfSpades,arguements: GameSettings.sharedInstance.rules.shortDescription)
                     .localize
-                
                 return  start + "\n" + "Bad Luck".localize + "."
-            
+            case TurnOverYourCards :
+                return "Swipe to turn over your cards".localize
+            case TurnFor( let player ) :
+                if player is HumanPlayer
+                {
+                    return player.isYou
+                        ? "Your Turn".localize
+                        : "_ Turn".localizeWith(player.name )
+                } else { return nil }
             case NewHand :
                 return nil
             case SomethingHasGoneWrong :

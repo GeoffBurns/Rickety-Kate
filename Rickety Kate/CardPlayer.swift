@@ -70,21 +70,22 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
     public var sideOfTable = SideOfTable.Bottom
     var playerNo = 0
     var wonCards : CardPile = CardPile(name: CardPileType.Won.description)
-    static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3),ComputerPlayer(name:"Rita",margin: 4)]
-    
-    ////////////////////////////////////////////
+ 
+    ///////////////////////////////////////////
     /// Static Functions
     ///////////////////////////////////////////
-    
     static func demoPlayers(noOfPlayers:Int) -> [CardPlayer]
     {
-        return Array(computerPlayers[0..<noOfPlayers])
+        return Usher.players(noOfPlayers,noOfHumans: 0)
     }
     
     static func gamePlayers(noOfPlayers:Int) -> [CardPlayer]
     {
-        let noOfComputerPlayers = noOfPlayers - 1
-        return [HumanPlayer()] + Array(computerPlayers[0..<noOfComputerPlayers])
+        var noOfHumanPlayers = GameSettings.sharedInstance.noOfHumanPlayers
+        noOfHumanPlayers = noOfHumanPlayers < 1 ? 1 : noOfHumanPlayers
+        noOfHumanPlayers = noOfHumanPlayers > noOfPlayers ? noOfPlayers : noOfHumanPlayers
+        
+        return Usher.players(noOfPlayers,noOfHumans: noOfHumanPlayers)
     }
     
     ///////////////////////////////////////
@@ -94,7 +95,6 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
         return self.name.hashValue
     }
     
-
     /////////////////////////////////
     /// Constructors and setup
     /////////////////////////////////
@@ -145,10 +145,12 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
 
 public class HumanPlayer :CardPlayer
 {
- //   lazy static let sharedInstance = HumanPlayer()
     public init() {
-
-        super.init(name: GameKitHelper.sharedInstance.displayName )
+        super.init(name: GameKitHelper.sharedInstance.displayName)
+    }
+    
+    public override init(name:String) {
+        super.init(name: name )
     }
 }
 
@@ -159,8 +161,6 @@ public class ComputerPlayer :CardPlayer
     //////////////////////////////////////
     var strategies = [TrickPlayingStrategy]()
     var passingStrategy = HighestCardsPassingStrategy.sharedInstance
-    
-    
     
     /////////////////////////////////
     /// Constructors and setup

@@ -63,7 +63,6 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
             
         skView.presentScene(scene)
         
-
         loadAds()
      
     }
@@ -117,18 +116,18 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         
         var adHeight = CGFloat()
         
-        if banner.hidden == false
-        {
+     //   if banner.hidden == false
+     //   {
             adHeight = banner.frame.size.height
-        }
+      // }
     let   skViews = self.view.subviews.filter { $0 is SKView }
     if let uiView = skViews.first,
         skView = uiView as? SKView,
         scene = skView.scene as? RicketyKateGameScene
         {
           //  let width = size.width //* UIScreen.mainScreen().scale
-           // let height = (size.height -  adHeight)// * UIScreen.mainScreen().scale
-            let anchory = -adHeight
+            let height = (size.height -  adHeight)// * UIScreen.mainScreen().scale
+            let anchory = -adHeight / height
             //let size = CGSizeMake(width, height)
            
         

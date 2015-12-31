@@ -12,11 +12,11 @@ import SpriteKit
 /// Game Option Setting Screen
 class OptionScreen: MultiPagePopup {
     var isSetup = false
-    var noOfSuites = NumberRangeToggle(min: 3, max: 8, current: 6, text: "Number_Of_Suites".localize)
-    var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 18, current: 14, text: "Number_In_Suite".localize)
-    var noOfPlayers = NumberRangeToggle(min: 3, max:(DeviceSettings.isPad ? 7 : 6), current: 4, text: "Number_Of_Players".localize)
-    
-    var hasJokers = BinaryToggle(current: false, text: "Include_Jokers".localize)
+    var noOfSuites = NumberRangeToggle(min: 3, max: 8, current: 6, text: "Number Of Suites".localize)
+    var noOfCardsInASuite = NumberRangeToggle(min: 10, max: 18, current: 14, text: "Number In Suite".localize)
+    var noOfPlayers = NumberRangeToggle(min: 3, max:(DeviceSettings.isPad ? 7 : 6), current: 4, text: "Number Of Players".localize)
+    var noOfHumanPlayers = NumberRangeToggle(min: 1, max:(DeviceSettings.isPad ? 7 : 6), current: 1, text: "Number of Human Players".localize)
+    var hasJokers = BinaryToggle(current: false, text: "Include Jokers".localize)
     var hasTrumps = BinaryToggle(current: false, text: "Include_Tarot_Trumps".localize)
     var willPassCards = BinaryToggle(current: false, text: "Pass_Worst_Cards".localize)
     var includeHooligan = BinaryToggle(current: false, text: "Include_Hooligan".localize)
@@ -33,15 +33,19 @@ class OptionScreen: MultiPagePopup {
     var ruleSet = ListToggle(list: ["Spades".localize,"Hearts".localize,"Jacks".localize],  current: 1, text: "Rule Set".localize )
  
     var optionSettings = [SKNode]()
+    var multiPlayerSettings = [SKNode]()
+    var gameCenterSettings = [SKNode]()
     var noOfItemsOnPage = 3
     var separationOfItems =  CGFloat(0.2)
     var startHeight =  CGFloat(0.7)
     
-    var tabNewPage = [ displayOptions, gameCentre ]
+//    var tabNewPage = [ displayOptions, gameCentre, displayMultiplayer ]
+     var tabNewPage = [ displayOptions, gameCentre ]
     
     override func onEnter() {
         self.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
         self.noOfPlayers.current = GameSettings.sharedInstance.noOfPlayersAtTable
+        self.noOfHumanPlayers.current = GameSettings.sharedInstance.noOfHumanPlayers
         self.noOfCardsInASuite.current = GameSettings.sharedInstance.noOfCardsInASuite
         self.hasTrumps.current = GameSettings.sharedInstance.hasTrumps
         self.hasJokers.current = GameSettings.sharedInstance.hasJokers
@@ -69,14 +73,15 @@ class OptionScreen: MultiPagePopup {
             noOfCardsInASuite: noOfCardsInASuite.current,
             hasTrumps: hasTrumps.current,
             hasJokers: hasJokers.current,
-            willPassCards:willPassCards.current,
-            speedOfToss:speedOfToss.current,
-            gameWinningScoreIndex:gameWinningScore.current,
-            ruleSet:ruleSet.current,
-            allowBreakingTrumps:allowBreakingTrumps.current,
-            includeHooligan:includeHooligan.current,
-            includeOmnibus:includeOmnibus.current,
-            useNumbersForCourtCards:useNumbersForCourtCards.current
+            willPassCards: willPassCards.current,
+            speedOfToss: speedOfToss.current,
+            gameWinningScoreIndex: gameWinningScore.current,
+            ruleSet: ruleSet.current,
+            allowBreakingTrumps: allowBreakingTrumps.current,
+            includeHooligan: includeHooligan.current,
+            includeOmnibus: includeOmnibus.current,
+            useNumbersForCourtCards: useNumbersForCourtCards.current,
+            noOfHumanPlayers: noOfHumanPlayers.current
             )
         {
             if let scene = gameScene as? RicketyKateGameScene
@@ -86,7 +91,6 @@ class OptionScreen: MultiPagePopup {
         }
       super.onExit()
     }
-
     
     override func  setup(scene:SKNode)
     {
@@ -104,9 +108,9 @@ class OptionScreen: MultiPagePopup {
         
         optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps , useNumbersForCourtCards
         ]
-        
+        multiPlayerSettings = [noOfHumanPlayers]
+     //   tabNames = ["Options","Gamecentre","multiplayer"]
         tabNames = ["Options","Gamecentre"]
-        
         arrangeLayoutFor(size)
     }
     
@@ -118,41 +122,31 @@ class OptionScreen: MultiPagePopup {
             return optionSettings.numOfPagesOf(noOfItemsOnPage)
         default :
             return 1
-            
         }
     }
     
     override func arrangeLayoutFor(size:CGSize)
     {
         
-        
-        if DeviceSettings.isBigDevice
-        {
-            if DeviceSettings.isPortrait
-            {
+        if DeviceSettings.isBigDevice {
+            if DeviceSettings.isPortrait {
                 
                 noOfItemsOnPage = 7
                 separationOfItems =  CGFloat(0.12)
                 startHeight = CGFloat(0.87)
-            }
-            else
-            {
-                
+            } else {
                 noOfItemsOnPage = 5
                 separationOfItems =  CGFloat(0.15)
                 startHeight = CGFloat(0.77)
             }
-        }
-        else
-        {
+        } else {
             noOfItemsOnPage = 3
             separationOfItems =  CGFloat(0.2)
             startHeight = CGFloat(0.7)
         }
         
         super.arrangeLayoutFor(size)
-        if pageNo > noPageFor(tabNo) - 1
-        {
+        if pageNo > noPageFor(tabNo) - 1 {
             pageNo = noPageFor(tabNo) - 1
         }
         super.arrangeLayoutFor(size)
@@ -160,38 +154,32 @@ class OptionScreen: MultiPagePopup {
         newPage()
     }
     
-    func gameCentre()
-    {
-        
-        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate ,
-               controller = appDelegate.window?.rootViewController
-        {
-        GameKitHelper.sharedInstance.showGKGameCenterViewController(
-            controller) { self.tabNo = 0; self.pageNo = 0 ; self.newPage()}
-        }
-    }
-    
     override func newPage()
     {
         if self.tabNo < 0 { return }
-        
-        for optionSetting in optionSettings
-        {
-            if(optionSetting.parent != nil)
-            {
+        for optionSetting in optionSettings {
+            if optionSetting.parent != nil {
                 optionSetting.removeFromParent()
             }
         }
+        for multiplayerSetting in multiPlayerSettings {
+            if multiplayerSetting.parent != nil {
+                multiplayerSetting.removeFromParent()
+            }
+        }
         
-        
+        for gameCenterSetting in gameCenterSettings {
+            if gameCenterSetting.parent != nil {
+                gameCenterSetting.removeFromParent()
+            }
+        }
         let renderPage = self.tabNewPage[self.tabNo](self)
       
         renderPage()
-      
     }
+    /// Allow rule of the game to be changed
     func displayOptions()
     {
-        
         let settingStart = noOfItemsOnPage*self.pageNo
         let optionSettingsDisplayed = optionSettings
             .from(settingStart, forLength: noOfItemsOnPage)
@@ -199,12 +187,46 @@ class OptionScreen: MultiPagePopup {
         let scene = gameScene!
         let midWidth = CGRectGetMidX(gameScene!.frame)
         
-     
-        for (i, optionSetting) in optionSettingsDisplayed.enumerate()
-        {
+        for (i, optionSetting) in optionSettingsDisplayed.enumerate() {
             optionSetting.name = "Setting" + (i + 1).description
             optionSetting.position = CGPoint(x:midWidth,y:scene.frame.height * (startHeight - separationOfItems * CGFloat(i)))
             self.addChild(optionSetting)
+        }
+    }
+    ///
+    func gameCentre()
+    {
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate ,
+            controller = appDelegate.window?.rootViewController
+        {
+            GameKitHelper.sharedInstance.showGKGameCenterViewController(
+                controller) { self.tabNo = 0; self.pageNo = 0 ; self.newPage()}
+        }
+        
+        let fontsize : CGFloat = FontSize.Small.scale
+        let warn = SKLabelNode(fontNamed:"Verdana")
+        warn.name = "Setting1"
+        warn.fontSize = fontsize
+        warn.position = CGPointMake(size.width * 0.50, size.height * 0.50)
+        warn.text = "Having_trouble_connecting_to_Game_Center".localize
+        gameCenterSettings = [warn]
+        self.addChild(warn)
+    }
+    /// display pass the phone multiplayer mode settings
+    func displayMultiplayer()
+    {
+        let settingStart = noOfItemsOnPage*self.pageNo
+        let multiplayerSettingsDisplayed = multiPlayerSettings
+            .from(settingStart, forLength: noOfItemsOnPage)
+        
+        let scene = gameScene!
+        let midWidth = CGRectGetMidX(gameScene!.frame)
+        
+        for (i, multiplayerSetting) in multiplayerSettingsDisplayed.enumerate()
+        {
+            multiplayerSetting.name = "Setting" + (i + 1).description
+            multiplayerSetting.position = CGPoint(x:midWidth,y:scene.frame.height * (startHeight - separationOfItems * CGFloat(i)))
+            self.addChild(multiplayerSetting)
         }
     }
 

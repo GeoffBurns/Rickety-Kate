@@ -32,7 +32,7 @@ class Navigate {
     }
     static func setupExitButton(scene:SKNode)
     {
-        let exitButton = PopupButton(imageNamed:"Exit".symbol, altNamed:"X",popup:ExitScreen())
+        let exitButton = PopupButton(imageNamed:"Exit", altNamed:"X",popup:ExitScreen())
         exitButton.setScale(ButtonSize.Small.scale)
         exitButton.anchorPoint = CGPoint(x: 1.0,  y: 1.0)
         exitButton.position = CGPoint(x:scene.frame.size.width,y:scene.frame.size.height * 0.95)

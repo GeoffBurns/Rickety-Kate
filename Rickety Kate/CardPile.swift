@@ -165,11 +165,7 @@ public class CardPile : PositionedOnTable
                 sprite.zPosition = isBackground ? 3 : 140
                 sprite.state = CardState.AtRest
             }
-            else
-            {
-                sprite.zPosition = self.zPositon
-            }
-            
+     
             // Stop all running animations before starting new ones
             sprite.removeAllActions()
             sprite.positionInSpread = positionInSpread
