@@ -79,7 +79,7 @@ class AwarderBase
             result[hooligan_] = 7
             hooligan = hooligan_
         }
-        if gameSettings!.includeOmnibus
+        if gameSettings!.includeOmnibus 
         {
             result[self.omnibus_] = -10
             omnibus=self.omnibus_
@@ -285,10 +285,11 @@ class JacksAwarder : AwarderBase, IAwarder
     var trumpSuitePlural : String  { return "Jacks".localize }
 
     var backgroundCards : [PlayingCard] {
-        let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
-            .filter { $0.suite == PlayingCard.Suite.Diamonds }
+        var cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
+            .filter { $0.suite == PlayingCard.Suite.Clubs }
             .sort()
             .reverse()
+        
         
         return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
     }

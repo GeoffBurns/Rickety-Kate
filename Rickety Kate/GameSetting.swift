@@ -289,7 +289,10 @@ class LiveGameSettings : IGameSettings
     var includeOmnibus : Bool {
         
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.includeOmnibus.rawValue)
+            let result = NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.includeOmnibus.rawValue)
+            if let deck1 = self.deck {  return result && deck1.setOfSuitesInDeck.contains(PlayingCard.Suite.Diamonds) }
+            
+            return result
         }
         set (newValue) {
             NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.includeOmnibus.rawValue)
