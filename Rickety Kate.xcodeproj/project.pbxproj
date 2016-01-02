@@ -312,7 +312,6 @@
 				AC7C9FCF1BB3886D0086AC02 /* Direction.swift */,
 				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
 				AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */,
-				AC5ECDFF1C35091E0072903C /* Usher.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
 				AC7C9FC61BB380A00086AC02 /* GameSetting.swift */,
@@ -346,9 +345,10 @@
 				ACB20F9F1BE0C64700718CC0 /* SKNodeExtensions2.swift */,
 				ACE6DFC61BAA5563005B5424 /* StatusArea.swift */,
 				AC5CB4001BFFD554007C5AFD /* stringExtensions.swift */,
+				AC62B6961BA1564800B0EDAE /* Supporting Files */,
 				AC5ECDFD1C3506030072903C /* TIp.swift */,
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
-				AC62B6961BA1564800B0EDAE /* Supporting Files */,
+				AC5ECDFF1C35091E0072903C /* Usher.swift */,
 			);
 			path = "Rickety Kate";
 			sourceTree = "<group>";

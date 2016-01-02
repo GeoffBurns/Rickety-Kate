@@ -50,6 +50,7 @@ public protocol ICardGameSettings
     var tossDuration : NSTimeInterval { get  }
     var memoryWarning : Bool { get set }
     
+    func newDeck()
 }
     public protocol IGameSettings : ICardGameSettings
 {
@@ -403,6 +404,8 @@ class LiveGameSettings : IGameSettings
             noOfCardsInASuite = 10 + 5.random
             noOfSuitesInDeck = 5 + 4.random
         }
+        
+        newDeck()
     }
     var awarder : IAwarder? = nil
     var rules : IAwarder {
@@ -458,12 +461,12 @@ class LiveGameSettings : IGameSettings
         }
     }
  
-    init() {
-   
- 
-    deck = PlayingCard.BuiltCardDeck(gameSettings: self)
     
+    func newDeck() {
+         deck = PlayingCard.BuiltCardDeck(gameSettings: self)
     }
+    
+    init() {  newDeck() }
     
     func changeSettings(
         noOfSuitesInDeck:Int = 4,
@@ -563,6 +566,8 @@ public class FakeGameSettings : IGameSettings
         rules  = SpadesAwarder(gameSettings: self)
     }
     public func random() {}
+    public func newDeck() {}
+
     public func changeSettings(
         noOfSuitesInDeck:Int,
         noOfPlayersAtTable:Int,
