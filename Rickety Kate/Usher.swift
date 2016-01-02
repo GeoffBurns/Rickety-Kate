@@ -3,15 +3,19 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 31/12/2015.
-//  Copyright © 2015 Nereids Gold. All rights reserved.
+//  Copyright © 2015 Geoff Burns All rights reserved.
 //
 
 import Foundation
 
+
+/// organize list of players for game
 class Usher {
     
     static let computerPlayers = [ComputerPlayer(name:"Fred",margin: 2),ComputerPlayer(name:"Molly",margin: 3),ComputerPlayer(name:"Greg",margin: 1),ComputerPlayer(name:"Sarah",margin: 4),ComputerPlayer(name:"Warren",margin: 5),ComputerPlayer(name:"Linda",margin: 3),ComputerPlayer(name:"Rita",margin: 4)]
     
+    
+    /// create list of game players
     static func players(noOfPlayers:Int,noOfHumans:Int) -> [CardPlayer]
     {
         if noOfHumans == 0 {
