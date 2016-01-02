@@ -14,7 +14,7 @@ public class CardTable: GameStateBase
 {
     public var players = [CardPlayer]()
     var scene : CardScene? = nil
-    var playerOne: CardPlayer = HumanPlayer();
+    var playerOne: CardPlayer = HumanPlayer()
 
     var isInDemoMode = false
     
@@ -26,23 +26,18 @@ public class CardTable: GameStateBase
         isInDemoMode = !(playerOne is HumanPlayer)
         self.scene  = scene
         
-
         super.init()
         //  setPassedCards()
     }
     var cardTossDuration = GameSettings.sharedInstance.tossDuration*1.8
     
-    func dealHands()->[[PlayingCard]]
-    {
+    func dealHands()->[[PlayingCard]] {
         return GameSettings.sharedInstance.deck!.dealFor(players.count)
     }
     
-    func redealHands()
-    {
+    func redealHands() {
         dealtHands = self.dealHands()
     }
-    
-
 }
 
 /// controls the flow of the game

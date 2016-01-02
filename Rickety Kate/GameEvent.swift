@@ -30,9 +30,6 @@ public enum GameEvent : Equatable
     var congrats : String  { return "Congratulatons".localize }
     var wow : String  { return "Wow".localize   }
     
-    
-
-
     var description : String?
         {
             switch self
@@ -109,6 +106,7 @@ public enum GameEvent : Equatable
                 }
             }
     }
+    
     var line2 : String?
         {
             if let message = description {

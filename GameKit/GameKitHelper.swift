@@ -48,18 +48,26 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
     
     var displayName : String
         {
-        let localPlayer = GKLocalPlayer.localPlayer()
-    
+            let localPlayer = GKLocalPlayer.localPlayer()
             
-        return localPlayer.alias ?? "You".localize
-        }
+            
+            return localPlayer.alias ?? "You".localize
+    }
     
     var gameCenterName : String?
         {
             let localPlayer = GKLocalPlayer.localPlayer()
-            
+            if let name = localPlayer.alias
+            {
+                if name.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 18
+                {
+                    let index: String.Index = name.startIndex.advancedBy(18)
+                    return name.substringToIndex(index)
+                }
+            }
             return localPlayer.alias
     }
+
     func authenticateLocalPlayer () {
         
         //1

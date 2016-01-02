@@ -476,7 +476,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "516"
             endingLineNumber = "516"
-            landmarkName = "changeSettings(_:noOfPlayersAtTable:noOfCardsInASuite:hasTrumps:hasJokers:willPassCards:speedOfToss:gameWinningScoreIndex:ruleSet:allowBreakingTrumps:includeHooligan:includeOmnibus:useNumbersForCourtCards:)"
+            landmarkName = "changeSettings(_:noOfPlayersAtTable:noOfCardsInASuite:hasTrumps:hasJokers:willPassCards:speedOfToss:gameWinningScoreIndex:ruleSet:allowBreakingTrumps:includeHooligan:includeOmnibus:useNumbersForCourtCards:noOfHumanPlayers:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
