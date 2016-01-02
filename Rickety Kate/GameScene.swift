@@ -382,15 +382,16 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     }
     func setupPopupScreensAndButtons()
     {
-
         Navigate.setupRulesButton(self)
         if table.isInDemoMode
         {
             Navigate.setupOptionButton(self)
+            StatusDisplay.sharedInstance.setDemoMode()
         }
         else
         {
            Navigate.setupExitButton(self)
+           StatusDisplay.sharedInstance.setGameMode()
         }
         
         setupPlayButton()

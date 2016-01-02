@@ -18,9 +18,9 @@ class Label : SKLabelNode
 
     var textChangeHandlers = [TextChangeHandler]()
     var fontSizeChangeHandlers = [FontSizeChangeHandler]()
-
+    var afterDisplayAction:dispatch_block_t = {}
     var innerNode : SKLabelNode? = nil
-   
+    var displayTime : NSTimeInterval = 6
     func withShadow() -> Label
     {
         if innerNode != nil
@@ -40,30 +40,66 @@ class Label : SKLabelNode
         
         return self   
     }
-    
+    func withFadeOutAndAction(action:dispatch_block_t) -> Label
+    {
+        
+        afterDisplayAction = action
+        textChangeHandlers.append(startfadeOutThenAction)
+        
+        return self
+    }
+    func withFadeOut() -> Label
+    {
+        textChangeHandlers.append(startfadeOut)
+        
+        return self
+    }
     func withFadeInOut() -> Label
     {
         textChangeHandlers.append(startfadeInOut)
         
         return self
     }
-    
+    func startfadeOut(text: String?)
+        {
+          removeActionForKey("Fade")
+        
+        alpha = 1.0
+        if let t = text  where t != ""{
+        runAction(SKAction.fadeOutWithDuration(displayTime), withKey:"Fade")
+        }
+    }
+    func startfadeOutThenAction(text: String?)
+    {
+        removeActionForKey("Fade")
+        
+        alpha = 1.0
+        if let t = text  where t != ""
+        {
+            let action = SKAction.sequence([
+                    SKAction.fadeOutWithDuration(displayTime),
+                     SKAction.runBlock(afterDisplayAction) 
+                ])
+            
+            runAction(action, withKey:"Fade")
+        }
+    }
     func startfadeInOut(text: String?)
     {
-        removeAllActions()
+         removeActionForKey("Fade")
         
         alpha = 1.0
         if let t = text  where t != ""
         {
             let action = SKAction.repeatActionForever(
                 SKAction.sequence([
-                    SKAction.fadeOutWithDuration(6),
-                    SKAction.waitForDuration(10),
-                    SKAction.fadeInWithDuration(4),
-                    SKAction.waitForDuration(5),
+                    SKAction.fadeOutWithDuration(displayTime),
+                    SKAction.waitForDuration(displayTime),
+                    SKAction.fadeInWithDuration(displayTime),
+                    SKAction.waitForDuration(displayTime),
                     ] )
             )
-            runAction(action)
+            runAction(action, withKey:"Fade")
         }
     }
     

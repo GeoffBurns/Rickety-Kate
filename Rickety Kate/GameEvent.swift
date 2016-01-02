@@ -19,6 +19,7 @@ public enum GameEvent : Equatable
     case PlayerKnocked(CardHolderBase)
     case YouNeedToPlayThisFirst(PlayingCard)
     case TurnFor(CardHolderBase)
+    case ShowTip(Tip)
     case YourTurn
     case NewGame
     case StartHand
@@ -29,6 +30,9 @@ public enum GameEvent : Equatable
     var congrats : String  { return "Congratulatons".localize }
     var wow : String  { return "Wow".localize   }
     
+    
+
+
     var description : String?
         {
             switch self
@@ -70,8 +74,10 @@ public enum GameEvent : Equatable
                         ? "Your Turn".localize
                         : "_ Turn".localizeWith(player.name )
                 } else { return nil }
+            case ShowTip( let tip ) :
+                return tip.description
             case NewHand :
-                return nil
+                    return nil
             case SomethingHasGoneWrong :
                 return nil
             case YourTurn :
@@ -102,6 +108,38 @@ public enum GameEvent : Equatable
                     return "Discard two more cards".localize + "\n" + "Your worst cards".localize
                 }
             }
+    }
+    var line2 : String?
+        {
+            if let message = description {
+                if message == "" {
+                    return ""
+                }
+                let messageLines = message.componentsSeparatedByString("\n")
+                switch (messageLines.count) {
+                case 1 :
+                    return message
+                default :
+                    return messageLines[1]
+                }
+            }
+            return nil
+        }
+    var line1 : String?
+        {
+            if let message = description {
+                if message == "" {
+                    return ""
+                }
+                let messageLines = message.componentsSeparatedByString("\n")
+                switch (messageLines.count) {
+                case 1 :
+                    return ""
+                default :
+                    return messageLines[0]
+                }
+            }
+            return nil
     }
 }
 

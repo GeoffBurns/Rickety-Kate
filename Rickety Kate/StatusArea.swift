@@ -17,8 +17,9 @@ protocol Resizable : class
 // Tells the game player what is going on
 class StatusDisplay : Resizable
 {
-    var noticeLabel = Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
     var noticeLabel2 = Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
+    var noticeLabel = Label(fontNamed:"Chalkduster").withShadow().withFadeOutAndAction
+        {  Bus.sharedInstance.send(GameEvent.ShowTip(Tip.dispenceTip())) }
  
     static let sharedInstance = StatusDisplay()
     private init() { }
@@ -28,6 +29,18 @@ class StatusDisplay : Resizable
         StatusDisplay.sharedInstance.setupStatusArea(scene)
     }
     
+    func setDemoMode()
+    {
+        Tip.tips = Tip.demoTips
+        noticeLabel.displayTime = 4
+        noticeLabel2.displayTime = 4
+    }
+    func setGameMode()
+    {
+        Tip.tips = Tip.gameTips
+        noticeLabel.displayTime = 6
+        noticeLabel2.displayTime = 6
+    }
     func arrangeLayoutFor(size:CGSize)
     {
         let fontsize : CGFloat = FontSize.Huge.scale
@@ -48,40 +61,13 @@ class StatusDisplay : Resizable
 
     noticeLabel.rac_text <~ Bus.sharedInstance.gameSignal
         . filter { $0.description != nil }
-        . map {
-                gameEvent in
-                let message = gameEvent.description!
-                if message == ""
-                  {
-                    return ""
-                  }
-                let messageLines = message.componentsSeparatedByString("\n")
-                switch (messageLines.count)
-                {
-                case 1 :
-                    return message
-                default :
-                    return messageLines[1]
-                }
-        }
-        noticeLabel2.rac_text <~ Bus.sharedInstance.gameSignal
+        . map { $0.line2! }
+       
+        
+    noticeLabel2.rac_text <~ Bus.sharedInstance.gameSignal
             . filter { $0.description != nil }
-            . map {
-                gameEvent in
-                let message = gameEvent.description!
-                if message == ""
-                {
-                    return ""
-                }
-                let messageLines = message.componentsSeparatedByString("\n")
-                switch (messageLines.count)
-                {
-                case 1 :
-                    return ""
-                default :
-                    return messageLines[0]
-                }
-        }
+            . map { $0.line1! }
+        
      
     }
 
