@@ -116,6 +116,7 @@ You_can_not_Play_You_have_to_Knock="You can not Play\nYou have to Knock";
 __Knocked="%@ Knocked";
 player="player";
 Having_trouble_connecting_to_Game_Center="Having trouble connecting to Game Center";
+Show_Tips="Show Tips";
 Try_to_block_other_players_by_holding_back_cards="Try to block other players\nby holding back cards";
 Try_not_to_block_yourself="Try to block yourself by\nholding back cards you will need";
 Tap_cog_symbol_to_build_your_own_deck_of_cards="Tap cog symbol to\ncreate your own deck of cards";

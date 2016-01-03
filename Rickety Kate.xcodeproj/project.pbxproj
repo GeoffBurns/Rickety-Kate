@@ -15,7 +15,6 @@
 		AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */; };
 		AC252A471BA8C53900C0121A /* PlayingCardComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */; };
 		AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */; };
-		AC2AB4CE1BC4AD2A0042BCBC /* ScoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4CD1BC4AD2A0042BCBC /* ScoreViewModel.swift */; };
 		AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */; };
 		AC2AB4D21BC4EB3F0042BCBC /* SKNodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */; };
 		AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */; };
@@ -125,7 +124,6 @@
 		AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIdeOfTable.swift; sourceTree = "<group>"; };
 		AC252A461BA8C53900C0121A /* PlayingCardComparable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingCardComparable.swift; sourceTree = "<group>"; };
 		AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPassingStrategy.swift; sourceTree = "<group>"; };
-		AC2AB4CD1BC4AD2A0042BCBC /* ScoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
 		AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEvent.swift; sourceTree = "<group>"; };
 		AC2AB4D11BC4EB3F0042BCBC /* SKNodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKNodeExtensions.swift; sourceTree = "<group>"; };
 		AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
@@ -337,7 +335,6 @@
 				AC0304031BAEDE7C005263C7 /* RuleScreen.swift */,
 				AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */,
 				ACCB13351BAB1D5700196393 /* Scorer.swift */,
-				AC2AB4CD1BC4AD2A0042BCBC /* ScoreViewModel.swift */,
 				AC7C9FC71BB380A00086AC02 /* Seater.swift */,
 				ACB20F9C1BE0C5F500718CC0 /* SequenceTypeExtensions.swift */,
 				AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */,
@@ -574,7 +571,6 @@
 				AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */,
 				ACE6DFC91BAA5FD9005B5424 /* CardSprite.swift in Sources */,
 				AC7C9FCE1BB385CA0086AC02 /* Popup.swift in Sources */,
-				AC2AB4CE1BC4AD2A0042BCBC /* ScoreViewModel.swift in Sources */,
 				ACB20FE01BE258DB00718CC0 /* CardStack.swift in Sources */,
 				AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */,
 				AC9E82C31BA686C40064870C /* CardPlayer.swift in Sources */,

@@ -17,9 +17,8 @@ protocol Resizable : class
 // Tells the game player what is going on
 class StatusDisplay : Resizable
 {
-    var noticeLabel2 = Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
-    var noticeLabel = Label(fontNamed:"Chalkduster").withShadow().withFadeOutAndAction
-        {  Bus.sharedInstance.send(GameEvent.ShowTip(Tip.dispenceTip())) }
+    var noticeLabel2 = Label(fontNamed:"Chalkduster")
+    var noticeLabel = Label(fontNamed:"Chalkduster")
  
     static let sharedInstance = StatusDisplay()
     private init() { }
@@ -55,6 +54,14 @@ class StatusDisplay : Resizable
     }
     func setupStatusArea(scene: SKNode)
     {
+    noticeLabel2 = GameSettings.sharedInstance.showTips
+            ? Label(fontNamed:"Chalkduster").withShadow().withFadeOut()
+            : Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
+        
+    noticeLabel = GameSettings.sharedInstance.showTips
+            ? Label(fontNamed:"Chalkduster").withShadow().withFadeOutAndAction
+                {  Bus.sharedInstance.send(GameEvent.ShowTip(Tip.dispenceTip())) }
+            : Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
     noticeLabel.resetToScene(scene)
     noticeLabel2.resetToScene(scene)
     arrangeLayoutFor(scene.frame.size)

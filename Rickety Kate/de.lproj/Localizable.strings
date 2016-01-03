@@ -116,6 +116,7 @@ You_can_not_Play_You_have_to_Knock="Sie können nicht spielen\nSie müssen sich 
 __Knocked="%@ übergeben";
 player="spieler";
 Having_trouble_connecting_to_Game_Center="Wir Probleme bei der\nVerbindung mit dem Game Center";
+Show_Tips="Anzeigehinweise";
 Try_to_block_other_players_by_holding_back_cards="Versuchen Sie, die anderen Spieler,\nindem Sie zurück Karten blockieren";
 Try_not_to_block_yourself="Versuchen Sie nicht, sich selbst durch\nZurückhaltung Karten müssen blockieren";
 Tap_cog_symbol_to_build_your_own_deck_of_cards="Drücken Sie die Zahnradsymbol,\num Ihr eigenes Kartenspiel zu erstellen";

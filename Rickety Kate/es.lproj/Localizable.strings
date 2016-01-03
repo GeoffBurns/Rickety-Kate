@@ -116,6 +116,7 @@ You_can_not_Play_You_have_to_Knock="No se puede jugar.\nTienes que pasar";
 __Knocked="%@ Pasado";
 player="jugador";
 Having_trouble_connecting_to_Game_Center="Estamos teniendo problemas\npara conectarse a la Game Center";
+Show_Tips="Mostrar sugerencias";
 Try_to_block_other_players_by_holding_back_cards="Trate de bloquear a otros\njugadores al retener tarjetas";
 Try_not_to_block_yourself="Trate de no bloquear a ti mismo\nal retener tarjetas que necesitará";
 Tap_cog_symbol_to_build_your_own_deck_of_cards="Pulse el símbolo de cremallera\npara crear su propia baraja de cartas";

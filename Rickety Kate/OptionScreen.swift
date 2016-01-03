@@ -19,6 +19,7 @@ class OptionScreen: MultiPagePopup {
     var hasJokers = BinaryToggle(current: false, text: "Include Jokers".localize)
     var hasTrumps = BinaryToggle(current: false, text: "Include_Tarot_Trumps".localize)
     var willPassCards = BinaryToggle(current: false, text: "Pass_Worst_Cards".localize)
+    var showTips = BinaryToggle(current: true, text: "Show Tips".localize)
     var includeHooligan = BinaryToggle(current: false, text: "Include_Hooligan".localize)
     var includeOmnibus = BinaryToggle(current: false, text: "Include_Omnibus".localize)
     var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow_Breaking_Trumps".localize)
@@ -57,6 +58,7 @@ class OptionScreen: MultiPagePopup {
         self.includeHooligan.current = GameSettings.sharedInstance.includeHooligan
         self.includeOmnibus.current = GameSettings.sharedInstance.includeOmnibus
         self.useNumbersForCourtCards.current = GameSettings.sharedInstance.useNumbersForCourtCards
+        self.showTips.current = GameSettings.sharedInstance.showTips
         }
     
     override func exit()
@@ -81,7 +83,9 @@ class OptionScreen: MultiPagePopup {
             includeHooligan: includeHooligan.current,
             includeOmnibus: includeOmnibus.current,
             useNumbersForCourtCards: useNumbersForCourtCards.current,
-            noOfHumanPlayers: noOfHumanPlayers.current
+            noOfHumanPlayers: noOfHumanPlayers.current,
+            showTips:showTips.current
+
             )
         {
             if let scene = gameScene as? RicketyKateGameScene
@@ -106,7 +110,7 @@ class OptionScreen: MultiPagePopup {
         name = "Option Background"
         pageNo = 0
         
-        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, allowBreakingTrumps , useNumbersForCourtCards
+        optionSettings = [self.noOfSuites, noOfCardsInASuite, noOfPlayers, hasJokers, hasTrumps, willPassCards, gameWinningScore,speedOfToss, ruleSet, includeHooligan, includeOmnibus, showTips, allowBreakingTrumps , useNumbersForCourtCards
         ]
         multiPlayerSettings = [noOfHumanPlayers]
      //   tabNames = ["Options","Gamecentre","multiplayer"]
