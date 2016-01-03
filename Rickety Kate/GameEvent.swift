@@ -16,14 +16,12 @@ public enum GameEvent : Equatable
     case TurnOverYourCards
     case SuiteFinished(PlayingCard.Suite)
     case CardPlayed(CardHolderBase,PlayingCard)
-    case PlayerKnocked(CardHolderBase)
+    case PlayerKnocked(CardPlayer)
     case YouNeedToPlayThisFirst(PlayingCard)
-    case TurnFor(CardHolderBase)
+    case TurnFor(CardPlayer)
     case ShowTip(Tip)
-    case YourTurn
     case NewGame
     case StartHand
-    case NotYourTurn
     case SomethingHasGoneWrong
     case DiscardWorstCards(Int)
 
@@ -77,16 +75,12 @@ public enum GameEvent : Equatable
                     return nil
             case SomethingHasGoneWrong :
                 return nil
-            case YourTurn :
-                return "Your Turn".localize
             case NewGame :
                 return "_ Game On".localizeWith(GameSettings.sharedInstance.gameType)
             case StartHand :
                 return nil
             case CardPlayed :
                 return nil
-            case NotYourTurn :
-                return ""
             case TrumpsHaveNotBeenBroken :
                 return "Can not Lead with a _".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
             case CardDoesNotFollowSuite :
@@ -145,17 +139,23 @@ public func ==(lhs: GameEvent, rhs: GameEvent) -> Bool {
     switch (lhs, rhs) {
         
     case let (.WinTrick(la), .WinTrick(ra)): return la == ra
+    case let (.PlayerKnocked(la), .PlayerKnocked(ra)): return la == ra
+    case let (.YouNeedToPlayThisFirst(la), .YouNeedToPlayThisFirst(ra)): return la == ra
+    case let (.SuiteFinished(la), .SuiteFinished(ra)): return la == ra
+    case let (.ShotTheMoon(la), .ShotTheMoon(ra)): return la == ra
     case let (.WinGame(la), .WinGame(ra)): return la == ra
     case let (.WinRicketyKate(la), .WinRicketyKate(ra)): return la == ra
+    case let (.WinHooligan(la), .WinHooligan(ra)): return la == ra
+    case let (.WinOmnibus(la), .WinOmnibus(ra)): return la == ra
     case let (.WinSpades(la,li), .WinSpades(ra,ri)): return la == ra && li == ri
+    case let (.TurnFor(la), .TurnFor(ra)): return la == ra
+    case let (.ShowTip(la), .ShowTip(ra)): return la == ra
     case let (.DiscardWorstCards(la), .DiscardWorstCards(ra)): return la == ra
     case (.NewHand, .NewHand): return true
     case (.CardDoesNotFollowSuite, .CardDoesNotFollowSuite): return true
     case (.WaitYourTurn, .WaitYourTurn): return true
-    case (.YourTurn, .YourTurn): return true
     case (.NewGame, .NewGame): return true
     case (.StartHand, .StartHand): return true
-    case (.NotYourTurn, .NotYourTurn): return true
         
     default: return false
     }

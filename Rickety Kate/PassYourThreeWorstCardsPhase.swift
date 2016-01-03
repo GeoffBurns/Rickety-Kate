@@ -117,7 +117,6 @@ var isCurrentlyActive = true
         passOtherCards()
         takePassedCards()
         isCurrentlyActive  = false
-        Bus.sharedInstance.send(GameEvent.NotYourTurn)
         
     }
     

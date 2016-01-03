@@ -170,6 +170,8 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
                }
             
             } else {
+            
+           
                scene!.schedule(delay: cardTossDuration*1.1) { [unowned self] timer in
                  self.playTrick(nextPlayer)
                }
@@ -238,6 +240,7 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
     
     func playTrick(playerWithTurn: CardPlayer)
     {
+          self.bus.send(GameEvent.TurnFor(playerWithTurn))
         if let computerPlayer = playerWithTurn as? ComputerPlayer
         {
             if let card = computerPlayer.playCard( self)
@@ -249,10 +252,7 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
             print(playerWithTurn.name + " has run out of cards - this shouldn't happen")
             endPlayersTurn(playerWithTurn)
         }
-        else
-        {
-            self.bus.send(GameEvent.YourTurn)
-        }
+
         
     }
 

@@ -171,8 +171,9 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     var playButton2 =  SKSpriteNode(imageNamed:"Random1")
     var arePassingCards : Bool { return  GameSettings.sharedInstance.willPassCards && !table.isInDemoMode }
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
-    var isYourTurn = false;
+
     var adHeight = CGFloat(0)
+    var currentPlayer = MutableProperty<CardPlayer>(CardPlayer(name: "None"))
     
     func setupPassYourThreeWorstCardsPhase()
     {
@@ -319,13 +320,26 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             
              self.startHand()
         }
-        Bus.sharedInstance.gameSignal
-            .observeOn(UIScheduler())
-            .filter { $0 == GameEvent.YourTurn }
-            .observeNext { [unowned self] _ in
+
+      
+   /*     let signal : Signal<CardPlayer,NoError> =  Bus.sharedInstance.gameSignal
+            . filter { switch $0 {case .TurnFor: return true; default: return false } }
+                . map { switch $0 {
+                case GameEvent.TurnFor(let player) : return player
+                default : return CardPlayer(name: "None")
+                    }
+                }
                 
-                 self.isYourTurn = true
-        }
+        self.currentPlayer <~ signal
+ 
+ */
+        self.currentPlayer <~  Bus.sharedInstance.gameSignal
+                                    . filter { switch $0 {case .TurnFor: return true; default: return false } }
+                                    . map { switch $0 {
+                                                case GameEvent.TurnFor(let player) : return player
+                                                default : return CardPlayer(name: "None")
+                                                }
+                                           }
     }
 
     func startHand()
@@ -634,8 +648,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     func transferCardToTrickPile(cardsprite:CardSprite)
     {
         table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card)
-        self.isYourTurn = false
-        Bus.sharedInstance.send(GameEvent.NotYourTurn)
+  
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -654,7 +667,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                     checkPassingPhaseProgess()
                     return;
                     }
-                else if self.isYourTurn
+                else if self.currentPlayer.value is HumanPlayer
                 {
                     if let cardsprite = draggedNode
                         where positionInScene.y > height * 0.3
