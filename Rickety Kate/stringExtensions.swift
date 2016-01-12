@@ -127,7 +127,7 @@ extension String
     }
     public func localizeAs(key:String) -> String
     {
-        return NSLocalizedString(key.underscore, comment: self)
+        return NSLocalizedString(key, comment: self)
     }
     public var underscore : String
     {
@@ -196,10 +196,6 @@ extension String
             return NSLocalizedString(self, comment: self)
     }
     
-    public var local : String
-    {
-            return NSLocalizedString(self, comment: self)
-    }
 
     var isYou : Bool{
        return self=="You".localize

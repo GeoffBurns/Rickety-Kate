@@ -190,7 +190,7 @@ class SpadesAwarder : AwarderBase, IAwarder
 /// Used by the Scorer
 class HeartsAwarder : AwarderBase, IAwarder
 {
-    var description = "Rickety Kate Hearts".local
+    var description = "Rickety Kate Hearts Rules".localize
     var shortDescription = "Heart"
     var leaderboard = LearderBoard.Hearts
     
