@@ -101,9 +101,7 @@ class RuleScreen: MultiPagePopup {
         case 1 :
             return cardDisplay.noPageFor(1)
         case 2 :
-            
             return cardDisplay.noPageFor(2)
-            
         default :
             return 1
         }
@@ -125,6 +123,7 @@ class RuleScreen: MultiPagePopup {
                 self.pageNo = 0
             }
         }
+        
         if self.tabNo > 0
         {
             cardDisplay.tabNo = self.tabNo

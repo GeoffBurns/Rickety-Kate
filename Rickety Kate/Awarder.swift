@@ -36,7 +36,6 @@ class AwarderBase
     var hooligan_ = 7.of(PlayingCard.Suite.Clubs)
     var omnibus : PlayingCard? = nil
     var hooligan : PlayingCard? = nil
- //   var leaderboard = LearderBoard.RicketyKate
     
     lazy var cardScores : Dictionary<PlayingCard,Int>  = self.createCardScores()
     lazy var allPoints : Int  = { return self.cardScores.reduce(0) { $0 + ($1.1 > 0 ? $1.1:0)} }()
@@ -150,7 +149,7 @@ class SpadesAwarder : AwarderBase, IAwarder
     var trumpSuiteSingular = "Spade".localize
     var trumpSuitePlural : String  { return trumpSuite.description }
 
-    var description = "Rickety Kate (Spade Variant) is a trick taking card game.".localizeAs("Rickety_Kate_Spades")
+    var description = "Rickety Kate Spades Rules".localize
     
     
     func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
@@ -191,7 +190,7 @@ class SpadesAwarder : AwarderBase, IAwarder
 /// Used by the Scorer
 class HeartsAwarder : AwarderBase, IAwarder
 {
-    var description = "Rickety Kate (Hearts Variant) is a trick taking card game.".localizeAs("Rickety_Kate_Hearts")
+    var description = "Rickety Kate Hearts".local
     var shortDescription = "Heart"
     var leaderboard = LearderBoard.Hearts
     
@@ -249,7 +248,7 @@ class HeartsAwarder : AwarderBase, IAwarder
 /// Used by the Scorer
 class JacksAwarder : AwarderBase, IAwarder
 {
-    var description = "Rickety Kate (Jacks Variant) is a trick taking card game".localizeAs("Rickety_Kate_Jacks")
+    var description = "Rickety Kate Jacks Rules".localize
     override var omnibus_ : PlayingCard { return CardName.Queen.of(PlayingCard.Suite.Diamonds)! }
     var shortDescription = "Jack"
     var leaderboard = LearderBoard.Jacks

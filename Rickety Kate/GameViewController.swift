@@ -116,10 +116,10 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         
         var adHeight = CGFloat()
         
-     //   if banner.hidden == false
-     //   {
+       if banner.hidden == false
+        {
             adHeight = banner.frame.size.height
-      // }
+       }
     let   skViews = self.view.subviews.filter { $0 is SKView }
     if let uiView = skViews.first,
         skView = uiView as? SKView,

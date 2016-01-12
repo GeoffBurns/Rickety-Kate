@@ -130,8 +130,12 @@ extension String
         return NSLocalizedString(key.underscore, comment: self)
     }
     public var underscore : String
-        {
+    {
             return self.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
+    }
+    public var quote : String
+    {
+            return String(format: "\"%@\"",  self)
     }
     public func localizeWith(arguements:CVarArgType...) -> String
     {
@@ -189,19 +193,14 @@ extension String
     
     public var localize : String
     {
-            return NSLocalizedString(self.underscore, comment: self)
+            return NSLocalizedString(self, comment: self)
+    }
+    
+    public var local : String
+    {
+            return NSLocalizedString(self, comment: self)
     }
 
-    var symbol : String
-        { 
-       /*     if let codeObj = NSLocale.currentLocale().objectForKey(NSLocaleLanguageCode),
-                code = codeObj as? String
-             where code=="en"
-            {
-            return self
-            }*/
-            return self+"_symbol"
-    }
     var isYou : Bool{
        return self=="You".localize
     }

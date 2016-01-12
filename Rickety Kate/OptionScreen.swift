@@ -17,12 +17,12 @@ class OptionScreen: MultiPagePopup {
     var noOfPlayers = NumberRangeToggle(min: 3, max:(DeviceSettings.isPad ? 7 : 6), current: 4, text: "Number Of Players".localize)
     var noOfHumanPlayers = NumberRangeToggle(min: 1, max:(DeviceSettings.isPad ? 7 : 6), current: 1, text: "Number of Human Players".localize)
     var hasJokers = BinaryToggle(current: false, text: "Include Jokers".localize)
-    var hasTrumps = BinaryToggle(current: false, text: "Include_Tarot_Trumps".localize)
-    var willPassCards = BinaryToggle(current: false, text: "Pass_Worst_Cards".localize)
+    var hasTrumps = BinaryToggle(current: false, text: "Include Tarot Trumps".localize)
+    var willPassCards = BinaryToggle(current: false, text: "Pass Worst Cards".localize)
     var showTips = BinaryToggle(current: true, text: "Show Tips".localize)
-    var includeHooligan = BinaryToggle(current: false, text: "Include_Hooligan".localize)
-    var includeOmnibus = BinaryToggle(current: false, text: "Include_Omnibus".localize)
-    var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow_Breaking_Trumps".localize)
+    var includeHooligan = BinaryToggle(current: false, text: "Include Hooligan".localize)
+    var includeOmnibus = BinaryToggle(current: false, text: "Include Omnibus".localize)
+    var allowBreakingTrumps = BinaryToggle(current: true, text: "Allow Breaking Trumps".localize)
     var useNumbersForCourtCards = BinaryToggle(current: false, text: "Use Numbers For Court Cards".localize)
     var speedOfToss = ListToggle(list: ["Very Slow".localize,
         "Slow".localize,
@@ -30,7 +30,7 @@ class OptionScreen: MultiPagePopup {
         "Fast".localize,
         "Very Fast".localize
         ], current: 3, text: "Speed_Of_Cards".localize)
-    var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game_Finishing_Score".localize)
+    var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game Finishing Score".localize)
     var ruleSet = ListToggle(list: ["Spades".localize,"Hearts".localize,"Jacks".localize],  current: 1, text: "Rule Set".localize )
  
     var optionSettings = [SKNode]()

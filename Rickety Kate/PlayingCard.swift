@@ -254,8 +254,11 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         static var values12CardInASuite : [CardValue] {
             return [Ace] + (2...9).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
         }
-        static var values14CardInASuite : [CardValue] {
+     /*   static var values14CardInASuite : [CardValue] {
             return [Ace] + (2...11).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
+        }*/
+        static var values14CardInASuite : [CardValue] {
+            return [Ace] + (2...10).map { Pip($0) } + ["J","KN","Q","K"].map { CourtCard($0) }
         }
         static var values15CardInASuite : [CardValue] {
             return [Ace] + (2...11).map { Pip($0) } + ["J","KN","Q","K"].map { CourtCard($0) }
@@ -317,9 +320,9 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case 14 : return "Temperance".localize
                 case 15 : return "Devil".localize
                 case 16 : return "Tower".localize
-                case 17 : return "The_Star".localize
+                case 17 : return "The Star".localize
                 case 18 : return "Moon".localize
-                case 19 : return "The_Sun".localize
+                case 19 : return "The Sun".localize
                 case 20 : return "Judgement".localize
                 case 21 : return "World".localize
                 default:
