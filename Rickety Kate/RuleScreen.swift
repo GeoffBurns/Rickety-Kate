@@ -20,12 +20,18 @@ class RuleScreen: MultiPagePopup {
         self.gameScene = scene
         color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
         size = scene.frame.size
+        var layoutSize = size
         position = CGPointZero
         anchorPoint = CGPointZero
         let fontsize : CGFloat = FontSize.Medium.scale
         let leading : Int = Int(FontSize.Medium.scale)
         userInteractionEnabled = true
         pageNo = 0
+        if let resize = scene as? Resizable
+        {
+            self.adHeight = resize.adHeight
+            layoutSize = CGSizeMake(size.width, size.height - self.adHeight)
+        }
         if isSetup
         {
          
@@ -34,11 +40,11 @@ class RuleScreen: MultiPagePopup {
         {
         rulesText  = SKMultilineLabel(
             text: GameSettings.sharedInstance.rules.description,
-            labelWidth: Int(scene.frame.width * 0.88),
-            maxHeight:scene.frame.height * 0.75,
-            pageBreak:scene.frame.height * 0.35,
-            pos: CGPoint(x:CGRectGetMidX(scene.frame),
-            y:scene.frame.size.height*0.8),
+            labelWidth: Int(layoutSize.width * 0.88),
+            maxHeight:layoutSize.height * 0.75,
+            pageBreak:layoutSize.height * 0.35,
+            pos: CGPoint(x:layoutSize.width*0.5,
+            y:layoutSize.height*0.8),
             fontSize:fontsize,
             fontColor:UIColor.whiteColor(),
             leading:leading)
@@ -56,35 +62,37 @@ class RuleScreen: MultiPagePopup {
             isSetup = true
             displayButtons()
         }
-    arrangeLayoutFor(size)
-       
-
+ 
+        arrangeLayoutFor(layoutSize,bannerHeight: adHeight)
+ 
+    
     }
     
-    override func arrangeLayoutFor(size:CGSize)
+    override func arrangeLayoutFor(size:CGSize,bannerHeight:CGFloat)
     {
-        self.size = size
         if let text = rulesText
         {
             text.dontUpdate = true
             text.labelWidth =  Int(size.width * 0.88)
-            text.pos = CGPoint(x:size.width*0.5, y:size.height*0.8)
+            text.pos = CGPoint(x:size.width*0.5, y:size.height*0.8 + bannerHeight)
             text.labelHeightMax = size.height * 0.75
             text.pageBreak = size.height * 0.35
             text.dontUpdate = false
             text.update()
         }
-        super.arrangeLayoutFor(size)
+        super.arrangeLayoutFor(size,bannerHeight:bannerHeight)
         
         let nodeNeedingLayoutRearrangement = self
             .children
-            .filter { $0 is MultiPagePopup }
-            .map { $0 as! MultiPagePopup }
+            .filter { $0 is Resizable }
+            .map { $0 as! Resizable }
+        //      .filter { $0 is MultiPagePopup }
+        //      .map { $0 as! MultiPagePopup }
         
         
         for resizing in nodeNeedingLayoutRearrangement
         {
-            resizing.arrangeLayoutFor(size)
+            resizing.arrangeLayoutFor(size,bannerHeight:bannerHeight)
         }
     }
     override func noPageFor(tab:Int) -> Int

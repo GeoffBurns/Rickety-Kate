@@ -35,6 +35,7 @@ public class CardPile : PositionedOnTable
     var zPositon = CGFloat(0)
     static let straightAnchorPoint = CGPoint(x: 0.5,y: 0.5)
     var speed = GameSettings.sharedInstance.tossDuration
+    var bannerHeight = CGFloat(0)
     var cardAnchorPoint : CGPoint { get { return CardPile.straightAnchorPoint }}
     var sprites : [SKNode] { return cards.map { createSprite($0,scene!)! } }
     subscript(index: Int) -> PlayingCard { return cards[index] }
@@ -198,8 +199,11 @@ public class CardPile : PositionedOnTable
                 //    sprite.flipUp()
                 flipAction = (SKAction.sequence([
                     SKAction.scaleXTo(0.0, duration: speed*0.5),
-                    SKAction.runBlock({ [unowned sprite] in
-                        sprite.flipUp()
+                    SKAction.runBlock({ [weak sprite] in
+                        if let s = sprite
+                        {
+                        s.flipUp()
+                        }
                     }) ,
                     SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.4)
                 
@@ -208,20 +212,27 @@ public class CardPile : PositionedOnTable
             }
             else if !isUp && sprite.isUp
             {
-                // sprite.flipDown()
+              
                 flipAction = (SKAction.sequence([
                     SKAction.scaleXTo(0.0, duration: speed*0.5),
-                    SKAction.runBlock({ [unowned sprite] in
-              
-                        sprite.flipDown()
+                    SKAction.runBlock({ [weak sprite] in
+                        if let s = sprite
+                        {
+                            s.flipDown()
+                        }
+                      
                     }) ,
                     SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.4)
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
             
-            sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({ [unowned sprite, unowned self] in
-                sprite.zPosition = self.zPositon + positionInSpread
+            sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({ [weak sprite, weak self] in
+                if let s = self,
+                       sp = sprite
+                {
+                sp.zPosition = s.zPositon + positionInSpread
+                }
     
     
             }) ]))

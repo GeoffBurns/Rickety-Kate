@@ -87,6 +87,7 @@ class MultiPagePopup : Popup,  Resizable {
     var tabNo = 0 { didSet { updateTab()   }}
     var pageNo = 0
     var tabNames : [String] = []
+    var adHeight = CGFloat(0)
     
     func updateTab()
     {
@@ -104,17 +105,20 @@ class MultiPagePopup : Popup,  Resizable {
         }
     }
     
-    func arrangeLayoutFor(size:CGSize)
+    
+    func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
     {
+        
+        adHeight = bannerHeight
         let top : CGFloat = size.isPortrait ? 0.97 : 0.99
-        moreButton.position = CGPoint(x:size.width,y:0.0)
-        backButton.position = CGPoint(x:0.0,y:0.0)
-        exitButton.position = CGPoint(x:size.width,y:size.height * top)
+        moreButton.position = CGPoint(x:size.width,y:bannerHeight)
+        backButton.position = CGPoint(x:0.0,y:bannerHeight)
+        exitButton.position = CGPoint(x:size.width,y:size.height * top + bannerHeight)
         
    
         for tabButton in tabButtons
         {
-            tabButton.position = CGPoint(x:0.0,y:self.frame.size.height * top)
+            tabButton.position = CGPoint(x:0.0,y:size.height * top + bannerHeight)
         }
     }
     

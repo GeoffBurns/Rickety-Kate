@@ -110,11 +110,11 @@ public class ParameterizedAlert : ParameterizedString
         {
             return WrappedParameterizedString(
                 inner: ParameterizedString(format: format, arguements: arguements),
-                outer: "Congratulatons__")
+                outer: "Congratulatons _")
         }
         return WrappedParameterizedString(
             inner: ParameterizedString(format: format, arguements: arguements),
-            outer: "Wow__")
+            outer: "Wow _")
     }
 }
 

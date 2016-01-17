@@ -60,7 +60,27 @@ var isCurrentlyActive = true
       }
    
     }
-    
+    func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
+    {
+        for (passPile,player) in Zip2Sequence( cardsPassed, players )
+        {
+            let side = player.sideOfTable
+            
+            if let passFan = passPile as? CardFan
+            {
+               passFan.bannerHeight = bannerHeight
+                passFan.tableSize = size
+                passFan.rearrangeFast()
+            }
+            else
+            {
+                passPile.position = side.positionOfPassingPile( 80, width: size.width, height: size.height)
+                passPile.bannerHeight = bannerHeight
+                passPile.tableSize = size
+                passPile.rearrangeFast()
+            }
+        }
+    }
     func takePassedCards()
     {
     

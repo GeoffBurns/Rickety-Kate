@@ -1,4 +1,4 @@
- //
+//
 //  GameScene.swift
 //  Rickety Kate
 //
@@ -58,8 +58,10 @@ extension PositionedOnTable
 
 extension HasDealersArea
 {
-    func setupDealersAreaFor(noOfPlayers:Int,width: CGFloat , height: CGFloat )
+    func setupDealersAreaFor(noOfPlayers:Int,size:CGSize)
     {
+        let width = size.width
+        let height = size.height
         dealtPiles = []
         let hSpacing = CGFloat(noOfPlayers) * 2
         let directions = [Direction.Down,Direction.Right,Direction.Right,Direction.Up,Direction.Up,Direction.Left,Direction.Left,Direction.Left,Direction.Left,Direction.Left,Direction.Left]
@@ -109,9 +111,9 @@ class CardGameScene : CardScene, HasDealersArea {
     var table : RicketyKateCardTable! 
     var dealtPiles = [CardPile]()
 
-    func createCardPilesToProvideStartPointForCardAnimation(width: CGFloat , height: CGFloat )
+    func createCardPilesToProvideStartPointForCardAnimation(size:CGSize )
     {
-        setupDealersAreaFor(table.players.count,width: width , height: height )
+        setupDealersAreaFor(table.players.count,size:size )
         deal(table.dealtHands)
     }
 
@@ -189,27 +191,28 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             player.setup(self, sideOfTable: seat, playerNo: i,isPortrait: self.isPortrait)
         }
     }
-    func arrangeLayoutFor(size:CGSize)
+    func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
     {
-          let width = size.width //* UIScreen.mainScreen().scale
-         let height = (size.height -  adHeight)// * UIScreen.mainScreen().scale
+    let width = size.width
+    let height = size.height -  bannerHeight
       
-        let newSize = CGSizeMake(width, height)
-       self.size = newSize
-    
-       if let rulesButton = self.childNodeWithName("Rules1")
+    let newSize = CGSizeMake(width, height)
+     //  self.size = newSize
+        
+      //  let bannerHeight = adHeight
+    if let rulesButton = self.childNodeWithName("Rules1")
           {
-          rulesButton.position = CGPoint(x:0.0,y:size.height * 0.95)
+          rulesButton.position = CGPoint(x:0.0,y:size.height )
           }
-        if table.isInDemoMode
+    if table.isInDemoMode
         {
             
-            playButton1.position = CGPoint(x:size.width*0.25,y:size.height*0.5)
-            playButton2.position = CGPoint(x:size.width*0.75,y:size.height*0.5)
+            playButton1.position = CGPoint(x:width*0.25,y:height*0.5+adHeight)
+            playButton2.position = CGPoint(x:width*0.75,y:height*0.5+adHeight)
             
         if let optionsButton = self.childNodeWithName("Options1")
           {
-            optionsButton.position = CGPoint(x:size.width,y:size.height * 0.95)
+            optionsButton.position = CGPoint(x:size.width,y:size.height)
             
 
           }
@@ -218,28 +221,32 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         {
             if  let exitButton = self.childNodeWithName("Exit")
             {
-                exitButton.position = CGPoint(x:size.width,y:size.height * 0.95)
+                exitButton.position = CGPoint(x:size.width,y:size.height )
             }
         }
    
-        backgroundFan.tableSize = size
+        backgroundFan.bannerHeight = bannerHeight
+        backgroundFan.tableSize = newSize
         backgroundFan.rearrangeFast()
-     
         
-        table.trickFan.tableSize = size
+        
+        table.trickFan.bannerHeight = bannerHeight
+        table.trickFan.tableSize = newSize
         table.trickFan.rearrangeFast()
         
-        StatusDisplay.sharedInstance.arrangeLayoutFor(size)
+        
+        self.cardPassingPhase.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
+        StatusDisplay.sharedInstance.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
         
         let seats = size.isPortrait ? Seater.portraitSeatsFor(table.players.count) : Seater.seatsFor(table.players.count)
         for (player,seat) in Zip2Sequence(table.players,seats)
         {
-            player.setPosition(size,sideOfTable: seat)
+            player.setPosition(newSize,sideOfTable: seat)
         }
         
         for (player,score) in Zip2Sequence(table.players,ScoreDisplay.sharedInstance.scoreLabel)
         {
-          score.position = ScoreDisplay.scorePosition(player.sideOfTable, scene: self)
+          score.position = ScoreDisplay.scorePosition(player.sideOfTable, size: newSize, bannerHeight:adHeight )
           score.zRotation = ScoreDisplay.scoreRotation(player.sideOfTable)
         }
         
@@ -247,25 +254,28 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             .children
             .filter { $0 is Resizable }
             .map { $0 as! Resizable }
-      //      .filter { $0 is MultiPagePopup }
-      //      .map { $0 as! MultiPagePopup }
+   
         
         for resizing in nodeNeedingLayoutRearrangement
         {
-        resizing.arrangeLayoutFor(size)
+        resizing.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
         }
         for (i,player) in table.players.enumerate()
         {
          self.schedule(delay: 0.4 * Double(i) )
          {
+            player._hand.bannerHeight = bannerHeight
+            player._hand.tableSize = newSize
             player._hand.rearrangeFast()
+            player.wonCards.bannerHeight = bannerHeight
+            player.wonCards.tableSize = newSize
             player.wonCards.rearrange()
          }
         }
     }
 
     
-    func rearrangeCardImagesInHandsWithAnimation(width: CGFloat , height: CGFloat )
+    func rearrangeCardImagesInHandsWithAnimation()
     {
         for player in table.players
         {
@@ -291,11 +301,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
         fillBackgroundSpreadWith(trickBackgroundCards)
 
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration*1.3) { [unowned self]  in
-                self.table.playTrick(self.table.players[self.table.startPlayerNo])
-
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*1.3) { [weak self]  in
+            if let s = self
+            {
+                s.table.playTrick(s.table.players[s.table.startPlayerNo])
+            }
         }
-
     }
     
     func setupNewGameArrangement()
@@ -303,22 +314,23 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         Bus.sharedInstance.gameSignal
             .observeOn(UIScheduler())
             .filter { $0 == GameEvent.NewHand }
-            .observeNext { [unowned self] _ in
-   
-            for player in self.table.players
-            {
-                player.wonCards.clear()
-                for card in player.hand
+            .observeNext { [weak self] _ in
+                if let s = self
+                {
+                    for player in s.table.players
                     {
-                        if let sprite = self.cardSprite(card)
+                        player.wonCards.clear()
+                        for card in player.hand
                         {
-                    //    sprite.flipDown()
-                        sprite .player = player
+                          if let sprite = s.cardSprite(card)
+                            {
+                                sprite .player = player
+                            }
                         }
-                     }
-            }
+                    }
             
-             self.startHand()
+                    s.startHand()
+                }
         }
 
       
@@ -344,31 +356,28 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
 
     func startHand()
     {
-        let width = self.frame.size.width
-        let height = self.frame.size.height
-        
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.5) { [unowned self]  in
-
-            self.rearrangeCardImagesInHandsWithAnimation(width,  height: height)
-            
-            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
-            if self.cardPassingPhase.isCurrentlyActive
-            {
-                self.fillBackgroundSpreadWith(self.threeWorstBackgroundCards)
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.5) { [weak self]  in
+          if let s = self
+          {
+            s.rearrangeCardImagesInHandsWithAnimation()
+            s.cardPassingPhase.isCurrentlyActive = s.arePassingCards
+            if s.cardPassingPhase.isCurrentlyActive
+               {
+                s.fillBackgroundSpreadWith(s.threeWorstBackgroundCards)
                 Bus.sharedInstance.send(GameEvent.NewGame)
+               }
             }
         }
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration*2.2) { [unowned self]  in
-            
-            
-            self.cardPassingPhase.isCurrentlyActive = self.arePassingCards
-            if self.cardPassingPhase.isCurrentlyActive
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*2.2) { [weak self]  in
+          if let s = self
             {
+            s.cardPassingPhase.isCurrentlyActive = s.arePassingCards
+            if s.cardPassingPhase.isCurrentlyActive
+              {
                 Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
-            }
-            else
-            {
-                self.startTrickPhase()
+              } else {
+                s.startTrickPhase()
+              }
             }
         }
   
@@ -378,14 +387,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
         if table.isInDemoMode
         {
-        playButton1.position = CGPoint(x:self.frame.size.width*0.25,y:self.frame.size.height*0.5)
-  
+   
         playButton1.name = "Play"
         playButton1.setScale(ButtonSize.Big.scale)
         playButton1.zPosition = 200
         playButton1.userInteractionEnabled = false
         self.addChild(playButton1)
-        playButton2.position = CGPoint(x:self.frame.size.width*0.75,y:self.frame.size.height*0.5)
             
         playButton2.name = "Random"
         playButton2.setScale(ButtonSize.Big.scale)
@@ -452,8 +459,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         seatPlayers()
         cardPassingPhase.setupCardPilesSoPlayersCanPassTheir3WorstCards()
         table.setupCardPilesSoPlayersCanPlayTricks()
-        createCardPilesToProvideStartPointForCardAnimation(self.frame.size.width,  height: self.frame.size.height)
+        
+        let s = UIScreen.mainScreen().bounds.size
+        createCardPilesToProvideStartPointForCardAnimation(s)
         ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
+        arrangeLayoutFor(s,bannerHeight: self.adHeight)
         table.dealNewCardsToPlayersThen {
             self.setupNewGameArrangement()
             self.startHand()
@@ -484,18 +494,23 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
         discard()
         
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration) { [unowned self] in
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration) { [weak self] in
+             if let s = self,
+                    oldScene = s.scene,
+                    view = oldScene.view
+                {
                 let transition = SKTransition.crossFadeWithDuration(0.5)
-                let scene = RicketyKateGameScene(size: self.scene!.size)
+                let scene = RicketyKateGameScene(size: oldScene.size)
                 
                 scene.scaleMode = SKSceneScaleMode.ResizeFill
              
                 scene.table = isInteractive ?
                     RicketyKateCardTable.makeTable(scene) :
                     RicketyKateCardTable.makeDemo(scene)
-                    
-                self.scene!.view!.presentScene(scene, transition: transition)
+                scene.adHeight = s.adHeight
+                view.presentScene(scene, transition: transition)
                 }
+        }
     }
     func resetSceneWithInteractiveTable()
     {

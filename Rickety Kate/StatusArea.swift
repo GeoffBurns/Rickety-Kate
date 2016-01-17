@@ -12,11 +12,13 @@ import ReactiveCocoa
 
 protocol Resizable : class
 {
-      func arrangeLayoutFor(size:CGSize)
+     var adHeight : CGFloat { get }
+     func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
 }
 // Tells the game player what is going on
 class StatusDisplay : Resizable
 {
+    var adHeight = CGFloat(0.0)
     var noticeLabel2 = Label(fontNamed:"Chalkduster")
     var noticeLabel = Label(fontNamed:"Chalkduster")
  
@@ -40,12 +42,13 @@ class StatusDisplay : Resizable
         noticeLabel.displayTime = 6
         noticeLabel2.displayTime = 6
     }
-    func arrangeLayoutFor(size:CGSize)
+    func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
     {
         let fontsize : CGFloat = FontSize.Huge.scale
-        noticeLabel.position = CGPoint(x:size.width * 0.5, y:size.height * 0.33);
+        adHeight = bannerHeight
+        noticeLabel.position = CGPoint(x:size.width * 0.5, y:size.height * 0.33 + bannerHeight);
     
-        noticeLabel2.position = CGPoint(x:size.width * 0.5, y:size.height * 0.68);
+        noticeLabel2.position = CGPoint(x:size.width * 0.5, y:size.height * 0.68 + bannerHeight);
         
         
         noticeLabel.fontSize = fontsize;
@@ -64,7 +67,7 @@ class StatusDisplay : Resizable
             : Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
     noticeLabel.resetToScene(scene)
     noticeLabel2.resetToScene(scene)
-    arrangeLayoutFor(scene.frame.size)
+    arrangeLayoutFor(scene.frame.size,bannerHeight: 0.0)
 
     noticeLabel.rac_text <~ Bus.sharedInstance.gameSignal
         . filter { $0.description != nil }

@@ -43,8 +43,10 @@ class CardFan : CardPile
     }
     override func positionOfCard(positionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
     {
-        return sideOfTable.positionOfCard(positionInSpread, spriteHeight: spriteHeight,
+        
+        let result =  sideOfTable.positionOfCard(positionInSpread, spriteHeight: spriteHeight,
             width: tableSize.width, height: tableSize.height, fullHand:fullHand)
+        return CGPointMake(result.x,result.y + self.bannerHeight)
     }
     override func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
     {

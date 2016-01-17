@@ -13,14 +13,27 @@ import iAd
 
 class GameViewController: UIViewController , ADBannerViewDelegate {
 
+    let transition = SKTransition.fadeWithDuration(1)
     var adBannerView: ADBannerView = ADBannerView(frame: CGRect.zero)
-   // var gameScene : RicketyKateGameScene? = nil
+
     func loadAds(){
+        
+        
+    //    NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideBannerAd", name: "hideadsID", object: nil)
+    //    NSNotificationCenter.defaultCenter().addObserver(self, selector: "showBannerAd", name: "showadsID", object: nil)
+
+
         adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
         adBannerView.delegate = self
         adBannerView.hidden = true
-        self.canDisplayBannerAds = true
+        
+       // set self.canDisplayBannerAds to true 
+       // or use ADBannerView and ADBannerViewDelegate
+       // don't do both
+       // self.canDisplayBannerAds = true
         view.addSubview(adBannerView)
+        
+ //       NSNotificationCenter.defaultCenter().postNotificationName("showadsID", object: nil)
     }
 
     override func viewDidLoad() {
@@ -111,29 +124,59 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
   
     }
     
+    /*
+    func showBannerAd() {
+        adBannerView.hidden = false
+        resize(adBannerView)
+        let bannerHeight = adBannerView.bounds.height
+        
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1) // Time it takes the animation to complete
+        adBannerView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - bannerHeight, 0, 0) // End position of the animation
+        UIView.commitAnimations()
+        NSLog("show Ad");
+    }
     
-   func resize(banner: ADBannerView, size:CGSize = UIScreen.mainScreen().applicationFrame.size) {
+    func hideBannerAd() {
+        adBannerView.hidden = true
+        
+        let bannerHeight = adBannerView.bounds.height
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1) // Time it takes the animation to complete
+        adBannerView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height + bannerHeight, 0, 0) // End position of the animation
+        UIView.commitAnimations()
+        resize(nil)
+        NSLog("hide Ad");
+    }
+
+*/
+
+   func resize(banner: ADBannerView?, size:CGSize = UIScreen.mainScreen().applicationFrame.size) {
         
         var adHeight = CGFloat()
-        
-       if banner.hidden == false
+    
+       if let b = banner
+     //     where b.bannerLoaded
+        where b.hidden == false
         {
-            adHeight = banner.frame.size.height
+            adHeight = b.frame.size.height
        }
+    if let uiView = self.view,
+        skView = uiView as? SKView,
+        scene = skView.scene as? RicketyKateGameScene
+    {
+        scene.adHeight = adHeight
+        scene.arrangeLayoutFor(size,bannerHeight: adHeight)
+        return
+    }
     let   skViews = self.view.subviews.filter { $0 is SKView }
     if let uiView = skViews.first,
         skView = uiView as? SKView,
         scene = skView.scene as? RicketyKateGameScene
         {
-          //  let width = size.width //* UIScreen.mainScreen().scale
-            let height = (size.height -  adHeight)// * UIScreen.mainScreen().scale
-            let anchory = -adHeight / height
-            //let size = CGSizeMake(width, height)
-           
-        
-            scene.anchorPoint = CGPointMake(0.0, anchory)
             scene.adHeight = adHeight
-            scene.arrangeLayoutFor(size)
+            
+            scene.arrangeLayoutFor(size,bannerHeight: adHeight)
         }
     }
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
@@ -142,18 +185,23 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     }
  //iAd
     func bannerViewWillLoadAd(banner: ADBannerView!) {
-
+         NSLog("banner will load");
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-        
+       adBannerView.hidden = false
+     /*   UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1) // Time it takes the animation to complete
+        adBannerView.alpha = 1 // Fade in the animation
+        UIView.commitAnimations() */
        resize(banner);
+         NSLog("banner loaded");
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         
-          resize(banner);
-        
+      //   resize(banner);
+         NSLog("banner Action Did Finish");
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
@@ -162,8 +210,16 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+       adBannerView.hidden = true
+    /*    UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1)
+        adBannerView.alpha = 0
+        UIView.commitAnimations()*/
+        let status = banner.bannerLoaded ? "error but banner loaded" :"banner unloaded"
+        NSLog(status);
         
-      //   resize(banner);
+         resize(banner);
+         NSLog(error.debugDescription);
     
 }
 }

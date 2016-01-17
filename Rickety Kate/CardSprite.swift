@@ -24,7 +24,6 @@ class CardSprite : SKSpriteNode
             where f.player != nil {
                 player = f.player
             }
-
         }
     }
     var player : CardHolderBase? = nil
@@ -121,7 +120,6 @@ class CardSprite : SKSpriteNode
     }
     /// changing the anchorpoint is not something you can do with a SKAction
     /// therefore changing the anchorpoint without causing the sprite to jump requires finess
-
     func removeLabel()
     {
         if let description = label
@@ -143,13 +141,16 @@ class CardSprite : SKSpriteNode
         label = SKLabelNode(text:self.card.description)
         // let originalScale = self.yScale
         
-        label!.position = CGPoint(x: 0.0, y:  self.size.height * 0.37)
-        label!.fontColor = UIColor.blackColor()
-        label!.fontName = "Verdana"
-        label!.fontSize = 11
+        if let l = label
+        {
+        l.position = CGPoint(x: 0.0, y:  self.size.height * 0.44 / self.yScale)
+        l.fontColor = UIColor.blackColor()
+        l.fontName = "Verdana"
+        l.fontSize = 11
       
-        label!.zPosition =  0.7
-        self.addChild(label!)
+        l.zPosition =  0.7
+        self.addChild(l)
+        }
     
     }
     func tintRed()
@@ -279,7 +280,6 @@ class CardSprite : SKSpriteNode
             {
                 letterBackground = nil
                 localLabel = nil
-                
             }
         }
     }

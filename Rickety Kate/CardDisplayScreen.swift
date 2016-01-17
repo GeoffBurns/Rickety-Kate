@@ -92,7 +92,8 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     
     override func setup(scene:SKNode)
     {
-        
+        size = scene.frame.size
+        var layoutSize = size
         pageNo = 0
         tabNo = -1
         cards = GameSettings.sharedInstance.deck!.orderedDeck
@@ -112,7 +113,12 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
    
            isSetup = true
           }
-        arrangeLayoutFor(size)
+        if let resize = scene as? Resizable
+        {
+            self.adHeight = resize.adHeight
+            layoutSize = CGSizeMake(size.width, size.height - self.adHeight)
+        }
+        arrangeLayoutFor(layoutSize,bannerHeight: adHeight)
     }
     func displayTitle()
     {
@@ -131,9 +137,8 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
        displayButtons()
     }
     
-    override func arrangeLayoutFor(size:CGSize)
+    override func arrangeLayoutFor(size:CGSize,bannerHeight:CGFloat)
     {
-        self.size = size
         switch DeviceSettings.layout
         {
             case .Phone :
@@ -153,7 +158,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
                   slideLabelStart =  0.865
         }
 
-        super.arrangeLayoutFor(size)
+        super.arrangeLayoutFor(size,bannerHeight: bannerHeight)
         if pageNo > noPageFor(tabNo) - 1
         {
             pageNo = noPageFor(tabNo) - 1
@@ -164,7 +169,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     }
     func createSlides()
     {
-        
         for slide in slides { slide.discardAll() }
         slides = []
         for i in 0..<noOfSlides

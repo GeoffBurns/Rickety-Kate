@@ -102,6 +102,7 @@ class OptionScreen: MultiPagePopup {
         self.gameScene = scene
         color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
         size = scene.frame.size
+        var layoutSize = size
         position = CGPointZero
         anchorPoint = CGPointZero
         
@@ -115,7 +116,12 @@ class OptionScreen: MultiPagePopup {
         multiPlayerSettings = [noOfHumanPlayers]
      //   tabNames = ["Options","Gamecentre","multiplayer"]
         tabNames = ["Options","Gamecentre"]
-        arrangeLayoutFor(size)
+        if let resize = scene as? Resizable
+        {
+            self.adHeight = resize.adHeight
+            layoutSize = CGSizeMake(size.width, size.height - self.adHeight)
+        }
+        arrangeLayoutFor(layoutSize,bannerHeight: adHeight)
     }
     
     override func noPageFor(tab:Int) -> Int
@@ -129,7 +135,7 @@ class OptionScreen: MultiPagePopup {
         }
     }
     
-    override func arrangeLayoutFor(size:CGSize)
+    override func arrangeLayoutFor(size:CGSize,bannerHeight:CGFloat)
     {
         
         if DeviceSettings.isBigDevice {
@@ -149,11 +155,12 @@ class OptionScreen: MultiPagePopup {
             startHeight = CGFloat(0.7)
         }
         
-        super.arrangeLayoutFor(size)
+        super.arrangeLayoutFor(size,bannerHeight:bannerHeight)
         if pageNo > noPageFor(tabNo) - 1 {
             pageNo = noPageFor(tabNo) - 1
         }
-        super.arrangeLayoutFor(size)
+        
+        super.arrangeLayoutFor(size,bannerHeight:bannerHeight)
         displayButtons()
         newPage()
     }
@@ -212,7 +219,7 @@ class OptionScreen: MultiPagePopup {
         warn.name = "Setting1"
         warn.fontSize = fontsize
         warn.position = CGPointMake(size.width * 0.50, size.height * 0.50)
-        warn.text = "Having_trouble_connecting_to_Game_Center".localize
+        warn.text = "Having trouble connecting to Game Center".localize
         gameCenterSettings = [warn]
         self.addChild(warn)
     }

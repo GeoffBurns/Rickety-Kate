@@ -26,7 +26,7 @@ class ScoreDisplay
         ScoreDisplay.sharedInstance.setupScoreArea(scene, players: players)
     }
     
-    static func scorePosition(side:SideOfTable, scene: SKNode) -> CGPoint
+    static func scorePosition(side:SideOfTable, size: CGSize, bannerHeight:CGFloat) -> CGPoint
     {
         
         
@@ -37,25 +37,25 @@ class ScoreDisplay
       switch side
       {
       case .Right:
-        return CGPoint(x:scene.frame.size.width * 0.93, y:CGRectGetMidY(scene.frame))
+        return CGPoint(x:size.width * 0.93, y:size.height * 0.5 + bannerHeight)
       case .RightLow:
-        return CGPoint(x:scene.frame.size.width * 0.93, y:scene.frame.size.height * 0.35)
+        return CGPoint(x:size.width * 0.93, y:size.height * 0.35 + bannerHeight)
       case .RightHigh:
-        return CGPoint(x:scene.frame.size.width * 0.93, y:scene.frame.size.height * 0.70)
+        return CGPoint(x:size.width * 0.93, y:size.height * 0.70 + bannerHeight)
        case .Top:
-        return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height *  top )
+        return  CGPoint(x:size.width * 0.5, y:size.height *  top + bannerHeight)
        case .TopMidRight:
-        return CGPoint(x:scene.frame.width * ( noOfPlayers == 6 ? 0.8 : 0.7), y:scene.frame.size.height *  top )
+        return CGPoint(x:size.width * ( noOfPlayers == 6 ? 0.8 : 0.7), y:size.height *  top  + bannerHeight)
        case .TopMidLeft:
-          return CGPoint(x:scene.frame.width *  ( noOfPlayers == 6 ? 0.2 : 0.3), y:scene.frame.size.height *  top)
+          return CGPoint(x:size.width *  ( noOfPlayers == 6 ? 0.2 : 0.3), y:size.height *  top + bannerHeight)
        case .Left:
-        return CGPoint(x:scene.frame.size.width * 0.07, y:CGRectGetMidY(scene.frame))
+        return CGPoint(x:size.width * 0.07, y:size.height * 0.5 + bannerHeight)
       case .LeftLow:
-        return CGPoint(x:scene.frame.size.width * 0.07, y:scene.frame.size.height * 0.35)
+        return CGPoint(x:size.width * 0.07, y:size.height * 0.35 + bannerHeight)
       case .LeftHigh:
-        return CGPoint(x:scene.frame.size.width * 0.07, y:scene.frame.size.height * 0.70)
+        return CGPoint(x:size.width * 0.07, y:size.height * 0.70 + bannerHeight)
        default:
-          return  CGPoint(x:CGRectGetMidX(scene.frame), y:scene.frame.size.height *  bottom)
+          return  CGPoint(x:size.width * 0.5, y:size.height *  bottom + bannerHeight)
        }
     }
     
@@ -99,7 +99,7 @@ class ScoreDisplay
   
             let side = player.sideOfTable
             
-            l.position = ScoreDisplay.scorePosition(side, scene: scene)
+       //     l.position = ScoreDisplay.scorePosition(side, scene: scene)
             l.zPosition = 201
             l.zRotation = ScoreDisplay.scoreRotation(side)
 

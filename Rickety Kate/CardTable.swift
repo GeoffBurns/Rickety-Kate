@@ -165,15 +165,21 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
           let firstNo = trick.player.playerNo
           if firstNo == nextPlayer.playerNo
             {
-            scene!.schedule(delay: cardTossDuration*1.1) { [unowned self] timer in
-                self.trickWon()
+            scene!.schedule(delay: cardTossDuration*1.1) { [weak self] timer in
+                if let s = self
+                {
+                s.trickWon()
+                }
                }
             
             } else {
             
            
-               scene!.schedule(delay: cardTossDuration*1.1) { [unowned self] timer in
-                 self.playTrick(nextPlayer)
+               scene!.schedule(delay: cardTossDuration*1.1) { [weak self] timer in
+                if let s = self
+                {
+                 s.playTrick(nextPlayer)
+                }
                }
             }
         } else {
