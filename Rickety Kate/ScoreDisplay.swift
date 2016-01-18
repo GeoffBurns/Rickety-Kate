@@ -28,13 +28,11 @@ class ScoreDisplay
     
     static func scorePosition(side:SideOfTable, size: CGSize, bannerHeight:CGFloat) -> CGPoint
     {
+    let top : CGFloat =  DeviceSettings.isPortrait ? 0.85 : 0.87
+    let bottom : CGFloat =  DeviceSettings.isPortrait ? 0.18 : 0.27
         
-        
-        let top : CGFloat =  DeviceSettings.isPortrait ? 0.85 : 0.87
-        let bottom : CGFloat =  DeviceSettings.isPortrait ? 0.18 : 0.27
-        
-      let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
-      switch side
+    let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
+    switch side
       {
       case .Right:
         return CGPoint(x:size.width * 0.93, y:size.height * 0.5 + bannerHeight)

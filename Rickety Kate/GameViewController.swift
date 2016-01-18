@@ -13,7 +13,6 @@ import iAd
 
 class GameViewController: UIViewController , ADBannerViewDelegate {
 
-    let transition = SKTransition.fadeWithDuration(1)
     var adBannerView: ADBannerView = ADBannerView(frame: CGRect.zero)
 
     func loadAds(){

@@ -197,9 +197,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     let height = size.height -  bannerHeight
       
     let newSize = CGSizeMake(width, height)
-     //  self.size = newSize
-        
-      //  let bannerHeight = adHeight
+ 
     if let rulesButton = self.childNodeWithName("Rules1")
           {
           rulesButton.position = CGPoint(x:0.0,y:size.height )
@@ -207,18 +205,14 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     if table.isInDemoMode
         {
             
-            playButton1.position = CGPoint(x:width*0.25,y:height*0.5+adHeight)
-            playButton2.position = CGPoint(x:width*0.75,y:height*0.5+adHeight)
+            playButton1.position = CGPoint(x:width*0.25,y:height*0.5+bannerHeight)
+            playButton2.position = CGPoint(x:width*0.75,y:height*0.5+bannerHeight)
             
         if let optionsButton = self.childNodeWithName("Options1")
           {
             optionsButton.position = CGPoint(x:size.width,y:size.height)
-            
-
           }
-        }
-        else
-        {
+        } else {
             if  let exitButton = self.childNodeWithName("Exit")
             {
                 exitButton.position = CGPoint(x:size.width,y:size.height )
