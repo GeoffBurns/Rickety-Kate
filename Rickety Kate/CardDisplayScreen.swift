@@ -8,12 +8,17 @@
 
 import SpriteKit
 
+enum CardDisplayTab : Int
+{
+    case Rules
+    case Deck
+    case Scores
+}
 
 typealias ScorePairCollection = [(PlayingCard,Int)]
 
 // Help Screen
 class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
-    
     
     var discardPile = CardPile(name: CardPileType.Discard.description)
     var discardWhitePile = CardPile(name: CardPileType.Discard.description)
@@ -26,7 +31,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         return pointsGroups.sort { $0.0 > $1.0 }
     }
     
-
     var tabNewPage = [ rules, displayCardsInDeck, displayScoringCards ]
     var cards = [PlayingCard]()
     var oldPositon = CGPointZero
@@ -38,10 +42,12 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     var originalTouch = CGPointZero
     var originalScale = CGFloat(0)
     var originalOrder = CGFloat(0)
+    var layoutSize = CGSizeZero
     
     override func onEnter() {
 
     }
+    
     override func onExit() {
         super.onExit()
     }
@@ -58,7 +64,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     
     override func exit()
     {
-        
         if let ruleScreen = parent as? MultiPagePopup
         {
             removeFromParent()
@@ -68,7 +73,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     }
      func presetup(scene:SKNode)
     {
-        
         pageNo = 0
         tabNo = -1
         cards = GameSettings.sharedInstance.deck!.orderedDeck
@@ -85,7 +89,6 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
             position = CGPointZero
             anchorPoint = CGPointZero
             userInteractionEnabled = true
-            
             isSetup = true
         }
     }
@@ -139,6 +142,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     
     override func arrangeLayoutFor(size:CGSize,bannerHeight:CGFloat)
     {
+        layoutSize = size
         switch DeviceSettings.layout
         {
             case .Phone :
@@ -163,11 +167,21 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         {
             pageNo = noPageFor(tabNo) - 1
         }
-        createSlides()
+        clearLabels()
+        switch tabNo
+        {
+        case CardDisplayTab.Deck.rawValue:
+            displaySlideLabels(size,bannerHeight: bannerHeight)
+        case CardDisplayTab.Scores.rawValue:
+            displayScoringCardsLabels(size,bannerHeight: bannerHeight)
+        default: break
+        }
+
+        createSlides(size,bannerHeight: bannerHeight)
         displayPage()
         newPage()
     }
-    func createSlides()
+    func createSlides(size:CGSize,bannerHeight:CGFloat)
     {
         for slide in slides { slide.discardAll() }
         slides = []
@@ -175,7 +189,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         {
             let slide = CardSlide(name: "slide")
             slide.setup(self, slideWidth: size.width * 0.9)
-            slide.position = CGPointMake(size.width * 0.10, size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
+            slide.position = CGPointMake(size.width * 0.10, bannerHeight + size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
             slides.append(slide)
         }
     }
@@ -197,94 +211,68 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         default :
             return 1
         }
-        
     }
-    func displayCardsInDeck()
+    
+    func displaySlideLabels(size:CGSize,bannerHeight:CGFloat)
     {
-        
         let fontsize : CGFloat = FontSize.Smallest.scale
-        for slide in slides { slide.discardAll() }
-        
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.7)
-            {
+        for (i,(_, _)) in Zip2Sequence(
+            self.slides,
+            cardsInSuitesDisplayed).enumerate() {
                 
-             let cardsBeingDisplayed = GameSettings.sharedInstance.deck!
-                    .suitesInDeck
-                    .from(self.noOfSlides*self.pageNo, forLength: self.noOfSlides)
-                    .map { suite in  self.cards.filter { $0.suite == suite} }
-                    .filter { cards in cards.count > 0 }
+                let l = SKLabelNode(fontNamed:"Verdana")
+                l.fontSize = fontsize
+                l.position = CGPointMake(size.width * 0.10, bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
+                l.text = "High Cards".localize
+                l.name = "label"
+                //   l.userData = ["SlideNo":i]
                 
-
-             for (i,(slide, cards)) in Zip2Sequence(
-                                            self.slides,
-                                            cardsBeingDisplayed)
-                                            .enumerate() {
-       
-       
-                    let l = SKLabelNode(fontNamed:"Verdana")
-                    l.fontSize = fontsize
-                    l.position = CGPointMake(self.size.width * 0.10, self.size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
-                    l.text = "High Cards".localize
-                    l.name = "label"
-                    
-                    let m = SKLabelNode(fontNamed:"Verdana")
-                    m.fontSize = fontsize
-                    m.position = CGPointMake(self.size.width * 0.93, self.size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
-                    m.text = "Low Cards".localize
-                    
-                    m.name = "label"
-                    
-                    self.addChild(l)
-                    self.addChild(m)
-                    
-                    slide.replaceWithContentsOf(cards)
-                    slide.rearrange()
-            
-            }
+                let m = SKLabelNode(fontNamed:"Verdana")
+                m.fontSize = fontsize
+                m.position = CGPointMake(size.width * 0.93, bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
+                m.text = "Low Cards".localize
+                m.name = "label"
+                //   l.userData = ["SlideNo":i]
+                
+                self.addChild(l)
+                self.addChild(m)
         }
     }
     
-    func displayScoringCards()
+    var cardsInSuitesDisplayed : [[PlayingCard]]
     {
-        
-        let fontsize : CGFloat = FontSize.Smallest.scale
-        
-        let penaltyCardsBeingDisplayed = orderedGroups
-            
-            .from(self.noOfSlides*self.pageNo, forLength: self.noOfSlides)
-            .map { group in  (group.0, group.1.map { $0.0 }) }
-            
-            .filter { (_,cards) in cards.count > 0 }
-
-        for slide in slides {
-            slide.discardAll()
-            slide.clear() }
-        
-        for (i,(slide, (points, cards))) in Zip2Sequence(
+            return GameSettings.sharedInstance.deck!
+                .suitesInDeck
+                .from(self.noOfSlides*self.pageNo, forLength: self.noOfSlides)
+                .map { suite in  self.cards.filter { $0.suite == suite} }
+                .filter { cards in cards.count > 0 }
+    }
+    func refillSlides()
+    {
+        for (slide, cards) in Zip2Sequence(
             self.slides,
-            penaltyCardsBeingDisplayed)
-            .enumerate() {
-                
-         
-              let l = SKLabelNode(fontNamed:"Verdana")
-              l.fontSize = fontsize
-              l.horizontalAlignmentMode = .Left
-              l.position = CGPointMake(size.width * 0.05, size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
-              if cards.count > 1 { l.text = "_ Points Each".localizeWith(points) }
-              else if points > 0 { l.text = "_ Points".localizeWith(points) }
-              else  { l.text = "_ Points".localizeWith(points) +
-                " (" + "Total Points for Hand can not Fall Below Zero".localize + ")" }
-              l.name = "label"
-              self.addChild(l)
- 
-              slide.replaceWithContentsOf(cards)
-                
-              }
+            cardsInSuitesDisplayed)
+        {
+            slide.replaceWithContentsOf(cards)
+            slide.rearrange()
+        }
+    }
+
+
+    func displayCardsInDeck()
+    {
+        for slide in slides { slide.discardAll() }
+        self.clearLabels()
+        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.3)
+            {
+                self.refillSlides()
+                self.displaySlideLabels(self.layoutSize,bannerHeight: self.adHeight)
+            }
     }
     
-    override func newPage()
+    func clearLabels()
     {
-        if self.tabNo < 0 { return }
+        
         let labels = self
             .children
             .filter { $0 is SKLabelNode }
@@ -294,13 +282,71 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         {
             label.removeFromParent()
         }
+        /*
+        var l = self.childNodeWithName("label")
+        while l != nil
+        {
+            l!.removeFromParent()
+            l = self.childNodeWithName("label")
+        }*/
+    }
+    var scoringCardsByScoreDisplayed : [(Int,[PlayingCard])]
+    {
+            return orderedGroups
+                .from(self.noOfSlides*self.pageNo, forLength: self.noOfSlides)
+                .map { group in  (group.0, group.1.map { $0.0 }) }
+                .filter { (_,cards) in cards.count > 0 }
+    }
+    
+    func displayScoringCardsLabels(size:CGSize,bannerHeight:CGFloat)
+    {
+        let fontsize : CGFloat = FontSize.Smallest.scale
+        for (i,(_, (points, _))) in Zip2Sequence(
+            self.slides,
+            scoringCardsByScoreDisplayed)
+            .enumerate() {
+                let l = SKLabelNode(fontNamed:"Verdana")
+                l.fontSize = fontsize
+                l.horizontalAlignmentMode = .Left
+                l.position = CGPointMake(size.width * 0.05, bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
+                if cards.count > 1 { l.text = "_ Points Each".localizeWith(points) }
+                else if points > 0 { l.text = "_ Points".localizeWith(points) }
+                else  { l.text = "_ Points".localizeWith(points) +
+                    " (" + "Total Points for Hand can not Fall Below Zero".localize + ")" }
+                l.name = "label"
+                self.addChild(l)
+        }
+    }
+    func refillScoringCards()
+    {
+        for (slide, (_, cards)) in Zip2Sequence(
+            self.slides,
+            scoringCardsByScoreDisplayed)
+        {
+            slide.replaceWithContentsOf(cards)
+        }
         
+    }
+    func displayScoringCards()
+    {
+        for slide in slides {
+            slide.discardAll()
+            slide.clear() }
+        
+        refillScoringCards()
+        displayScoringCardsLabels(self.layoutSize,bannerHeight: self.adHeight)
+    }
+    
+    override func newPage()
+    {
+        if self.tabNo < 0 { return }
+
+        clearLabels()
         let renderPage = self.tabNewPage[self.tabNo](self)
         self.schedule(delay: 0.3)
         {
             renderPage()
         }
-        
     }
     
 
@@ -323,8 +369,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
        // let width = self.frame.size.width
     
         if let node = self.nodeAtPoint(positionInScene) as? CardSprite
-        {
-       
+            {
                 storeDraggedNode(node)
                 return true
             }

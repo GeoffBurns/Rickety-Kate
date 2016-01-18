@@ -29,7 +29,7 @@ class OptionScreen: MultiPagePopup {
         "Normal".localize,
         "Fast".localize,
         "Very Fast".localize
-        ], current: 3, text: "Speed_Of_Cards".localize)
+        ], current: 3, text: "Speed Of Cards".localize)
     var gameWinningScore = ListToggle(list:  ["50", "100", "150", "200", "250", "300", "500"],  current: 2, text: "Game Finishing Score".localize)
     var ruleSet = ListToggle(list: ["Spades".localize,"Hearts".localize,"Jacks".localize],  current: 1, text: "Rule Set".localize )
  
