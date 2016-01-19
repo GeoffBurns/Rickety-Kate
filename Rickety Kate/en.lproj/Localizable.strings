@@ -186,6 +186,10 @@ Points="Points";
 "%@ score is %d"="%@'s score is %d";
 "You Score %d n %d Wins"="Your Score : %d & %d Wins";
 "%@ Score %d n %d Wins"="%@'s Score : %d & %d Wins";
+"You Score %d n %d %@"="Your Score : %d & %d %@";
+"%@ Score %d n %d %@"="%@'s Score : %d & %d %@";
+Win="Win";
+Wins="Wins";
 "You have %d Wins"="You have %d Wins";
 "%@ %d Wins"="%@ : %d Wins";
 
