@@ -116,8 +116,8 @@ class ScoreDisplay
                        return  "%@ score is %d".with.sayTo(name).using(score).localize
                     }
                     
-                    return  "%@ Score %d n %d Wins".with.sayTo(name).using(score, wins).localize
-     
+                    return "%@ Score %d n %d %@".with.sayTo(name).using(score).pluralizeUnit(wins, unit: "Win").localize
+    
             }
 
             return l
