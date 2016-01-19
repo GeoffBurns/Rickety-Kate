@@ -58,6 +58,19 @@ public class GivenAString : XCTestCase {
         
         let you_score_22_1 = "%@ Score %d n %d Wins".with.sayTo("You").using(22, 1).localize
         XCTAssert(you_score_22_1=="Your Score : 22 & 1 Wins",you_score_22_1)
+        
+        
+        let molly_score_24_2 = "%@ Score %d n %d %@".with.sayTo("Molly").using(24).pluralizeUnit(2, unit: "Win").localize
+        XCTAssert(molly_score_24_2=="Molly's Score : 24 & 2 Wins",molly_score_24_2)
+        
+        let molly_score_23_1 = "%@ Score %d n %d %@".with.sayTo("Molly").using(23).pluralizeUnit(1, unit: "Win").localize
+        XCTAssert(molly_score_23_1=="Molly's Score : 23 & 1 Win",molly_score_23_1)
+        
+        let you_score_24_2 = "%@ Score %d n %d %@".with.sayTo("You").using(24).pluralizeUnit(2, unit: "Win").localize
+        XCTAssert(you_score_24_2=="Your Score : 24 & 2 Wins",you_score_24_2)
+        
+        let you_score_23_1 = "%@ Score %d n %d %@".with.sayTo("You").using(23).pluralizeUnit(1, unit: "Win").localize
+        XCTAssert(you_score_23_1=="Your Score : 23 & 1 Win",you_score_23_1)
     }
 
     public func testLocalizedStrings() {

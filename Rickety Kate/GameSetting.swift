@@ -384,9 +384,9 @@ class LiveGameSettings : IGameSettings
         
         switch gameFlavor
         {
-        case .Soccer : return "Soccer _".localizeWith( gameType )
-        case .Hooligan : return "Hooligan _".localizeWith( gameType )
-        case .Bussing : return "Bussing _".localizeWith( gameType )
+        case .Soccer : return "Soccer %@".localizeWith( gameType )
+        case .Hooligan : return "Hooligan %@".localizeWith( gameType )
+        case .Bussing : return "Bussing %@".localizeWith( gameType )
         case .Straight :
                if let no = self.deck?.normalSuitesInDeck.count
                   where self.rules.trumpSuite == PlayingCard.Suite.None
