@@ -33,28 +33,28 @@ public enum GameEvent : Equatable
             switch self
             {
             case WinTrick( let name ) :
-                return  "_ just Won the Trick".sayTo(name)
+                return  "%@ just Won the Trick".sayTo(name)
             case PlayerKnocked( let player ) :
                 return player.isYou
                     ? "You can not Play You have to Knock".localize
                     : "_ Knocked".localizeWith(player.name )
             case YouNeedToPlayThisFirst(let card) :
-                return "You Need to Play _ First".localizeWith(card.description)
+                return "You Need to Play %@ First".localizeWith(card.description)
             case SuiteFinished(let suite) :
                 return suite.description + " " + "Finished".localize
             case ShotTheMoon( let name ) :
-                return "_ just Shot the Moon".sayCongratsTo(name)
+                return "%@ just Shot the Moon".sayCongratsTo(name)
             case WinGame( let name ) :
-                return "_ just Won the Game".sayCongratsTo(name)
+                return "%@ just Won the Game".sayCongratsTo(name)
             case WinRicketyKate( let name ) :
-                return  "_ was kissed by Rickety Kate Poor _".sayTwiceTo(name)
+                return  "%@ was kissed by Rickety Kate Poor %@".sayTwiceTo(name)
             
             case WinHooligan( let name ) :
-                return  "_ was bashed by the Hooligan Poor _".sayTwiceTo(name)
+                return  "%@ was bashed by the Hooligan Poor %@".sayTwiceTo(name)
             case WinOmnibus( let name ) :
-                return "_ just Caught the Bus".sayCongratsTo(name)
+                return "%@ just Caught the Bus".sayCongratsTo(name)
             case WinSpades( let name, let noOfSpades ) : 
-                let start = "_ won * _"
+                let start = "%@ won %d %@"
                     .with
                     .sayTo(name)
                     .pluralize(noOfSpades,arguements: GameSettings.sharedInstance.rules.shortDescription)
@@ -67,7 +67,7 @@ public enum GameEvent : Equatable
                 {
                     return player.isYou
                         ? "Your Turn".localize
-                        : "_ Turn".localizeWith(player.name )
+                        : "%@ Turn".localizeWith(player.name )
                 } else { return nil }
             case ShowTip( let tip ) :
                 return tip.description
@@ -76,13 +76,13 @@ public enum GameEvent : Equatable
             case SomethingHasGoneWrong :
                 return nil
             case NewGame :
-                return "_ Game On".localizeWith(GameSettings.sharedInstance.gameType)
+                return "%@ Game On".localizeWith(GameSettings.sharedInstance.gameType)
             case StartHand :
                 return nil
             case CardPlayed :
                 return nil
             case TrumpsHaveNotBeenBroken :
-                return "Can not Lead with a _".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
+                return "Can not Lead with a %@".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
             case CardDoesNotFollowSuite :
                 return "Card Does Not Follow Suite".localize
             case WaitYourTurn :

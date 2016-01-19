@@ -113,17 +113,11 @@ class ScoreDisplay
                     
                     if wins==0
                     {
-                       if name.isYou
-                       {
-                            return "Your score is _".localizeWith(score)
-                        }
-                       return  "_ score is _".localizeWith(name, score)
+                       return  "%@ score is %d".with.sayTo(name).using(score).localize
                     }
-                 
-                    return  ((name.isYou)
-                        ? "Your Score _ n _ Wins".localizeWith(score, wins)
-                        : "_ Score _ n _ Wins".localizeWith( name, score, wins))
-          
+                    
+                    return  "%@ Score %d n %d Wins".with.sayTo(name).using(score, wins).localize
+     
             }
 
             return l

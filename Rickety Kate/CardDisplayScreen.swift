@@ -301,7 +301,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     func displayScoringCardsLabels(size:CGSize,bannerHeight:CGFloat)
     {
         let fontsize : CGFloat = FontSize.Smallest.scale
-        for (i,(_, (points, _))) in Zip2Sequence(
+        for (i,(_, (points, cards))) in Zip2Sequence(
             self.slides,
             scoringCardsByScoreDisplayed)
             .enumerate() {
@@ -309,9 +309,9 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
                 l.fontSize = fontsize
                 l.horizontalAlignmentMode = .Left
                 l.position = CGPointMake(size.width * 0.05, bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
-                if cards.count > 1 { l.text = "_ Points Each".localizeWith(points) }
-                else if points > 0 { l.text = "_ Points".localizeWith(points) }
-                else  { l.text = "_ Points".localizeWith(points) +
+                if cards.count > 1 { l.text = "%d %@ Each".with.pluralizeUnit(points, unit: "Point").localize }
+                else if points > 0 { l.text = "%d %@".with.pluralizeUnit(points, unit: "Point").localize}
+                else  { l.text = "%d %@".with.pluralizeUnit(points, unit: "Point").localize +
                     " (" + "Total Points for Hand can not Fall Below Zero".localize + ")" }
                 l.name = "label"
                 self.addChild(l)

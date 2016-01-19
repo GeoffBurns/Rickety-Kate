@@ -18,18 +18,20 @@ public class ParameterizedString
         self.format = format
         self.arguements = arguements
     }
-    
+
     var sayToYou :ParameterizedAlert
     {
-        let index = format.startIndex.advancedBy(1)
-        let newFormat = "You" + format.substringFromIndex(index)
+        var newFormat = format
+        if let range = newFormat.rangeOfString("%@")
+        {
+            newFormat.replaceRange(range, with: "You")
+        }
         
         return  ParameterizedAlert(format: newFormat,arguements: arguements, isYou: true)
     }
     var sayTwiceToYou : ParameterizedAlert
     {
-        let index = Range(start:format.startIndex.advancedBy(1), end:format.endIndex.advancedBy(-1))
-        let newFormat = "You" + format.substringWithRange(index) + "you"
+        let newFormat = format.stringByReplacingOccurrencesOfString("%@", withString: "You", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
         return  ParameterizedAlert(format: newFormat,arguements: arguements, isYou: true)
     }
@@ -58,11 +60,19 @@ public class ParameterizedString
         }
 
     }
+    public func using(arguements:CVarArgType...) -> ParameterizedString
+    {
+     
+            var newArgs = self.arguements
+            
+            newArgs.appendContentsOf(arguements)
+            return ParameterizedString(format: format,arguements: newArgs)
+        
+    }
     public func pluralize(n:Int,arguements : String...) -> ParameterizedString
     {
         if n==1 {
-            
-            let newFormat = format.stringByReplacingOccurrencesOfString("*", withString: "a", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            let newFormat = format.stringByReplacingOccurrencesOfString("%d", withString: "a", options: NSStringCompareOptions.LiteralSearch, range: nil)
             
             var newArgs = Array(self.arguements)
             newArgs.appendContentsOf(arguements.map { $0 as CVarArgType })
@@ -70,14 +80,27 @@ public class ParameterizedString
             return ParameterizedString(format: newFormat,arguements: newArgs)
         } else{
             
-            let newFormat = format.stringByReplacingOccurrencesOfString("*", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            
+            let newFormat = format            
             var newArgs = Array(self.arguements)
             newArgs.append(n)
             newArgs.appendContentsOf(arguements.map { ($0 + "s") as CVarArgType })
             
             return ParameterizedString(format: newFormat,arguements: newArgs)
         }
+    }
+    public func pluralizeUnit(n:Int, unit : String) -> ParameterizedString
+    {
+        let newFormat = format
+        var newArgs = Array(self.arguements)
+        newArgs.append(n)
+        
+        if n==1 {
+            newArgs.append(unit)
+        } else{
+            newArgs.append(unit + "s")
+        }
+        
+        return ParameterizedString(format: newFormat,arguements: newArgs)
     }
     public var localize : String
     {
@@ -104,23 +127,31 @@ public class ParameterizedAlert : ParameterizedString
         super.init(format: format,arguements: arguements)
       
     }
+    public override func using(arguements:CVarArgType...) -> ParameterizedAlert
+    {
+        
+        var newArgs = self.arguements
+        
+        newArgs.appendContentsOf(arguements)
+        return ParameterizedAlert(format: format,arguements: newArgs)
+        
+    }
     public var congrats : WrappedParameterizedString
     {
         if isYou
         {
             return WrappedParameterizedString(
                 inner: ParameterizedString(format: format, arguements: arguements),
-                outer: "Congratulatons _")
+                outer: "Congratulatons %@")
         }
         return WrappedParameterizedString(
             inner: ParameterizedString(format: format, arguements: arguements),
-            outer: "Wow _")
+            outer: "Wow %@")
     }
 }
 
 extension String
 {
-    
     public var with : ParameterizedString
     {
        return ParameterizedString(format: self, arguements: [])
@@ -147,15 +178,17 @@ extension String
     }
     public func sayToYou(name:String, arguements:[CVarArgType]) -> String
     {
-        let index = self.startIndex.advancedBy(1)
-        let format = "You" + self.substringFromIndex(index)
+        var format = self
+        if let range = format.rangeOfString("%@")
+        {
+        format.replaceRange(range, with: "You")
+        }
         
         return  format.localizeWith(arguements.tail)
     }
     public func sayTwiceToYou(name:String, arguements:[CVarArgType]) -> String
     {
-        let index = Range<Index>(start:self.startIndex.advancedBy(1), end:self.endIndex.advancedBy(-1))
-        let format = "You" + self.substringWithRange(index) + "you"
+        let format = self.stringByReplacingOccurrencesOfString("%@", withString: "You", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
         return  format.localizeWith(arguements.tail)
     }
@@ -188,7 +221,6 @@ extension String
     {
         
         return self.with.sayTo(name).congrats.localize
-       
     }
     
     public var localize : String
