@@ -18,9 +18,9 @@ class Label : SKLabelNode
 
     var textChangeHandlers = [TextChangeHandler]()
     var fontSizeChangeHandlers = [FontSizeChangeHandler]()
-    var afterDisplayAction:dispatch_block_t = {}
+    var afterDisplayAction:()->() = {}
     var innerNode : SKLabelNode? = nil
-    var displayTime : NSTimeInterval = 6
+    var displayTime : TimeInterval = 6
     func withShadow() -> Label
     {
         if innerNode != nil
@@ -31,7 +31,7 @@ class Label : SKLabelNode
 
         self.fontColor = UIColor(red: 0.0, green: 0.2, blue: 0.0, alpha: 0.7)
         innerNode!.position = CGPoint(x:-2,y:2)
-        innerNode!.fontColor = UIColor.whiteColor()
+        innerNode!.fontColor = UIColor.white
         innerNode!.zPosition = 10
         addChild(innerNode!)
         
@@ -40,7 +40,7 @@ class Label : SKLabelNode
         
         return self   
     }
-    func withFadeOutAndAction(action:dispatch_block_t) -> Label
+    func withFadeOutAndAction(_ action:@escaping ()->()) -> Label
     {
         
         afterDisplayAction = action
@@ -60,50 +60,50 @@ class Label : SKLabelNode
         
         return self
     }
-    func startfadeOut(text: String?)
+    func startfadeOut(_ text: String?)
         {
-          removeActionForKey("Fade")
+          removeAction(forKey: "Fade")
         
         alpha = 1.0
-        if let t = text  where t != ""{
-        runAction(SKAction.fadeOutWithDuration(displayTime), withKey:"Fade")
+        if let t = text, t != ""{
+        run(SKAction.fadeOut(withDuration: displayTime), withKey:"Fade")
         }
     }
-    func startfadeOutThenAction(text: String?)
+    func startfadeOutThenAction(_ text: String?)
     {
-        removeActionForKey("Fade")
+        removeAction(forKey: "Fade")
         
         alpha = 1.0
-        if let t = text  where t != ""
+        if let t = text, t != ""
         {
             let action = SKAction.sequence([
-                    SKAction.fadeOutWithDuration(displayTime),
-                     SKAction.runBlock(afterDisplayAction) 
+                    SKAction.fadeOut(withDuration: displayTime),
+                     SKAction.run(afterDisplayAction) 
                 ])
             
-            runAction(action, withKey:"Fade")
+            run(action, withKey:"Fade")
         }
     }
-    func startfadeInOut(text: String?)
+    func startfadeInOut(_ text: String?)
     {
-         removeActionForKey("Fade")
+         removeAction(forKey: "Fade")
         
         alpha = 1.0
-        if let t = text  where t != ""
+        if let t = text, t != ""
         {
-            let action = SKAction.repeatActionForever(
+            let action = SKAction.repeatForever(
                 SKAction.sequence([
-                    SKAction.fadeOutWithDuration(displayTime),
-                    SKAction.waitForDuration(displayTime),
-                    SKAction.fadeInWithDuration(displayTime),
-                    SKAction.waitForDuration(displayTime),
+                    SKAction.fadeOut(withDuration: displayTime),
+                    SKAction.wait(forDuration: displayTime),
+                    SKAction.fadeIn(withDuration: displayTime),
+                    SKAction.wait(forDuration: displayTime),
                     ] )
             )
-            runAction(action, withKey:"Fade")
+            run(action, withKey:"Fade")
         }
     }
     
-    func resetToScene(scene:SKNode)
+    func resetToScene(_ scene:SKNode)
     {
         if parent != nil
         {

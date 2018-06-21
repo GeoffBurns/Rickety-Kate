@@ -10,9 +10,9 @@ import SpriteKit
 
 
 /// controls the flow of the game
-public class CardTable: GameStateBase
+open class CardTable: GameStateBase
 {
-    public var players = [CardPlayer]()
+    open var players = [CardPlayer]()
     var scene : CardScene? = nil
     var playerOne: CardPlayer = HumanPlayer()
 
@@ -20,7 +20,7 @@ public class CardTable: GameStateBase
     
     lazy var dealtHands : [[PlayingCard]] = self.dealHands()
     
-    private init(players: [CardPlayer],  scene:CardScene) {
+    fileprivate init(players: [CardPlayer],  scene:CardScene) {
         self.players = players
         playerOne = self.players[0]
         isInDemoMode = !(playerOne is HumanPlayer)
@@ -35,27 +35,28 @@ public class CardTable: GameStateBase
         return GameSettings.sharedInstance.deck!.dealFor(players.count)
     }
     
-    func redealHands() {
+    func redealHands()->[[PlayingCard]] {
         dealtHands = self.dealHands()
+        return dealtHands
     }
 }
 
 /// controls the flow of the game
-public class RicketyKateCardTable : CardTable, GameState
+open class RicketyKateCardTable : CardTable, GameState
 {
 
     let bus = Bus.sharedInstance
 
     var startPlayerNo = 1
 
-    static public func makeTable(scene:CardScene, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> RicketyKateCardTable {
+    static open func makeTable(_ scene:CardScene, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> RicketyKateCardTable {
      return RicketyKateCardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
 }
 
-    static public func makeDemo(scene:CardScene, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> RicketyKateCardTable  {
+    static open func makeDemo(_ scene:CardScene, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> RicketyKateCardTable  {
      return RicketyKateCardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable), scene:scene )
     }
-    private override init(players: [CardPlayer],  scene:CardScene) {
+    fileprivate override init(players: [CardPlayer],  scene:CardScene) {
 
     Scorer.sharedInstance.setupScorer(players)
     super.init(players: players,scene: scene)
@@ -71,17 +72,17 @@ public class RicketyKateCardTable : CardTable, GameState
      //////////
     // GameState Protocol
     //////////
-    public var noOfPlayers : Int
+    open var noOfPlayers : Int
     {
             return players.count
     }
 
-    public var unplayedCardsInTrick : Int
+    open var unplayedCardsInTrick : Int
     {
     return  noOfPlayers - playedCardsInTrick
     }
     
-    public var isLastPlayer : Bool {
+    open var isLastPlayer : Bool {
      return tricksPile.count >= noOfPlayers - 1
     }
     
@@ -90,10 +91,10 @@ public class RicketyKateCardTable : CardTable, GameState
     //////////
 
     
-    func addToTrickPile(player:CardPlayer,trickcard:PlayingCard)
+    func addToTrickPile(_ player:CardPlayer,trickcard:PlayingCard)
     {
         if let card = player.removeFromHand(trickcard),
-            displayedCard = scene!.cardSpriteNamed(card.imageName)
+            let displayedCard = scene!.cardSpriteNamed(card.imageName)
         {
             
            
@@ -106,7 +107,7 @@ public class RicketyKateCardTable : CardTable, GameState
         }
     }
     
-    func isMoveValid(player:CardPlayer,card:PlayingCard) -> GameEvent
+    func isMoveValid(_ player:CardPlayer,card:PlayingCard) -> GameEvent
     {
      
         if self.tricksPile.isEmpty
@@ -117,35 +118,49 @@ public class RicketyKateCardTable : CardTable, GameState
                card.suite == GameSettings.sharedInstance.rules.trumpSuite
             
             {
-                return GameEvent.TrumpsHaveNotBeenBroken
+                return GameEvent.trumpsHaveNotBeenBroken
             }
             
-            return GameEvent.CardPlayed(player, card)
+            return GameEvent.cardPlayed(player, card)
         }
         if let trick = self.tricksPile.first
         {
             let leadingSuite = trick.playedCard.suite
             let cardsInSuite = player.hand.filter { $0.suite == leadingSuite}
             
-               let displayedCard = scene!.cardSprite(card)
-            
             /// If the player has no cards in the suite they do not need to follow
-            if cardsInSuite.isEmpty || displayedCard!.card.suite == leadingSuite
-            {
-                return GameEvent.CardPlayed(player, card)
+            if cardsInSuite.isEmpty || card.suite == leadingSuite  {
+                return GameEvent.cardPlayed(player, card)
             }
+            if let cardScene = scene {
+            
+            for card in cardsInSuite {
+                if let sprite =  cardScene.cardSprite(card,isUp: true)  {
+                    sprite.tintGreen()
+                }
+            }
+            
+            if let displayedCard = cardScene.cardSprite(card) {
+               displayedCard.tintRed()
+                }
+            }
+            
+            return GameEvent.cardDoesNotFollowSuite(leadingSuite)
         }
-        return GameEvent.CardDoesNotFollowSuite
+        
+        /// Shoold never get here
+        print("trick pile is non empty and has on first")
+        return GameEvent.cardPlayed(player, card)
     }
     
-    func playTrickCard(playerWithTurn:CardPlayer, trickcard:PlayingCard)
+    func playTrickCard(_ playerWithTurn:CardPlayer, trickcard:PlayingCard)
     {
         addToTrickPile(playerWithTurn,trickcard: trickcard)
         endPlayersTurn(playerWithTurn)
     }
 
 
-func nextPlayerAfter(playerWithTurn:CardPlayer) -> CardPlayer
+func nextPlayerAfter(_ playerWithTurn:CardPlayer) -> CardPlayer
 {
     var nextNo = playerWithTurn.playerNo + 1
     if nextNo >= noOfPlayers
@@ -155,7 +170,7 @@ func nextPlayerAfter(playerWithTurn:CardPlayer) -> CardPlayer
     return self.players[nextNo]
 }
     
-func endPlayersTurn(playerWithTurn:CardPlayer)
+func endPlayersTurn(_ playerWithTurn:CardPlayer)
     {
 
         let nextPlayer = nextPlayerAfter(playerWithTurn)
@@ -191,7 +206,7 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
     }
     func endOfHand()
     {
-        self.startPlayerNo++
+        self.startPlayerNo += 1
         if self.startPlayerNo > 3
         {
             self.startPlayerNo = 0
@@ -203,9 +218,17 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
         Scorer.sharedInstance.hasGameBeenWon()
         
         self.gameTracker.reset()
-        self.redealHands()
-        self.dealNewCardsToPlayersThen{
-                self.bus.send(GameEvent.NewHand)
+        
+        if let cardscene = scene! as? CardGameScene
+        {
+        cardscene.redealThen(self.redealHands())
+            {
+              dealtPiles in
+                
+            self.dealNewCardsToPlayersThen(dealtPiles) {
+                self.bus.send(GameEvent.newHand)
+            }
+        }
         }
     }
     func trickWon()
@@ -215,7 +238,7 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
             self.removeTricksPile(winner)
         }
     }
-    func removeTricksPile(winner:CardPlayer)
+    func removeTricksPile(_ winner:CardPlayer)
     {
     
         for trick in self.tricksPile
@@ -223,7 +246,6 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
             let card =  trick.playedCard
             let sprite =  scene!.cardSprite(card)!
             
-        
             sprite.schedule(delay: cardTossDuration) {
                 winner.wonCards.append(card)
             }
@@ -244,9 +266,9 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
         self.tricksPile = []
     }
     
-    func playTrick(playerWithTurn: CardPlayer)
+    func playTrick(_ playerWithTurn: CardPlayer)
     {
-          self.bus.send(GameEvent.TurnFor(playerWithTurn))
+          self.bus.send(GameEvent.turnFor(playerWithTurn))
         if let computerPlayer = playerWithTurn as? ComputerPlayer
         {
             if let card = computerPlayer.playCard( self)
@@ -274,21 +296,22 @@ func endPlayersTurn(playerWithTurn:CardPlayer)
     }
     func setupCardPilesSoPlayersCanPlayTricks()
     {
-       trickFan.setup(scene!, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
+       trickFan.setup(scene!, sideOfTable: SideOfTable.center, isUp: true, sizeOfCards: CardSize.medium)
     }
 
-    public func dealNewCardsToPlayersThen(whenDone: () -> Void)
+    open func dealNewCardsToPlayersThen(_ dealtPiles: [CardPile], whenDone: @escaping () -> Void)
     {
    
 
-        for (i,(player,hand)) in Zip2Sequence(players,dealtHands).enumerate()
+        for (i,(player,pile)) in zip(players,dealtPiles).enumerated()
         {
-            scene?.schedule(delay: NSTimeInterval(i) * GameSettings.sharedInstance.tossDuration*1.2 + 0.1) {
-            let sortedHand = hand.sort()
-            player.newHand( Array(sortedHand.reverse()))
+            scene?.schedule(delay: TimeInterval(i) * GameSettings.sharedInstance.tossDuration*1.2 + 0.1) {
+            let sortedHand = pile.cards.sorted()
+            pile.clear()
+            player.newHand( Array(sortedHand.reversed()))
             }
      
         }
-        scene?.schedule(delay: NSTimeInterval(players.count-1) * GameSettings.sharedInstance.tossDuration*1.2, handler: whenDone)
+        scene?.schedule(delay: TimeInterval(players.count-1) * GameSettings.sharedInstance.tossDuration*1.2, handler: whenDone)
     }
 }

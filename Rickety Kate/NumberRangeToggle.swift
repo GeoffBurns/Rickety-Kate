@@ -24,9 +24,9 @@ class NumberRangeToggle: SKNode {
     self.min = min
     self.max = max
     self.current = current
-    label.fontSize = FontSize.Big.scale
+    label.fontSize = FontSize.big.scale
     self.text = text
-    label.userInteractionEnabled = false
+    label.isUserInteractionEnabled = false
     label.text = "\(text) : \(current)"
     super.init()
         
@@ -57,7 +57,7 @@ class NumberRangeToggle: SKNode {
     down.position = CGPoint(x:width*0.5,y:-height*0.6)
     label.addChild(down)
     self.addChild(label)
-    self.userInteractionEnabled = true
+    self.isUserInteractionEnabled = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -71,7 +71,7 @@ class NumberRangeToggle: SKNode {
     }
     func touchDown()
     {
-        current--
+        current -= 1
         if(current < min)
         {
            current = max
@@ -80,7 +80,7 @@ class NumberRangeToggle: SKNode {
     }
     func touchUp()
     {
-        current++
+        current += 1
         if(current > max)
         {
             current = min
@@ -88,20 +88,19 @@ class NumberRangeToggle: SKNode {
         update()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
 
         for touch in (touches )
         {
-            let touchPoint = touch.locationInNode(self)
-            if let touchedNode : SKSpriteNode = self.nodeAtPoint(touchPoint) as? SKSpriteNode
-            where touchedNode.name == "down"
+            let touchPoint = touch.location(in: self)
+            if let touchedNode : SKSpriteNode = self.atPoint(touchPoint) as? SKSpriteNode, touchedNode.name == "down"
             {
                 touchDown()
                 return
             }
             
-            if label.containsPoint(touchPoint) {
+            if label.contains(touchPoint) {
     
             touchUp()
             return
@@ -131,9 +130,9 @@ class ListToggle: SKNode {
     {
         self.list = list
         self.current = current
-        label.fontSize = FontSize.Big.scale
+        label.fontSize = FontSize.big.scale
         self.text = text
-        label.userInteractionEnabled = false
+        label.isUserInteractionEnabled = false
 
         super.init()
         
@@ -165,7 +164,7 @@ class ListToggle: SKNode {
         down.position = CGPoint(x:width*0.5,y:-height*0.57)
         label.addChild(down)
         self.addChild(label)
-        self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -179,7 +178,7 @@ class ListToggle: SKNode {
     }
     func touchDown()
     {
-        current--
+        current -= 1
         if(current < 0)
         {
             current = list.count
@@ -188,7 +187,7 @@ class ListToggle: SKNode {
     }
     func touchUp()
     {
-        current++
+        current += 1
         if(current > list.count)
         {
             current = 1
@@ -196,21 +195,20 @@ class ListToggle: SKNode {
         update()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
         
         for touch in (touches )
         {
-            let touchPoint = touch.locationInNode(self)
-            if let touchedNode : SKSpriteNode = self.nodeAtPoint(touchPoint) as? SKSpriteNode
-                where touchedNode.name == "down"
+            let touchPoint = touch.location(in: self)
+            if let touchedNode : SKSpriteNode = self.atPoint(touchPoint) as? SKSpriteNode, touchedNode.name == "down"
             {
                 touchDown()
                 return
             }
             
             
-            if label.containsPoint(touchPoint) {
+            if label.contains(touchPoint) {
                 
                 touchUp()
                 return

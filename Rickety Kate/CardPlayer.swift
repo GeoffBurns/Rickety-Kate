@@ -8,13 +8,13 @@
 
 import SpriteKit
 import ReactiveCocoa
-
+import ReactiveSwift
 
 
 // Cut down version of a CardPlayer that is visible to tests
 public protocol CardHolder
 {
-    func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
+    func cardsIn(_ suite:PlayingCard.Suite) -> [PlayingCard]
     
     var hand : [PlayingCard] { get }
 }
@@ -28,19 +28,33 @@ extension CardHolder
             return RicketyKate.first
     }
 }
-public class NoPlayer:  CardHolderBase
+extension Sequence where Iterator.Element == PlayingCard
+{
+public func cardsIn(_ suite:PlayingCard.Suite) -> [PlayingCard]
+{
+    return self.filter {suite == $0.suite}
+}
+    
+    public func cardsNotIn(_ suite:PlayingCard.Suite) -> [PlayingCard]
+    {
+        return self.filter {suite != $0.suite}
+    }
+}
+
+
+open class NoPlayer:  CardHolderBase
 {
     init() {
         super.init(name: "Played")
     }
 }
-public class CardHolderBase :  CardHolder
+open class CardHolderBase :  CardHolder
 {
-    public var name : String = "Base"
-    public var isYou : Bool { return name=="You".localize }
-    lazy var _hand : CardFan = CardFan(name: CardPileType.Hand.description, player:self)
-    public var hand : [PlayingCard] { get { return _hand.cards } set { _hand.cards = newValue }}
-    public func cardsIn(suite:PlayingCard.Suite) -> [PlayingCard]
+    open var name : String = "Base"
+    open var isYou : Bool { return name=="You".localize }
+    lazy var _hand : CardFan = CardFan(name: CardPileType.hand.description, player:self)
+    open var hand : [PlayingCard] { get { return _hand.cards } set { _hand.cards = newValue }}
+    open func cardsIn(_ suite:PlayingCard.Suite) -> [PlayingCard]
     {
         return _hand.cards.filter {$0.suite == suite}
     }
@@ -48,7 +62,7 @@ public class CardHolderBase :  CardHolder
     init(name s: String) {
         self.name = s
     }
-    public func removeFromHand(card:PlayingCard) -> PlayingCard?
+    open func removeFromHand(_ card:PlayingCard) -> PlayingCard?
     {
         return _hand.remove(card)
     }
@@ -57,7 +71,7 @@ public class CardHolderBase :  CardHolder
 
 
 // Models the state and behaviour of each of the players in the game
-public class CardPlayer :CardHolderBase , Equatable, Hashable
+open class CardPlayer :CardHolderBase , Equatable, Hashable
 {
     //////////////////////////////////////
     /// Variables
@@ -67,19 +81,19 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
     var isSetup = false
     var noOfWins = MutableProperty<Int>(0)
     var scoreForCurrentHand = 0
-    public var sideOfTable = SideOfTable.Bottom
+    open var sideOfTable = SideOfTable.bottom
     var playerNo = 0
-    var wonCards : CardPile = CardPile(name: CardPileType.Won.description)
+    var wonCards : CardPile = CardPile(name: CardPileType.won.description)
  
     ///////////////////////////////////////////
     /// Static Functions
     ///////////////////////////////////////////
-    static func demoPlayers(noOfPlayers:Int) -> [CardPlayer]
+    static func demoPlayers(_ noOfPlayers:Int) -> [CardPlayer]
     {
         return Usher.players(noOfPlayers,noOfHumans: 0)
     }
     
-    static func gamePlayers(noOfPlayers:Int) -> [CardPlayer]
+    static func gamePlayers(_ noOfPlayers:Int) -> [CardPlayer]
     {
         var noOfHumanPlayers = GameSettings.sharedInstance.noOfHumanPlayers
         noOfHumanPlayers = noOfHumanPlayers < 1 ? 1 : noOfHumanPlayers
@@ -91,26 +105,26 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
     ///////////////////////////////////////
     /// Hashable Protocol
     ///////////////////////////////////////
-    public var hashValue: Int {
+    open var hashValue: Int {
         return self.name.hashValue
     }
     
     /////////////////////////////////
     /// Constructors and setup
     /////////////////////////////////
-    func setup(scene: CardScene, sideOfTable: SideOfTable, playerNo: Int, isPortrait: Bool)
+    func setup(_ scene: CardScene, sideOfTable: SideOfTable, playerNo: Int, isPortrait: Bool)
     {
         
         self.isSetup = true
         self.sideOfTable = sideOfTable
         self.playerNo = playerNo
-        let isUp = sideOfTable == SideOfTable.Bottom
-        let cardSize = isUp ? (isPortrait ? CardSize.Medium :CardSize.Big) : CardSize.Small
+        let isUp = sideOfTable == SideOfTable.bottom
+        let cardSize = isUp ? (isPortrait ? CardSize.medium :CardSize.big) : CardSize.small
         _hand.setup(scene, sideOfTable: sideOfTable, isUp: isUp, sizeOfCards: cardSize)
         wonCards.setup(scene, direction: sideOfTable.direction, position: sideOfTable.positionOfWonCards(scene.frame.width, height: scene.frame.height))
     }
     
-    func setPosition(size:CGSize, sideOfTable: SideOfTable)
+    func setPosition(_ size:CGSize, sideOfTable: SideOfTable)
     {
         if self.isSetup
         {
@@ -119,8 +133,8 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
             self.sideOfTable = sideOfTable
             _hand.sideOfTable = sideOfTable
             let isPortrait = size.width < size.height
-            let isUp = sideOfTable == SideOfTable.Bottom
-            _hand.sizeOfCards = isUp ? (isPortrait ? CardSize.Medium :CardSize.Big) : CardSize.Small
+            let isUp = sideOfTable == SideOfTable.bottom
+            _hand.sizeOfCards = isUp ? (isPortrait ? CardSize.medium :CardSize.big) : CardSize.small
             wonCards.position = sideOfTable.positionOfWonCards(size.width, height: size.height)
             wonCards.tableSize = size
       //      wonCards.update()
@@ -131,19 +145,19 @@ public class CardPlayer :CardHolderBase , Equatable, Hashable
     /// Instance Methods
     ///////////////////////////////////
     
-    public func newHand(cards: [PlayingCard]  )
+    open func newHand(_ cards: [PlayingCard]  )
     {
         _hand.replaceWithContentsOf(cards)
     }
     
-    public func appendContentsToHand(cards: [PlayingCard]  )
+    open func appendContentsToHand(_ cards: [PlayingCard]  )
     {
         _hand.appendContentsOf(cards);
     }
     
 }
 
-public class HumanPlayer :CardPlayer
+open class HumanPlayer :CardPlayer
 {
     public init() {
         super.init(name: GameKitHelper.sharedInstance.displayName)
@@ -154,7 +168,7 @@ public class HumanPlayer :CardPlayer
     }
 }
 
-public class ComputerPlayer :CardPlayer
+open class ComputerPlayer :CardPlayer
 {
     //////////////////////////////////////
     /// Variables
@@ -179,7 +193,7 @@ public class ComputerPlayer :CardPlayer
     ///////////////////////////////////
     /// Instance Methods
     ///////////////////////////////////
-    public func playCard(gameState:GameState) -> PlayingCard?
+    open func playCard(_ gameState:GameState) -> PlayingCard?
     {
         for strategy in strategies
         {
@@ -191,7 +205,7 @@ public class ComputerPlayer :CardPlayer
         return RandomStrategy.sharedInstance.chooseCard(self,gameState:gameState)
     }
     
-    public func passCards() -> [PlayingCard]
+    open func passCards() -> [PlayingCard]
     {
         return passingStrategy.chooseWorstCards(self)
     }
@@ -199,16 +213,16 @@ public class ComputerPlayer :CardPlayer
     
 }
 
-public class FakeCardHolder : CardHolderBase
+open class FakeCardHolder : CardHolderBase
 {
 
     
     //////////
     // internal functions
     //////////
-    public func addCardsToHand(cardCodes:[String])
+    open func addCardsToHand(_ cardCodes:[String])
     {
-        hand.appendContentsOf(cardCodes.map { $0.card } )
+        hand.append(contentsOf: cardCodes.map { $0.card } )
     }
     
     public init() {

@@ -10,11 +10,11 @@ import UIKit
 import XCTest
 import Rickety_Kate
 
-public class GivenTwoCards: XCTestCase {
+open class GivenTwoCards: XCTestCase {
  
     var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance;
     var cards : Dictionary<String,PlayingCard> = [:]
-    override public func setUp() {
+    override open func setUp() {
         super.setUp()
         for card  in deck.cards
         {
@@ -22,17 +22,17 @@ public class GivenTwoCards: XCTestCase {
         }
     }
     
-    override public func tearDown() {
+    override open func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
-    public func testBeCompable() {
+    open func testBeCompable() {
         
-        let QueenOfSpades = CardName.Queen.of(PlayingCard.Suite.Spades)!
-        let AceOfSpades = CardName.Ace.of(PlayingCard.Suite.Spades)!
+        let QueenOfSpades = CardName.queen.of(PlayingCard.Suite.spades)!
+        let AceOfSpades = CardName.ace.of(PlayingCard.Suite.spades)!
         let KingOfSpades = cards["KS"]!
-        let TenOfSpades = 10.of(PlayingCard.Suite.Spades)
+        let TenOfSpades = 10.of(PlayingCard.Suite.spades)
         let FiveOfSpades = cards["5S"]!
         
         XCTAssert(!(AceOfSpades.value <  AceOfSpades.value), "Less Than")

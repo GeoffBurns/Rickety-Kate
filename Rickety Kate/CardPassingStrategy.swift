@@ -12,16 +12,16 @@ import Foundation
 // What Strategy does a computer player use when passing the 3 worst cards.
 protocol CardPassingStrategy
 {
-    func chooseWorstCards(player:CardHolder) -> [PlayingCard]
+    func chooseWorstCards(_ player:CardHolder) -> [PlayingCard]
     
 }
-public class HighestCardsPassingStrategy : CardPassingStrategy
+open class HighestCardsPassingStrategy : CardPassingStrategy
 {
     static let sharedInstance = HighestCardsPassingStrategy()
-    private init() { }
-    func chooseWorstCards(player:CardHolder) -> [PlayingCard]
+    fileprivate init() { }
+    func chooseWorstCards(_ player:CardHolder) -> [PlayingCard]
     {
-        let orderedArray = player.hand.sort({$0.value > $1.value})
+        let orderedArray = player.hand.sorted(by: {$0.value > $1.value})
         let slice = orderedArray[0...2]
         return Array(slice)
     }

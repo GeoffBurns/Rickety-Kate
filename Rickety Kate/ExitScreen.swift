@@ -26,19 +26,19 @@ class ExitScreen: Popup //, Resizable
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setup(scene:SKNode)
+    override func setup(_ scene:SKNode)
     {
         button!.zPosition = 350
-        let fontsize = FontSize.Huge.scale
+        let fontsize = FontSize.huge.scale
         self.gameScene = scene
         color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
         size = scene.frame.size
-        position = CGPointZero
-        anchorPoint = CGPointZero
+        position = CGPoint.zero
+        anchorPoint = CGPoint.zero
         name = "ExitBackground"
-        userInteractionEnabled = true
+        isUserInteractionEnabled = true
         
-        let midWidth = CGRectGetMidX(scene.frame)
+        let midWidth = scene.frame.midX
         
         exitLabel.text = "Are you sure".localize
         exitLabel.fontSize = fontsize;
@@ -46,23 +46,23 @@ class ExitScreen: Popup //, Resizable
         
         self.addChild(exitLabel)
         
-        exitLabel2.text = "you_want_to_exit".localize
+        exitLabel2.text = "you want to exit".localize
         exitLabel2.fontSize = fontsize;
         exitLabel2.position = CGPoint(x:midWidth, y:self.frame.size.height * 0.57);
         
         self.addChild(exitLabel2)
         
         yesButton.position = CGPoint(x:self.frame.width * 0.25,y:self.frame.height * 0.4)
-        yesButton.setScale(ButtonSize.Small.scale)
+        yesButton.setScale(ButtonSize.small.scale)
         yesButton.zPosition = 100
         yesButton.name = "Yes"
-        yesButton.userInteractionEnabled = false
+        yesButton.isUserInteractionEnabled = false
         
         noButton.position = CGPoint(x:self.frame.width*0.75,y:self.frame.height * 0.4)
-        noButton.setScale(ButtonSize.Small.scale)
+        noButton.setScale(ButtonSize.small.scale)
         noButton.zPosition = 100
         noButton.name = "No"
-        noButton.userInteractionEnabled = false
+        noButton.isUserInteractionEnabled = false
         
         self.addChild(yesButton)
         self.addChild(noButton)
@@ -78,14 +78,14 @@ class ExitScreen: Popup //, Resizable
         exitLabel2.position = CGPoint(x:size.width * 0.5, y:self.frame.size.height * 0.57 + bannerHeight);
     }
     */
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
 
         for touch in (touches )
         {
-            let positionInScene = touch.locationInNode(self)
+            let positionInScene = touch.location(in: self)
 
-            if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode
+            if let touchedNode : SKSpriteNode = self.atPoint(positionInScene) as? SKSpriteNode
               {
               if touchedNode.name == "No"
                 {

@@ -8,12 +8,12 @@
 
 import Foundation
 
-public extension SequenceType {
+public extension Sequence {
     
     /// Categorises elements of self into a dictionary, with the keys given by keyFunc
     
-    func categorise<U : Hashable>(@noescape keyFunc: Generator.Element -> U) -> [U:[Generator.Element]] {
-        var dict: [U:[Generator.Element]] = [:]
+    func categorise<U : Hashable>(_ keyFunc: (Iterator.Element) -> U) -> [U:[Iterator.Element]] {
+        var dict: [U:[Iterator.Element]] = [:]
         for el in self {
             let key = keyFunc(el)
             dict[key]?.append(el) ?? {dict[key] = [el]}()
@@ -21,13 +21,13 @@ public extension SequenceType {
         return dict
     }
     
-    public func from(n: Int, forLength: Int) -> [Generator.Element] {
+    public func from(_ n: Int, forLength: Int) -> [Iterator.Element] {
         
-        var result : [Generator.Element]
+        var result : [Iterator.Element]
         result = []
         result.reserveCapacity(forLength)
         
-        var g = generate()
+        var g = makeIterator()
         for _ in 0..<n {
             if let _ = g.next() { /* skip */ } else { return [] }
         }
@@ -38,21 +38,21 @@ public extension SequenceType {
         return result
     }
     
-    public var head : Generator.Element? {
+    public var head : Iterator.Element? {
         
 
         
-        var g = generate()
+        var g = makeIterator()
     
         return g.next() 
     }
-    public var tail : [Generator.Element] {
+    public var tail : [Iterator.Element] {
         
-        var result : [Generator.Element]
+        var result : [Iterator.Element]
         result = []
-        result.reserveCapacity(self.underestimateCount())
+        result.reserveCapacity(self.underestimatedCount)
         
-        var g = generate()
+        var g = makeIterator()
         
         if let _ = g.next() { /* skip */ } else { return [] }
         

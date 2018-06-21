@@ -8,12 +8,12 @@
 
 import SpriteKit
 import ReactiveCocoa
-
+import ReactiveSwift
 
 protocol Resizable : class
 {
      var adHeight : CGFloat { get }
-     func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
+     func arrangeLayoutFor(_ size:CGSize, bannerHeight:CGFloat)
 }
 // Tells the game player what is going on
 class StatusDisplay : Resizable
@@ -23,9 +23,9 @@ class StatusDisplay : Resizable
     var noticeLabel = Label(fontNamed:"Chalkduster")
  
     static let sharedInstance = StatusDisplay()
-    private init() { }
+    fileprivate init() { }
     
-    static func register(scene: SKNode)
+    static func register(_ scene: SKNode)
     {
         StatusDisplay.sharedInstance.setupStatusArea(scene)
     }
@@ -42,9 +42,9 @@ class StatusDisplay : Resizable
         noticeLabel.displayTime = 6
         noticeLabel2.displayTime = 6
     }
-    func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
+    func arrangeLayoutFor(_ size:CGSize, bannerHeight:CGFloat)
     {
-        let fontsize : CGFloat = FontSize.Huge.scale
+        let fontsize : CGFloat = FontSize.huge.scale
         adHeight = bannerHeight
         noticeLabel.position = CGPoint(x:size.width * 0.5, y:size.height * 0.33 + bannerHeight);
     
@@ -55,7 +55,7 @@ class StatusDisplay : Resizable
         
         noticeLabel2.fontSize = fontsize;
     }
-    func setupStatusArea(scene: SKNode)
+    func setupStatusArea(_ scene: SKNode)
     {
     noticeLabel2 = GameSettings.sharedInstance.showTips
             ? Label(fontNamed:"Chalkduster").withShadow().withFadeOut()
@@ -63,7 +63,7 @@ class StatusDisplay : Resizable
         
     noticeLabel = GameSettings.sharedInstance.showTips
             ? Label(fontNamed:"Chalkduster").withShadow().withFadeOutAndAction
-                {  Bus.sharedInstance.send(GameEvent.ShowTip(Tip.dispenceTip())) }
+                {  Bus.sharedInstance.send(GameEvent.showTip(Tip.dispenceTip())) }
             : Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
     noticeLabel.resetToScene(scene)
     noticeLabel2.resetToScene(scene)

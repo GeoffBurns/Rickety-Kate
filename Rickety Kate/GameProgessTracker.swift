@@ -10,9 +10,9 @@ import Foundation
 
 
 // Used by Computer Player to calculate strategy
-public class GameProgressTracker
+open class GameProgressTracker
 {
-    var cardCount = [Int](count: PlayingCard.Suite.NoOfSuites.rawValue, repeatedValue: 0)
+    var cardCount = [Int](repeating: 0, count: PlayingCard.Suite.noOfSuites.rawValue)
     var notFollowing  = [Set<CardPlayer>]()
     var unplayedScoringCards = Set<PlayingCard>()
     var trumpsHaveBeenBroken = false
@@ -27,18 +27,18 @@ public class GameProgressTracker
         }
     }
     
-    public func reset()
+    open func reset()
     {
-        for (i,_) in cardCount.enumerate()
+        for (i,_) in cardCount.enumerated()
         {
         cardCount[i] = 0
-        notFollowing[i].removeAll(keepCapacity: true)
+        notFollowing[i].removeAll(keepingCapacity: true)
         }
         unplayedScoringCards = Set<PlayingCard>(gameSettings.rules.cardScores.keys)
         trumpsHaveBeenBroken = false
     }
     
-    func trackNotFollowingBehaviourForAIStrategy(first:TrickPlay?,player: CardPlayer, suite: PlayingCard.Suite )
+    func trackNotFollowingBehaviourForAIStrategy(_ first:TrickPlay?,player: CardPlayer, suite: PlayingCard.Suite )
     {
         if let firstcard = first //tricksPile.first
         {
@@ -50,7 +50,7 @@ public class GameProgressTracker
         }
     }
     
-    func trackProgress(first:TrickPlay?,player:CardPlayer, playedCard:PlayingCard)
+    func trackProgress(_ first:TrickPlay?,player:CardPlayer, playedCard:PlayingCard)
     {
         
         if playedCard.suite == GameSettings.sharedInstance.rules.trumpSuite
@@ -62,15 +62,15 @@ public class GameProgressTracker
         unplayedScoringCards.remove(playedCard)
     }
     
-     func countCardIn(suite: PlayingCard.Suite)
+     func countCardIn(_ suite: PlayingCard.Suite)
      {
         let index = suite.rawValue
         
-        self.cardCount[index]++
+        self.cardCount[index] += 1
      }
 
     
-    func playerNotFollowingSuite(player: CardPlayer, suite: PlayingCard.Suite )
+    func playerNotFollowingSuite(_ player: CardPlayer, suite: PlayingCard.Suite )
      {
 
             let index = suite.rawValue

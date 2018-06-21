@@ -8,6 +8,7 @@
 
 import SpriteKit
 import ReactiveCocoa
+import ReactiveSwift
 
 struct AssociationKey {
     static var hidden: UInt8 = 1
@@ -17,7 +18,7 @@ struct AssociationKey {
 }
 
 // lazily creates a gettable associated property via the given factory
-func lazyAssociatedProperty<T: AnyObject>(host: AnyObject, key: UnsafePointer<Void>, factory: ()->T) -> T {
+func lazyAssociatedProperty<T: AnyObject>(_ host: AnyObject, key: UnsafeRawPointer, factory: ()->T) -> T {
     var associatedProperty = objc_getAssociatedObject(host, key) as? T
     
     if associatedProperty == nil {
@@ -27,11 +28,11 @@ func lazyAssociatedProperty<T: AnyObject>(host: AnyObject, key: UnsafePointer<Vo
     return associatedProperty!
 }
 
-func lazyMutableProperty<T>(host: AnyObject, key: UnsafePointer<Void>, setter: T -> (), getter: () -> T) -> MutableProperty<T> {
+func lazyMutableProperty<T>(_ host: AnyObject, key: UnsafeRawPointer, setter: @escaping (T) -> (), getter: @escaping () -> T) -> MutableProperty<T> {
     return lazyAssociatedProperty(host, key: key) {
         let property = MutableProperty<T>(getter())
         property.producer
-            .startWithNext { newValue in
+            .startWithValues { newValue in
                 setter(newValue)
         }
         return property
@@ -44,7 +45,7 @@ extension SKNode {
     }
     
     public var rac_hidden: MutableProperty<Bool> {
-        return lazyMutableProperty(self, key: &AssociationKey.hidden, setter: { self.hidden = $0 }, getter: { self.hidden  })
+        return lazyMutableProperty(self, key: &AssociationKey.hidden, setter: { self.isHidden = $0 }, getter: { self.isHidden  })
     }
 }
 

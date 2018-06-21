@@ -34,7 +34,7 @@ class GivenAEarlyLeadingStrategy: XCTestCase {
         var card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
         XCTAssert(card?.imageName=="QD", (card?.imageName ?? "nil") + " chosen instead of QD")
         
-        gameState.addNotFollowed(PlayingCard.Suite.Diamonds)
+        gameState.addNotFollowed(PlayingCard.Suite.diamonds)
         
         card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
         
@@ -47,7 +47,7 @@ class GivenAEarlyLeadingStrategy: XCTestCase {
             XCTAssert(false, "No Card")
         }
         
-        gameState.addNotFollowed(PlayingCard.Suite.Clubs)
+        gameState.addNotFollowed(PlayingCard.Suite.clubs)
         
         card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
         XCTAssert(card == nil, "Pass")

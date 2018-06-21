@@ -13,22 +13,22 @@ import SpriteKit
 /// Which direction are the cards and scores rotated
 public enum Direction:Int
 {
-    case Up
-    case Left
-    case Down
-    case Right
+    case up
+    case left
+    case down
+    case right
     
     
-    func rotationOfCard(positionInSpread: CGFloat,fullHand: CGFloat = CardPile.defaultSpread) -> CGFloat
+    func rotationOfCard(_ positionInSpread: CGFloat,fullHand: CGFloat = CardPile.defaultSpread) -> CGFloat
     {
         var startRotate = CGFloat(0)
         switch self
         {
-        case .Left:
+        case .left:
             startRotate = 120.degreesToRadians
-        case .Down:
+        case .down:
             startRotate = 210.degreesToRadians
-        case .Right:
+        case .right:
             startRotate = -60.degreesToRadians
         default:
             startRotate = 30.degreesToRadians
@@ -39,21 +39,21 @@ public enum Direction:Int
         return   startRotate - rotateDelta * positionInSpread
     }
     
-    func positionOfCard(positionInSpread: CGFloat, spriteHeight: CGFloat, startWidth: CGFloat, startheight: CGFloat, hortizonalSpacing: CGFloat, verticalSpacing: CGFloat) -> CGPoint
+    func positionOfCard(_ positionInSpread: CGFloat, spriteHeight: CGFloat, startWidth: CGFloat, startheight: CGFloat, hortizonalSpacing: CGFloat, verticalSpacing: CGFloat) -> CGPoint
     {
         
         switch self
         {
-        case .Up:
+        case .up:
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight-spriteHeight*0.92)
             
-        case .Left:
+        case .left:
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             
-        case .Down:
+        case .down:
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             
-        case .Right:
+        case .right:
             
             return CGPoint(x:startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
         }

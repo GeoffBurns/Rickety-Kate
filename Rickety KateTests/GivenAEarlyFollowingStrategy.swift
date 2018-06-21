@@ -37,7 +37,7 @@ class GivenAEarlyGameFollowingStrategy: XCTestCase {
         XCTAssert(card?.imageName=="KC", "Pass")
         
         
-        gameState.addNotFollowed(PlayingCard.Suite.Clubs)
+        gameState.addNotFollowed(PlayingCard.Suite.clubs)
         card =  strategy.chooseCard(player as CardHolder,gameState:gameState as GameState)
         XCTAssert(card == nil, "Pass")
         

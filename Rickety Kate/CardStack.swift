@@ -11,13 +11,13 @@ import SpriteKit
 /// How the cards are displayed in a stack
 /// Only certain cards are accepted on the stack
 /// Used in Sevens and Penalty Games
-typealias ValidNextCardsCalculator = PlayingCard -> Set<PlayingCard>
-typealias ValidNextCardCalculator = PlayingCard -> PlayingCard?
+typealias ValidNextCardsCalculator = (PlayingCard) -> Set<PlayingCard>
+typealias ValidNextCardCalculator = (PlayingCard) -> PlayingCard?
 
 class CardStack : CardPile
 {
     weak var parentStack : CardStack? = nil
-    var suite: PlayingCard.Suite = PlayingCard.Suite.Spades
+    var suite: PlayingCard.Suite = PlayingCard.Suite.spades
     var baseCard : PlayingCard? = nil  { didSet { updateBase() } }
     
     var baseSprite : CardSprite? { if baseCard == nil {return nil}; return scene!.whiteCardSprite(baseCard!) }
@@ -26,21 +26,21 @@ class CardStack : CardPile
  
     var lowerStack: CardStack? = nil
 
-    static func nextLowerCard(lastCard:PlayingCard) ->[PlayingCard]
+    static func nextLowerCard(_ lastCard:PlayingCard) ->[PlayingCard]
     {
             let prevcards = GameSettings.sharedInstance.deck!.orderedDeck
                 .filter { $0.suite == lastCard.suite && $0.value < lastCard.value }
-                .sort {$0.value > $1.value}
+                .sorted {$0.value > $1.value}
             
             return prevcards
     }
 
-    static func nextHigherCard(lastCard:PlayingCard) ->[PlayingCard]
+    static func nextHigherCard(_ lastCard:PlayingCard) ->[PlayingCard]
     {
         
     let nextcards = GameSettings.sharedInstance.deck!.orderedDeck
         .filter { $0.suite == lastCard.suite && $0.value > lastCard.value }
-        .sort {$0.value < $1.value}
+        .sorted {$0.value < $1.value}
         
     return nextcards
     }
@@ -61,7 +61,7 @@ class CardStack : CardPile
         }
     }
  
-    override func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
+    override func rotationOfCard(_ positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
     {
         return 0
     }
@@ -93,29 +93,26 @@ class CardStack : CardPile
             return parent.finished
         }
         
-        if let lower = lowerStack
-        where isFinished && lower.isFinished
+        if let lower = lowerStack, isFinished && lower.isFinished
         {
             return self
         }
         return nil
     }
-    func playBefore(card:PlayingCard) -> PlayingCard?
+    func playBefore(_ card:PlayingCard) -> PlayingCard?
     {
         if baseCard == nil {
             return nil }
         if baseCard!.suite != card.suite { return nil }
         
-        if let next = nextCard()
-           where next != card
+        if let next = nextCard(), next != card
            && Set(self.validNextCardsCalculator ( next )).contains(card)
             {
             return next
             }
         
         if let lower = lowerStack,
-            next = lower.nextCard()
-            where next != card
+            let next = lower.nextCard(), next != card
                 && Set(lower.validNextCardsCalculator ( next )).contains(card)
         {
             return next
@@ -127,7 +124,7 @@ class CardStack : CardPile
     
     func addLower() ->CardStack
     {
-        lowerStack = CardStack(name: CardPileType.Stack.description)
+        lowerStack = CardStack(name: CardPileType.stack.description)
         lowerStack!.validNextCardsCalculator = CardStack.nextLowerCard
         lowerStack!.parentStack = self
         return lowerStack!
@@ -138,7 +135,7 @@ class CardStack : CardPile
         
         if !cards.isEmpty
         {
-            if let lower = lowerStack where lower.baseCard == nil
+            if let lower = lowerStack, lower.baseCard == nil
             {
             lower.baseCard = GameSettings.sharedInstance.deck!.lowerMiddleCardIn(self.baseCard!.suite)
             }
@@ -155,7 +152,7 @@ class CardStack : CardPile
           //  if (sprite.state != CardState.AtRest)
           //  {
                 sprite.zPosition = 1
-                sprite.state = CardState.AtRest
+                sprite.state = CardState.atRest
           //  }
             
             
@@ -166,7 +163,7 @@ class CardStack : CardPile
             
             let newHeight = newScale * sprite.size.height / sprite.yScale
             sprite.updateAnchorPoint(cardAnchorPoint)
-            sprite.color = UIColor.whiteColor()
+            sprite.color = UIColor.white
             sprite.colorBlendFactor = 0
             
             

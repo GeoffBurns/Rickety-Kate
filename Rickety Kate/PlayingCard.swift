@@ -11,12 +11,12 @@ import UIKit
 public protocol Deck
 {
     var cards: [PlayingCard] {get}
-    func dealFor(numberOfPlayers:Int) -> [[PlayingCard]]
+    func dealFor(_ numberOfPlayers:Int) -> [[PlayingCard]]
 }
 
 extension UIColor
 {
-    class func colorFromHexString(hexString: String) -> UIColor
+    class func colorFromHexString(_ hexString: String) -> UIColor
     {
         if let rgbValue = UInt32(hexString, radix: 16)
         {
@@ -25,7 +25,7 @@ extension UIColor
             let blue : CGFloat  = CGFloat(rgbValue & 0xFF) / 255.0
             return UIColor(red:red, green:green, blue:blue, alpha:1.0);
         }
-        return UIColor.blackColor()
+        return UIColor.black
     }
 }
 
@@ -34,18 +34,18 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public enum Suite : Int, Equatable, Comparable
     {
-        case Spades
-        case Hearts
-        case Clubs
-        case Diamonds
-        case Suns
-        case Anchors
-        case Stars
-        case Picks
-        case Trumps
-        case Jokers
-        case NoOfSuites
-        case None
+        case spades
+        case hearts
+        case clubs
+        case diamonds
+        case suns
+        case anchors
+        case stars
+        case picks
+        case trumps
+        case jokers
+        case noOfSuites
+        case none
         
         
         var imageCode : String
@@ -53,92 +53,110 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             {
                 switch(self)
                 {
-                case .Spades: return "S"
-                case .Hearts: return "H"
-                case .Clubs:  return "C"
-                case .Diamonds: return "D"
-                case .Suns: return "U"
-                case .Anchors: return "A"
-                case .Stars : return "R"
-                case .Picks : return "P"
-                case .Trumps : return "T"
-                case .Jokers : return "J"
-                case .NoOfSuites : return ""
-                case .None : return ""
+                case .spades: return "S"
+                case .hearts: return "H"
+                case .clubs:  return "C"
+                case .diamonds: return "D"
+                case .suns: return "U"
+                case .anchors: return "A"
+                case .stars : return "R"
+                case .picks : return "P"
+                case .trumps : return "T"
+                case .jokers : return "J"
+                case .noOfSuites : return ""
+                case .none : return ""
                 }
         }
-        
+        var singular : String
+            // Used to help create imagename for a card
+            {
+                switch(self)
+                {
+                case .spades: return "Spade".localize
+                case .hearts: return "Heart".localize
+                case .clubs:  return "Club".localize
+                case .diamonds: return "Diamond".localize
+                case .suns: return "Sun".localize
+                case .anchors: return "Anchor".localize
+                case .stars : return "Star".localize
+                case .picks : return "Pick".localize
+                case .trumps : return "Trump".localize
+                case .jokers : return "Joker".localize
+                case .noOfSuites : return "Not_Applicable".localize
+                case .none : return "None".localize
+                }
+        }
         var description : String
             // Used to help create imagename for a card
             {
                 switch(self)
                 {
-                case .Spades: return "Spades".localize
-                case .Hearts: return "Hearts".localize
-                case .Clubs:  return "Clubs".localize
-                case .Diamonds: return "Diamonds".localize
-                case .Suns: return "Suns".localize
-                case .Anchors: return "Anchors".localize
-                case .Stars : return "Stars".localize
-                case .Picks : return "Picks".localize
-                case .Trumps : return "Trumps".localize
-                case .Jokers : return "Jokers".localize
-                case .NoOfSuites : return "Not_Applicable".localize
-                case .None : return "None".localize
+                case .spades: return "Spades".localize
+                case .hearts: return "Hearts".localize
+                case .clubs:  return "Clubs".localize
+                case .diamonds: return "Diamonds".localize
+                case .suns: return "Suns".localize
+                case .anchors: return "Anchors".localize
+                case .stars : return "Stars".localize
+                case .picks : return "Picks".localize
+                case .trumps : return "Trumps".localize
+                case .jokers : return "Jokers".localize
+                case .noOfSuites : return "Not_Applicable".localize
+                case .none : return "None".localize
                 }
         }
         var color : UIColor
             {
                 switch(self)
                 {
-                case .Spades: return UIColor.blackColor()
-                case .Hearts: return UIColor.colorFromHexString("df0000")
-                case .Clubs:  return UIColor.colorFromHexString("1ea820")
-                case .Diamonds: return UIColor.colorFromHexString("16b4b7")
-                case .Suns: return UIColor.colorFromHexString("ffb002")
-                case .Anchors: return UIColor.colorFromHexString("0044cd")
-                case .Stars : return UIColor.colorFromHexString("ff6600")
-                case .Picks : return UIColor.colorFromHexString("841c00")
-                case .Trumps : return UIColor.colorFromHexString("5600b6")
-                case .Jokers : return UIColor.colorFromHexString("fb47f3")
-                case .NoOfSuites : return UIColor.blackColor()
-                case .None : return UIColor.blackColor()
+                case .spades: return UIColor.black
+                case .hearts: return UIColor.colorFromHexString("df0000")
+                case .clubs:  return UIColor.colorFromHexString("1ea820")
+                case .diamonds: return UIColor.colorFromHexString("16b4b7")
+                case .suns: return UIColor.colorFromHexString("ffb002")
+                case .anchors: return UIColor.colorFromHexString("0044cd")
+                case .stars : return UIColor.colorFromHexString("ff6600")
+                case .picks : return UIColor.colorFromHexString("841c00")
+                case .trumps : return UIColor.colorFromHexString("5600b6")
+                case .jokers : return UIColor.colorFromHexString("fb47f3")
+                case .noOfSuites : return UIColor.black
+                case .none : return UIColor.black
                 }
         }
         static var standardSuites : [Suite]
         {
-            return [Spades,Hearts,Clubs,Diamonds]
+            return [spades,hearts,clubs,diamonds]
         }
         static var normalSuites : [Suite]
         {
-            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors,Stars,Picks]
+            return [spades,hearts,clubs,diamonds,suns,anchors,stars,picks]
         }
         static var allSuites : [Suite]
         {
-            return [Spades,Hearts,Clubs,Diamonds,Suns,Anchors,Stars,Picks,Trumps,Jokers]
+            return [spades,hearts,clubs,diamonds,suns,anchors,stars,picks,trumps,jokers]
         }
     }
     public enum CardValue : Equatable, Comparable
     {
-        case CourtCard(String)
-        case Pip(Int)
-        case Ace
+        case courtCard(String)
+        case pip(Int)
+        case ace
         
         var imageCode : String
         // Used to help create imagename for a card
         {
                 switch(self)
                 {
-                case CourtCard(let cardLetter): return cardLetter
-                case Pip(let faceValue): return faceValue.description
-                case Ace: return "A"
+                case .courtCard(let cardLetter): return cardLetter
+                case .pip(let faceValue): return faceValue.description
+                case .ace: return "A"
                 }
         }
         var localLetterRaw : String
         {
                 switch(self)
                 {
-                case CourtCard(let cardLetter):
+                case .courtCard(let cardLetter):
                     
                     switch cardLetter
                     {
@@ -161,8 +179,8 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 if raw == "" { return ""}
                 switch(self)
                 {
-                case CourtCard(let cardLetter):
-                    return cardLetter.lowercaseString == raw.lowercaseString ? "" : raw
+                case .courtCard(let cardLetter):
+                    return cardLetter.lowercased() == raw.lowercased() ? "" : raw
                 default : return ""
                 }
         }
@@ -171,7 +189,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             {
                 switch(self)
                 {
-                case CourtCard(let cardLetter):
+                case .courtCard(let cardLetter):
                     
                     switch cardLetter
                     {
@@ -184,7 +202,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     case "K" : return "King".localize
                     default : return "Page".localize
                     }
-                case Pip(let faceValue):
+                case .pip(let faceValue):
                     switch faceValue
                     {
                     case 2 : return "Deuce".localize
@@ -199,7 +217,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     case 11 : return "Eleven".localize
                     default : return faceValue.description
                     }
-                case Ace: return "Ace".localize
+                case .ace: return "Ace".localize
                 }
         }
         
@@ -208,7 +226,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             {
                 switch(self)
                 {
-                case CourtCard(let cardLetter):
+                case .courtCard(let cardLetter):
                     
                     switch cardLetter
                     {
@@ -222,12 +240,12 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     default: return 0
                     }
                     
-                case Pip(let faceValue): return faceValue
-                case Ace: return 19
+                case .pip(let faceValue): return faceValue
+                case .ace: return 19
                 }
         }
         
-        static func valuesFor(noOfCardsInASuite:Int = 13) -> [CardValue]
+        static func valuesFor(_ noOfCardsInASuite:Int = 13) -> [CardValue]
         {
             switch noOfCardsInASuite
             {
@@ -242,35 +260,45 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             default: return standardValues
             }
         }
+        static func cardsUpTo(_ noOfCards:Int = 10) -> [CardValue]
+        {
+            return [ace] + (2...noOfCards).map { pip($0) }
+        }
         static var standardValues : [CardValue] {
-            return [Ace] + (2...10).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
+            return  cardsUpTo(10) + ["J","Q","K"].map { courtCard($0) }
         }
         static var values10CardInASuite : [CardValue] {
-            return [Ace] + (2...7).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
+            
+            return  cardsUpTo(7) + ["J","Q","K"].map { courtCard($0) }
         }
         static var values11CardInASuite : [CardValue] {
-            return [Ace] + (2...8).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
+            
+            return  cardsUpTo(8) + ["J","Q","K"].map { courtCard($0) }
         }
         static var values12CardInASuite : [CardValue] {
-            return [Ace] + (2...9).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
+            
+            return  cardsUpTo(9) + ["J","Q","K"].map { courtCard($0) }
         }
      /*   static var values14CardInASuite : [CardValue] {
             return [Ace] + (2...11).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
         }*/
         static var values14CardInASuite : [CardValue] {
-            return [Ace] + (2...10).map { Pip($0) } + ["J","KN","Q","K"].map { CourtCard($0) }
+            
+            return  cardsUpTo(10) + ["J","KN","Q","K"].map { courtCard($0) }
         }
         static var values15CardInASuite : [CardValue] {
-            return [Ace] + (2...11).map { Pip($0) } + ["J","KN","Q","K"].map { CourtCard($0) }
+            
+            return  cardsUpTo(11) + ["J","KN","Q","K"].map { courtCard($0) }
         }
         static var values16CardInASuite : [CardValue] {
-            return [Ace] + (2...11).map { Pip($0) } + ["J","KN","PS","Q","K"].map { CourtCard($0) }
+            
+            return  cardsUpTo(11) +  ["J","KN","PS","Q","K"].map { courtCard($0) }
         }
         static var values17CardInASuite : [CardValue] {
-            return [Ace] + (2...11).map { Pip($0) } + ["J","KN","AR","PS","Q","K"].map { CourtCard($0) }
+            return  cardsUpTo(11) +  ["J","KN","AR","PS","Q","K"].map { courtCard($0) }
         }
         static var values18CardInASuite : [CardValue]{
-            return [Ace] + (2...11).map { Pip($0) } + ["J","KN","AR","PS","PR","Q","K"].map { CourtCard($0) }
+            return  cardsUpTo(11) + ["J","KN","AR","PS","PR","Q","K"].map { courtCard($0) }
         }
     }
     
@@ -292,16 +320,16 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         {
             switch(suite)
             {
-            case PlayingCard.Suite.Jokers:
+            case PlayingCard.Suite.jokers:
                 switch value.rank
                 {
                 case 0 : return "Fool".localize
                 case 1 : return "Joker1".localize
                 case 2 : return "Joker2".localize
                 default:
-                    return  "_ of _".localizeWith(value.description,suite.description)
+                    return  "%@ of %@".localizeWith(value.description,suite.description)
                 }
-            case PlayingCard.Suite.Trumps:
+            case PlayingCard.Suite.trumps:
                 switch value.rank
                 {
                 case 1 : return "Magician".localize
@@ -326,10 +354,10 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case 20 : return "Judgement".localize
                 case 21 : return "World".localize
                 default:
-                    return  "_ of _".localizeWith(value.description,suite.description)
+                    return  "%@ of %@".localizeWith(value.description,suite.description)
                 }
             default:
-                return  "_ of _".localizeWith(value.description,suite.description)
+                return  "%@ of %@".localizeWith(value.description,suite.description)
             }
     }
     
@@ -349,36 +377,36 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             return !isRicketyKate
     }
     
-    public class DeckBase : Deck
+    open class DeckBase : Deck
     {
         var noInSuites = [13,13,13,13,13,13,13,13,21,3]
-        func noCardIn(suite:PlayingCard.Suite) -> Int
+        func noCardIn(_ suite:PlayingCard.Suite) -> Int
         {
             return noInSuites[suite.rawValue]
         }
-        func middleCardIn(suite:PlayingCard.Suite) -> PlayingCard
+        func middleCardIn(_ suite:PlayingCard.Suite) -> PlayingCard
         {
-            return PlayingCard(suite:suite,value:PlayingCard.CardValue.Pip((noInSuites[suite.rawValue]+1)/2))
+            return PlayingCard(suite:suite,value:PlayingCard.CardValue.pip((noInSuites[suite.rawValue]+1)/2))
         }
-        func lowerMiddleCardIn(suite:PlayingCard.Suite) -> PlayingCard
+        func lowerMiddleCardIn(_ suite:PlayingCard.Suite) -> PlayingCard
         {
-            return PlayingCard(suite:suite,value:PlayingCard.CardValue.Pip((noInSuites[suite.rawValue]-1)/2))
+            return PlayingCard(suite:suite,value:PlayingCard.CardValue.pip((noInSuites[suite.rawValue]-1)/2))
         }
-        public var cards: [PlayingCard] {
+        open var cards: [PlayingCard] {
            
             return orderedDeck.shuffle();
         }
         
-        public func dealFor(numberOfPlayers:Int ) -> [[PlayingCard]]
+        open func dealFor(_ numberOfPlayers:Int ) -> [[PlayingCard]]
         {
             let pack = cards;
-            var hands: [[PlayingCard]] = [[PlayingCard]](count: numberOfPlayers, repeatedValue: [])
+            var hands: [[PlayingCard]] = [[PlayingCard]](repeating: [], count: numberOfPlayers)
             
             var i:Int = 0
             for card in pack
             {
                 hands[i].append(card)
-                i++;
+                i += 1;
                 if(i>=numberOfPlayers)
                 {
                     i=0
@@ -386,17 +414,17 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             }
             return hands
         }
-        public var orderedDeck:[PlayingCard]
+        open var orderedDeck:[PlayingCard]
         // override in derived class
         {
             return [];
         }
     }
-    public class Standard52CardDeck : DeckBase
+    open class Standard52CardDeck : DeckBase
     {
         
-        public static let sharedInstance = Standard52CardDeck()
-        override public var orderedDeck:[PlayingCard]
+        open static let sharedInstance = Standard52CardDeck()
+        override open var orderedDeck:[PlayingCard]
         {
             var deck = [PlayingCard]();
 
@@ -410,13 +438,13 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             return deck
         }
     }
-    public class BuiltCardDeck : DeckBase
+    open class BuiltCardDeck : DeckBase
     {
         var gameSettings:IGameSettings? = nil
-        public var setOfSuitesInDeck = Set<PlayingCard.Suite>()
-        public var suitesInDeck : [PlayingCard.Suite] = []
-        public var normalSuitesInDeck : [PlayingCard.Suite] = []
-        public var valuesInSuite : [PlayingCard.CardValue] = []
+        open var setOfSuitesInDeck = Set<PlayingCard.Suite>()
+        open var suitesInDeck : [PlayingCard.Suite] = []
+        open var normalSuitesInDeck : [PlayingCard.Suite] = []
+        open var valuesInSuite : [PlayingCard.CardValue] = []
         
         var noOfPossibleCardsInDeck : Int {
             var result = (gameSettings!.noOfSuitesInDeck * gameSettings!.noOfCardsInASuite)
@@ -437,12 +465,12 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             suitesInDeck = normalSuitesInDeck
             if gameSettings.hasTrumps
             {
-                suitesInDeck.append(PlayingCard.Suite.Trumps)
+                suitesInDeck.append(PlayingCard.Suite.trumps)
                
             }
             if gameSettings.hasJokers
             {
-                suitesInDeck.append(PlayingCard.Suite.Jokers)
+                suitesInDeck.append(PlayingCard.Suite.jokers)
         
             }
             
@@ -456,29 +484,29 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             {
                 noInSuites[s.rawValue]  = gameSettings!.noOfCardsInASuite
             }
-            noInSuites[PlayingCard.Suite.Jokers.rawValue] = 0
+            noInSuites[PlayingCard.Suite.jokers.rawValue] = 0
             if gameSettings!.hasTrumps
             {
-                noInSuites[PlayingCard.Suite.Trumps.rawValue] = 21
-                noInSuites[PlayingCard.Suite.Jokers.rawValue] = 1
+                noInSuites[PlayingCard.Suite.trumps.rawValue] = 21
+                noInSuites[PlayingCard.Suite.jokers.rawValue] = 1
             }
             if gameSettings!.hasJokers
             {
-                noInSuites[PlayingCard.Suite.Jokers.rawValue]  += 2
+                noInSuites[PlayingCard.Suite.jokers.rawValue]  += 2
             }
         }
         
-        public func rankFor(card:PlayingCard) -> Int
+        open func rankFor(_ card:PlayingCard) -> Int
         {
             switch card.value
             {
-            case .Ace : return 1
-            case .Pip(let n) : return n
-            case .CourtCard :
-               return (valuesInSuite.indexOf(card.value)  ?? -1) + 1
+            case .ace : return 1
+            case .pip(let n) : return n
+            case .courtCard :
+               return (valuesInSuite.index(of: card.value)  ?? -1) + 1
             }
         }
-        override public var orderedDeck:[PlayingCard]
+        override open var orderedDeck:[PlayingCard]
             {
                 var deck = [PlayingCard]();
        
@@ -505,11 +533,11 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     {
                         continue
                     }
-                    removedCards.insert(PlayingCard(suite: s, value: PlayingCard.CardValue.Pip(pip)))
+                    removedCards.insert(PlayingCard(suite: s, value: PlayingCard.CardValue.pip(pip)))
                     noInSuites[s.rawValue]  = noInSuites[s.rawValue] - 1
-                    removedSoFar++
+                    removedSoFar+=1
                   }
-                  pip++
+                  pip+=1
                 }
                 while removedSoFar < toRemove
                 
@@ -529,32 +557,32 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 
                 if gameSettings!.hasTrumps
                 {
-                    deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(0)))
+                    deck.append(PlayingCard(suite: PlayingCard.Suite.jokers, value : PlayingCard.CardValue.pip(0)))
                     for v in 1...21
                     {
-                        deck.append(PlayingCard(suite: PlayingCard.Suite.Trumps, value : PlayingCard.CardValue.Pip(v)))
+                        deck.append(PlayingCard(suite: PlayingCard.Suite.trumps, value : PlayingCard.CardValue.pip(v)))
                     }
                 }
                 if gameSettings!.hasJokers
                 {
                     for v in 1...2
                     {
-                        deck.append(PlayingCard(suite: PlayingCard.Suite.Jokers, value : PlayingCard.CardValue.Pip(v)))
+                        deck.append(PlayingCard(suite: PlayingCard.Suite.jokers, value : PlayingCard.CardValue.pip(v)))
                     }
                 }
                 return deck
         }
     }
     
-    public class TestCardDeck : DeckBase
+    open class TestCardDeck : DeckBase
     {
     var deck = [PlayingCard]();
         
     public init(cards:[PlayingCard])
         {
-            deck.appendContentsOf(cards)
+            deck.append(contentsOf: cards)
         }
-    override public var orderedDeck:[PlayingCard]
+    override open var orderedDeck:[PlayingCard]
         {
             return deck
         }
@@ -567,17 +595,17 @@ extension String {
         {
           switch(self)
                     {
-                    case "S" : return .Spades
-                    case "H" : return .Hearts
-                    case "C" : return .Clubs
-                    case "D" : return .Diamonds
-                    case "U" : return .Suns
-                    case "A" : return .Anchors
-                    case "R" : return .Stars
-                    case "P" : return .Picks
-                    case "T" : return .Trumps
-                    case "J" : return .Jokers
-                    default : return .None
+                    case "S" : return .spades
+                    case "H" : return .hearts
+                    case "C" : return .clubs
+                    case "D" : return .diamonds
+                    case "U" : return .suns
+                    case "A" : return .anchors
+                    case "R" : return .stars
+                    case "P" : return .picks
+                    case "T" : return .trumps
+                    case "J" : return .jokers
+                    default : return .none
                     }
        
     }
@@ -585,32 +613,32 @@ extension String {
         {
         
         if self=="A" {
-            return PlayingCard.CardValue.Ace
+            return PlayingCard.CardValue.ace
         } else if let num = Int(self) {
-            return PlayingCard.CardValue.Pip(num)
+            return PlayingCard.CardValue.pip(num)
         } else {
-            return PlayingCard.CardValue.CourtCard(self)
+            return PlayingCard.CardValue.courtCard(self)
         }
     }
     var card : PlayingCard
     {
-     let index = self.endIndex.advancedBy(-1)
-     let v = self.substringToIndex(index)
-     let s = self.substringFromIndex(index)
+     let index = self.characters.index(self.endIndex, offsetBy: -1)
+     let v = self.substring(to: index)
+     let s = self.substring(from: index)
      return PlayingCard(suite: s.suite, value: v.cardvalue)
     }
 }
     
 extension Int
 {
-    public func of(suite :PlayingCard.Suite) -> PlayingCard
+    public func of(_ suite :PlayingCard.Suite) -> PlayingCard
     {
         return PlayingCard(suite: suite,value: cardValue)
     }
     
     public var cardValue : PlayingCard.CardValue
     {
-        return PlayingCard.CardValue.Pip(self)
+        return PlayingCard.CardValue.pip(self)
     }
     public var letterDescription :String
     {
@@ -635,34 +663,34 @@ extension Int
 }
 public enum CardName
 {
-    case Ace
-    case King
-    case Queen
-    case Prince
-    case Princess
-    case Archer
-    case Knight
-    case Jack
+    case ace
+    case king
+    case queen
+    case prince
+    case princess
+    case archer
+    case knight
+    case jack
     
     public var letter : String
         {
             switch(self)
             {
-            case .Ace :
+            case .ace :
                 return "A"
-            case .King :
+            case .king :
                 return "K"
-            case .Queen :
+            case .queen :
                 return "Q"
-            case .Prince :
+            case .prince :
                 return "PR"
-            case .Princess :
+            case .princess :
                 return "PS"
-            case .Archer :
+            case .archer :
                 return "AR"
-            case .Knight :
+            case .knight :
                 return "KN"
-            case .Jack :
+            case .jack :
                 return "J"
             } 
     }
@@ -670,14 +698,14 @@ public enum CardName
         {
             switch(self)
             {
-            case Ace :
-                return PlayingCard.CardValue.Ace
+            case .ace :
+                return PlayingCard.CardValue.ace
             default :
-                 return PlayingCard.CardValue.CourtCard(letter)
+                 return PlayingCard.CardValue.courtCard(letter)
             }
     }
 
-    public func of(suite :PlayingCard.Suite) -> PlayingCard?
+    public func of(_ suite :PlayingCard.Suite) -> PlayingCard?
     {
         return PlayingCard(suite: suite,value: cardValue)
 

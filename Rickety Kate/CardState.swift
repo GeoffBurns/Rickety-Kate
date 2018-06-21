@@ -11,7 +11,7 @@ import Foundation
 // is the card being dragged or examined
 enum CardState
 {
-    case AtRest
-    case Dragged
-    case Enlarged
+    case atRest
+    case dragged
+    case enlarged
 }

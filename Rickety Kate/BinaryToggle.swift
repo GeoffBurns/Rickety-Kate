@@ -22,14 +22,14 @@ class BinaryToggle: SKNode {
     init(current:Bool, text: String)
     {
         self.current = current
-        label.fontSize =  FontSize.Big.scale
+        label.fontSize =  FontSize.big.scale
         self.text = text
-        label.userInteractionEnabled = false
+        label.isUserInteractionEnabled = false
         
         super.init()
         updateLabelText()
         self.addChild(label)
-        self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,14 +46,14 @@ class BinaryToggle: SKNode {
         current  = !current
         updateLabelText()
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
         
         for touch in (touches )
         {
-            let touchPoint = touch.locationInNode(self)
+            let touchPoint = touch.location(in: self)
             
-            if label.containsPoint(touchPoint) {
+            if label.contains(touchPoint) {
                 
                 touched()
                 return

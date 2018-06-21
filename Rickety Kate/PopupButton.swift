@@ -21,9 +21,9 @@ class PopupButton : SKSpriteNode
        popupScene = popup
  
         let texture =  SKTexture(imageNamed: unpressed)
-        super.init(texture: texture, color: UIColor.whiteColor(), size: texture.size())
+        super.init(texture: texture, color: UIColor.white, size: texture.size())
         self.name = imageNamed
-        userInteractionEnabled = true
+        isUserInteractionEnabled = true
         popupScene?.button = self
         zPosition = 350
     }
@@ -36,7 +36,7 @@ class PopupButton : SKSpriteNode
     {
         
         if let popup = popupScene,
-               scene = self.parent
+               let scene = self.parent
         {
         popup.setup(scene)
         popup.zPosition = 400
@@ -59,7 +59,7 @@ class PopupButton : SKSpriteNode
         self.texture =  SKTexture(imageNamed: unpressed)
         popupScene?.removeFromParent()
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
         
         if popupScene!.parent == nil

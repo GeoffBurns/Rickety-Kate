@@ -34,7 +34,7 @@ public enum Achievement : String
 
 extension Achievement
 {
-    func SevenAchieventFor(number:Int) -> Achievement
+    func SevenAchieventFor(_ number:Int) -> Achievement
     {
    
         switch number

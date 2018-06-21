@@ -38,7 +38,7 @@ class SKMultilineLabel: SKNode {
     var noOfPages = 0
 
     
-    init(text:String, labelWidth:Int, maxHeight:CGFloat, pageBreak:CGFloat, pos:CGPoint, fontName:String="Verdana",fontSize:CGFloat=10,fontColor:UIColor=UIColor.blackColor(),leading:Int=10, alignment:SKLabelHorizontalAlignmentMode = .Center, shouldShowBorder:Bool = false)
+    init(text:String, labelWidth:Int, maxHeight:CGFloat, pageBreak:CGFloat, pos:CGPoint, fontName:String="Verdana",fontSize:CGFloat=10,fontColor:UIColor=UIColor.black,leading:Int=10, alignment:SKLabelHorizontalAlignmentMode = .center, shouldShowBorder:Bool = false)
     {
         self.text = text
         self.labelWidth = labelWidth
@@ -72,8 +72,8 @@ class SKMultilineLabel: SKNode {
             }
             labels = []
         }
-        let separators = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-        let words = text.componentsSeparatedByCharactersInSet(separators)
+        let separators = CharacterSet.whitespacesAndNewlines
+        let words = text.components(separatedBy: separators)
         
         var finalLine = false
         var wordCount = -1
@@ -83,7 +83,7 @@ class SKMultilineLabel: SKNode {
         var pageCount : CGFloat = 0.0
         var pagesSoFar : CGFloat = 0.0
         while (!finalLine) {
-            lineCount++
+            lineCount += 1
             var lineLength = CGFloat(0)
             var lineString = ""
             var lineStringBeforeAddingWord = ""
@@ -94,12 +94,12 @@ class SKMultilineLabel: SKNode {
             label.name = "line\(lineCount)"
             label.horizontalAlignmentMode = alignment
             label.fontSize = fontSize
-            label.fontColor = UIColor.whiteColor()
+            label.fontColor = UIColor.white
  
 
             while lineLength < CGFloat(labelWidth)
             {
-                wordCount++
+                wordCount += 1
                 if wordCount > words.count-1
                 {
                     //label.text = "\(lineString) \(words[wordCount])"
@@ -115,15 +115,15 @@ class SKMultilineLabel: SKNode {
                 }
             }
             if lineLength > 0 {
-                wordCount--
+                wordCount -= 1
                 if (!finalLine) {
                     lineString = lineStringBeforeAddingWord
                 }
                 label.text = lineString
                 var linePos = pos
-                if (alignment == .Left) {
+                if (alignment == .left) {
                     linePos.x -= CGFloat(labelWidth / 2)
-                } else if (alignment == .Right) {
+                } else if (alignment == .right) {
                     linePos.x += CGFloat(labelWidth / 2)
                 }
                 yPos = CGFloat(leading * lineCount)
@@ -132,7 +132,7 @@ class SKMultilineLabel: SKNode {
                 yPosWithBreak = yPos + pagesSoFar * self.pageBreak
                 let labelhiegth =  CGFloat(pos.y) -  CGFloat(yPosWithBreak) + CGFloat(page) *  CGFloat(pageLength)
                 linePos.y = labelhiegth
-                label.position = CGPointMake( linePos.x , linePos.y )
+                label.position = CGPoint( x: linePos.x , y: linePos.y )
                 self.addChild(label)
                 labels.append(label)
                 //println("was \(lineLength), now \(label.width)")

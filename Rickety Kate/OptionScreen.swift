@@ -96,17 +96,17 @@ class OptionScreen: MultiPagePopup {
       super.onExit()
     }
     
-    override func  setup(scene:SKNode)
+    override func  setup(_ scene:SKNode)
     {
         
         self.gameScene = scene
         color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
         size = scene.frame.size
         var layoutSize = size
-        position = CGPointZero
-        anchorPoint = CGPointZero
+        position = CGPoint.zero
+        anchorPoint = CGPoint.zero
         
-        userInteractionEnabled = true
+        isUserInteractionEnabled = true
         
         name = "Option Background"
         pageNo = 0
@@ -119,12 +119,12 @@ class OptionScreen: MultiPagePopup {
         if let resize = scene as? Resizable
         {
             self.adHeight = resize.adHeight
-            layoutSize = CGSizeMake(size.width, size.height - self.adHeight)
+            layoutSize = CGSize(width: size.width, height: size.height - self.adHeight)
         }
         arrangeLayoutFor(layoutSize,bannerHeight: adHeight)
     }
     
-    override func noPageFor(tab:Int) -> Int
+    override func noPageFor(_ tab:Int) -> Int
     {
         switch tab
         {
@@ -135,7 +135,7 @@ class OptionScreen: MultiPagePopup {
         }
     }
     
-    override func arrangeLayoutFor(size:CGSize,bannerHeight:CGFloat)
+    override func arrangeLayoutFor(_ size:CGSize,bannerHeight:CGFloat)
     {
         
         if DeviceSettings.isBigDevice {
@@ -196,9 +196,9 @@ class OptionScreen: MultiPagePopup {
             .from(settingStart, forLength: noOfItemsOnPage)
       
         let scene = gameScene!
-        let midWidth = CGRectGetMidX(gameScene!.frame)
+        let midWidth = gameScene!.frame.midX
         
-        for (i, optionSetting) in optionSettingsDisplayed.enumerate() {
+        for (i, optionSetting) in optionSettingsDisplayed.enumerated() {
             optionSetting.name = "Setting" + (i + 1).description
             optionSetting.position = CGPoint(x:midWidth,y:scene.frame.height * (startHeight - separationOfItems * CGFloat(i)))
             self.addChild(optionSetting)
@@ -207,18 +207,18 @@ class OptionScreen: MultiPagePopup {
     ///
     func gameCentre()
     {
-        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate ,
-            controller = appDelegate.window?.rootViewController
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate ,
+            let controller = appDelegate.window?.rootViewController
         {
             GameKitHelper.sharedInstance.showGKGameCenterViewController(
                 controller) { self.tabNo = 0; self.pageNo = 0 ; self.newPage()}
         }
         
-        let fontsize : CGFloat = FontSize.Small.scale
+        let fontsize : CGFloat = FontSize.small.scale
         let warn = SKLabelNode(fontNamed:"Verdana")
         warn.name = "Setting1"
         warn.fontSize = fontsize
-        warn.position = CGPointMake(size.width * 0.50, size.height * 0.50)
+        warn.position = CGPoint(x: size.width * 0.50, y: size.height * 0.50)
         warn.text = "Having trouble connecting to Game Center".localize
         gameCenterSettings = [warn]
         self.addChild(warn)
@@ -231,9 +231,9 @@ class OptionScreen: MultiPagePopup {
             .from(settingStart, forLength: noOfItemsOnPage)
         
         let scene = gameScene!
-        let midWidth = CGRectGetMidX(gameScene!.frame)
+        let midWidth = gameScene!.frame.midX
         
-        for (i, multiplayerSetting) in multiplayerSettingsDisplayed.enumerate()
+        for (i, multiplayerSetting) in multiplayerSettingsDisplayed.enumerated()
         {
             multiplayerSetting.name = "Setting" + (i + 1).description
             multiplayerSetting.position = CGPoint(x:midWidth,y:scene.frame.height * (startHeight - separationOfItems * CGFloat(i)))

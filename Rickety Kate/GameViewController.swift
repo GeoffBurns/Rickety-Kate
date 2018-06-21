@@ -19,7 +19,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
   
         adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
         adBannerView.delegate = self
-        adBannerView.hidden = true
+        adBannerView.isHidden = true
         
 
         view.addSubview(adBannerView)
@@ -33,20 +33,20 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let value = UIInterfaceOrientation.LandscapeLeft.rawValue
-        UIDevice.currentDevice().setValue(value, forKey: "orientation")
+        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
         
         // Detect the screensize
-        let sizeRect = UIScreen.mainScreen().applicationFrame
-        let scale = UIScreen.mainScreen().scale
+        let sizeRect = UIScreen.main.applicationFrame
+        let scale = UIScreen.main.scale
         let width = sizeRect.size.width * scale
         let height = sizeRect.size.height * scale
-        let size = CGSizeMake(width, height)
+        let size = CGSize(width: width, height: height)
         
-        NSNotificationCenter.defaultCenter() .
+        NotificationCenter.default .
             addObserver(self, selector:
-                Selector("showAuthenticationViewController"), name:
-                PresentAuthenticationViewController, object: nil)
+                #selector(GameViewController.showAuthenticationViewController), name:
+                NSNotification.Name(rawValue: PresentAuthenticationViewController), object: nil)
         
         GameKitHelper.sharedInstance.authenticateLocalPlayer()
         
@@ -65,13 +65,13 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         skView.ignoresSiblingOrder = true
             
         /* Set the scale mode to manually resize */
-        scene.scaleMode = .ResizeFill
+        scene.scaleMode = .resizeFill
         
         scene.table = RicketyKateCardTable.makeDemo(scene)
             
         skView.presentScene(scene)
         
-        loadAds()
+     //   loadAds()
      
     }
     
@@ -83,21 +83,21 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
             gameKitHelper.authenticationViewController {
                 
               self  .
-                    presentViewController(authenticationViewController,
+                    present(authenticationViewController,
                         animated: true,
                         completion: nil)
         }
     }
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
   
-            return UIInterfaceOrientationMask.LandscapeLeft
+            return UIInterfaceOrientationMask.landscapeLeft
 
     }
 
@@ -106,13 +106,13 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         GameSettings.sharedInstance.memoryWarning = true
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
    
-    override  func viewWillTransitionToSize( _ size: CGSize,
-        withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
+    override  func viewWillTransition( to size: CGSize,
+        with coordinator: UIViewControllerTransitionCoordinator)
     
     {
      resize(adBannerView,size: size);
@@ -120,19 +120,17 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     }
 
 
-   func resize(banner: ADBannerView?, size:CGSize = UIScreen.mainScreen().applicationFrame.size) {
+   func resize(_ banner: ADBannerView?, size:CGSize = UIScreen.main.applicationFrame.size) {
         
         var adHeight = CGFloat()
     
-       if let b = banner
-     //     where b.bannerLoaded
-        where b.hidden == false
+       if let b = banner, b.isHidden == false
         {
             adHeight = b.frame.size.height
        }
     if let uiView = self.view,
-        skView = uiView as? SKView,
-        scene = skView.scene as? RicketyKateGameScene
+        let skView = uiView as? SKView,
+        let scene = skView.scene as? RicketyKateGameScene
     {
         scene.adHeight = adHeight
         scene.arrangeLayoutFor(size,bannerHeight: adHeight)
@@ -140,48 +138,53 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     }
     let   skViews = self.view.subviews.filter { $0 is SKView }
     if let uiView = skViews.first,
-        skView = uiView as? SKView,
-        scene = skView.scene as? RicketyKateGameScene
+        let skView = uiView as? SKView,
+        let scene = skView.scene as? RicketyKateGameScene
         {
             scene.adHeight = adHeight
             
             scene.arrangeLayoutFor(size,bannerHeight: adHeight)
         }
     }
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
 
         resize(adBannerView);
     }
  //iAd
-    func bannerViewWillLoadAd(banner: ADBannerView!) {
+    func bannerViewWillLoadAd(_ banner: ADBannerView!) {
          NSLog("banner will load");
     }
     
-    func bannerViewDidLoadAd(banner: ADBannerView!) {
-       adBannerView.hidden = false
+    func bannerViewDidLoadAd(_ banner: ADBannerView!) {
+       adBannerView.isHidden = false
        resize(banner);
          NSLog("banner loaded");
     }
     
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
+    func bannerViewActionDidFinish(_ banner: ADBannerView!) {
         
       //   resize(banner);
          NSLog("banner Action Did Finish");
     }
     
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
+    func bannerViewActionShouldBegin(_ banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         
         return true 
     }
     
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-       adBannerView.hidden = true
+    func bannerView(_ banner: ADBannerView!, didFailToReceiveAdWithError error: Error!) {
+       adBannerView.isHidden = true
 
-        let status = banner.bannerLoaded ? "error but banner loaded" :"banner unloaded"
+        let status = banner.isBannerLoaded ? "error but banner loaded" :"banner unloaded"
         NSLog(status);
         
          resize(banner);
-         NSLog(error.debugDescription);
+        
+        if let oldError = error as NSError?
+        {
+         let errorString = oldError.debugDescription
+         NSLog(errorString);
+        }
     
 }
 }

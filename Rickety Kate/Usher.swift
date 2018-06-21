@@ -16,7 +16,7 @@ class Usher {
     
     
     /// create list of game players
-    static func players(noOfPlayers:Int,noOfHumans:Int) -> [CardPlayer]
+    static func players(_ noOfPlayers:Int,noOfHumans:Int) -> [CardPlayer]
     {
         if noOfHumans == 0 {
             return Array(computerPlayers[0..<noOfPlayers])

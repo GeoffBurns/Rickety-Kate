@@ -11,18 +11,18 @@ import SpriteKit
 // Where are the players seated
 class Seater
 {
-    static let seatsFor3 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.Left]
-    static let seatsFor4 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.Top, SideOfTable.Left]
-    static let seatsFor5 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.TopMidRight, SideOfTable.TopMidLeft,
-        SideOfTable.Left]
-    static let seatsFor5p = [SideOfTable.Bottom,  SideOfTable.RightLow, SideOfTable.RightHigh,  SideOfTable.Top,
-        SideOfTable.Left]
-    static let seatsFor6 = [SideOfTable.Bottom, SideOfTable.Right, SideOfTable.TopMidRight, SideOfTable.Top, SideOfTable.TopMidLeft,
-        SideOfTable.Left]
-    static let seatsFor6p = [SideOfTable.Bottom, SideOfTable.RightLow, SideOfTable.RightHigh, SideOfTable.Top,SideOfTable.LeftHigh, SideOfTable.LeftLow]
-    static let seatsFor7 = [SideOfTable.Bottom, SideOfTable.RightLow, SideOfTable.RightHigh, SideOfTable.TopMidRight, SideOfTable.TopMidLeft,SideOfTable.LeftHigh, SideOfTable.LeftLow]
+    static let seatsFor3 = [SideOfTable.bottom, SideOfTable.right, SideOfTable.left]
+    static let seatsFor4 = [SideOfTable.bottom, SideOfTable.right, SideOfTable.top, SideOfTable.left]
+    static let seatsFor5 = [SideOfTable.bottom, SideOfTable.right, SideOfTable.topMidRight, SideOfTable.topMidLeft,
+        SideOfTable.left]
+    static let seatsFor5p = [SideOfTable.bottom,  SideOfTable.rightLow, SideOfTable.rightHigh,  SideOfTable.top,
+        SideOfTable.left]
+    static let seatsFor6 = [SideOfTable.bottom, SideOfTable.right, SideOfTable.topMidRight, SideOfTable.top, SideOfTable.topMidLeft,
+        SideOfTable.left]
+    static let seatsFor6p = [SideOfTable.bottom, SideOfTable.rightLow, SideOfTable.rightHigh, SideOfTable.top,SideOfTable.leftHigh, SideOfTable.leftLow]
+    static let seatsFor7 = [SideOfTable.bottom, SideOfTable.rightLow, SideOfTable.rightHigh, SideOfTable.topMidRight, SideOfTable.topMidLeft,SideOfTable.leftHigh, SideOfTable.leftLow]
     
-    static func seatsFor(noOfPlayers:Int) -> [SideOfTable]
+    static func seatsFor(_ noOfPlayers:Int) -> [SideOfTable]
     {
         switch noOfPlayers
         {
@@ -34,7 +34,7 @@ class Seater
         default : return []
         }
     }
-    static func portraitSeatsFor(noOfPlayers:Int) -> [SideOfTable]
+    static func portraitSeatsFor(_ noOfPlayers:Int) -> [SideOfTable]
     {
         switch noOfPlayers
         {

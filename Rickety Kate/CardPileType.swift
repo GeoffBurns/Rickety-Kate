@@ -12,26 +12,26 @@ import Foundation
 // What purpose does a pile serve?
 enum CardPileType : CustomStringConvertible
 {
-    case Hand
-    case Passing
-    case Won
-    case Trick
-    case Background
-    case Dealt
-    case Stack
-    case Discard
+    case hand
+    case passing
+    case won
+    case trick
+    case background
+    case dealt
+    case stack
+    case discard
     
     var description : String {
         switch self {
             
-        case .Hand: return "Hand"
-        case .Passing: return "Passing"
-        case .Won: return "Won"
-        case .Trick: return "Trick"
-        case .Background: return "Background"
-        case .Dealt: return "Dealt"
-        case .Stack: return "Stack"
-        case .Discard: return "Discard"
+        case .hand: return "Hand"
+        case .passing: return "Passing"
+        case .won: return "Won"
+        case .trick: return "Trick"
+        case .background: return "Background"
+        case .dealt: return "Dealt"
+        case .stack: return "Stack"
+        case .discard: return "Discard"
         }
     }
 }

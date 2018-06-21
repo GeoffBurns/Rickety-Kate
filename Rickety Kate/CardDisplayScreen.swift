@@ -10,39 +10,42 @@ import SpriteKit
 
 enum CardDisplayTab : Int
 {
-    case Rules
-    case Deck
-    case Scores
+    case rules
+    case deck
+    case scores
 }
 
-typealias ScorePairCollection = [(PlayingCard,Int)]
+//typealias ScorePairCollection = [(PlayingCard,Int)]  // swift 2.2
+typealias ScorePairCollection = [(key: PlayingCard, value: Int)]
 
+//key: Int, value: [(key: PlayingCard, value: Int)]
 // Help Screen
 class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     
-    var discardPile = CardPile(name: CardPileType.Discard.description)
-    var discardWhitePile = CardPile(name: CardPileType.Discard.description)
+    var discardPile = CardPile(name: CardPileType.discard.description)
+    var discardWhitePile = CardPile(name: CardPileType.discard.description)
     
     var isSetup = false
     var slides = [CardSlide]()
-    var orderedGroups : [(Int,ScorePairCollection)] {
+    // var orderedGroups : [(Int,ScorePairCollection)] { // swift 2.2
+    var orderedGroups : [(key: Int, value:ScorePairCollection)] {
         
         let pointsGroups = GameSettings.sharedInstance.rules.cardScores.categorise {$0.1}
-        return pointsGroups.sort { $0.0 > $1.0 }
+        return pointsGroups.sorted { $0.0 > $1.0 }
     }
     
     var tabNewPage = [ rules, displayCardsInDeck, displayScoringCards ]
     var cards = [PlayingCard]()
-    var oldPositon = CGPointZero
+    var oldPositon = CGPoint.zero
     var noOfSlides =  2
     var separationOfSlides = 0.4
     var slideStart  =  CGFloat(0.7)
     var slideLabelStart  =  CGFloat(0.83)
     var draggedNode : CardSprite? = nil
-    var originalTouch = CGPointZero
+    var originalTouch = CGPoint.zero
     var originalScale = CGFloat(0)
     var originalOrder = CGFloat(0)
-    var layoutSize = CGSizeZero
+    var layoutSize = CGSize.zero
     
     override func onEnter() {
 
@@ -71,7 +74,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         }
        
     }
-     func presetup(scene:SKNode)
+     func presetup(_ scene:SKNode)
     {
         pageNo = 0
         tabNo = -1
@@ -86,14 +89,14 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
             discardPile.speed = GameSettings.sharedInstance.tossDuration*0.5
             color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
             size = scene.frame.size
-            position = CGPointZero
-            anchorPoint = CGPointZero
-            userInteractionEnabled = true
+            position = CGPoint.zero
+            anchorPoint = CGPoint.zero
+            isUserInteractionEnabled = true
             isSetup = true
         }
     }
     
-    override func setup(scene:SKNode)
+    override func setup(_ scene:SKNode)
     {
         size = scene.frame.size
         var layoutSize = size
@@ -110,25 +113,25 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
           discardPile.speed = GameSettings.sharedInstance.tossDuration*0.5
           color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
           size = scene.frame.size
-          position = CGPointZero
-          anchorPoint = CGPointZero
-          userInteractionEnabled = true
+          position = CGPoint.zero
+          anchorPoint = CGPoint.zero
+          isUserInteractionEnabled = true
    
            isSetup = true
           }
         if let resize = scene as? Resizable
         {
             self.adHeight = resize.adHeight
-            layoutSize = CGSizeMake(size.width, size.height - self.adHeight)
+            layoutSize = CGSize(width: size.width, height: size.height - self.adHeight)
         }
         arrangeLayoutFor(layoutSize,bannerHeight: adHeight)
     }
     func displayTitle()
     {
-        let fontsize : CGFloat = FontSize.Small.scale
+        let fontsize : CGFloat = FontSize.small.scale
         let title = SKLabelNode(fontNamed:"Verdana")
         title.fontSize = fontsize
-        title.position = CGPointMake(size.width * 0.50, size.height * 0.92 )
+        title.position = CGPoint(x: size.width * 0.50, y: size.height * 0.92 )
         title.text = "Card Rankings".localize
         self.addChild(title)
  
@@ -140,22 +143,22 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
        displayButtons()
     }
     
-    override func arrangeLayoutFor(size:CGSize,bannerHeight:CGFloat)
+    override func arrangeLayoutFor(_ size:CGSize,bannerHeight:CGFloat)
     {
         layoutSize = size
         switch DeviceSettings.layout
         {
-            case .Phone :
+            case .phone :
                     noOfSlides =   2
                     separationOfSlides =   0.4
                     slideStart =  0.7
                     slideLabelStart =  0.83
-            case .Pad :
+            case .pad :
                   noOfSlides =   3
                   separationOfSlides =   0.25
                   slideStart =  0.72
                   slideLabelStart =  0.83
-            case .Portrait :
+            case .portrait :
                   noOfSlides =   4
                   separationOfSlides =   0.2
                   slideStart = 0.78
@@ -170,9 +173,9 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         clearLabels()
         switch tabNo
         {
-        case CardDisplayTab.Deck.rawValue:
+        case CardDisplayTab.deck.rawValue:
             displaySlideLabels(size,bannerHeight: bannerHeight)
-        case CardDisplayTab.Scores.rawValue:
+        case CardDisplayTab.scores.rawValue:
             displayScoringCardsLabels(size,bannerHeight: bannerHeight)
         default: break
         }
@@ -181,7 +184,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         displayPage()
         newPage()
     }
-    func createSlides(size:CGSize,bannerHeight:CGFloat)
+    func createSlides(_ size:CGSize,bannerHeight:CGFloat)
     {
         for slide in slides { slide.discardAll() }
         slides = []
@@ -189,11 +192,11 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         {
             let slide = CardSlide(name: "slide")
             slide.setup(self, slideWidth: size.width * 0.9)
-            slide.position = CGPointMake(size.width * 0.10, bannerHeight + size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
+            slide.position = CGPoint(x: size.width * 0.10, y: bannerHeight + size.height * (slideStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
             slides.append(slide)
         }
     }
-    override func noPageFor(tab:Int) -> Int
+    override func noPageFor(_ tab:Int) -> Int
     {
         switch tab
         {
@@ -213,23 +216,23 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         }
     }
     
-    func displaySlideLabels(size:CGSize,bannerHeight:CGFloat)
+    func displaySlideLabels(_ size:CGSize,bannerHeight:CGFloat)
     {
-        let fontsize : CGFloat = FontSize.Smallest.scale
-        for (i,(_, _)) in Zip2Sequence(
+        let fontsize : CGFloat = FontSize.smallest.scale
+        for (i,(_, _)) in zip(
             self.slides,
-            cardsInSuitesDisplayed).enumerate() {
+            cardsInSuitesDisplayed).enumerated() {
                 
                 let l = SKLabelNode(fontNamed:"Verdana")
                 l.fontSize = fontsize
-                l.position = CGPointMake(size.width * 0.10, bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
+                l.position = CGPoint(x: size.width * 0.10, y: bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
                 l.text = "High Cards".localize
                 l.name = "label"
                 //   l.userData = ["SlideNo":i]
                 
                 let m = SKLabelNode(fontNamed:"Verdana")
                 m.fontSize = fontsize
-                m.position = CGPointMake(size.width * 0.93, bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
+                m.position = CGPoint(x: size.width * 0.93, y: bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(self.separationOfSlides))))
                 m.text = "Low Cards".localize
                 m.name = "label"
                 //   l.userData = ["SlideNo":i]
@@ -249,7 +252,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     }
     func refillSlides()
     {
-        for (slide, cards) in Zip2Sequence(
+        for (slide, cards) in zip(
             self.slides,
             cardsInSuitesDisplayed)
         {
@@ -298,17 +301,17 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
                 .filter { (_,cards) in cards.count > 0 }
     }
     
-    func displayScoringCardsLabels(size:CGSize,bannerHeight:CGFloat)
+    func displayScoringCardsLabels(_ size:CGSize,bannerHeight:CGFloat)
     {
-        let fontsize : CGFloat = FontSize.Smallest.scale
-        for (i,(_, (points, cards))) in Zip2Sequence(
+        let fontsize : CGFloat = FontSize.smallest.scale
+        for (i,(_, (points, cards))) in zip(
             self.slides,
             scoringCardsByScoreDisplayed)
-            .enumerate() {
+            .enumerated() {
                 let l = SKLabelNode(fontNamed:"Verdana")
                 l.fontSize = fontsize
-                l.horizontalAlignmentMode = .Left
-                l.position = CGPointMake(size.width * 0.05, bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
+                l.horizontalAlignmentMode = .left
+                l.position = CGPoint(x: size.width * 0.05, y: bannerHeight + size.height * (self.slideLabelStart - ( CGFloat(i) * CGFloat(separationOfSlides))))
                 if cards.count > 1 { l.text = "%d %@ Each".with.pluralizeUnit(points, unit: "Point").localize }
                 else if points > 0 { l.text = "%d %@".with.pluralizeUnit(points, unit: "Point").localize}
                 else  { l.text = "%d %@".with.pluralizeUnit(points, unit: "Point").localize +
@@ -319,7 +322,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     }
     func refillScoringCards()
     {
-        for (slide, (_, cards)) in Zip2Sequence(
+        for (slide, (_, cards)) in zip(
             self.slides,
             scoringCardsByScoreDisplayed)
         {
@@ -350,25 +353,25 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     }
     
 
-    func storeDraggedNode(node:CardSprite)
+    func storeDraggedNode(_ node:CardSprite)
     {
         draggedNode = node;
         originalScale = node.xScale
         originalOrder = node.zPosition
-        node.setScale(CardSize.Huge.scale)
+        node.setScale(CardSize.huge.scale)
         
         originalOrder = node.zPosition
         
-        node.zPosition = CardSize.Huge.zOrder
+        node.zPosition = CardSize.huge.zOrder
         
         node.addLabel()
  
     }
-    override func cardTouched(positionInScene:CGPoint) -> Bool
+    override func cardTouched(_ positionInScene:CGPoint) -> Bool
     {
        // let width = self.frame.size.width
     
-        if let node = self.nodeAtPoint(positionInScene) as? CardSprite
+        if let node = self.atPoint(positionInScene) as? CardSprite
             {
                 storeDraggedNode(node)
                 return true
@@ -388,13 +391,12 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
             draggedNode=nil
         }
     }
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in (touches )
         {
-            let positionInScene = touch.locationInNode(self)
+            let positionInScene = touch.location(in: self)
             
-            if let node = self.nodeAtPoint(positionInScene) as? CardSprite
-                where draggedNode?.name != node.name
+            if let node = self.atPoint(positionInScene) as? CardSprite, draggedNode?.name != node.name
             {
                 restoreDraggedNode()
                 storeDraggedNode(node)
@@ -402,8 +404,8 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
             }
         }
     }
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-       super.touchesEnded(touches, withEvent: event)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+       super.touchesEnded(touches, with: event)
        restoreDraggedNode()
     }
 

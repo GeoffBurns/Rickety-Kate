@@ -11,27 +11,27 @@ import SpriteKit
 typealias CreateSprite = (PlayingCard,SKNode) -> CardSprite?
 
 /// How the cards are displayed in a pile
-public class CardPile : PositionedOnTable
+open class CardPile : PositionedOnTable
 {
  
     static let defaultSpread = CGFloat(10)
     var cards = [PlayingCard]() { didSet { update() } }
     var tableSize : CGSize
     var isUp = false { didSet { update() } }
-    var sizeOfCards = CardSize.Small
+    var sizeOfCards = CardSize.small
     weak var scene : SKNode? = nil
     weak var discardAreas : HasDiscardArea? = nil
     var fullHand = defaultSpread
     weak var player : CardHolderBase? = nil
-    var sideOfTable = SideOfTable.Bottom
-    var direction = Direction.Up
+    var sideOfTable = SideOfTable.bottom
+    var direction = Direction.up
     var isFanClosed = false
     var isFanOpen :Bool { return !isFanClosed }
     var isBackground : Bool = false
         { didSet {  createSprite = isBackground ? { $1.whiteCardSprite($0) } : { $1.cardSprite($0,isUp: self.isUp) }} }
     var name = ""
     var createSprite : CreateSprite = { $1.cardSprite($0) }
-    var position = CGPointZero
+    var position = CGPoint.zero
     var zPositon = CGFloat(0)
     static let straightAnchorPoint = CGPoint(x: 0.5,y: 0.5)
     var speed = GameSettings.sharedInstance.tossDuration
@@ -42,7 +42,7 @@ public class CardPile : PositionedOnTable
     
     init(name:String,player:CardHolderBase? = nil) { self.name = name; self.player = player;  tableSize = CGSize() }
  
-    func setup(scene:HasDiscardArea, direction: Direction, position: CGPoint, isUp: Bool = false, sizeOfCards: CardSize = CardSize.Small)
+    func setup(_ scene:HasDiscardArea, direction: Direction, position: CGPoint, isUp: Bool = false, sizeOfCards: CardSize = CardSize.small)
     {
         self.discardAreas = scene
         self.scene = scene as? SKNode
@@ -55,21 +55,24 @@ public class CardPile : PositionedOnTable
         tableSize = self.scene!.frame.size
     }
     
-    func transferFrom(pile:CardPile)
+    func transferFrom(_ pile:CardPile)
     {
+        pile.clear()
         appendContentsOf(pile.cards)
-        pile.clear()
+        
     }
-    func replaceFrom(pile:CardPile)
+    func replaceFrom(_ pile:CardPile)
     {
-        replaceWithContentsOf(pile.cards)
         pile.clear()
+        replaceWithContentsOf(pile.cards)
+       
     }
     
-    func transferCardFrom(pile:CardPile, card:PlayingCard) -> PlayingCard?
+    func transferCardFrom(_ pile:CardPile, card:PlayingCard) -> PlayingCard?
     {
+        let result = pile.remove(card)
         append(card)
-        return pile.remove(card)
+        return result
     }
     
     func discardAll()
@@ -83,11 +86,11 @@ public class CardPile : PositionedOnTable
         discardAreas?.discardPile.replaceFrom(self)
         }
     }
-    func append(card:PlayingCard)
+    func append(_ card:PlayingCard)
     {
         let count = cards.count
         cards.append(card)
-        
+ 
         rearrangeFor(card, positionInSpread: CGFloat(count),  fullHand: 1)
     }
     func update()
@@ -98,12 +101,12 @@ public class CardPile : PositionedOnTable
     {
         cards = []
     }
-    func appendContentsOf(newCards:[PlayingCard])
+    func appendContentsOf(_ newCards:[PlayingCard])
     {
         let count = cards.count
-        cards.appendContentsOf(newCards)
+        cards.append(contentsOf: newCards)
         
-        for (i,card) in cards.enumerate()
+        for (i,card) in cards.enumerated()
         {
             rearrangeFor(card, positionInSpread: CGFloat(i+count),  fullHand: 1)
         }
@@ -111,60 +114,78 @@ public class CardPile : PositionedOnTable
     
     func rearrange()
     {
-        for (i,card) in cards.enumerate()
+        for (i,card) in cards.enumerated()
         {
             rearrangeFor(card, positionInSpread: CGFloat(i),  fullHand: 1)
         }
     }
     func rearrangeFast()
     {
-        for (i,card) in cards.enumerate()
+        for (i,card) in cards.enumerated()
         {
             rearrangeFastFor(card, positionInSpread: CGFloat(i),  fullHand: 1)
         }
     }
-    func replaceWithContentsOf(newCards:[PlayingCard])
+    func replaceWithContentsOf(_ newCards:[PlayingCard])
     {
         cards = newCards
         
         
-        for (i,card) in cards.enumerate()
+        for (i,card) in cards.enumerated()
         {
             rearrangeFor(card, positionInSpread: CGFloat(i),  fullHand: 1)
         }
     }
-    func remove(card:PlayingCard) -> PlayingCard?
+    func remove(_ card:PlayingCard) -> PlayingCard?
     {
-        if let index = cards.indexOf(card)
+        if let index = cards.index(of: card)
         {
-            return cards.removeAtIndex(index)
+            return cards.remove(at: index)
         }
         return nil
     }
-    func positionOfCard(cpositionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
+    func positionOfCard(_ cpositionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
     {
         return position
     }
-    func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
+    func rotationOfCard(_ positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
     {
         return direction.rotationOfCard(positionInSpread, fullHand:fullHand) - 30.degreesToRadians
     }
     
 
 
-    func rearrangeFor(card:PlayingCard,positionInSpread:CGFloat,
+    func rearrangeFor(_ card:PlayingCard,positionInSpread:CGFloat,
         fullHand:CGFloat)
     {
         if let cardScene = scene,
-               sprite = createSprite(card,cardScene)
+               let sprite = createSprite(card,cardScene)
         {
             sprite.removeLabel()
-            if sprite.fan !== self { sprite.fan = self }
+            if sprite.fan !== self {
+                
+                if let fan = sprite.fan, fan.cards.contains(card)
+                {
+                    var otherPlayer = ""
+                    var thisPlayer = ""
+                    if let fp = fan.player
+                    {
+                        otherPlayer = fp.name
+                    }
+                    if let sp = self.player
+                    {
+                        thisPlayer = sp.name
+                    }
+                    
+                    NSLog("%@ in two fans %@ %@ and %@ %@", card.description,self.name,thisPlayer,fan.name,otherPlayer)
+                }
+                sprite.fan = self
+            }
             
-            if (sprite.state != CardState.AtRest)
+            if (sprite.state != CardState.atRest)
             {
                 sprite.zPosition = isBackground ? 3 : 140
-                sprite.state = CardState.AtRest
+                sprite.state = CardState.atRest
             }
      
             // Stop all running animations before starting new ones
@@ -179,33 +200,33 @@ public class CardPile : PositionedOnTable
             sprite.removeTint()
 
             
-            var flipAction = (SKAction.scaleTo(sizeOfCards.scale, duration: speed))
+            var flipAction = (SKAction.scale(to: sizeOfCards.scale, duration: speed))
          
             let rotationAngle = rotationOfCard(positionInSpread, fullHand:fullHand)
-            let rotateAction = (SKAction.rotateToAngle(rotationAngle, duration:(speed*0.8)))
+            let rotateAction = (SKAction.rotate(toAngle: rotationAngle, duration:(speed*0.8)))
             let newPosition =  sprite.rotateAboutPoint(
                 positionOfCard(positionInSpread, spriteHeight: newHeight, fullHand:fullHand),
                 rotatePoint:cardAnchorPoint,
                 zRotation:rotationAngle,
                 newScale:sizeOfCards.scale)
             
-            let moveAction = (SKAction.moveTo(newPosition, duration:(speed*0.8)))
-            let scaleAction =  (SKAction.scaleTo(sizeOfCards.scale, duration: speed))
-            let scaleYAction =  SKAction.scaleYTo(sizeOfCards.scale, duration: speed)
+            let moveAction = (SKAction.move(to: newPosition, duration:(speed*0.8)))
+            let scaleAction =  (SKAction.scale(to: sizeOfCards.scale, duration: speed))
+            let scaleYAction =  SKAction.scaleY(to: sizeOfCards.scale, duration: speed)
             var groupAction = SKAction.group([moveAction,rotateAction,scaleAction])
             
             if isUp && !sprite.isUp
             {
                 //    sprite.flipUp()
                 flipAction = (SKAction.sequence([
-                    SKAction.scaleXTo(0.0, duration: speed*0.5),
-                    SKAction.runBlock({ [weak sprite] in
+                    SKAction.scaleX(to: 0.0, duration: speed*0.5),
+                    SKAction.run({ [weak sprite] in
                         if let s = sprite
                         {
                         s.flipUp()
                         }
                     }) ,
-                    SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.4)
+                    SKAction.scaleX(to: sizeOfCards.scale, duration: speed*0.4)
                 
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
@@ -214,22 +235,22 @@ public class CardPile : PositionedOnTable
             {
               
                 flipAction = (SKAction.sequence([
-                    SKAction.scaleXTo(0.0, duration: speed*0.5),
-                    SKAction.runBlock({ [weak sprite] in
+                    SKAction.scaleX(to: 0.0, duration: speed*0.5),
+                    SKAction.run({ [weak sprite] in
                         if let s = sprite
                         {
                             s.flipDown()
                         }
                       
                     }) ,
-                    SKAction.scaleXTo(sizeOfCards.scale, duration: speed*0.4)
+                    SKAction.scaleX(to: sizeOfCards.scale, duration: speed*0.4)
                     ]))
                 groupAction = SKAction.group([moveAction,rotateAction,flipAction,scaleYAction])
             }
             
-            sprite.runAction(SKAction.sequence([groupAction, SKAction.runBlock({ [weak sprite, weak self] in
+            sprite.run(SKAction.sequence([groupAction, SKAction.run({ [weak sprite, weak self] in
                 if let s = self,
-                       sp = sprite
+                       let sp = sprite
                 {
                 sp.zPosition = s.zPositon + positionInSpread
                 }
@@ -242,19 +263,19 @@ public class CardPile : PositionedOnTable
     }
     
     
-    func rearrangeFastFor(card:PlayingCard,positionInSpread:CGFloat,
+    func rearrangeFastFor(_ card:PlayingCard,positionInSpread:CGFloat,
         fullHand:CGFloat)
     {
         if let cardScene = scene,
-            sprite = createSprite(card,cardScene)
+            let sprite = createSprite(card,cardScene)
         {
             sprite.removeLabel()
             if sprite.fan !== self { sprite.fan = self }
             
-            if (sprite.state != CardState.AtRest)
+            if (sprite.state != CardState.atRest)
             {
                 sprite.zPosition = isBackground ? 3 : 140
-                sprite.state = CardState.AtRest
+                sprite.state = CardState.atRest
             }
             else
             {
@@ -324,11 +345,10 @@ public class CardPile : PositionedOnTable
                 positionStart = CGFloat(0)
             }
         }
-        for (positionInSpread,card) in cards.enumerate()
+        for (positionInSpread,card) in cards.enumerated()
         {
             if let cardScene = scene,
-                sprite = createSprite(card,cardScene)
-                where sprite.state == CardState.AtRest
+                let sprite = createSprite(card,cardScene), sprite.state == CardState.atRest
             {
                 rearrangeFor(card,positionInSpread:CGFloat(positionInSpread)+positionStart, fullHand:fullHand)
             }
@@ -357,12 +377,11 @@ public class CardPile : PositionedOnTable
         for card in cards
         {
             if let cardScene = scene,
-                sprite = createSprite(card,cardScene)
-            where sprite.state == CardState.AtRest
+                let sprite = createSprite(card,cardScene), sprite.state == CardState.atRest
             {
             sprite.zPosition = self.zPositon  + positionInSpread
             }
-            positionInSpread++
+            positionInSpread += 1
             
         }
     }

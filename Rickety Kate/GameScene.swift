@@ -8,6 +8,7 @@
 
 import SpriteKit
 import ReactiveCocoa
+import ReactiveSwift
 
 public protocol HasDiscardArea : class
 {
@@ -15,11 +16,16 @@ public protocol HasDiscardArea : class
     var discardWhitePile : CardPile { get }
 }
 
-public class CardScene : SKScene, HasDiscardArea, PositionedOnTable  {
+open class CardScene : SKScene, HasDiscardArea, PositionedOnTable  {
     
-    public var discardPile = CardPile(name: CardPileType.Discard.description)
-    public var discardWhitePile = CardPile(name: CardPileType.Discard.description)
-    public var tableSize = CGSize()
+    open var discardPile = CardPile(name: CardPileType.discard.description)
+    open var discardWhitePile = CardPile(name: CardPileType.discard.description)
+    open var tableSize = CGSize()
+    
+ /*   public func redealThen(cards:[[PlayingCard]],  whenDone: ([CardPile]) -> Void)
+    {
+
+    }*/
 }
 
 extension HasDiscardArea
@@ -28,8 +34,8 @@ extension HasDiscardArea
     {
         
         discardWhitePile.isBackground = true
-        discardPile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
-        discardWhitePile.setup(self, direction: Direction.Up, position: CGPoint(x: -300, y: -300),isUp: false)
+        discardPile.setup(self, direction: Direction.up, position: CGPoint(x: -300, y: -300),isUp: false)
+        discardWhitePile.setup(self, direction: Direction.up, position: CGPoint(x: -300, y: -300),isUp: false)
 //        discardPile.isDiscard = true
 //        discardWhitePile.isDiscard = true
         discardWhitePile.speed = 0.1
@@ -58,16 +64,16 @@ extension PositionedOnTable
 
 extension HasDealersArea
 {
-    func setupDealersAreaFor(noOfPlayers:Int,size:CGSize)
+    func setupDealersAreaFor(_ noOfPlayers:Int,size:CGSize)
     {
         let width = size.width
         let height = size.height
         dealtPiles = []
         let hSpacing = CGFloat(noOfPlayers) * 2
-        let directions = [Direction.Down,Direction.Right,Direction.Right,Direction.Up,Direction.Up,Direction.Left,Direction.Left,Direction.Left,Direction.Left,Direction.Left,Direction.Left]
+        let directions = [Direction.down,Direction.right,Direction.right,Direction.up,Direction.up,Direction.left,Direction.left,Direction.left,Direction.left,Direction.left,Direction.left]
         for i in 0..<noOfPlayers
         {
-            let dealtPile = CardPile(name: CardPileType.Dealt.description)
+            let dealtPile = CardPile(name: CardPileType.dealt.description)
             dealtPile.setup(self, direction: directions[i], position: CGPoint(x: width * CGFloat(2 * i  - 3) / hSpacing,y: height*1.2), isUp: false)
             dealtPile.speed = 0.1
             dealtPiles.append(dealtPile)
@@ -75,9 +81,9 @@ extension HasDealersArea
         
     }
     
-    func deal(hands:[[PlayingCard]])
+    func deal(_ hands:[[PlayingCard]])
     {
-        for (dealtPile,hand) in Zip2Sequence(dealtPiles,hands)
+        for (dealtPile,hand) in zip(dealtPiles,hands)
         {
             dealtPile.replaceWithContentsOf(hand)
         }
@@ -94,11 +100,11 @@ extension HasBackgroundSpread
     func setupBackgroundSpread( )
     {
         backgroundFan.isBackground = true
-        backgroundFan.setup(self, sideOfTable: SideOfTable.Center, isUp: true, sizeOfCards: CardSize.Medium)
+        backgroundFan.setup(self, sideOfTable: SideOfTable.center, isUp: true, sizeOfCards: CardSize.medium)
         backgroundFan.zPositon = 0.0
         backgroundFan.speed = 0.1
     }
-    func fillBackgroundSpreadWith(cards:[PlayingCard])
+    func fillBackgroundSpreadWith(_ cards:[PlayingCard])
     {
         backgroundFan.discardAll()
         backgroundFan.replaceWithContentsOf(cards)
@@ -111,7 +117,7 @@ class CardGameScene : CardScene, HasDealersArea {
     var table : RicketyKateCardTable! 
     var dealtPiles = [CardPile]()
 
-    func createCardPilesToProvideStartPointForCardAnimation(size:CGSize )
+    func createCardPilesToProvideStartPointForCardAnimation(_ size:CGSize )
     {
         setupDealersAreaFor(table.players.count,size:size )
         deal(table.dealtHands)
@@ -123,10 +129,24 @@ class CardGameScene : CardScene, HasDealersArea {
         for player in table.players
         {
             player._hand.discardAll()
+            player.wonCards.discardAll()
          }
         table.trickFan.discardAll()
     }
-
+    internal func redealThen(_ cards:[[PlayingCard]],  whenDone: @escaping ([CardPile]) -> Void)
+    {
+        for player in table.players
+        {
+            player._hand.clear()
+            player.wonCards.clear()
+        }
+        table.trickFan.clear()
+        discardPile.clear()
+    
+    scene?.schedule(delay:  GameSettings.sharedInstance.tossDuration*1.2) { whenDone(self.dealtPiles) }
+    
+    }
+    
 }
 
 protocol HasDraggableCards : class
@@ -146,13 +166,13 @@ extension HasDraggableCards
             draggedNode=nil
         }
     }
-    func quickSwapDraggedCard(newCard:CardSprite,originalPosition:CGPoint)
+    func quickSwapDraggedCard(_ newCard:CardSprite,originalPosition:CGPoint)
     {
     draggedNode?.setdownQuick()
     newCard.liftUpQuick(originalPosition)
     draggedNode = newCard;
     }
-    func startDraggingCard(newCard:CardSprite,originalPosition:CGPoint)
+    func startDraggingCard(_ newCard:CardSprite,originalPosition:CGPoint)
     {
     draggedNode = newCard
     newCard.liftUp(originalPosition)
@@ -168,7 +188,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     var draggedNode: CardSprite? = nil;
     var cardScaleForSelected = CGFloat(1.05)
 
-    var backgroundFan = CardFan(name: CardPileType.Background.description)
+    var backgroundFan = CardFan(name: CardPileType.background.description)
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Random1")
     var arePassingCards : Bool { return  GameSettings.sharedInstance.willPassCards && !table.isInDemoMode }
@@ -186,19 +206,19 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
     
         let seats = self.isPortrait ? Seater.portraitSeatsFor(table.players.count) : Seater.seatsFor(table.players.count)
-        for (i,(player,seat)) in Zip2Sequence(table.players,seats).enumerate()
+        for (i,(player,seat)) in zip(table.players,seats).enumerated()
         {
             player.setup(self, sideOfTable: seat, playerNo: i,isPortrait: self.isPortrait)
         }
     }
-    func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
+    func arrangeLayoutFor(_ size:CGSize, bannerHeight:CGFloat)
     {
     let width = size.width
     let height = size.height -  bannerHeight
       
-    let newSize = CGSizeMake(width, height)
+    let newSize = CGSize(width: width, height: height)
  
-    if let rulesButton = self.childNodeWithName("Rules1")
+    if let rulesButton = self.childNode(withName: "Rules1")
           {
           rulesButton.position = CGPoint(x:0.0,y:size.height )
           }
@@ -208,12 +228,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             playButton1.position = CGPoint(x:width*0.25,y:height*0.5+bannerHeight)
             playButton2.position = CGPoint(x:width*0.75,y:height*0.5+bannerHeight)
             
-        if let optionsButton = self.childNodeWithName("Options1")
+        if let optionsButton = self.childNode(withName: "Options1")
           {
             optionsButton.position = CGPoint(x:size.width,y:size.height)
           }
         } else {
-            if  let exitButton = self.childNodeWithName("Exit")
+            if  let exitButton = self.childNode(withName: "Exit")
             {
                 exitButton.position = CGPoint(x:size.width,y:size.height )
             }
@@ -233,12 +253,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         StatusDisplay.sharedInstance.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
         
         let seats = size.isPortrait ? Seater.portraitSeatsFor(table.players.count) : Seater.seatsFor(table.players.count)
-        for (player,seat) in Zip2Sequence(table.players,seats)
+        for (player,seat) in zip(table.players,seats)
         {
             player.setPosition(newSize,sideOfTable: seat)
         }
         
-        for (player,score) in Zip2Sequence(table.players,ScoreDisplay.sharedInstance.scoreLabel)
+        for (player,score) in zip(table.players,ScoreDisplay.sharedInstance.scoreLabel)
         {
           score.position = ScoreDisplay.scorePosition(player.sideOfTable, size: newSize, bannerHeight:adHeight )
           score.zRotation = ScoreDisplay.scoreRotation(player.sideOfTable)
@@ -254,7 +274,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         {
         resizing.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
         }
-        for (i,player) in table.players.enumerate()
+        for (i,player) in table.players.enumerated()
         {
          self.schedule(delay: 0.4 * Double(i) )
          {
@@ -282,11 +302,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
         if arePassingCards
         {
-            Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
+            Bus.sharedInstance.send(GameEvent.discardWorstCards(3))
         }
         else
         {
-            Bus.sharedInstance.send(GameEvent.NewGame)
+            Bus.sharedInstance.send(GameEvent.newGame)
         }
     }
     
@@ -306,9 +326,9 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     func setupNewGameArrangement()
     {
         Bus.sharedInstance.gameSignal
-            .observeOn(UIScheduler())
-            .filter { $0 == GameEvent.NewHand }
-            .observeNext { [weak self] _ in
+            .observe(on: UIScheduler())
+            .filter { $0 == GameEvent.newHand }
+            .observeValues { [weak self] _ in
                 if let s = self
                 {
                     for player in s.table.players
@@ -340,9 +360,9 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
  
  */
         self.currentPlayer <~  Bus.sharedInstance.gameSignal
-                                    . filter { switch $0 {case .TurnFor: return true; default: return false } }
+                                    . filter { switch $0 {case .turnFor: return true; default: return false } }
                                     . map { switch $0 {
-                                                case GameEvent.TurnFor(let player) : return player
+                                                case GameEvent.turnFor(let player) : return player
                                                 default : return CardPlayer(name: "None")
                                                 }
                                            }
@@ -358,7 +378,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             if s.cardPassingPhase.isCurrentlyActive
                {
                 s.fillBackgroundSpreadWith(s.threeWorstBackgroundCards)
-                Bus.sharedInstance.send(GameEvent.NewGame)
+                Bus.sharedInstance.send(GameEvent.newGame)
                }
             }
         }
@@ -368,7 +388,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             s.cardPassingPhase.isCurrentlyActive = s.arePassingCards
             if s.cardPassingPhase.isCurrentlyActive
               {
-                Bus.sharedInstance.send(GameEvent.DiscardWorstCards(3))
+                Bus.sharedInstance.send(GameEvent.discardWorstCards(3))
               } else {
                 s.startTrickPhase()
               }
@@ -383,15 +403,15 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         {
    
         playButton1.name = "Play"
-        playButton1.setScale(ButtonSize.Big.scale)
+        playButton1.setScale(ButtonSize.big.scale)
         playButton1.zPosition = 200
-        playButton1.userInteractionEnabled = false
+        playButton1.isUserInteractionEnabled = false
         self.addChild(playButton1)
             
         playButton2.name = "Random"
-        playButton2.setScale(ButtonSize.Big.scale)
+        playButton2.setScale(ButtonSize.big.scale)
         playButton2.zPosition = 200
-        playButton2.userInteractionEnabled = false
+        playButton2.isUserInteractionEnabled = false
         self.addChild(playButton2)
         }
     }
@@ -424,9 +444,9 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     var threeWorstBackgroundCards : [PlayingCard]
         {
             return [
-                CardName.Ace.of(PlayingCard.Suite.Spades)!,
-                CardName.Ace.of(PlayingCard.Suite.Hearts)!,
-                CardName.Ace.of(PlayingCard.Suite.Diamonds)!]
+                CardName.ace.of(PlayingCard.Suite.spades)!,
+                CardName.ace.of(PlayingCard.Suite.hearts)!,
+                CardName.ace.of(PlayingCard.Suite.diamonds)!]
     }
     
     func setupBackground()
@@ -444,7 +464,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         self.fillBackgroundSpreadWith(self.trickBackgroundCards)
         }
     }
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         /* Setup your scene here */
         setupDiscardArea()
         setupBackground()
@@ -454,11 +474,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         cardPassingPhase.setupCardPilesSoPlayersCanPassTheir3WorstCards()
         table.setupCardPilesSoPlayersCanPlayTricks()
         
-        let s = UIScreen.mainScreen().bounds.size
+        let s = UIScreen.main.bounds.size
         createCardPilesToProvideStartPointForCardAnimation(s)
         ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
         arrangeLayoutFor(s,bannerHeight: self.adHeight)
-        table.dealNewCardsToPlayersThen {
+        table.dealNewCardsToPlayersThen(self.dealtPiles) {
             self.setupNewGameArrangement()
             self.startHand()
         }
@@ -467,14 +487,13 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
   
     }
     
-    func isNodeAPlayerOneCardSpite(cardsprite:CardSprite) -> Bool
+    func isNodeAPlayerOneCardSpite(_ cardsprite:CardSprite) -> Bool
     {
         
         // does the sprite belong to a player
         if let fan = cardsprite.fan,
-            player = cardsprite.player
-            where (fan.name == CardPileType.Passing.description ||
-                fan.name == CardPileType.Hand.description) &&
+            let player = cardsprite.player, (fan.name == CardPileType.passing.description ||
+                fan.name == CardPileType.hand.description) &&
                 player is HumanPlayer
         {
             return true
@@ -484,19 +503,19 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     }
  
 
-    func resetSceneWithNewTableThatIsInteractive(isInteractive:Bool)
+    func resetSceneWithNewTableThatIsInteractive(_ isInteractive:Bool)
     {
         discard()
         
         self.schedule(delay: GameSettings.sharedInstance.tossDuration) { [weak self] in
              if let s = self,
-                    oldScene = s.scene,
-                    view = oldScene.view
+                    let oldScene = s.scene,
+                    let view = oldScene.view
                 {
-                let transition = SKTransition.crossFadeWithDuration(0.5)
+                let transition = SKTransition.crossFade(withDuration: 0.5)
                 let scene = RicketyKateGameScene(size: oldScene.size)
                 
-                scene.scaleMode = SKSceneScaleMode.ResizeFill
+                scene.scaleMode = SKSceneScaleMode.resizeFill
              
                 scene.table = isInteractive ?
                     RicketyKateCardTable.makeTable(scene) :
@@ -514,10 +533,10 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
         resetSceneWithNewTableThatIsInteractive(false)
     }
-    func buttonTouched(positionInScene:CGPoint) -> Bool
+    func buttonTouched(_ positionInScene:CGPoint) -> Bool
     {
-        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode,
-            touchName = touchedNode.name
+        if let touchedNode : SKSpriteNode = self.atPoint(positionInScene) as? SKSpriteNode,
+            let touchName = touchedNode.name
         {
             switch touchName
             {
@@ -538,7 +557,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
          return false
     }
     
-    func cardTouched(positionInScene:CGPoint) -> Bool
+    func cardTouched(_ positionInScene:CGPoint) -> Bool
     {
         let width = self.frame.size.width
         var newX = positionInScene.x
@@ -548,8 +567,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         }
         /// correct for rotation of card
         let adjustedPosition = CGPoint(x: newX,y: positionInScene.y)
-        if let adjustedNode = self.nodeAtPoint(adjustedPosition) as? CardSprite
-            where isNodeAPlayerOneCardSpite(adjustedNode)
+        if let adjustedNode = self.atPoint(adjustedPosition) as? CardSprite, isNodeAPlayerOneCardSpite(adjustedNode)
                {
                 startDraggingCard(adjustedNode,originalPosition:positionInScene)
                 originalTouch = positionInScene
@@ -558,13 +576,13 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
            return false
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
         
  
       for touch in (touches )
       {
-        let positionInScene = touch.locationInNode(self)
+        let positionInScene = touch.location(in: self)
 
         if buttonTouched(positionInScene)
            {
@@ -579,9 +597,9 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     }
     
 
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     let touch = (touches ).first!
-    let positionInScene = touch.locationInNode(self)
+    let positionInScene = touch.location(in: self)
    
     let goingRight = originalTouch.x < positionInScene.x
     let deltaX = abs(originalTouch.x - positionInScene.x)
@@ -592,9 +610,8 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     if deltaX > (2.2 * deltaY) && deltaX > 15
         {
             if let oldCard = draggedNode,
-                    fan = oldCard.fan,
-                    indexInFan = fan.cards.indexOf(oldCard.card)
-                where isNodeAPlayerOneCardSpite(oldCard)
+                    let fan = oldCard.fan,
+                    let indexInFan = fan.cards.index(of: oldCard.card), isNodeAPlayerOneCardSpite(oldCard)
             {
                 let newIndex = goingRight ? indexInFan+1 : indexInFan-1
                     
@@ -619,7 +636,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
 
  
     
-    func setDownDraggedPassingCard(positionInScene:CGPoint)
+    func setDownDraggedPassingCard(_ positionInScene:CGPoint)
     {
         let height = self.frame.size.height
         let cardsprite = draggedNode!;
@@ -647,25 +664,19 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         }
     }
     
-    func doesNotFollowSuite(cardsprite:CardSprite)
-    {
-    cardsprite.tintRed()
-    
-    Bus.sharedInstance.send(GameEvent.CardDoesNotFollowSuite)
-    }
-    
-    func transferCardToTrickPile(cardsprite:CardSprite)
+
+    func transferCardToTrickPile(_ cardsprite:CardSprite)
     {
         table.playTrickCard(self.table.playerOne, trickcard:cardsprite.card)
   
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
        
     if let touch = touches.first
         {
         let height = self.frame.size.height
-        let positionInScene = touch.locationInNode(self)
+        let positionInScene = touch.location(in: self)
         
         if( draggedNode != nil)
            {
@@ -678,20 +689,17 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                     }
                 else if self.currentPlayer.value is HumanPlayer
                 {
-                    if let cardsprite = draggedNode
-                        where positionInScene.y > height * 0.3
+                    if let cardsprite = draggedNode, positionInScene.y > height * 0.3
                         {
                         
                        let gameEvent = table.isMoveValid(self.table.playerOne,card: cardsprite.card)
                         switch gameEvent
                           {
-                          case .CardPlayed(_, _) :
+                          case .cardPlayed(_, _) :
                                transferCardToTrickPile(cardsprite)
                                draggedNode = nil
                                return
-                          case .CardDoesNotFollowSuite :
-                               doesNotFollowSuite(cardsprite)
-                        
+            
                           default:
                                cardsprite.tintRed()
 
@@ -701,7 +709,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                     
                          }
                 } else {
-                    Bus.sharedInstance.send(GameEvent.WaitYourTurn)
+                    Bus.sharedInstance.send(GameEvent.waitYourTurn)
                 }
             
              restoreDraggedCard()
@@ -710,12 +718,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         }
 
     }
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        if let touches = touches {
-            touchesEnded(touches, withEvent: event)
-        }
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+  //      if let touches = touches {
+            touchesEnded(touches, with: event)
+    //    }
     }
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
     }
 }

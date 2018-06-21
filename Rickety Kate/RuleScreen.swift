@@ -15,22 +15,22 @@ class RuleScreen: MultiPagePopup {
     var cardDisplay = CardDisplayScreen()
       var isSetup = false
     
-    override func setup(scene:SKNode)
+    override func setup(_ scene:SKNode)
     {
         self.gameScene = scene
         color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
         size = scene.frame.size
         var layoutSize = size
-        position = CGPointZero
-        anchorPoint = CGPointZero
-        let fontsize : CGFloat = FontSize.Medium.scale
-        let leading : Int = Int(FontSize.Medium.scale)
-        userInteractionEnabled = true
+        position = CGPoint.zero
+        anchorPoint = CGPoint.zero
+        let fontsize : CGFloat = FontSize.medium.scale
+        let leading : Int = Int(FontSize.medium.scale)
+        isUserInteractionEnabled = true
         pageNo = 0
         if let resize = scene as? Resizable
         {
             self.adHeight = resize.adHeight
-            layoutSize = CGSizeMake(size.width, size.height - self.adHeight)
+            layoutSize = CGSize(width: size.width, height: size.height - self.adHeight)
         }
         if isSetup
         {
@@ -46,15 +46,15 @@ class RuleScreen: MultiPagePopup {
             pos: CGPoint(x:layoutSize.width*0.5,
             y:layoutSize.height*0.8),
             fontSize:fontsize,
-            fontColor:UIColor.whiteColor(),
+            fontColor:UIColor.white,
             leading:leading)
       
-        name = PopupType.RulesScreen.description
+        name = PopupType.rulesScreen.description
   
         self.addChild(rulesText!)
    
         rulesText!.name = "RulesText"
-        rulesText!.userInteractionEnabled = false
+        rulesText!.isUserInteractionEnabled = false
         tabNames = ["Rules","Deck","Scores"]
         
       
@@ -68,7 +68,7 @@ class RuleScreen: MultiPagePopup {
     
     }
     
-    override func arrangeLayoutFor(size:CGSize,bannerHeight:CGFloat)
+    override func arrangeLayoutFor(_ size:CGSize,bannerHeight:CGFloat)
     {
         if let text = rulesText
         {
@@ -95,7 +95,7 @@ class RuleScreen: MultiPagePopup {
             resizing.arrangeLayoutFor(size,bannerHeight:bannerHeight)
         }
     }
-    override func noPageFor(tab:Int) -> Int
+    override func noPageFor(_ tab:Int) -> Int
     {
 
         switch tab
@@ -121,7 +121,7 @@ class RuleScreen: MultiPagePopup {
         {
            if self.pageNo >= rulesText!.noOfPages
            {
-            self.tabNo++
+            self.tabNo += 1
             self.pageNo = 0
            }
      

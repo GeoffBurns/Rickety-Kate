@@ -25,10 +25,10 @@ public protocol GameState
     var bonusCards : Set<PlayingCard> { get }
     var canLeadTrumps : Bool { get }
     
-    func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
-    func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
-    func penaltyCardsFor(suite:PlayingCard.Suite) -> [PlayingCard]
-    func bonusCardFor(suite:PlayingCard.Suite) -> [PlayingCard]
+    func arePlayerWithoutCardsIn(_ suite:PlayingCard.Suite) -> Bool
+    func noCardsPlayedFor(_ suite:PlayingCard.Suite) -> Int
+    func penaltyCardsFor(_ suite:PlayingCard.Suite) -> [PlayingCard]
+    func bonusCardFor(_ suite:PlayingCard.Suite) -> [PlayingCard]
    
 }
 
@@ -58,7 +58,7 @@ public func <(lhs: TrickPlay, rhs: TrickPlay) -> Bool
     return lhs.playedCard < rhs.playedCard
 }
 
-extension SequenceType where Generator.Element == TrickPlay {
+extension Sequence where Iterator.Element == TrickPlay {
     
     
     var playsFollowingSuite : [TrickPlay]
@@ -75,7 +75,7 @@ extension SequenceType where Generator.Element == TrickPlay {
     public var winningPlay : TrickPlay?
         {
         let followingTricks = playsFollowingSuite
-        let orderedTricks = followingTricks.sort { $0.playedCard.value > $1.playedCard.value }
+        let orderedTricks = followingTricks.sorted { $0.playedCard.value > $1.playedCard.value }
         if let highest = orderedTricks.first
             {
                 return highest
@@ -85,7 +85,7 @@ extension SequenceType where Generator.Element == TrickPlay {
     public var cards : [PlayingCard] {
          return self.map { $0.playedCard }
     }
-    public func wouldWin(nextCard:PlayingCard) -> Bool
+    public func wouldWin(_ nextCard:PlayingCard) -> Bool
     {
             return self.cards.wouldWin(nextCard)
     }
@@ -94,7 +94,7 @@ extension SequenceType where Generator.Element == TrickPlay {
     }
 }
 
-extension SequenceType where Generator.Element == PlayingCard {
+extension Sequence where Iterator.Element == PlayingCard {
     public var score : Int {
         return self.reduce(0) { $0 + ( GameSettings.sharedInstance.rules.cardScores[$1] ?? 0) }
     }
@@ -111,20 +111,20 @@ extension SequenceType where Generator.Element == PlayingCard {
     public var winningCard : PlayingCard?
         {
             let followingTricks = cardsFollowingSuite
-            let orderedTricks = followingTricks.sort { $0.value > $1.value }
+            let orderedTricks = followingTricks.sorted { $0.value > $1.value }
             if let highest = orderedTricks.first
             {
                 return highest
             }
             return nil
     }
-    public func wouldWin(nextCard:PlayingCard) -> Bool
+    public func wouldWin(_ nextCard:PlayingCard) -> Bool
     {
         var trick = Array(self)
         trick.append(nextCard)
         return nextCard == trick.winningCard
     }
-    public func wouldScore(nextCard:PlayingCard) -> Int?
+    public func wouldScore(_ nextCard:PlayingCard) -> Int?
     {
         var trick = Array(self)
         trick.append(nextCard)
@@ -137,9 +137,9 @@ extension SequenceType where Generator.Element == PlayingCard {
 }
 
 
-public class GameStateBase
+open class GameStateBase
 {
-    var trickFan = CardFan(name: CardPileType.Trick.description)
+    var trickFan = CardFan(name: CardPileType.trick.description)
     var tricksPile = [TrickPlay]() { didSet { trickFan.cards = tricksPile.map { return $0.playedCard }}}
     var gameTracker : GameProgressTracker
     var gameSettings:IGameSettings
@@ -149,58 +149,58 @@ public class GameStateBase
         self.gameSettings = gameSettings
         self.gameTracker = GameProgressTracker(gameSettings: gameSettings)
     }
-    public var playedCardsInTrick : Int {
+    open var playedCardsInTrick : Int {
         return tricksPile.count
     }
-    public var highestCardInTrick : PlayingCard { return cardsFollowingSuite.maxElement()! }
-    public var canLeadTrumps :Bool { return gameTracker.trumpsHaveBeenBroken || GameSettings.sharedInstance.allowBreakingTrumps }
-    public func arePlayerWithoutCardsIn(suite:PlayingCard.Suite) -> Bool
+    open var highestCardInTrick : PlayingCard { return cardsFollowingSuite.max()! }
+    open var canLeadTrumps :Bool { return gameTracker.trumpsHaveBeenBroken || GameSettings.sharedInstance.allowBreakingTrumps }
+    open func arePlayerWithoutCardsIn(_ suite:PlayingCard.Suite) -> Bool
     {
         return !gameTracker.notFollowing[suite.rawValue].isEmpty
     }
     
-    public var hasLead : Bool {
+    open var hasLead : Bool {
         return tricksPile.isEmpty
     }
     
-    public var hasntLead : Bool {
+    open var hasntLead : Bool {
         return !hasLead
     }
     
-    public var leadingSuite : PlayingCard.Suite? {
+    open var leadingSuite : PlayingCard.Suite? {
         return tricksPile.first?.playedCard.suite
     }
     
-    public var cardsFollowingSuite : [PlayingCard] {
+    open var cardsFollowingSuite : [PlayingCard] {
  
         return tricksPile.playsFollowingSuite.map {$0.playedCard}
     }
     
-    public var scoreOfPile : Int {
+    open var scoreOfPile : Int {
         return tricksPile.score
     }
     
-    public func noCardsPlayedFor(suite:PlayingCard.Suite) -> Int
+    open func noCardsPlayedFor(_ suite:PlayingCard.Suite) -> Int
     {
         return gameTracker.cardCount[suite.rawValue]
     }
     
-    public func penaltyCardsFor(suite:PlayingCard.Suite) -> [PlayingCard]
+    open func penaltyCardsFor(_ suite:PlayingCard.Suite) -> [PlayingCard]
     {
         return penaltyCards.filter { $0.suite == suite }
     }
-    public func bonusCardFor(suite:PlayingCard.Suite) -> [PlayingCard]
+    open func bonusCardFor(_ suite:PlayingCard.Suite) -> [PlayingCard]
     {
         return bonusCards.filter { $0.suite == suite }
     }
     
 
-    public var penaltyCards : Set<PlayingCard> {
+    open var penaltyCards : Set<PlayingCard> {
         return Set<PlayingCard>(gameTracker.unplayedScoringCards.filter {
             (GameSettings.sharedInstance.rules.cardScores[$0] ?? 0) > 0
         })}
     
-    public var bonusCards : Set<PlayingCard> {
+    open var bonusCards : Set<PlayingCard> {
         return Set<PlayingCard>(gameTracker.unplayedScoringCards.filter {
             (GameSettings.sharedInstance.rules.cardScores[$0] ?? 0) < 0
         })}
@@ -209,20 +209,20 @@ public class GameStateBase
 
 
 // Used for testing
-public class FakeGameState : GameStateBase, GameState
+open class FakeGameState : GameStateBase, GameState
 {
 
     //////////
     // GameState Protocol
     //////////
-public var noOfPlayers  = 0
+open var noOfPlayers  = 0
 
-public var unplayedCardsInTrick : Int
+open var unplayedCardsInTrick : Int
 {
     return  noOfPlayers - playedCardsInTrick
 }
 
-public var isLastPlayer : Bool {
+open var isLastPlayer : Bool {
     return tricksPile.count >= noOfPlayers - 1
 }
 
@@ -238,27 +238,27 @@ public var isLastPlayer : Bool {
     //////////
     // internal functions
     //////////
-    public func reset()
+    open func reset()
     {
         gameTracker.reset()
     }
-    public func createTrickPile(cardCodes:[String]) -> [TrickPlay]
+    open func createTrickPile(_ cardCodes:[String]) -> [TrickPlay]
     {
         
         let player : CardPlayer =  HumanPlayer()
         return cardCodes.map { TrickPlay(player:player,playedCard:$0.card) }
         
     }
-    public func addCardsToTrickPile(cardCodes:[String])
+    open func addCardsToTrickPile(_ cardCodes:[String])
     {
-        tricksPile.appendContentsOf(createTrickPile(cardCodes))
+        tricksPile.append(contentsOf: createTrickPile(cardCodes))
      
     }
-    public func setTrickPile(cardCodes:[String])
+    open func setTrickPile(_ cardCodes:[String])
     {
         tricksPile = createTrickPile(cardCodes)
     }
-    public func addNotFollowed(suite:PlayingCard.Suite)
+    open func addNotFollowed(_ suite:PlayingCard.Suite)
     {
         gameTracker.notFollowing[suite.rawValue].insert(HumanPlayer())
     }

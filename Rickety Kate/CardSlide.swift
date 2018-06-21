@@ -17,50 +17,50 @@ class CardSlide : CardPile
     
     var slideWidth = CGFloat()
     
-    func setup(scene:HasDiscardArea, slideWidth: CGFloat, sizeOfCards: CardSize = CardSize.Medium)
+    func setup(_ scene:HasDiscardArea, slideWidth: CGFloat, sizeOfCards: CardSize = CardSize.medium)
     {
         self.discardAreas = scene
         self.scene = scene as? SKNode
-        self.sideOfTable = SideOfTable.Bottom
+        self.sideOfTable = SideOfTable.bottom
         self.slideWidth = slideWidth
         self.isUp = true
         self.sizeOfCards = sizeOfCards
-        self.direction = Direction.Up
+        self.direction = Direction.up
         self.zPositon = self.sizeOfCards.zOrder
     }
     
-    override func append(card:PlayingCard)
+    override func append(_ card:PlayingCard)
     {
         var updatedCards = cards
         updatedCards.append(card)
-        let sortedHand = updatedCards.sort()
-        cards = ( Array(sortedHand.reverse()))
+        let sortedHand = updatedCards.sorted()
+        cards = ( Array(sortedHand.reversed()))
     }
     override func update()
     {
         rearrange()
     }
-    override func positionOfCard(positionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
+    override func positionOfCard(_ positionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
     {
         let seperation = max (CardPile.defaultSpread , CGFloat(cards.count))
         return CGPoint(x:position.x+slideWidth*positionInSpread/seperation, y:position.y)
     }
-    override func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
+    override func rotationOfCard(_ positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
     {
         return 0.0
     }
-    override func appendContentsOf(newCards:[PlayingCard])
+    override func appendContentsOf(_ newCards:[PlayingCard])
     {
         var updatedCards = cards
-        updatedCards.appendContentsOf(newCards)
-        let sortedHand = updatedCards.sort()
-        cards = ( Array(sortedHand.reverse()))
+        updatedCards.append(contentsOf: newCards)
+        let sortedHand = updatedCards.sorted()
+        cards = ( Array(sortedHand.reversed()))
     }
-    override func replaceWithContentsOf(newCards:[PlayingCard])
+    override func replaceWithContentsOf(_ newCards:[PlayingCard])
     {
         let updatedCards = newCards
-        let sortedHand = updatedCards.sort()
-        cards = ( Array(sortedHand.reverse()))
+        let sortedHand = updatedCards.sorted()
+        cards = ( Array(sortedHand.reversed()))
     }
     override func rearrange()
     {
@@ -72,7 +72,7 @@ class CardSlide : CardPile
         let noCards = CGFloat(cards.count)
         
         
-        for (positionInSpread,card) in cards.enumerate()
+        for (positionInSpread,card) in cards.enumerated()
         {
             rearrangeFor(card,positionInSpread:CGFloat(positionInSpread), fullHand:noCards)
             

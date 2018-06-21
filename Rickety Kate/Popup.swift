@@ -26,19 +26,19 @@ public extension CGPoint {
 
 enum PopupType : CustomStringConvertible
 {
-    case RulesScreen
-    case OptionScreen
-    case ExitScreen
-    case CardDisplayScreen
+    case rulesScreen
+    case optionScreen
+    case exitScreen
+    case cardDisplayScreen
 
     
     var description : String {
         switch self {
             
-        case .RulesScreen: return "RulesScreen"
-        case .OptionScreen: return "OptionScreen"
-        case .ExitScreen: return "ExitScreen"
-        case .CardDisplayScreen: return "CardDisplayScreen"
+        case .rulesScreen: return "RulesScreen"
+        case .optionScreen: return "OptionScreen"
+        case .exitScreen: return "ExitScreen"
+        case .cardDisplayScreen: return "CardDisplayScreen"
    
         }}
 }
@@ -47,11 +47,11 @@ class Popup: SKSpriteNode {
     
     weak var gameScene : SKNode? = nil
     weak var button :  PopupButton? = nil
-    var startTouchPosition = CGPointZero
+    var startTouchPosition = CGPoint.zero
 
     
 
-    func setup(gameScene : SKNode)
+    func setup(_ gameScene : SKNode)
     {
         self.gameScene = gameScene
  
@@ -106,7 +106,7 @@ class MultiPagePopup : Popup,  Resizable {
     }
     
     
-    func arrangeLayoutFor(size:CGSize, bannerHeight:CGFloat)
+    func arrangeLayoutFor(_ size:CGSize, bannerHeight:CGFloat)
     {
         
         adHeight = bannerHeight
@@ -126,31 +126,31 @@ class MultiPagePopup : Popup,  Resizable {
     {
         //arrangeLayoutFor(self.frame.size)
         
-        moreButton.setScale(ButtonSize.Small.scale)
+        moreButton.setScale(ButtonSize.small.scale)
         moreButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
         
         moreButton.name = "More"
         
         moreButton.zPosition = 100
-        moreButton.userInteractionEnabled = false
+        moreButton.isUserInteractionEnabled = false
         
         moreButton.addSafelyTo(self)
         
-        backButton.setScale(ButtonSize.Small.scale)
+        backButton.setScale(ButtonSize.small.scale)
         backButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
         backButton.name = "Back"
         backButton.zPosition = 100
-        backButton.userInteractionEnabled = false
+        backButton.isUserInteractionEnabled = false
         
         backButton.addSafelyTo(self)
         
-        exitButton.setScale(ButtonSize.Small.scale)
+        exitButton.setScale(ButtonSize.small.scale)
         exitButton.anchorPoint = CGPoint(x: 1.0, y: 1.0)
         
         exitButton.name = "Exit"
         
         exitButton.zPosition = 100
-        exitButton.userInteractionEnabled = false
+        exitButton.isUserInteractionEnabled = false
         
        
         exitButton.addSafelyTo(self)
@@ -158,18 +158,18 @@ class MultiPagePopup : Popup,  Resizable {
         
         if tabButtons.count == 0
          {
-          for (i,tabName) in tabNames.enumerate()
+          for (i,tabName) in tabNames.enumerated()
            {
             let imageName = tabName + (i == tabNo ? "2" : "1")
             let tabButton = SKSpriteNode(imageNamed: imageName)
-            tabButton.setScale(ButtonSize.Small.scale)
+            tabButton.setScale(ButtonSize.small.scale)
             tabButton.anchorPoint = CGPoint(x: CGFloat(-i), y: 1.0)
             tabButton.position = CGPoint(x:0.0,y:self.frame.size.height)
             
             tabButton.name = tabName
             
             tabButton.zPosition = 300
-            tabButton.userInteractionEnabled = false
+            tabButton.isUserInteractionEnabled = false
             
             tabButtons.append(tabButton)
             self.addChild(tabButton)
@@ -186,13 +186,13 @@ class MultiPagePopup : Popup,  Resizable {
         removeFromParent()
     }
     // overriden in derived class
-    func noPageFor(tab:Int) -> Int
+    func noPageFor(_ tab:Int) -> Int
     {
         return 1
     }
     func nextPage()
     {
-        self.pageNo++
+        self.pageNo += 1
      
        if self.pageNo >= noPageFor(self.tabNo)
         {
@@ -210,7 +210,7 @@ class MultiPagePopup : Popup,  Resizable {
     }
     func prevPage()
     {
-        self.pageNo--
+        self.pageNo -= 1
         
         if self.pageNo < 0
         {
@@ -227,14 +227,14 @@ class MultiPagePopup : Popup,  Resizable {
         }
         newPage()
     }
-    func buttonTouched(positionInScene:CGPoint) -> Bool
+    func buttonTouched(_ positionInScene:CGPoint) -> Bool
     {
-        if let touchedNode : SKSpriteNode = self.nodeAtPoint(positionInScene) as? SKSpriteNode,
-            nodeName =  touchedNode.name
+        if let touchedNode : SKSpriteNode = self.atPoint(positionInScene) as? SKSpriteNode,
+            let nodeName =  touchedNode.name
         {
             
             let buttons = tabButtons
-                .enumerate()
+                .enumerated()
                 .filter { (i,tabButton) in return i != self.tabNo && tabButton.name == nodeName }
             
             for (i,_) in buttons
@@ -266,21 +266,21 @@ class MultiPagePopup : Popup,  Resizable {
         return false
     }
     
-    func cardTouched(positionInScene:CGPoint) -> Bool
+    func cardTouched(_ positionInScene:CGPoint) -> Bool
     {
         return false
     }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
         
         
         if let t = touches.first
         {
-            startTouchPosition = t.locationInNode(self)
+            startTouchPosition = t.location(in: self)
         }
         for touch in (touches )
         {
-            let positionInScene = touch.locationInNode(self)
+            let positionInScene = touch.location(in: self)
             
             if buttonTouched(positionInScene) { return }
             if cardTouched(positionInScene) { return }
@@ -288,10 +288,10 @@ class MultiPagePopup : Popup,  Resizable {
     }
 
 
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let t = touches.first
         {
-          let  endTouchPosition = t.locationInNode(self)
+          let  endTouchPosition = t.location(in: self)
           let  displacement = endTouchPosition - startTouchPosition
           if displacement.lengthSquared() > 4000 && 2*fabs(displacement.x) < fabs(displacement.y)
           {
@@ -306,9 +306,9 @@ class MultiPagePopup : Popup,  Resizable {
           }
         }
     }
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        if let touches = touches {
-            touchesEnded(touches, withEvent: event)
-        }
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+     //   if let touches = touches {
+            touchesEnded(touches, with: event)
+    //    }
     }
 }

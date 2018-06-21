@@ -20,8 +20,7 @@ class CardSprite : SKSpriteNode
     var fan : CardPile? = nil
         {
         didSet {
-            if let f = fan
-            where f.player != nil {
+            if let f = fan, f.player != nil {
                 player = f.player
             }
         }
@@ -30,13 +29,13 @@ class CardSprite : SKSpriteNode
     var card : PlayingCard
     var isUp = false
     var positionInSpread = CGFloat(0.0)
-    var state = CardState.AtRest
-    var originalTouch : CGPoint = CGPointZero
+    var state = CardState.atRest
+    var originalTouch : CGPoint = CGPoint.zero
     var label : SKLabelNode? = nil
     var localLabel : SKSpriteNode? = nil
     var letterBackground : SKSpriteNode? = nil
     var originalScale = CGFloat(1.0)
-    var originalCardPosition   = CGPointZero
+    var originalCardPosition   = CGPoint.zero
     var originalCardRotation  = CGFloat(0.0)
     var originalCardZPosition  = CGFloat(0.0)
     
@@ -47,12 +46,12 @@ class CardSprite : SKSpriteNode
     init(card:PlayingCard,  texture: SKTexture = SKTexture(imageNamed: "Back1"))
     {
     self.card = card
-    super.init(texture: texture, color: UIColor.whiteColor(), size: texture.size())
+    super.init(texture: texture, color: UIColor.white, size: texture.size())
       
 
     self.name = card.imageName
-    self.userInteractionEnabled = false
-    self.anchorPoint = CGPointMake(0.5, 0.5)
+    self.isUserInteractionEnabled = false
+    self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     }
     
     
@@ -61,7 +60,7 @@ class CardSprite : SKSpriteNode
     }
     
 
-    static func create(card:PlayingCard, scene:SKNode) -> CardSprite
+    static func create(_ card:PlayingCard, scene:SKNode) -> CardSprite
     {
         let sprite = CardSprite(card: card)
         scene.addChild(sprite)
@@ -69,7 +68,7 @@ class CardSprite : SKSpriteNode
         return sprite
     }
     
-    static func create(card:PlayingCard, isUp: Bool, scene:SKNode) -> CardSprite
+    static func create(_ card:PlayingCard, isUp: Bool, scene:SKNode) -> CardSprite
     {
         let sprite = CardSprite(card: card,
             texture: isUp
@@ -92,16 +91,16 @@ class CardSprite : SKSpriteNode
     /// changing the anchorpoint is not something you can do with a SKAction
     /// therefore changing the anchorpoint without causing the sprite to jump requires finess
     
-    func rotateAboutPoint(position:CGPoint, rotatePoint:CGPoint, zRotation:CGFloat) -> CGPoint
+    func rotateAboutPoint(_ position:CGPoint, rotatePoint:CGPoint, zRotation:CGFloat) -> CGPoint
     {
         let dx1 = (rotatePoint.x - self.anchorPoint.x) * self.size.width
         let dy1 = (rotatePoint.y - self.anchorPoint.y) * self.size.height
         
         let dx = dx1 * cos(zRotation) - dy1 * sin(zRotation)
         let dy = dx1 * sin(zRotation) + dy1 * cos(zRotation)
-        return CGPointMake(position.x+dx, position.y+dy)
+        return CGPoint(x: position.x+dx, y: position.y+dy)
     }
-    func rotateAboutPoint(position:CGPoint, rotatePoint:CGPoint, zRotation:CGFloat, newScale:CGFloat) -> CGPoint
+    func rotateAboutPoint(_ position:CGPoint, rotatePoint:CGPoint, zRotation:CGFloat, newScale:CGFloat) -> CGPoint
     {
         let dx1 = (self.anchorPoint.x - rotatePoint.x) * self.size.width  * newScale / self.yScale
         let dy1 = (self.anchorPoint.y - rotatePoint.y ) * self.size.height  * newScale / self.yScale
@@ -109,9 +108,9 @@ class CardSprite : SKSpriteNode
         
         let dx = dx1 * cos(zRotation) - dy1 * sin(zRotation)
         let dy = dx1 * sin(zRotation) + dy1 * cos(zRotation)
-        return CGPointMake(position.x+dx, position.y+dy)
+        return CGPoint(x: position.x+dx, y: position.y+dy)
     }
-    func updateAnchorPoint(anchorPoint:CGPoint = CGPointMake(0.5, 0.5))
+    func updateAnchorPoint(_ anchorPoint:CGPoint = CGPoint(x: 0.5, y: 0.5))
     {
         
         self.position = rotateAboutPoint(self.position,rotatePoint: anchorPoint,zRotation:self.zRotation)
@@ -144,7 +143,7 @@ class CardSprite : SKSpriteNode
         if let l = label
         {
         l.position = CGPoint(x: 0.0, y:  self.size.height * 0.44 / self.yScale)
-        l.fontColor = UIColor.blackColor()
+        l.fontColor = UIColor.black
         l.fontName = "Verdana"
         l.fontSize = 11
       
@@ -155,30 +154,30 @@ class CardSprite : SKSpriteNode
     }
     func tintRed()
     {
-        self.color = UIColor.redColor()
+        self.color = UIColor.red
         if let letter = self.letterBackground
         {
-            letter.color = UIColor.redColor()
+            letter.color = UIColor.red
             letter.colorBlendFactor = 0.2
         }
         self.colorBlendFactor = 0.2
     }
     func tintGreen()
     {
-        self.color = UIColor.greenColor()
+        self.color = UIColor.green
         if let letter = self.letterBackground
         {
-            letter.color = UIColor.greenColor()
+            letter.color = UIColor.green
             letter.colorBlendFactor = 0.2
         }
         self.colorBlendFactor = 0.2
     }
     func removeTint()
     {
-        self.color = UIColor.whiteColor()
+        self.color = UIColor.white
         if let letter = self.letterBackground
         {
-            letter.color = UIColor.whiteColor()
+            letter.color = UIColor.white
             letter.colorBlendFactor = 0.0
         }
         self.colorBlendFactor = 0.0
@@ -188,7 +187,7 @@ class CardSprite : SKSpriteNode
     {
         switch card.value
         {
-        case .CourtCard :
+        case .courtCard :
             if let deck = GameSettings.sharedInstance.deck
             {
                 return deck.rankFor(card)
@@ -213,7 +212,7 @@ class CardSprite : SKSpriteNode
     }
     var backgroundColor : UIColor
     {
-            return UIColor.whiteColor()
+            return UIColor.white
     }
     var indexMaskingImageName : String { return "letter" }
     
@@ -229,12 +228,11 @@ class CardSprite : SKSpriteNode
             letterForeground.color = foregroundColor
             letterForeground.colorBlendFactor = 1.0
             letterForeground.anchorPoint=CGPoint(x: 0.5,y: 0.5)
-            letterForeground.position = CGPointZero
+            letterForeground.position = CGPoint.zero
             
             letterForeground.zPosition =  0.1
             letterBackground = SKSpriteNode(imageNamed:indexMaskingImageName)
-            if let background = letterBackground
-                where background.frame.size.width > 2
+            if let background = letterBackground, background.frame.size.width > 2
             {
                 background.zPosition =  0.8
                 background.anchorPoint=CGPoint(x: 0.5,y: 0.5)
@@ -260,13 +258,12 @@ class CardSprite : SKSpriteNode
            letterForeground.color = foregroundColor
            letterForeground.colorBlendFactor = 1.0
 
-           letterForeground.position = CGPointZero
+           letterForeground.position = CGPoint.zero
             
            letterForeground.anchorPoint=CGPoint(x: 0.5,y: 0.5)
            letterForeground.zPosition =  0.1
            letterBackground = SKSpriteNode(imageNamed:indexMaskingImageName)
-            if let background = letterBackground
-                where background.size.width > 2
+            if let background = letterBackground, background.size.width > 2
             {
             background.zPosition =  0.8
             background.anchorPoint=CGPoint(x: 0.5,y: 0.5)
@@ -284,10 +281,10 @@ class CardSprite : SKSpriteNode
         }
     }
     /// the user has just started dragging the sprite
-    func liftUp(positionInScene:CGPoint)
+    func liftUp(_ positionInScene:CGPoint)
     {
 
-        state = CardState.Dragged
+        state = CardState.dragged
         originalScale = self.yScale
         originalCardPosition  = self.position
         originalCardRotation  = self.zRotation
@@ -296,14 +293,14 @@ class CardSprite : SKSpriteNode
 
         self.zPosition = 120
       //  removeAllActions()
-        runAction(
+        run(
             SKAction.sequence([
                 SKAction.group([
-            SKAction.scaleTo(CardSize.Huge.scale, duration: 0.3),
-            SKAction.rotateToAngle(0.0, duration: 0.3),
-            SKAction.moveTo(positionInScene, duration: 0.3)
+            SKAction.scale(to: CardSize.huge.scale, duration: 0.3),
+            SKAction.rotate(toAngle: 0.0, duration: 0.3),
+            SKAction.move(to: positionInScene, duration: 0.3)
             ]),
-            SKAction.runBlock
+            SKAction.run
                 {
                        self.addLabel()
                 }]))
@@ -313,14 +310,14 @@ class CardSprite : SKSpriteNode
     func setdown()
     {
         removeLabel()
-        state = CardState.AtRest
+        state = CardState.atRest
 
-        runAction(SKAction.sequence([SKAction.group([
-            SKAction.scaleTo(originalScale, duration: 0.3),
-            SKAction.rotateToAngle(originalCardRotation, duration: 0.3),
-            SKAction.moveTo(originalCardPosition, duration: 0.3)
+        run(SKAction.sequence([SKAction.group([
+            SKAction.scale(to: originalScale, duration: 0.3),
+            SKAction.rotate(toAngle: originalCardRotation, duration: 0.3),
+            SKAction.move(to: originalCardPosition, duration: 0.3)
             ]),
-            SKAction.runBlock {
+            SKAction.run {
                self.zPosition = self.originalCardZPosition
                 self.fan?.reaZOrderCardsAtRest()
                 
@@ -328,18 +325,18 @@ class CardSprite : SKSpriteNode
     }
 
     /// the user has just switched which sprite they are dragging
-    func liftUpQuick(positionInScene:CGPoint)
+    func liftUpQuick(_ positionInScene:CGPoint)
     {
         removeAllActions()
         
-        state = CardState.Dragged
+        state = CardState.dragged
         originalScale = self.yScale
         originalCardPosition  = self.position
         originalCardRotation  = self.zRotation
         self.zPosition = 120
         self.position = positionInScene
         self.zRotation = 0.0
-        self.setScale(CardSize.Huge.scale)
+        self.setScale(CardSize.huge.scale)
         addLabel()
     }
     
@@ -348,7 +345,7 @@ class CardSprite : SKSpriteNode
     {
         removeAllActions()
         removeLabel()
-        state = CardState.AtRest
+        state = CardState.atRest
         self.zPosition = originalCardZPosition
         self.position = originalCardPosition
         self.zRotation = originalCardRotation
@@ -392,7 +389,7 @@ class CardSprite : SKSpriteNode
         }
     }
     /// Turn the card
-    func flip(toUp:Bool)
+    func flip(_ toUp:Bool)
     {
         if toUp
         {
@@ -428,7 +425,7 @@ class WhiteCardSprite : CardSprite
     
     override var foregroundColor : UIColor
     {
-            return  UIColor.whiteColor()
+            return  UIColor.white
     }
     override var backgroundColor : UIColor
     {
@@ -436,7 +433,7 @@ class WhiteCardSprite : CardSprite
     }
     
     override var indexMaskingImageName : String { return "letterwhite" }
-    private init(card:PlayingCard)
+    fileprivate init(card:PlayingCard)
     {
         super.init(card:card, texture: SKTexture(imageNamed: "blank"))
         
@@ -461,7 +458,7 @@ class WhiteCardSprite : CardSprite
         if let s = shadow
         {
             
-            s.color = UIColor.blackColor()
+            s.color = UIColor.black
             s.colorBlendFactor = 1.0
             s.zPosition = 0.1
             s.position = CGPoint(x:2,y:-2)
@@ -475,7 +472,7 @@ class WhiteCardSprite : CardSprite
         if let os = outlineShadow
         {
             
-            os.color = UIColor.blackColor()
+            os.color = UIColor.black
             os.colorBlendFactor = 1.0
             os.zPosition = 0.3
             os.position = CGPoint(x:2,y:-2)
@@ -496,7 +493,7 @@ class WhiteCardSprite : CardSprite
     }
     
 
-    static func createWhite(card:PlayingCard, scene:SKNode) -> CardSprite
+    static func createWhite(_ card:PlayingCard, scene:SKNode) -> CardSprite
     {
         let sprite = WhiteCardSprite(card: card)
         
@@ -510,11 +507,11 @@ class WhiteCardSprite : CardSprite
 
 extension SKNode
 {
- func cardSpriteNamed(cardname :String) -> CardSprite?
+ func cardSpriteNamed(_ cardname :String) -> CardSprite?
     {
-    return (self.childNodeWithName(cardname) as? CardSprite?)!
+    return (self.childNode(withName: cardname) as? CardSprite?) ?? nil
     }
-func cardSprite(card :PlayingCard) -> CardSprite?
+func cardSprite(_ card :PlayingCard) -> CardSprite?
     {
         if let sprite = self.cardSpriteNamed(card.imageName)
         {
@@ -523,7 +520,7 @@ func cardSprite(card :PlayingCard) -> CardSprite?
         return CardSprite.create(card, scene: self)
     }
     
-func whiteCardSprite(card :PlayingCard) -> CardSprite?
+func whiteCardSprite(_ card :PlayingCard) -> CardSprite?
     {
         if let sprite = self.cardSpriteNamed(card.whiteImageName)
         {
@@ -532,7 +529,7 @@ func whiteCardSprite(card :PlayingCard) -> CardSprite?
         return WhiteCardSprite.createWhite(card, scene: self)
     }
 
-func cardSprite(card :PlayingCard,isUp: Bool) -> CardSprite?
+func cardSprite(_ card :PlayingCard,isUp: Bool) -> CardSprite?
 {
     if let sprite = self.cardSpriteNamed(card.imageName)
     {

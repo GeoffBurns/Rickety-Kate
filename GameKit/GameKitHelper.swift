@@ -17,14 +17,14 @@ let PresentAuthenticationViewController =
 protocol GameKitHelperDelegate {
     func matchStarted()
     func matchEnded()
-    func matchReceivedData(match: GKMatch, data: NSData,
+    func matchReceivedData(_ match: GKMatch, data: Data,
         fromPlayer player: String)
 }
 
 
-public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBasedMatchmakerViewControllerDelegate {
+open class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBasedMatchmakerViewControllerDelegate {
     var authenticationViewController: UIViewController?
-    var lastError: NSError?
+    var lastError: Error?
     var gameCenterEnabled: Bool
     var delegate: GameKitHelperDelegate?
     var multiplayerMatch: GKMatch?
@@ -59,10 +59,10 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
             let localPlayer = GKLocalPlayer.localPlayer()
             if let name = localPlayer.alias
             {
-                if name.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 18
+                if name.lengthOfBytes(using: String.Encoding.utf8) > 18
                 {
-                    let index: String.Index = name.startIndex.advancedBy(18)
-                    return name.substringToIndex(index)
+                    let index: String.Index = name.characters.index(name.startIndex, offsetBy: 18)
+                    return name.substring(to: index)
                 }
             }
             return localPlayer.alias
@@ -76,16 +76,16 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
             
             
             //2
-            self.lastError = error
+            self.lastError = error as NSError?
             
             if viewController != nil {
                 //3
                 self.authenticationViewController = viewController
                 
-                NSNotificationCenter.defaultCenter().postNotificationName(
-                    PresentAuthenticationViewController,
+                NotificationCenter.default.post(
+                    name: Notification.Name(rawValue: PresentAuthenticationViewController),
                     object: self)
-            } else if localPlayer.authenticated {
+            } else if localPlayer.isAuthenticated {
                 //4
                 self.gameCenterEnabled = true
             } else {
@@ -94,7 +94,7 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
             }
         }
     }
-    func findMatch(minPlayers: Int, maxPlayers: Int,
+    func findMatch(_ minPlayers: Int, maxPlayers: Int,
         presentingViewController viewController: UIViewController,
         delegate: GameKitHelperDelegate) {
             
@@ -125,7 +125,7 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
             matchMakerViewController.showExistingMatches = true;
             
             presentingViewController? .
-                presentViewController(matchMakerViewController,
+                present(matchMakerViewController,
                     animated: false, completion: nil)
                 
         
@@ -134,16 +134,16 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
    /// GKTurnBasedMatchmakerViewControllerDelegate functions START
         
         // The user has cancelled
-        public func turnBasedMatchmakerViewControllerWasCancelled(viewController: GKTurnBasedMatchmakerViewController)
+        open func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController)
         {
-             presentingViewController? .dismissViewControllerAnimated(true, completion: nil)
+             presentingViewController? .dismiss(animated: true, completion: nil)
               print("Matchmaker cancelled")
         }
         
         // Matchmaking has failed with an error
-        public func turnBasedMatchmakerViewController(viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: NSError)
+        open func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: Error)
         {
-             presentingViewController? .dismissViewControllerAnimated(true, completion: nil)
+             presentingViewController? .dismiss(animated: true, completion: nil)
             print("Error finding match: %@", error.localizedDescription)
         }
     
@@ -165,11 +165,11 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
     /// GKTurnBasedMatchmakerViewControllerDelegate functions END
     
     
-    func reportAchievement(achievement: Achievement)
+    func reportAchievement(_ achievement: Achievement)
       {
         reportAchievements([achievement])
     }
-    func reportAchievements(achievements: [Achievement]) {
+    func reportAchievements(_ achievements: [Achievement]) {
   
         let gkAchievements : [GKAchievement] = achievements.map {
             ricketyKateAchievement in
@@ -185,11 +185,11 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
             print("Local player is not authenticated")
             return
         }
-        GKAchievement.reportAchievements(gkAchievements) {(error) in
+        GKAchievement.report(gkAchievements, withCompletionHandler: {(error) in
             self.lastError = error
-        }
+        }) 
     }
-    func reportScore(score: Int64,
+    func reportScore(_ score: Int64,
         forLeaderBoard leaderBoard: LearderBoard) {
             
             if !gameCenterEnabled {
@@ -206,11 +206,11 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
             let scores = [scoreReporter]
             
             //2
-            GKScore.reportScores(scores) {(error) in
+            GKScore.report(scores, withCompletionHandler: {(error) in
                 self.lastError = error
-            }
+            }) 
     }
-    func showGKGameCenterViewController(viewController: UIViewController!, onDismiss : () -> ()) {
+    func showGKGameCenterViewController(_ viewController: UIViewController!, onDismiss : @escaping () -> ()) {
         
         
         self.onDismiss = onDismiss
@@ -227,20 +227,20 @@ public class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBase
         gameCenterViewController.gameCenterDelegate = self
         
         //3
-        gameCenterViewController.viewState = .Achievements
+        gameCenterViewController.viewState = .achievements
         
         //4
         viewController .
-            presentViewController(gameCenterViewController,
+            present(gameCenterViewController,
                 animated: true, completion: nil)
     }
     
-    public func gameCenterViewControllerDidFinish(gameCenterViewController:
+    open func gameCenterViewControllerDidFinish(_ gameCenterViewController:
         GKGameCenterViewController) {
             
             self.onDismiss()
             gameCenterViewController .
-                dismissViewControllerAnimated(true, completion: nil)
+                dismiss(animated: true, completion: nil)
     }
    
 }

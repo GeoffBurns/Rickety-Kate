@@ -8,6 +8,7 @@
 
 import SpriteKit
 import ReactiveCocoa
+import ReactiveSwift
 
 
 // Display the score for each player
@@ -18,15 +19,15 @@ class ScoreDisplay
     
 
     static let sharedInstance = ScoreDisplay()
-    private init() { }
+    fileprivate init() { }
     
 
-    static func register(scene: SKNode, players: [CardPlayer])
+    static func register(_ scene: SKNode, players: [CardPlayer])
     {
         ScoreDisplay.sharedInstance.setupScoreArea(scene, players: players)
     }
     
-    static func scorePosition(side:SideOfTable, size: CGSize, bannerHeight:CGFloat) -> CGPoint
+    static func scorePosition(_ side:SideOfTable, size: CGSize, bannerHeight:CGFloat) -> CGPoint
     {
     let top : CGFloat =  DeviceSettings.isPortrait ? 0.85 : 0.87
     let bottom : CGFloat =  DeviceSettings.isPortrait ? 0.18 : 0.27
@@ -34,60 +35,60 @@ class ScoreDisplay
     let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
     switch side
       {
-      case .Right:
+      case .right:
         return CGPoint(x:size.width * 0.93, y:size.height * 0.5 + bannerHeight)
-      case .RightLow:
+      case .rightLow:
         return CGPoint(x:size.width * 0.93, y:size.height * 0.35 + bannerHeight)
-      case .RightHigh:
+      case .rightHigh:
         return CGPoint(x:size.width * 0.93, y:size.height * 0.70 + bannerHeight)
-       case .Top:
+       case .top:
         return  CGPoint(x:size.width * 0.5, y:size.height *  top + bannerHeight)
-       case .TopMidRight:
+       case .topMidRight:
         return CGPoint(x:size.width * ( noOfPlayers == 6 ? 0.8 : 0.7), y:size.height *  top  + bannerHeight)
-       case .TopMidLeft:
+       case .topMidLeft:
           return CGPoint(x:size.width *  ( noOfPlayers == 6 ? 0.2 : 0.3), y:size.height *  top + bannerHeight)
-       case .Left:
+       case .left:
         return CGPoint(x:size.width * 0.07, y:size.height * 0.5 + bannerHeight)
-      case .LeftLow:
+      case .leftLow:
         return CGPoint(x:size.width * 0.07, y:size.height * 0.35 + bannerHeight)
-      case .LeftHigh:
+      case .leftHigh:
         return CGPoint(x:size.width * 0.07, y:size.height * 0.70 + bannerHeight)
        default:
           return  CGPoint(x:size.width * 0.5, y:size.height *  bottom + bannerHeight)
        }
     }
     
-    static func scoreRotation(side:SideOfTable) -> CGFloat
+    static func scoreRotation(_ side:SideOfTable) -> CGFloat
     {
         switch side
         {
-        case .RightHigh:
+        case .rightHigh:
             fallthrough
-        case .RightLow:
+        case .rightLow:
             fallthrough
-        case .Right:
+        case .right:
             return 90.degreesToRadians
-        case .Top:
+        case .top:
             fallthrough
-        case .TopMidRight:
+        case .topMidRight:
             fallthrough
-        case .TopMidLeft:
+        case .topMidLeft:
                return 0.degreesToRadians
-        case .LeftHigh:
+        case .leftHigh:
             fallthrough
-        case .LeftLow:
+        case .leftLow:
             fallthrough
-        case .Left:
+        case .left:
                return -90.degreesToRadians
         default:
                return  0.degreesToRadians
         }
     }
 
-    func setupScoreFor(scene: SKNode,player:CardPlayer) -> SKLabelNode
+    func setupScoreFor(_ scene: SKNode,player:CardPlayer) -> SKLabelNode
         {
             
-            let fontsize : CGFloat = FontSize.Smaller.scale
+            let fontsize : CGFloat = FontSize.smaller.scale
 
             let l = Label(fontNamed:"Verdana").withShadow()
             
@@ -103,7 +104,7 @@ class ScoreDisplay
 
             scene.addChild(l)
 
-            l.rac_text <~ combineLatest(player.currentTotalScore.producer, player.noOfWins.producer)
+            l.rac_text <~ SignalProducer.combineLatest(player.currentTotalScore.producer, player.noOfWins.producer)
                 . map {
                     next in
                     let name = player.name
@@ -124,7 +125,7 @@ class ScoreDisplay
         }
     
   
-func setupScoreArea(scene: SKNode, players: [CardPlayer])
+func setupScoreArea(_ scene: SKNode, players: [CardPlayer])
 {
     scoreLabel  = []
 

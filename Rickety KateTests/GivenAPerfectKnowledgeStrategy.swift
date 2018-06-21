@@ -67,12 +67,12 @@ class GivenAPerfectKnowledgeStrategy: XCTestCase {
         var bonusCount = gameState.bonusCards.count
         XCTAssert(bonusCount==1, "1 bonusCards")
         
-        let bonusCards =  gameState.bonusCardFor(PlayingCard.Suite.Diamonds)
+        let bonusCards =  gameState.bonusCardFor(PlayingCard.Suite.diamonds)
         bonusCount = bonusCards.count
         XCTAssert(bonusCount==1, "1 bonusCards that are Daimonds")
         
         card =  strategy.chooseCard(player as CardHolder,gameState:gameState)
-        XCTAssert(card?.imageName=="JD", String("IfOmnibus choose %@",card?.imageName))
+        XCTAssert(card?.imageName=="JD", "IfOmnibus choose " + (card?.imageName ?? "NA"))
         
         
         gameState.setTrickPile(["4D","KND","KC"])

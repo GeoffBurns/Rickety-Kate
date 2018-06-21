@@ -10,10 +10,10 @@ import UIKit
 
 class RicketyKateNavigationController: UINavigationController {
     override func viewDidLoad() {
-        NSNotificationCenter.defaultCenter() .
+        NotificationCenter.default .
             addObserver(self, selector:
-                Selector("showAuthenticationViewController"), name:
-                PresentAuthenticationViewController, object: nil)
+                #selector(RicketyKateNavigationController.showAuthenticationViewController), name:
+                NSNotification.Name(rawValue: PresentAuthenticationViewController), object: nil)
         
         GameKitHelper.sharedInstance.authenticateLocalPlayer()
         super.viewDidLoad()
@@ -26,12 +26,12 @@ class RicketyKateNavigationController: UINavigationController {
             gameKitHelper.authenticationViewController {
                 
                 topViewController! .
-                    presentViewController(authenticationViewController,
+                    present(authenticationViewController,
                         animated: true,
                         completion: nil)
         }
     }
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }

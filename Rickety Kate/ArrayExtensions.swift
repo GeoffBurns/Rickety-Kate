@@ -12,7 +12,7 @@ import GameplayKit
 
 extension Array {
     
-    func numOfPagesOf(noOfItemsOnPage:Int) -> Int
+    func numOfPagesOf(_ noOfItemsOnPage:Int) -> Int
     {
         return self.count / noOfItemsOnPage + (self.count % noOfItemsOnPage == 0 ? 0 : 1)
         
@@ -30,7 +30,7 @@ extension Array {
         }
     }
 
-    func flatMap<U>(transform: Element -> U?) -> [U] {
+    func flatMap<U>(_ transform: (Element) -> U?) -> [U] {
         var result = [U]()
         result.reserveCapacity(self.count)
         for item in map(transform) {
@@ -42,7 +42,7 @@ extension Array {
     }
 
     mutating func shuffleThis () {
-        for i in (self.count-1).stride(to:0, by:-1) {
+        for i in stride(from: (self.count-1), to:0, by:-1) {
             let ix1 = i
             let ix2 = Int(arc4random_uniform(UInt32(i+1)))
             (self[ix1], self[ix2]) = (self[ix2], self[ix1])
@@ -51,7 +51,7 @@ extension Array {
     
     func shuffle () -> Array {
         var temp = self
-        for i in (temp.count-1).stride(to:0, by:-1) {
+        for i in stride(from: (temp.count-1), to:0, by:-1) {
             let ix1 = i
             let ix2 = Int(arc4random_uniform(UInt32(i+1)))
             (temp[ix1], temp[ix2]) = (temp[ix2], temp[ix1])

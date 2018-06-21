@@ -13,26 +13,26 @@ class Navigate {
     
    
 
-    static func setupRulesButton(scene:SKNode)
+    static func setupRulesButton(_ scene:SKNode)
     {
  
         let rulesButton = PopupButton(imageNamed:"Rules1", altNamed:"",popup:RuleScreen())
-        rulesButton.setScale(ButtonSize.Small.scale)
+        rulesButton.setScale(ButtonSize.small.scale)
         rulesButton.anchorPoint = CGPoint(x: 0.0, y: 1.0)
         scene.addChild(rulesButton)
     }
-    static func setupOptionButton(scene:SKNode)
+    static func setupOptionButton(_ scene:SKNode)
     {
    
         let optionsButton = PopupButton(imageNamed:"Options1", altNamed:"",popup:OptionScreen())
-        optionsButton.setScale(ButtonSize.Small.scale)
+        optionsButton.setScale(ButtonSize.small.scale)
         optionsButton.anchorPoint = CGPoint(x: 1.0,  y: 1.0)
         scene.addChild(optionsButton)
     }
-    static func setupExitButton(scene:SKNode)
+    static func setupExitButton(_ scene:SKNode)
     {
         let exitButton = PopupButton(imageNamed:"Exit", altNamed:"X",popup:ExitScreen())
-        exitButton.setScale(ButtonSize.Small.scale)
+        exitButton.setScale(ButtonSize.small.scale)
         exitButton.anchorPoint = CGPoint(x: 1.0,  y: 1.0)
         scene.addChild(exitButton)
     }

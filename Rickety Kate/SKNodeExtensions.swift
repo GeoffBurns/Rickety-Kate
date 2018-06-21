@@ -19,8 +19,8 @@ extension SKNode {
      
      :returns: The newly-created `NSTimer` instance.
      */
-    func schedule(delay delay: NSTimeInterval, handler: () -> Void)  {
-        self.runAction(SKAction.sequence([SKAction.waitForDuration(delay), SKAction.runBlock({
+    func schedule(delay: TimeInterval, handler: @escaping () -> Void)  {
+        self.run(SKAction.sequence([SKAction.wait(forDuration: delay), SKAction.run({
             handler()
         })]))
     }
@@ -33,13 +33,13 @@ extension SKNode {
      
      :returns: The newly-created `NSTimer` instance.
      */
-    func schedule(repeatInterval interval: NSTimeInterval, handler:  () -> Void) {
-        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(interval), SKAction.runBlock({
+    func schedule(repeatInterval interval: TimeInterval, handler:  @escaping () -> Void) {
+        self.run(SKAction.repeatForever( SKAction.sequence([SKAction.wait(forDuration: interval), SKAction.run({
             handler()
         })])))
     }
     
-    func addSafelyTo(newParent:SKNode)
+    func addSafelyTo(_ newParent:SKNode)
     {
      if self.parent == nil
       {

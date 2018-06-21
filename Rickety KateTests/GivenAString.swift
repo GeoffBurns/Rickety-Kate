@@ -11,17 +11,17 @@ import UIKit
 import XCTest
 import Rickety_Kate
 
-public class GivenAString : XCTestCase {
+open class GivenAString : XCTestCase {
     
 
     
-    override public func tearDown() {
+    override open func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
     
-    func getStringForWinning(name:String,n:Int,pluralizable:String) -> String
+    func getStringForWinning(_ name:String,n:Int,pluralizable:String) -> String
     {
         return "%@ won %d %@"
             .with
@@ -31,7 +31,7 @@ public class GivenAString : XCTestCase {
 
     }
     
-    public func testParameterizedStrings() {
+    open func testParameterizedStrings() {
         
         let molly_won_a_jack = getStringForWinning("Molly",n: 1, pluralizable: "Jack")
         XCTAssert(molly_won_a_jack=="Molly won a Jack",molly_won_a_jack)
@@ -73,7 +73,7 @@ public class GivenAString : XCTestCase {
         XCTAssert(you_score_23_1=="Your Score : 23 & 1 Win",you_score_23_1)
     }
 
-    public func testLocalizedStrings() {
+    open func testLocalizedStrings() {
         
         let molly_won_a_trick = "%@ just Won the Trick".sayTo("Molly")
         XCTAssert(molly_won_a_trick=="Molly just Won the Trick",molly_won_a_trick)

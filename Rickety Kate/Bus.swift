@@ -7,17 +7,19 @@
 //
 
 import ReactiveCocoa
+import ReactiveSwift
+import enum Result.NoError
 
 class Bus {
     
-    let (gameSignal,gameSink) = Signal<GameEvent,NoError>.pipe()
+    let (gameSignal,gameSink) = Signal<GameEvent,Result.NoError>.pipe()
     
     
     static let sharedInstance = Bus()
-    private init() { }
+    fileprivate init() { }
     
-    func send(gameEvent:GameEvent)
+    func send(_ gameEvent:GameEvent)
     {
-    gameSink.sendNext( gameEvent)
+    gameSink.send( value: gameEvent)
     }
 }

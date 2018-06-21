@@ -2,28 +2,28 @@ import SpriteKit
 
 public enum GameEvent : Equatable
 {
-    case WinTrick(String)
-    case WinGame(String)
-    case ShotTheMoon(String)
-    case WinRicketyKate(String)
-    case WinHooligan(String)
-    case WinOmnibus(String)
-    case WinSpades(String,Int)
-    case NewHand
-    case CardDoesNotFollowSuite
-    case TrumpsHaveNotBeenBroken
-    case WaitYourTurn
-    case TurnOverYourCards
-    case SuiteFinished(PlayingCard.Suite)
-    case CardPlayed(CardHolderBase,PlayingCard)
-    case PlayerKnocked(CardPlayer)
-    case YouNeedToPlayThisFirst(PlayingCard)
-    case TurnFor(CardPlayer)
-    case ShowTip(Tip)
-    case NewGame
-    case StartHand
-    case SomethingHasGoneWrong
-    case DiscardWorstCards(Int)
+    case winTrick(String)
+    case winGame(String)
+    case shotTheMoon(String)
+    case winRicketyKate(String)
+    case winHooligan(String)
+    case winOmnibus(String)
+    case winSpades(String,Int)
+    case newHand
+    case cardDoesNotFollowSuite(PlayingCard.Suite)
+    case trumpsHaveNotBeenBroken
+    case waitYourTurn
+    case turnOverYourCards
+    case suiteFinished(PlayingCard.Suite)
+    case cardPlayed(CardHolderBase,PlayingCard)
+    case playerKnocked(CardPlayer)
+    case youNeedToPlayThisFirst(PlayingCard)
+    case turnFor(CardPlayer)
+    case showTip(Tip)
+    case newGame
+    case startHand
+    case somethingHasGoneWrong
+    case discardWorstCards(Int)
 
     var congrats : String  { return "Congratulatons".localize }
     var wow : String  { return "Wow".localize   }
@@ -32,62 +32,62 @@ public enum GameEvent : Equatable
         {
             switch self
             {
-            case WinTrick( let name ) :
+            case .winTrick( let name ) :
                 return  "%@ just Won the Trick".sayTo(name)
-            case PlayerKnocked( let player ) :
+            case .playerKnocked( let player ) :
                 return player.isYou
                     ? "You can not Play You have to Knock".localize
                     : "_ Knocked".localizeWith(player.name )
-            case YouNeedToPlayThisFirst(let card) :
+            case .youNeedToPlayThisFirst(let card) :
                 return "You Need to Play %@ First".localizeWith(card.description)
-            case SuiteFinished(let suite) :
+            case .suiteFinished(let suite) :
                 return suite.description + " " + "Finished".localize
-            case ShotTheMoon( let name ) :
+            case .shotTheMoon( let name ) :
                 return "%@ just Shot the Moon".sayCongratsTo(name)
-            case WinGame( let name ) :
+            case .winGame( let name ) :
                 return "%@ just Won the Game".sayCongratsTo(name)
-            case WinRicketyKate( let name ) :
+            case .winRicketyKate( let name ) :
                 return  "%@ was kissed by Rickety Kate Poor %@".sayTwiceTo(name)
             
-            case WinHooligan( let name ) :
+            case .winHooligan( let name ) :
                 return  "%@ was bashed by the Hooligan Poor %@".sayTwiceTo(name)
-            case WinOmnibus( let name ) :
+            case .winOmnibus( let name ) :
                 return "%@ just Caught the Bus".sayCongratsTo(name)
-            case WinSpades( let name, let noOfSpades ) : 
+            case .winSpades( let name, let noOfSpades ) : 
                 let start = "%@ won %d %@"
                     .with
                     .sayTo(name)
                     .pluralize(noOfSpades,arguements: GameSettings.sharedInstance.rules.shortDescription)
                     .localize
                 return  start + "\n" + "Bad Luck".localize + "."
-            case TurnOverYourCards :
+            case .turnOverYourCards :
                 return "Swipe to turn over your cards".localize
-            case TurnFor( let player ) :
+            case .turnFor( let player ) :
                 if player is HumanPlayer
                 {
                     return player.isYou
                         ? "Your Turn".localize
                         : "%@ Turn".localizeWith(player.name )
                 } else { return nil }
-            case ShowTip( let tip ) :
+            case .showTip( let tip ) :
                 return tip.description
-            case NewHand :
+            case .newHand :
                     return nil
-            case SomethingHasGoneWrong :
+            case .somethingHasGoneWrong :
                 return nil
-            case NewGame :
+            case .newGame :
                 return "%@ Game On".localizeWith(GameSettings.sharedInstance.gameType)
-            case StartHand :
+            case .startHand :
                 return nil
-            case CardPlayed :
+            case .cardPlayed :
                 return nil
-            case TrumpsHaveNotBeenBroken :
+            case .trumpsHaveNotBeenBroken :
                 return "Can not Lead with a %@".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
-            case CardDoesNotFollowSuite :
-                return "Card Does Not Follow Suite".localize
-            case WaitYourTurn :
+            case .cardDoesNotFollowSuite( let suite )  :
+                return "Card Does Not Follow Suite".localize + "\n" + "Play a %@".localizeWith(suite.singular)
+            case .waitYourTurn :
                 return "Wait your turn".localize
-            case DiscardWorstCards(let noOfCardsLeft) :
+            case .discardWorstCards(let noOfCardsLeft) :
                 switch noOfCardsLeft
                 {
                 case 3 :
@@ -107,7 +107,7 @@ public enum GameEvent : Equatable
                 if message == "" {
                     return ""
                 }
-                let messageLines = message.componentsSeparatedByString("\n")
+                let messageLines = message.components(separatedBy: "\n")
                 switch (messageLines.count) {
                 case 1 :
                     return message
@@ -123,7 +123,7 @@ public enum GameEvent : Equatable
                 if message == "" {
                     return ""
                 }
-                let messageLines = message.componentsSeparatedByString("\n")
+                let messageLines = message.components(separatedBy: "\n")
                 switch (messageLines.count) {
                 case 1 :
                     return ""
@@ -138,24 +138,24 @@ public enum GameEvent : Equatable
 public func ==(lhs: GameEvent, rhs: GameEvent) -> Bool {
     switch (lhs, rhs) {
         
-    case let (.WinTrick(la), .WinTrick(ra)): return la == ra
-    case let (.PlayerKnocked(la), .PlayerKnocked(ra)): return la == ra
-    case let (.YouNeedToPlayThisFirst(la), .YouNeedToPlayThisFirst(ra)): return la == ra
-    case let (.SuiteFinished(la), .SuiteFinished(ra)): return la == ra
-    case let (.ShotTheMoon(la), .ShotTheMoon(ra)): return la == ra
-    case let (.WinGame(la), .WinGame(ra)): return la == ra
-    case let (.WinRicketyKate(la), .WinRicketyKate(ra)): return la == ra
-    case let (.WinHooligan(la), .WinHooligan(ra)): return la == ra
-    case let (.WinOmnibus(la), .WinOmnibus(ra)): return la == ra
-    case let (.WinSpades(la,li), .WinSpades(ra,ri)): return la == ra && li == ri
-    case let (.TurnFor(la), .TurnFor(ra)): return la == ra
-    case let (.ShowTip(la), .ShowTip(ra)): return la == ra
-    case let (.DiscardWorstCards(la), .DiscardWorstCards(ra)): return la == ra
-    case (.NewHand, .NewHand): return true
-    case (.CardDoesNotFollowSuite, .CardDoesNotFollowSuite): return true
-    case (.WaitYourTurn, .WaitYourTurn): return true
-    case (.NewGame, .NewGame): return true
-    case (.StartHand, .StartHand): return true
+    case let (.winTrick(la), .winTrick(ra)): return la == ra
+    case let (.playerKnocked(la), .playerKnocked(ra)): return la == ra
+    case let (.youNeedToPlayThisFirst(la), .youNeedToPlayThisFirst(ra)): return la == ra
+    case let (.suiteFinished(la), .suiteFinished(ra)): return la == ra
+    case let (.shotTheMoon(la), .shotTheMoon(ra)): return la == ra
+    case let (.winGame(la), .winGame(ra)): return la == ra
+    case let (.winRicketyKate(la), .winRicketyKate(ra)): return la == ra
+    case let (.winHooligan(la), .winHooligan(ra)): return la == ra
+    case let (.winOmnibus(la), .winOmnibus(ra)): return la == ra
+    case let (.winSpades(la,li), .winSpades(ra,ri)): return la == ra && li == ri
+    case let (.turnFor(la), .turnFor(ra)): return la == ra
+    case let (.showTip(la), .showTip(ra)): return la == ra
+    case let (.discardWorstCards(la), .discardWorstCards(ra)): return la == ra
+    case (.newHand, .newHand): return true
+    case (.cardDoesNotFollowSuite, .cardDoesNotFollowSuite): return true
+    case (.waitYourTurn, .waitYourTurn): return true
+    case (.newGame, .newGame): return true
+    case (.startHand, .startHand): return true
         
     default: return false
     }

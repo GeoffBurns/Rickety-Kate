@@ -104,16 +104,16 @@ class GivenATrickPile: XCTestCase {
         XCTAssert(penaltyCount==14, "still 14 penaltyCards")
         XCTAssert(bonusCount==1, "1 bonusCards")
         
-        let bonusCards =  gameState.bonusCardFor(PlayingCard.Suite.Diamonds)
+        let bonusCards =  gameState.bonusCardFor(PlayingCard.Suite.diamonds)
         bonusCount = bonusCards.count
         XCTAssert(bonusCount==1, "1 bonusCards that are Daimonds")
        
-        let penaltyCards =  gameState.penaltyCardsFor(PlayingCard.Suite.Spades)
+        let penaltyCards =  gameState.penaltyCardsFor(PlayingCard.Suite.spades)
         penaltyCount = penaltyCards.count
         XCTAssert(penaltyCount==13,  String(format: "%d cards instead of 13 penaltyCards that are Spades",penaltyCount))
         
         
-        let penaltyCards2 =  gameState.penaltyCardsFor(PlayingCard.Suite.Clubs)
+        let penaltyCards2 =  gameState.penaltyCardsFor(PlayingCard.Suite.clubs)
         penaltyCount = penaltyCards2.count
         XCTAssert(penaltyCount==1, String(format: "%d cards instead 1 penaltyCards that are Clubs",penaltyCount))
         

@@ -16,9 +16,9 @@ class Scorer
     var players = [CardPlayer]()
     
     static let sharedInstance = Scorer()
-    private init() { }
+    fileprivate init() { }
     
-    func setupScorer( players: [CardPlayer])
+    func setupScorer( _ players: [CardPlayer])
     {
         self.players=players
         
@@ -31,14 +31,14 @@ class Scorer
     }
     
     /// Which player has won the trick
-    static func playerThatWon(gameState:GameStateBase) -> CardPlayer?
+    static func playerThatWon(_ gameState:GameStateBase) -> CardPlayer?
     {
         if let trick = gameState.tricksPile.first
         {
             let leadingSuite = trick.playedCard.suite
             let followingTricks = gameState.tricksPile.filter { $0.playedCard.suite == leadingSuite }
             
-            let orderedTricks = followingTricks.sort({ $0.playedCard.value > $1.playedCard.value })
+            let orderedTricks = followingTricks.sorted(by: { $0.playedCard.value > $1.playedCard.value })
             if let highest = orderedTricks.first
             {
                 return highest.player
@@ -48,7 +48,7 @@ class Scorer
     }
     
     // Update the score of the players
-    func recordTheScoresForAGameWin(winner: CardPlayer)
+    func recordTheScoresForAGameWin(_ winner: CardPlayer)
     {
     winner.noOfWins.value = winner.noOfWins.value + 1
     
@@ -69,7 +69,7 @@ class Scorer
          {
          player.currentTotalScore.value = 0
          hasShotMoon = true
-         Bus.sharedInstance.send(GameEvent.ShotTheMoon(player.name))
+         Bus.sharedInstance.send(GameEvent.shotTheMoon(player.name))
          GameKitHelper.sharedInstance.reportAchievement(Achievement.ShootingTheMoon)
         }
       }
@@ -81,8 +81,8 @@ class Scorer
         {
             
             let ranked  = players
-                . sort {$0.currentTotalScore.value < $1.currentTotalScore.value}
-                . enumerate()
+                . sorted {$0.currentTotalScore.value < $1.currentTotalScore.value}
+                . enumerated()
             
             let humans = ranked.filter { $0.1.playerNo == 0 }
             
@@ -141,7 +141,7 @@ class Scorer
        
       }
     
-      Bus.sharedInstance.send(GameEvent.WinGame(winner!.name))
+      Bus.sharedInstance.send(GameEvent.winGame(winner!.name))
       }
         
  
@@ -158,7 +158,7 @@ class Scorer
             player.scoreForCurrentHand = 0
         }
     }
-    func trickWon(gameState:GameStateBase) -> CardPlayer?
+    func trickWon(_ gameState:GameStateBase) -> CardPlayer?
     {
         if let winner = Scorer.playerThatWon(gameState)
         {

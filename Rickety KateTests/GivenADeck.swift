@@ -10,22 +10,22 @@ import UIKit
 import XCTest
 import Rickety_Kate
 
-public class GivenADeck: XCTestCase {
+open class GivenADeck: XCTestCase {
 
     var deck: Deck = PlayingCard.Standard52CardDeck.sharedInstance;
     var cards : Dictionary<String,PlayingCard> = [:]
-    override public func setUp() {
+    override open func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
       
     }
     
-    override public func tearDown() {
+    override open func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
-    public func testContainAllUniqueCards() {
+    open func testContainAllUniqueCards() {
        
         let cards = deck.cards
        
@@ -37,7 +37,7 @@ public class GivenADeck: XCTestCase {
    
     }
     
-    public func deckWithNoOfSuites(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false) -> [PlayingCard]
+    open func deckWithNoOfSuites(_ noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false) -> [PlayingCard]
         {
         let deck = PlayingCard.BuiltCardDeck( gameSettings: FakeGameSettings(noOfSuitesInDeck: noOfSuitesInDeck ,
             noOfPlayersAtTable: noOfPlayersAtTable,
@@ -46,7 +46,7 @@ public class GivenADeck: XCTestCase {
             hasJokers: hasJokers))
             return deck.orderedDeck
     }
-    public func testContainRightNumberOfCards() {
+    open func testContainRightNumberOfCards() {
 
         // count 52 without removed cards
         XCTAssert(deckWithNoOfSuites( 4,noOfPlayersAtTable: 4).count == 52, "Pass")

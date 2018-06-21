@@ -10,25 +10,25 @@ import SpriteKit
 
 public enum DeviceType
 {
-    case Phone
-    case Pad
-    case BigPhone
-    case BigPad
+    case phone
+    case pad
+    case bigPhone
+    case bigPad
 }
 public enum LayoutType
 {
-    case Phone
-    case Pad
-    case Portrait
+    case phone
+    case pad
+    case portrait
 }
 
 public enum GameFlavor
 {
     
-    case Hooligan
-    case Soccer
-    case Bussing
-    case Straight
+    case hooligan
+    case soccer
+    case bussing
+    case straight
     
 }
 
@@ -48,7 +48,7 @@ public protocol ICardGameSettings
     var makeDeckEvenlyDevidable  : Bool { get }
     var deck  : PlayingCard.BuiltCardDeck? { get  }
     var speedOfToss  : Int { get }
-    var tossDuration : NSTimeInterval { get  }
+    var tossDuration : TimeInterval { get  }
     var memoryWarning : Bool { get set }
     
     func newDeck()
@@ -67,7 +67,7 @@ public protocol ICardGameSettings
     func random()
     
     func changeSettings(
-        noOfSuitesInDeck:Int,
+        _ noOfSuitesInDeck:Int,
         noOfPlayersAtTable:Int,
         noOfCardsInASuite:Int,
         hasTrumps:Bool,
@@ -105,28 +105,28 @@ enum GameProperties : String
 }
 
 /// User controlled options for the game
-public class DeviceSettings
+open class DeviceSettings
 {
     static var isPad : Bool
     {
-        return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+        return UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
     }
     static var isPhone : Bool
     {
-        return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone
+        return UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone
     }
     static var isPortrait : Bool
     {
-        let size = UIScreen.mainScreen().applicationFrame
+        let size = UIScreen.main.applicationFrame
         return size.width < size.height
     }
     static var isBigPhone : Bool
     {
-        return   UIScreen.mainScreen().nativeScale > 2.5
+        return   UIScreen.main.nativeScale > 2.5
     }
     static var isBigPad : Bool
     {
-        return   isPad && UIScreen.mainScreen().nativeScale > 1.9
+        return   isPad && UIScreen.main.nativeScale > 1.9
         
     }
     static var isBiggerDevice: Bool
@@ -137,22 +137,25 @@ public class DeviceSettings
     {
         return isBigPhone || isPad
     }
-    
+    static var isSmallDevice: Bool
+    {
+        return !isBigPhone && !isPad
+    }
     static  var device : DeviceType {
         
         if isPad
         {
             if isBigPad
             {
-                return .BigPad
+                return .bigPad
             }
-            return .Pad
+            return .pad
         }
         if isBigPhone
         {
-            return .BigPhone
+            return .bigPhone
         }
-        return .Phone
+        return .phone
     }
     static  var layout : LayoutType {
         
@@ -160,19 +163,19 @@ public class DeviceSettings
         {
             if isPortrait
             {
-                return .Portrait
+                return .portrait
             }
-            return .Pad
+            return .pad
         }
-        return .Phone
+        return .phone
     }
 }
 
 /// User controlled options for the game
-public class GameSettings
+open class GameSettings
 {
     static var instance : IGameSettings? = nil
-    public static var sharedInstance : IGameSettings {
+    open static var sharedInstance : IGameSettings {
         get{
             if instance == nil
             {
@@ -199,7 +202,7 @@ class LiveGameSettings : IGameSettings
   var noOfSuitesInDeck : Int {
         
     get {
-            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfSuitesInDeck.rawValue)
+            let result = UserDefaults.standard.integer(forKey: GameProperties.NoOfSuitesInDeck.rawValue)
             if result == 0
             {
                 return 5
@@ -207,7 +210,7 @@ class LiveGameSettings : IGameSettings
             return result
     }
     set (newValue) {
-    NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.NoOfSuitesInDeck.rawValue)
+    UserDefaults.standard.set(newValue, forKey: GameProperties.NoOfSuitesInDeck.rawValue)
 
    
     }
@@ -216,7 +219,7 @@ class LiveGameSettings : IGameSettings
     var noOfPlayersAtTable : Int {
         
         get {
-            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfPlayersAtTable.rawValue)
+            let result = UserDefaults.standard.integer(forKey: GameProperties.NoOfPlayersAtTable.rawValue)
             if result == 0
             {
                 return 5
@@ -224,14 +227,14 @@ class LiveGameSettings : IGameSettings
             return result
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.NoOfPlayersAtTable.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.NoOfPlayersAtTable.rawValue)
             
         }
     }
     var noOfCardsInASuite : Int {
         
         get {
-            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.NoOfCardsInASuite.rawValue)
+            let result = UserDefaults.standard.integer(forKey: GameProperties.NoOfCardsInASuite.rawValue)
             if result == 0
             {
                 return 14
@@ -239,77 +242,77 @@ class LiveGameSettings : IGameSettings
             return result
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.NoOfCardsInASuite.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.NoOfCardsInASuite.rawValue)
         }
     }
     
     var memoryWarning : Bool {
         
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.memoryWarning.rawValue)
+            return UserDefaults.standard.bool(forKey: GameProperties.memoryWarning.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.memoryWarning.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.memoryWarning.rawValue)
         }
     }
     
     var showTips : Bool {
         
         get {
-            return !NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.hideTips.rawValue)
+            return !UserDefaults.standard.bool(forKey: GameProperties.hideTips.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(!newValue, forKey: GameProperties.hideTips.rawValue)
+            UserDefaults.standard.set(!newValue, forKey: GameProperties.hideTips.rawValue)
         }
     }
     
     var willPassCards : Bool {
         
         get {
-            return !NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.ignorePassCards.rawValue)
+            return !UserDefaults.standard.bool(forKey: GameProperties.ignorePassCards.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(!newValue, forKey: GameProperties.ignorePassCards.rawValue)
+            UserDefaults.standard.set(!newValue, forKey: GameProperties.ignorePassCards.rawValue)
         }
     }
     
     var useNumbersForCourtCards : Bool {
         
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.useNumbersForCourtCards.rawValue)
+            return UserDefaults.standard.bool(forKey: GameProperties.useNumbersForCourtCards.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.useNumbersForCourtCards.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.useNumbersForCourtCards.rawValue)
         }
     }
     var allowBreakingTrumps : Bool {
         
         get {
-            return !NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.dontBreakTrumps.rawValue)
+            return !UserDefaults.standard.bool(forKey: GameProperties.dontBreakTrumps.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(!newValue, forKey: GameProperties.dontBreakTrumps.rawValue)
+            UserDefaults.standard.set(!newValue, forKey: GameProperties.dontBreakTrumps.rawValue)
         }
     }
     var includeHooligan : Bool {
         
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.includeHooligan.rawValue)
+            return UserDefaults.standard.bool(forKey: GameProperties.includeHooligan.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.includeHooligan.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.includeHooligan.rawValue)
         }
     }
     var includeOmnibus : Bool {
         
         get {
-            let result = NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.includeOmnibus.rawValue)
-            if let deck1 = self.deck {  return result && deck1.setOfSuitesInDeck.contains(PlayingCard.Suite.Diamonds) }
+            let result = UserDefaults.standard.bool(forKey: GameProperties.includeOmnibus.rawValue)
+            if let deck1 = self.deck {  return result && deck1.setOfSuitesInDeck.contains(PlayingCard.Suite.diamonds) }
             
             return result
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.includeOmnibus.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.includeOmnibus.rawValue)
         }
     }
 
@@ -330,9 +333,9 @@ class LiveGameSettings : IGameSettings
     var __speedOfToss : Int? = nil
     var _speedOfToss : Int {
         get {
-            let defaults = NSUserDefaults.standardUserDefaults()
+            let defaults = UserDefaults.standard
             let key = GameProperties.speedOfToss.rawValue
-            let result = defaults.integerForKey(key)
+            let result = defaults.integer(forKey: key)
             if result > 0 && result < 8
             {
                 return result
@@ -340,16 +343,16 @@ class LiveGameSettings : IGameSettings
              return 3
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.speedOfToss.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.speedOfToss.rawValue)
         }
     }
     
-    var tossDurations : [NSTimeInterval] = [ 1.0, 0.85, 0.7, 0.5, 0.4, 0.25, 0.18, 0.15, 0.1, 0.05]
-    var tossDuration : NSTimeInterval { return tossDurations[speedOfToss] }
+    var tossDurations : [TimeInterval] = [ 1.0, 0.85, 0.7, 0.5, 0.4, 0.25, 0.18, 0.15, 0.1, 0.05]
+    var tossDuration : TimeInterval { return tossDurations[speedOfToss] }
     
     var ruleSet : Int {
         get {
-            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.ruleSet.rawValue)
+            let result = UserDefaults.standard.integer(forKey: GameProperties.ruleSet.rawValue)
             if result == 0
             {
                 return 1
@@ -357,7 +360,7 @@ class LiveGameSettings : IGameSettings
             return result
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.ruleSet.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.ruleSet.rawValue)
             awarder = nil
         }
     }
@@ -370,12 +373,12 @@ class LiveGameSettings : IGameSettings
     var gameFlavor : GameFlavor
         {
             if includeHooligan  {
-                if includeOmnibus { return .Soccer }
-                return .Hooligan
+                if includeOmnibus { return .soccer }
+                return .hooligan
             }
             
-            if includeOmnibus { return .Bussing }
-            return .Straight
+            if includeOmnibus { return .bussing }
+            return .straight
     }
 
     var gameType : String {
@@ -384,12 +387,11 @@ class LiveGameSettings : IGameSettings
         
         switch gameFlavor
         {
-        case .Soccer : return "Soccer %@".localizeWith( gameType )
-        case .Hooligan : return "Hooligan %@".localizeWith( gameType )
-        case .Bussing : return "Bussing %@".localizeWith( gameType )
-        case .Straight :
-               if let no = self.deck?.normalSuitesInDeck.count
-                  where self.rules.trumpSuite == PlayingCard.Suite.None
+        case .soccer : return "Soccer %@".localizeWith( gameType )
+        case .hooligan : return "Hooligan %@".localizeWith( gameType )
+        case .bussing : return "Bussing %@".localizeWith( gameType )
+        case .straight :
+               if let no = self.deck?.normalSuitesInDeck.count, self.rules.trumpSuite == PlayingCard.Suite.none
                             {
                                 return no.letterDescription + " " + gameType
                             }
@@ -443,7 +445,7 @@ class LiveGameSettings : IGameSettings
     var gameWinningScoreIndex: Int {
         
         get {
-            let result = NSUserDefaults.standardUserDefaults().integerForKey(GameProperties.gameWinningScore.rawValue)
+            let result = UserDefaults.standard.integer(forKey: GameProperties.gameWinningScore.rawValue)
             if result == 0
             {
                 return 2
@@ -451,7 +453,7 @@ class LiveGameSettings : IGameSettings
             return result
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: GameProperties.gameWinningScore.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.gameWinningScore.rawValue)
             
         }
     }
@@ -459,20 +461,20 @@ class LiveGameSettings : IGameSettings
     var hasTrumps : Bool {
         
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.HasTrumps.rawValue)
+            return UserDefaults.standard.bool(forKey: GameProperties.HasTrumps.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.HasTrumps.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.HasTrumps.rawValue)
         }
     }
     
     var hasJokers : Bool {
         
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(GameProperties.HasJokers.rawValue)
+            return UserDefaults.standard.bool(forKey: GameProperties.HasJokers.rawValue)
         }
         set (newValue) {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: GameProperties.HasJokers.rawValue)
+            UserDefaults.standard.set(newValue, forKey: GameProperties.HasJokers.rawValue)
         }
     }
  
@@ -484,7 +486,7 @@ class LiveGameSettings : IGameSettings
     init() {  newDeck() }
     
     func changeSettings(
-        noOfSuitesInDeck:Int = 4,
+        _ noOfSuitesInDeck:Int = 4,
         noOfPlayersAtTable:Int  = 4,
         noOfCardsInASuite:Int  = 13,
         hasTrumps:Bool = false,
@@ -543,36 +545,36 @@ class LiveGameSettings : IGameSettings
  }
 
 /// For testing
-public class FakeGameSettings : IGameSettings
+open class FakeGameSettings : IGameSettings
 {
-    public var hasFool =  true
-    public var noOfHumanPlayers : Int  = 1
-    public var noOfSuitesInDeck = 6
-    public var noOfPlayersAtTable = 5
-    public var noOfCardsInASuite = 15
-    public var hasTrumps = false
-    public var hasJokers = false
-    public var showTips = false
-    public var allowBreakingTrumps = true
-    public var includeHooligan  = false { didSet { update() }}
-    public var includeOmnibus  = false { didSet { update() }}
-    public var useNumbersForCourtCards  = false
-    public var speedOfToss = 3
-    public var willPassCards = false
-    public var ruleSet = 1
-    public var gameWinningScore = 1
-    public var isAceHigh  = true
-    public var memoryWarning  = true
-    public var makeDeckEvenlyDevidable  = true
-    public var deck  : PlayingCard.BuiltCardDeck? = nil
-    public var gameWinningScoreIndex = 1
-    public var gameType = "Spades"
-    public var achievementForWin = Achievement.StraightSpades
+    open var hasFool =  true
+    open var noOfHumanPlayers : Int  = 1
+    open var noOfSuitesInDeck = 6
+    open var noOfPlayersAtTable = 5
+    open var noOfCardsInASuite = 15
+    open var hasTrumps = false
+    open var hasJokers = false
+    open var showTips = false
+    open var allowBreakingTrumps = true
+    open var includeHooligan  = false { didSet { update() }}
+    open var includeOmnibus  = false { didSet { update() }}
+    open var useNumbersForCourtCards  = false
+    open var speedOfToss = 3
+    open var willPassCards = false
+    open var ruleSet = 1
+    open var gameWinningScore = 1
+    open var isAceHigh  = true
+    open var memoryWarning  = true
+    open var makeDeckEvenlyDevidable  = true
+    open var deck  : PlayingCard.BuiltCardDeck? = nil
+    open var gameWinningScoreIndex = 1
+    open var gameType = "Spades"
+    open var achievementForWin = Achievement.StraightSpades
 
     var awarder : IAwarder? = nil
-    public lazy var rules : IAwarder  = SpadesAwarder(gameSettings: self)
+    open lazy var rules : IAwarder  = SpadesAwarder(gameSettings: self)
     
-    public var tossDuration : NSTimeInterval = 0.4
+    open var tossDuration : TimeInterval = 0.4
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)
     {
         self.noOfSuitesInDeck = noOfSuitesInDeck
@@ -582,15 +584,15 @@ public class FakeGameSettings : IGameSettings
         self.hasJokers = hasJokers
         deck  = PlayingCard.BuiltCardDeck(gameSettings: self)
     }
-    public func update()
+    open func update()
     {
         rules  = SpadesAwarder(gameSettings: self)
     }
-    public func random() {}
-    public func newDeck() {}
+    open func random() {}
+    open func newDeck() {}
 
-    public func changeSettings(
-        noOfSuitesInDeck:Int,
+    open func changeSettings(
+        _ noOfSuitesInDeck:Int,
         noOfPlayersAtTable:Int,
         noOfCardsInASuite:Int,
         hasTrumps:Bool,

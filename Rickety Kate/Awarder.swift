@@ -25,15 +25,15 @@ public protocol IAwarder
     var hooligan : PlayingCard? { get }
     var backgroundCards : [PlayingCard] { get }
     var leaderboard : LearderBoard { get }
-    func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
-    func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
+    func scoreFor(_ cards: [PlayingCard], winnersName: String) ->Int
+    func AchievementForWin(_ gameFlavor:GameFlavor) ->  Achievement
    
 }
 
 class AwarderBase
 {
-    var omnibus_ : PlayingCard  { return CardName.Jack.of(PlayingCard.Suite.Diamonds)! }
-    var hooligan_ = 7.of(PlayingCard.Suite.Clubs)
+    var omnibus_ : PlayingCard  { return CardName.jack.of(PlayingCard.Suite.diamonds)! }
+    var hooligan_ = 7.of(PlayingCard.Suite.clubs)
     var omnibus : PlayingCard? = nil
     var hooligan : PlayingCard? = nil
     
@@ -66,7 +66,7 @@ class AwarderBase
     }
   
     // overriden in derived class
-    func countTrumps(cards: [PlayingCard]) -> Int
+    func countTrumps(_ cards: [PlayingCard]) -> Int
     {
         return 0
     }
@@ -90,9 +90,9 @@ class AwarderBase
         return Dictionary<PlayingCard,Int>()
     }
    
-    func scoreFor(cards: [PlayingCard], winnersName: String) ->Int
+    func scoreFor(_ cards: [PlayingCard], winnersName: String) ->Int
     {
-        let ricketyKate = cards.filter{$0 == CardName.Queen.of(PlayingCard.Suite.Spades)}
+        let ricketyKate = cards.filter{$0 == CardName.queen.of(PlayingCard.Suite.spades)}
         
         let noTrumps = countTrumps(cards)
         
@@ -103,23 +103,23 @@ class AwarderBase
         
         if !ricketyKate.isEmpty
         {
-            Bus.sharedInstance.send(GameEvent.WinRicketyKate(winnersName))
+            Bus.sharedInstance.send(GameEvent.winRicketyKate(winnersName))
         }
         else if !omni.isEmpty
         {
-            Bus.sharedInstance.send(GameEvent.WinOmnibus(winnersName))
+            Bus.sharedInstance.send(GameEvent.winOmnibus(winnersName))
         }
         else if !hool.isEmpty
         {
-            Bus.sharedInstance.send(GameEvent.WinHooligan(winnersName))
+            Bus.sharedInstance.send(GameEvent.winHooligan(winnersName))
         }
         else if noTrumps > 0
         {
-            Bus.sharedInstance.send(GameEvent.WinSpades(winnersName,noTrumps))
+            Bus.sharedInstance.send(GameEvent.winSpades(winnersName,noTrumps))
         }
         else
         {
-            Bus.sharedInstance.send(GameEvent.WinTrick(winnersName))
+            Bus.sharedInstance.send(GameEvent.winTrick(winnersName))
         }
         
         return score
@@ -138,28 +138,28 @@ class SpadesAwarder : AwarderBase, IAwarder
     var backgroundCards : [PlayingCard] {
     let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
         .filter { $0.suite == trumpSuite }
-        .sort()
-        .reverse()
+        .sorted()
+        .reversed()
     
     return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
     }
     
     var ricketyKatePoints = 10
-    var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.Spades }
+    var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.spades }
     var trumpSuiteSingular = "Spade".localize
     var trumpSuitePlural : String  { return trumpSuite.description }
 
     var description = "Rickety Kate Spades Rules".localize
     
     
-    func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
+    func AchievementForWin(_ gameFlavor:GameFlavor) ->  Achievement
         {
             switch gameFlavor
             {
-            case .Soccer : return .SoccerSpades
-            case .Hooligan : return .HooliganSpades
-            case .Bussing : return .BussingSpades
-            case .Straight : return .StraightSpades
+            case .soccer : return .SoccerSpades
+            case .hooligan : return .HooliganSpades
+            case .bussing : return .BussingSpades
+            case .straight : return .StraightSpades
             }
     }
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
@@ -168,9 +168,9 @@ class SpadesAwarder : AwarderBase, IAwarder
         let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
         var trumpsSet = Set(trumps)
         
-        result[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
+        result[CardName.queen.of(PlayingCard.Suite.spades)!] = ricketyKatePoints
         
-        trumpsSet.remove(CardName.Queen.of(PlayingCard.Suite.Spades)!)
+        trumpsSet.remove(CardName.queen.of(PlayingCard.Suite.spades)!)
         
         for card in trumpsSet
         {
@@ -181,9 +181,9 @@ class SpadesAwarder : AwarderBase, IAwarder
         return result
     }
     
-    override func countTrumps(cards: [PlayingCard]) -> Int
+    override func countTrumps(_ cards: [PlayingCard]) -> Int
     {
-        return cards.filter {$0.suite == PlayingCard.Suite.Spades && $0 != CardName.Queen.of(PlayingCard.Suite.Spades)}.count
+        return cards.filter {$0.suite == PlayingCard.Suite.spades && $0 != CardName.queen.of(PlayingCard.Suite.spades)}.count
     }
 }
 /// Calculate the score value of the cards
@@ -194,14 +194,14 @@ class HeartsAwarder : AwarderBase, IAwarder
     var shortDescription = "Heart"
     var leaderboard = LearderBoard.Hearts
     
-    func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
+    func AchievementForWin(_ gameFlavor:GameFlavor) ->  Achievement
     {
         switch gameFlavor
         {
-        case .Soccer : return .SoccerHearts
-        case .Hooligan : return .HooliganHearts
-        case .Bussing : return .BussingHearts
-        case .Straight : return .StraightHearts
+        case .soccer : return .SoccerHearts
+        case .hooligan : return .HooliganHearts
+        case .bussing : return .BussingHearts
+        case .straight : return .StraightHearts
         }
     }
             override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
@@ -213,11 +213,11 @@ class HeartsAwarder : AwarderBase, IAwarder
         {
             result[card] = 1
         }
-        result[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
-        result[CardName.Ace.of(PlayingCard.Suite.Hearts)!] = 4
-        result[CardName.King.of(PlayingCard.Suite.Hearts)!] = 3
-        result[CardName.Queen.of(PlayingCard.Suite.Hearts)!] = 2
-        result[CardName.Jack.of(PlayingCard.Suite.Hearts)!] = 5
+        result[CardName.queen.of(PlayingCard.Suite.spades)!] = ricketyKatePoints
+        result[CardName.ace.of(PlayingCard.Suite.hearts)!] = 4
+        result[CardName.king.of(PlayingCard.Suite.hearts)!] = 3
+        result[CardName.queen.of(PlayingCard.Suite.hearts)!] = 2
+        result[CardName.jack.of(PlayingCard.Suite.hearts)!] = 5
       
      
         return result
@@ -226,18 +226,18 @@ class HeartsAwarder : AwarderBase, IAwarder
     var backgroundCards : [PlayingCard] {
         let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
             .filter { $0.suite == trumpSuite }
-            .sort()
-            .reverse()
+            .sorted()
+            .reversed()
         
         return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
     }
     var ricketyKatePoints = 13
-    var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.Hearts }
+    var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.hearts }
     var trumpSuiteSingular = "Heart"
     var trumpSuitePlural : String  { return trumpSuite.description }
     
     
-    override func countTrumps(cards: [PlayingCard]) -> Int
+    override func countTrumps(_ cards: [PlayingCard]) -> Int
     {
         return cards.filter{$0.suite == trumpSuite }.count
     }
@@ -249,53 +249,53 @@ class HeartsAwarder : AwarderBase, IAwarder
 class JacksAwarder : AwarderBase, IAwarder
 {
     var description = "Rickety Kate Jacks Rules".localize
-    override var omnibus_ : PlayingCard { return CardName.Queen.of(PlayingCard.Suite.Diamonds)! }
+    override var omnibus_ : PlayingCard { return CardName.queen.of(PlayingCard.Suite.diamonds)! }
     var shortDescription = "Jack"
     var leaderboard = LearderBoard.Jacks
     
     
-    func AchievementForWin(gameFlavor:GameFlavor) ->  Achievement
+    func AchievementForWin(_ gameFlavor:GameFlavor) ->  Achievement
     {
         switch gameFlavor
         {
-        case .Soccer : return .SoccerJacks
-        case .Hooligan : return .HooliganJacks
-        case .Bussing : return .BussingJacks
-        case .Straight : return .StraightJacks
+        case .soccer : return .SoccerJacks
+        case .hooligan : return .HooliganJacks
+        case .bussing : return .BussingJacks
+        case .straight : return .StraightJacks
         }
     }
     
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
         var result =  Dictionary<PlayingCard,Int>()
-        result[CardName.Queen.of(PlayingCard.Suite.Spades)!] = ricketyKatePoints
+        result[CardName.queen.of(PlayingCard.Suite.spades)!] = ricketyKatePoints
         
         for suite in gameSettings!.deck!.normalSuitesInDeck
         {
-            result[CardName.Jack.of(suite)!] = 2
+            result[CardName.jack.of(suite)!] = 2
         }
 
         return result
     }
     
     var ricketyKatePoints = 10 
-    var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.None }
+    var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.none }
     var trumpSuiteSingular : String  { return "Jack".localize }
     var trumpSuitePlural : String  { return "Jacks".localize }
 
     var backgroundCards : [PlayingCard] {
         var cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
-            .filter { $0.suite == PlayingCard.Suite.Clubs }
-            .sort()
-            .reverse()
+            .filter { $0.suite == PlayingCard.Suite.clubs }
+            .sorted()
+            .reversed()
         
         
         return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
     }
 
-    override func countTrumps(cards: [PlayingCard]) -> Int
+    override func countTrumps(_ cards: [PlayingCard]) -> Int
     {
-        return  cards.filter{$0.value == CardName.Jack.cardValue }.count
+        return  cards.filter{$0.value == CardName.jack.cardValue }.count
     }
     
    }

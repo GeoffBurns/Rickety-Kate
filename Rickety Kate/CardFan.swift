@@ -17,7 +17,7 @@ class CardFan : CardPile
      override var cardAnchorPoint : CGPoint { get { return CardFan.fanAnchorPoint }}
     
     
-    func setup(scene:HasDiscardArea, sideOfTable: SideOfTable, isUp: Bool, sizeOfCards: CardSize = CardSize.Small)
+    func setup(_ scene:HasDiscardArea, sideOfTable: SideOfTable, isUp: Bool, sizeOfCards: CardSize = CardSize.small)
     {
         self.discardAreas = scene
         self.scene = scene as? SKNode
@@ -30,40 +30,40 @@ class CardFan : CardPile
     }
 
     
-    override func append(card:PlayingCard)
+    override func append(_ card:PlayingCard)
     {
         var updatedCards = cards
         updatedCards.append(card)
-        let sortedHand = updatedCards.sort()
-        cards = ( Array(sortedHand.reverse()))
+        let sortedHand = updatedCards.sorted()
+        cards = ( Array(sortedHand.reversed()))
     }
     override func update()
     {
        rearrange()
     }
-    override func positionOfCard(positionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
+    override func positionOfCard(_ positionInSpread:CGFloat, spriteHeight:CGFloat,fullHand:CGFloat) -> CGPoint
     {
         
         let result =  sideOfTable.positionOfCard(positionInSpread, spriteHeight: spriteHeight,
             width: tableSize.width, height: tableSize.height, fullHand:fullHand)
-        return CGPointMake(result.x,result.y + self.bannerHeight)
+        return CGPoint(x: result.x,y: result.y + self.bannerHeight)
     }
-    override func rotationOfCard(positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
+    override func rotationOfCard(_ positionInSpread:CGFloat, fullHand:CGFloat) -> CGFloat
     {
         return direction.rotationOfCard(positionInSpread, fullHand:fullHand)
     }
-    override func appendContentsOf(newCards:[PlayingCard])
+    override func appendContentsOf(_ newCards:[PlayingCard])
     {
         var updatedCards = cards
-        updatedCards.appendContentsOf(newCards)
-        let sortedHand = updatedCards.sort()
-        cards = ( Array(sortedHand.reverse()))
+        updatedCards.append(contentsOf: newCards)
+        let sortedHand = updatedCards.sorted()
+        cards = ( Array(sortedHand.reversed()))
     }
-    override func replaceWithContentsOf(newCards:[PlayingCard])
+    override func replaceWithContentsOf(_ newCards:[PlayingCard])
     {
         let updatedCards = newCards
-        let sortedHand = updatedCards.sort()
-        cards = ( Array(sortedHand.reverse()))
+        let sortedHand = updatedCards.sorted()
+        cards = ( Array(sortedHand.reversed()))
     }
     override func rearrange()
     {
@@ -87,7 +87,7 @@ class CardFan : CardPile
         for card in cards
         {
             rearrangeFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
-            positionInSpread++
+            positionInSpread += 1
             
         }
     }
@@ -113,7 +113,7 @@ class CardFan : CardPile
         for card in cards
         {
             rearrangeFastFor(card,positionInSpread:positionInSpread, fullHand:fullHand)
-            positionInSpread++
+            positionInSpread += 1
             
         }
     }
