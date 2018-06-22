@@ -622,10 +622,10 @@ extension String {
     }
     var card : PlayingCard
     {
-     let index = self.characters.index(self.endIndex, offsetBy: -1)
-     let v = self.substring(to: index)
-     let s = self.substring(from: index)
-     return PlayingCard(suite: s.suite, value: v.cardvalue)
+
+     let v = self.dropLast()
+     let s = self.suffix(1)
+     return PlayingCard(suite: String(s).suite, value: String(v).cardvalue)
     }
 }
     

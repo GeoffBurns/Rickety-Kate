@@ -76,7 +76,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     }
     
     
-    func showAuthenticationViewController() {
+    @objc func showAuthenticationViewController() {
         let gameKitHelper = GameKitHelper.sharedInstance
         
         if let authenticationViewController =
@@ -151,28 +151,28 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         resize(adBannerView);
     }
  //iAd
-    func bannerViewWillLoadAd(_ banner: ADBannerView!) {
+    func bannerViewWillLoadAd(_ banner: ADBannerView) {
          NSLog("banner will load");
     }
     
-    func bannerViewDidLoadAd(_ banner: ADBannerView!) {
+    func bannerViewDidLoadAd(_ banner: ADBannerView) {
        adBannerView.isHidden = false
        resize(banner);
          NSLog("banner loaded");
     }
     
-    func bannerViewActionDidFinish(_ banner: ADBannerView!) {
+    func bannerViewActionDidFinish(_ banner: ADBannerView) {
         
       //   resize(banner);
          NSLog("banner Action Did Finish");
     }
     
-    func bannerViewActionShouldBegin(_ banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
+    func bannerViewActionShouldBegin(_ banner: ADBannerView, willLeaveApplication willLeave: Bool) -> Bool {
         
         return true 
     }
     
-    func bannerView(_ banner: ADBannerView!, didFailToReceiveAdWithError error: Error!) {
+    func bannerView(_ banner: ADBannerView, didFailToReceiveAdWithError error: Error) {
        adBannerView.isHidden = true
 
         let status = banner.isBannerLoaded ? "error but banner loaded" :"banner unloaded"

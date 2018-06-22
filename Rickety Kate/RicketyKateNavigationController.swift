@@ -19,7 +19,7 @@ class RicketyKateNavigationController: UINavigationController {
         super.viewDidLoad()
     }
     
-    func showAuthenticationViewController() {
+    @objc func showAuthenticationViewController() {
         let gameKitHelper = GameKitHelper.sharedInstance
         
         if let authenticationViewController =

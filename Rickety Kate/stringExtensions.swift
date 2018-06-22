@@ -152,6 +152,15 @@ open class ParameterizedAlert : ParameterizedString
 
 extension String
 {
+    
+    public func truncated(_ length:Int) -> String
+    {
+    if self.lengthOfBytes(using: String.Encoding.utf8) > length
+       {
+       return String(self.prefix(length))
+       }
+        return self
+    }
     public var with : ParameterizedString
     {
        return ParameterizedString(format: self, arguements: [])

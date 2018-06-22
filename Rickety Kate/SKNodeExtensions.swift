@@ -19,7 +19,7 @@ extension SKNode {
      
      :returns: The newly-created `NSTimer` instance.
      */
-    func schedule(delay: TimeInterval, handler: @escaping () -> Void)  {
+   func schedule(delay: TimeInterval, handler: @escaping () -> Void)  {
         self.run(SKAction.sequence([SKAction.wait(forDuration: delay), SKAction.run({
             handler()
         })]))
@@ -38,7 +38,7 @@ extension SKNode {
             handler()
         })])))
     }
-    
+ 
     func addSafelyTo(_ newParent:SKNode)
     {
      if self.parent == nil

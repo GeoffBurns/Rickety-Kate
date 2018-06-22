@@ -180,21 +180,15 @@ func endPlayersTurn(_ playerWithTurn:CardPlayer)
           let firstNo = trick.player.playerNo
           if firstNo == nextPlayer.playerNo
             {
-            scene!.schedule(delay: cardTossDuration*1.1) { [weak self] timer in
-                if let s = self
-                {
-                s.trickWon()
-                }
+            scene!.schedule(delay: cardTossDuration*1.1) {
+                self.trickWon()
                }
             
             } else {
             
            
-               scene!.schedule(delay: cardTossDuration*1.1) { [weak self] timer in
-                if let s = self
-                {
-                 s.playTrick(nextPlayer)
-                }
+               scene!.schedule(delay: cardTossDuration*1.1) {
+                 self.playTrick(nextPlayer)
                }
             }
         } else {
@@ -212,7 +206,7 @@ func endPlayersTurn(_ playerWithTurn:CardPlayer)
             self.startPlayerNo = 0
         }
 
-        Scorer.sharedInstance.hasShotTheMoon()
+        _ = Scorer.sharedInstance.hasShotTheMoon()
         Scorer.sharedInstance.endHand() 
 
         Scorer.sharedInstance.hasGameBeenWon()

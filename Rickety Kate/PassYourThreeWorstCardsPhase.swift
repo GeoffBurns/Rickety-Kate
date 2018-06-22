@@ -126,7 +126,7 @@ var isCurrentlyActive = true
         {
         for card in compPlayer.passCards()
           {
-          passCard(i, passedCard:card)
+          _ = passCard(i, passedCard:card)
           }
         }
       }

@@ -59,11 +59,9 @@ open class GameKitHelper: NSObject, GKGameCenterControllerDelegate, GKTurnBasedM
             let localPlayer = GKLocalPlayer.localPlayer()
             if let name = localPlayer.alias
             {
-                if name.lengthOfBytes(using: String.Encoding.utf8) > 18
-                {
-                    let index: String.Index = name.characters.index(name.startIndex, offsetBy: 18)
-                    return name.substring(to: index)
-                }
+             
+                    return name.truncated(18)
+                
             }
             return localPlayer.alias
     }

@@ -57,14 +57,16 @@ open class CardPile : PositionedOnTable
     
     func transferFrom(_ pile:CardPile)
     {
-        pile.clear()
+    
         appendContentsOf(pile.cards)
+        pile.clear()
         
     }
     func replaceFrom(_ pile:CardPile)
     {
-        pile.clear()
+      
         replaceWithContentsOf(pile.cards)
+          pile.clear()
        
     }
     
@@ -79,11 +81,11 @@ open class CardPile : PositionedOnTable
     {
        if isBackground
        {
-        discardAreas?.discardWhitePile.replaceFrom(self)
+        discardAreas?.discardWhitePile.transferFrom(self)
         }
         else
        {
-        discardAreas?.discardPile.replaceFrom(self)
+        discardAreas?.discardPile.transferFrom(self)
         }
     }
     func append(_ card:PlayingCard)
