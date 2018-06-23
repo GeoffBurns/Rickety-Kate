@@ -24,6 +24,23 @@ public enum SideOfTable:Int
     case leftLow
     case leftHigh
  
+    fileprivate func heightOfFarHand(_ height: CGFloat, _ top: CGFloat) -> CGFloat {
+        if DeviceSettings.isPhone
+          {
+            return height * top + height * -0.03
+        }
+  
+        if DeviceSettings.isPortrait
+        {
+            
+            return height * top + height * (height > 1200 /* iPadPro */ ? 0.018 : 0.033)
+        }
+        
+      
+            return height * top + height * (height > 870 /* iPadPro */ ?  -0.06 : -0.03 )
+
+    }
+    
     func positionOfCard(_ positionInSpread: CGFloat, spriteHeight: CGFloat, width: CGFloat, height: CGFloat, fullHand: CGFloat = CardPile.defaultSpread) -> CGPoint
     {
         var startheight = CGFloat(0.0)
@@ -37,23 +54,25 @@ public enum SideOfTable:Int
         {
             // Player One
         case .bottom:
+       
+            startheight = height * (DeviceSettings.isPortrait ? -0.022 : -0.02)
             let heightfactor : CGFloat = DeviceSettings.isPad ? 0.92 : 1.05
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread, y: startheight-spriteHeight * heightfactor )
             // Computer Player
         case .right:
-            startWidth =  width*0.97
+            startWidth =  width*0.96
             startheight = height * 0.4
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             // Computer Player        
         case .rightLow:
-            startWidth = width*0.97
+            startWidth = width*0.96
             
             verticalSpacing = height * 0.12 / fullHand
             startheight = height * 0.3
             return CGPoint(x: startWidth+spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             // Computer Player        
         case .rightHigh:
-            startWidth = width*0.97
+            startWidth = width*0.96
             
             verticalSpacing = height * 0.12 / fullHand
             startheight = height * 0.65
@@ -62,21 +81,23 @@ public enum SideOfTable:Int
         case .top:
             hortizonalSpacing = -width * (noOfPlayers == 6 ? 0.06 : 0.2) / fullHand
             startWidth = width * (noOfPlayers == 6 ? 0.5 : 0.6)
-            startheight = height * top
+            startheight = heightOfFarHand(height, top)
             
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .topMidLeft:
             hortizonalSpacing = -width * (noOfPlayers == 6  ? 0.06 : 0.14) / fullHand
             startWidth = width * (noOfPlayers == 6 ? 0.20 : 0.33)
-            startheight = height * top
+
+            startheight = heightOfFarHand(height, top)
 
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
         case .topMidRight:
             hortizonalSpacing = -width * (noOfPlayers == 6 ? 0.06 : 0.14) / fullHand
             startWidth = width * (noOfPlayers == 6 ? 0.84 : 0.75)
-            startheight = height * top
+    
+            startheight = heightOfFarHand(height, top)
 
             return CGPoint(x: startWidth+hortizonalSpacing*positionInSpread,y: startheight+spriteHeight*0.65)
             // Computer Player
@@ -84,17 +105,19 @@ public enum SideOfTable:Int
             verticalSpacing = -verticalSpacing
             startheight = height * 0.6
             startWidth =
-                width*0.03
+                width*0.04
             return CGPoint(x: startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
         case .leftLow:
                 verticalSpacing = -height * 0.12 / fullHand
                 startheight = height * 0.4
-                startWidth =   width*0.03
+                startWidth =   width*0.04
                 return CGPoint(x: startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
         case .leftHigh:
                     verticalSpacing = -height * 0.12 / fullHand
                     startheight = height * 0.75
-                    startWidth =  DeviceSettings.isPad ?width*0.03 : 0.0
+                    
+                    startWidth =   width*0.04
+                 //   startWidth =  DeviceSettings.isPad ? width*0.03 : 0.01
                     return CGPoint(x: startWidth - spriteHeight*1.4 ,y: startheight+verticalSpacing*positionInSpread )
             
             // the trick pile

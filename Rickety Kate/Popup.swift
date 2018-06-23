@@ -108,17 +108,29 @@ class MultiPagePopup : Popup,  Resizable {
     
     func arrangeLayoutFor(_ size:CGSize, bannerHeight:CGFloat)
     {
-        
         adHeight = bannerHeight
         let top : CGFloat = size.isPortrait ? 0.97 : 0.99
-        moreButton.position = CGPoint(x:size.width,y:bannerHeight)
-        backButton.position = CGPoint(x:0.0,y:bannerHeight)
-        exitButton.position = CGPoint(x:size.width,y:size.height * top + bannerHeight)
-        
+        let bottomRight = DeviceSettings.isPhoneX
+            ? CGPoint(x:size.width-10.0,y:bannerHeight+5.0)
+            : CGPoint(x:size.width,y:bannerHeight)
+        let bottomLeft =  DeviceSettings.isPhoneX
+            ? CGPoint(x:10.0,y:bannerHeight+5.0)
+            : CGPoint(x:0.0,y:bannerHeight)
+    
+        let topRight = DeviceSettings.isPhoneX
+            ? CGPoint(x:size.width-10.0,y:size.height * top + bannerHeight)
+            : CGPoint(x:size.width,y:size.height * top + bannerHeight)
+        let topLeft = DeviceSettings.isPhoneX
+            ? CGPoint(x:10.0,y:size.height * top + bannerHeight)
+            : CGPoint(x:0.0,y:size.height * top + bannerHeight)
+        moreButton.position = bottomRight
+        backButton.position = bottomLeft
+        exitButton.position = topRight
+
    
         for tabButton in tabButtons
         {
-            tabButton.position = CGPoint(x:0.0,y:size.height * top + bannerHeight)
+            tabButton.position = topLeft
         }
     }
     
@@ -155,7 +167,9 @@ class MultiPagePopup : Popup,  Resizable {
        
         exitButton.addSafelyTo(self)
         
-        
+        let topLeft = DeviceSettings.isPhoneX
+            ? CGPoint(x:10.0,y:self.frame.size.height)
+            : CGPoint(x:0.0,y:self.frame.size.height)
         if tabButtons.count == 0
          {
           for (i,tabName) in tabNames.enumerated()
@@ -164,7 +178,7 @@ class MultiPagePopup : Popup,  Resizable {
             let tabButton = SKSpriteNode(imageNamed: imageName)
             tabButton.setScale(ButtonSize.small.scale)
             tabButton.anchorPoint = CGPoint(x: CGFloat(-i), y: 1.0)
-            tabButton.position = CGPoint(x:0.0,y:self.frame.size.height)
+            tabButton.position = topLeft
             
             tabButton.name = tabName
             

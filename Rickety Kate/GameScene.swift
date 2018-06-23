@@ -78,7 +78,6 @@ extension HasDealersArea
             dealtPile.speed = 0.1
             dealtPiles.append(dealtPile)
         }
-        
     }
     
     func deal(_ hands:[[PlayingCard]])
@@ -142,11 +141,10 @@ class CardGameScene : CardScene, HasDealersArea {
         }
         table.trickFan.clear()
         discardPile.clear()
-    
+        discardWhitePile.clear()
+        deal(cards)
     scene?.schedule(delay:  GameSettings.sharedInstance.tossDuration*1.2) { whenDone(self.dealtPiles) }
-    
     }
-    
 }
 
 protocol HasDraggableCards : class
@@ -217,10 +215,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     let height = size.height -  bannerHeight
       
     let newSize = CGSize(width: width, height: height)
- 
+    let topLeft = DeviceSettings.isPhoneX  ? CGPoint(x:20.0,y:size.height-20.0 ) : CGPoint(x:0.0,y:size.height )
+    let topRight = DeviceSettings.isPhoneX  ? CGPoint(x:size.width-20.0,y:size.height-20.0 ) : CGPoint(x:size.width,y:size.height)
     if let rulesButton = self.childNode(withName: "Rules1")
           {
-          rulesButton.position = CGPoint(x:0.0,y:size.height )
+          rulesButton.position = topLeft
           }
     if table.isInDemoMode
         {
@@ -230,12 +229,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             
         if let optionsButton = self.childNode(withName: "Options1")
           {
-            optionsButton.position = CGPoint(x:size.width,y:size.height)
+            optionsButton.position = topRight
           }
         } else {
             if  let exitButton = self.childNode(withName: "Exit")
             {
-                exitButton.position = CGPoint(x:size.width,y:size.height )
+                exitButton.position = topRight
             }
         }
    
@@ -706,7 +705,6 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                                Bus.sharedInstance.send(gameEvent)
                           
                           }
-                    
                          }
                 } else {
                     Bus.sharedInstance.send(GameEvent.waitYourTurn)

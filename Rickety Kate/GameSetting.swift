@@ -120,6 +120,15 @@ open class DeviceSettings
         let size = UIScreen.main.applicationFrame
         return size.width < size.height
     }
+    static var isPhoneX : Bool
+    {
+        return UIScreen.main.nativeBounds.height == 2436
+    }
+    static var isPadPro : Bool
+    {
+        let size = UIScreen.main.applicationFrame
+        return size.width > 1200 || size.height > 1200
+    }
     static var isBigPhone : Bool
     {
         return   UIScreen.main.nativeScale > 2.5

@@ -140,10 +140,18 @@ class OptionScreen: MultiPagePopup {
         
         if DeviceSettings.isBigDevice {
             if DeviceSettings.isPortrait {
-                
+                if DeviceSettings.isPadPro
+                {
                 noOfItemsOnPage = 7
                 separationOfItems =  CGFloat(0.12)
                 startHeight = CGFloat(0.87)
+                }
+                else
+                {
+                    noOfItemsOnPage = 6
+                    separationOfItems =  CGFloat(0.14)
+                    startHeight = CGFloat(0.77)
+                }
             } else {
                 noOfItemsOnPage = 5
                 separationOfItems =  CGFloat(0.15)

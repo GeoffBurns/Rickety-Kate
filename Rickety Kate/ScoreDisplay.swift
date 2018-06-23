@@ -17,11 +17,9 @@ class ScoreDisplay
     var scoreLabel = [SKLabelNode]()
     var players = [CardPlayer]()
     
-
     static let sharedInstance = ScoreDisplay()
     fileprivate init() { }
     
-
     static func register(_ scene: SKNode, players: [CardPlayer])
     {
         ScoreDisplay.sharedInstance.setupScoreArea(scene, players: players)
@@ -29,8 +27,11 @@ class ScoreDisplay
     
     static func scorePosition(_ side:SideOfTable, size: CGSize, bannerHeight:CGFloat) -> CGPoint
     {
-    let top : CGFloat =  DeviceSettings.isPortrait ? 0.85 : 0.87
-    let bottom : CGFloat =  DeviceSettings.isPortrait ? 0.18 : 0.27
+    let top : CGFloat =  DeviceSettings.isPortrait ? 0.90 : 0.87
+        let bottom : CGFloat =  DeviceSettings.isPortrait ? 0.12 :
+                                    (DeviceSettings.isPhone
+                                        ? (DeviceSettings.isPhoneX ? 0.25 : 0.19)
+                                        : 0.22)
         
     let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
     switch side
@@ -116,11 +117,8 @@ class ScoreDisplay
                     {
                        return  "%@ score is %d".with.sayTo(name).using(score).localize
                     }
-                    
                     return "%@ Score %d n %d %@".with.sayTo(name).using(score).pluralizeUnit(wins, unit: "Win").localize
-    
             }
-
             return l
         }
     
