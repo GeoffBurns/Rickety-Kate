@@ -96,7 +96,7 @@ extension Sequence where Iterator.Element == TrickPlay {
 
 extension Sequence where Iterator.Element == PlayingCard {
     public var score : Int {
-        return self.reduce(0) { $0 + ( Game.settings.rules.cardScores[$1] ?? 0) }
+        return self.reduce(0) { $0 + ( Game.rules.cardScores[$1] ?? 0) }
     }
     var cardsFollowingSuite : [PlayingCard]
         {
@@ -142,9 +142,9 @@ open class GameStateBase
     var trickFan = CardFan(name: CardPileType.trick.description)
     var tricksPile = [TrickPlay]() { didSet { trickFan.cards = tricksPile.map { return $0.playedCard }}}
     var gameTracker : GameProgressTracker
-    var gameSettings:IGameSettings
+    var gameSettings:ICardGameSettings
     
-    public init(gameSettings:IGameSettings = Game.settings)
+    public init(gameSettings:IGameSettings = Game.moreSettings)
     {
         self.gameSettings = gameSettings
         self.gameTracker = GameProgressTracker(gameSettings: gameSettings)
@@ -153,7 +153,7 @@ open class GameStateBase
         return tricksPile.count
     }
     open var highestCardInTrick : PlayingCard { return cardsFollowingSuite.max()! }
-    open var canLeadTrumps :Bool { return gameTracker.trumpsHaveBeenBroken || Game.settings.allowBreakingTrumps }
+    open var canLeadTrumps :Bool { return gameTracker.trumpsHaveBeenBroken || Game.moreSettings.allowBreakingTrumps }
     open func arePlayerWithoutCardsIn(_ suite:PlayingCard.Suite) -> Bool
     {
         return !gameTracker.notFollowing[suite.rawValue].isEmpty
@@ -197,12 +197,12 @@ open class GameStateBase
 
     open var penaltyCards : Set<PlayingCard> {
         return Set<PlayingCard>(gameTracker.unplayedScoringCards.filter {
-            (Game.settings.rules.cardScores[$0] ?? 0) > 0
+            (Game.rules.cardScores[$0] ?? 0) > 0
         })}
     
     open var bonusCards : Set<PlayingCard> {
         return Set<PlayingCard>(gameTracker.unplayedScoringCards.filter {
-            (Game.settings.rules.cardScores[$0] ?? 0) < 0
+            (Game.rules.cardScores[$0] ?? 0) < 0
         })}
 
 }
@@ -229,7 +229,7 @@ open var isLastPlayer : Bool {
     //////////
     // constructor
     //////////
-    public init(noPlayers:Int,gameSettings:IGameSettings = Game.settings)
+    public init(noPlayers:Int,gameSettings:IGameSettings = Game.moreSettings)
     {
     noOfPlayers = noPlayers
     super.init(gameSettings: gameSettings)

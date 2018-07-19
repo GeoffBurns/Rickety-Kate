@@ -12,6 +12,7 @@
 		AC147CE01EF7E06400A4E417 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC147CDF1EF7E06400A4E417 /* ReactiveSwift.framework */; };
 		AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF69C1BB4238300001024 /* buttons.atlas */; };
 		AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */; };
+		AC1D447F210061D4008E80B3 /* GameSettingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */; };
 		AC209B841C2F443500B005BF /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC209B821C2F443500B005BF /* Achievements.swift */; };
 		AC209B851C2F443500B005BF /* GameKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC209B831C2F443500B005BF /* GameKitHelper.swift */; };
 		AC252A451BA7D4BA00C0121A /* SIdeOfTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */; };
@@ -125,6 +126,7 @@
 		AC147CDF1EF7E06400A4E417 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		AC1CF69C1BB4238300001024 /* buttons.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = buttons.atlas; sourceTree = "<group>"; };
 		AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Extra.atlas; sourceTree = "<group>"; };
+		AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingExtensions.swift; sourceTree = "<group>"; };
 		AC209B821C2F443500B005BF /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Achievements.swift; path = GameKit/Achievements.swift; sourceTree = "<group>"; };
 		AC209B831C2F443500B005BF /* GameKitHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameKitHelper.swift; path = GameKit/GameKitHelper.swift; sourceTree = "<group>"; };
 		AC252A441BA7D4BA00C0121A /* SIdeOfTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIdeOfTable.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC62B69C1BA1564800B0EDAE /* GameScene.swift */,
 				AC7C9FC61BB380A00086AC02 /* GameSetting.swift */,
+				AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */,
 				AC3BB19B20FA1023005B5B29 /* IAwarder.swift */,
 				ACE6DFB51BAA32AB005B5424 /* GameState.swift */,
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
@@ -615,6 +618,7 @@
 				AC209B851C2F443500B005BF /* GameKitHelper.swift in Sources */,
 				AC44D7D11BB203AA00DA92EC /* CardPile.swift in Sources */,
 				AC3BB19020FA064A005B5B29 /* RicketyKateGameScene.swift in Sources */,
+				AC1D447F210061D4008E80B3 /* GameSettingExtensions.swift in Sources */,
 				ACE6DFBB1BAA32AB005B5424 /* TrickPlayingStrategy.swift in Sources */,
 				AC7C9FCC1BB3850A0086AC02 /* CardState.swift in Sources */,
 				AC7C9FC81BB380A00086AC02 /* CardFan.swift in Sources */,

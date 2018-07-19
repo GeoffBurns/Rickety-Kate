@@ -67,6 +67,37 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case .none : return ""
                 }
         }
+        var isLight : Bool
+        {
+            switch(self)
+            {
+            case .hearts: return true
+            case .diamonds: return true
+            case .suns: return true
+            case .stars : return true
+            default : return false
+            }
+        }
+        var isDark : Bool
+        {
+            switch(self)
+            {
+            case .spades: return true
+            case .clubs: return true
+            case .anchors: return true
+            case .picks : return true
+            default : return false
+            }
+        }
+        var isWild : Bool
+        {
+            switch(self)
+            {
+            case .trumps: return true
+            case .jokers: return true
+            default : return false
+            }
+        }
         var singular : String
             // Used to help create imagename for a card
             {
@@ -260,6 +291,21 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             default: return standardValues
             }
         }
+        static func courtLiteValuesFor(_ noOfCardsInASuite:Int = 13) -> [CardValue]
+        {
+            switch noOfCardsInASuite
+            {
+            case 10: return values10CardInASuiteAlt
+            case 11: return values11CardInASuiteAlt
+            case 12: return values12CardInASuiteAlt
+            case 14: return values14CardInASuiteAlt
+            case 15: return values15CardInASuite
+            case 16: return values16CardInASuite
+            case 17: return values17CardInASuite
+            case 18: return values18CardInASuite
+            default: return standardValues
+            }
+        }
         static func cardsUpTo(_ noOfCards:Int = 10) -> [CardValue]
         {
             return [ace] + (2...noOfCards).map { pip($0) }
@@ -278,6 +324,18 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         static var values12CardInASuite : [CardValue] {
             
             return  cardsUpTo(9) + ["J","Q","K"].map { courtCard($0) }
+        }
+        static var values10CardInASuiteAlt : [CardValue] {
+            
+            return  cardsUpTo(10)
+        }
+        static var values11CardInASuiteAlt : [CardValue] {
+            
+            return  cardsUpTo(11)
+        }
+        static var values12CardInASuiteAlt : [CardValue] {
+            
+            return  cardsUpTo(10) + ["Q","K"].map { courtCard($0) }
         }
         static var values14CardInASuiteAlt : [CardValue] {
             return cardsUpTo(11) +  ["J","Q","K"].map { courtCard($0) }
@@ -443,7 +501,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     }
     open class BuiltCardDeck : DeckBase
     {
-        var gameSettings:IGameSettings? = nil
+        var gameSettings:ICardGameSettings? = nil
         open var setOfSuitesInDeck = Set<PlayingCard.Suite>()
         open var suitesInDeck : [PlayingCard.Suite] = []
         open var normalSuitesInDeck : [PlayingCard.Suite] = []
@@ -461,7 +519,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                  }
             return result
         }
-        public init(gameSettings:IGameSettings )
+        public init(gameSettings:ICardGameSettings )
         {
             self.gameSettings = gameSettings
             normalSuitesInDeck = Array(PlayingCard.Suite.normalSuites[0..<gameSettings.noOfSuitesInDeck])

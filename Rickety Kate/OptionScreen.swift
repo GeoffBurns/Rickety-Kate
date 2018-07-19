@@ -52,11 +52,11 @@ class OptionScreen: MultiPagePopup {
         self.hasJokers.current = Game.settings.hasJokers
         self.willPassCards.current = Game.settings.willPassCards
         self.speedOfToss.current = Game.settings.speedOfToss
-        self.gameWinningScore.current = Game.settings.gameWinningScoreIndex
-        self.ruleSet.current = Game.settings.ruleSet
-        self.allowBreakingTrumps.current = Game.settings.allowBreakingTrumps
-        self.includeHooligan.current = Game.settings.includeHooligan
-        self.includeOmnibus.current = Game.settings.includeOmnibus
+        self.gameWinningScore.current = Game.moreSettings.gameWinningScoreIndex
+        self.ruleSet.current = Game.moreSettings.ruleSet
+        self.allowBreakingTrumps.current = Game.moreSettings.allowBreakingTrumps
+        self.includeHooligan.current = Game.moreSettings.includeHooligan
+        self.includeOmnibus.current = Game.moreSettings.includeOmnibus
         self.useNumbersForCourtCards.current = Game.settings.useNumbersForCourtCards
         self.showTips.current = Game.settings.showTips
         }
@@ -69,7 +69,7 @@ class OptionScreen: MultiPagePopup {
     
     override func onExit()
     {
-        if Game.settings.changeSettings(
+        if Game.moreSettings.changeSettings(
             noOfSuites.current,
             noOfPlayersAtTable: noOfPlayers.current,
             noOfCardsInASuite: noOfCardsInASuite.current,

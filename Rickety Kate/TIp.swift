@@ -37,7 +37,7 @@ public enum Tip
             case .tap_cog_symbol_to_change_rules : return "Tap_cog_symbol_to_change_rules".localize
             case .drag_a_card_to_the_center_to_play : return "Drag_a_card_to_the_center_to_play".localize
             case .you_need_to_follow_suite_if_you_can : return "You_need_to_follow_suite_if_you_can".localize
-            case .try_to_avoid_winning_penalty_cards : return "Try_to_avoid_winning__".localizeWith(Game.settings.rules.trumpSuitePlural)
+            case .try_to_avoid_winning_penalty_cards : return "Try_to_avoid_winning__".localizeWith(Game.rules.trumpSuitePlural)
             case .the_lowest_score_win : return "The_lowest_score_wins".localize
             case .tap_triangle_to_start_game : return "Tap_triangle_to_start_game".localize
             case .tap_dice_to_start_game_with_random_rules : return "Tap_dice_to_start_game_with_random_rules".localize

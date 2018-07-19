@@ -54,7 +54,11 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
                 NSNotification.Name(rawValue: PresentAuthenticationViewController), object: nil)
         
         GameKitHelper.sharedInstance.authenticateLocalPlayer()
+
         
+        Game.settings.isFoolATrump = false
+        Game.settings.isAceHigh =  true
+        Game.settings.noOfSuitesDefault = 5
         // Scene should be shown in fullscreen mode
         let scene = RicketyKateGameScene(size: size)
         scene.tableSize = size

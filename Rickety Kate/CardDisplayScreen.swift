@@ -30,7 +30,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     // var orderedGroups : [(Int,ScorePairCollection)] { // swift 2.2
     var orderedGroups : [(key: Int, value:ScorePairCollection)] {
         
-        let pointsGroups = Game.settings.rules.cardScores.categorise {$0.1}
+        let pointsGroups = Game.rules.cardScores.categorise {$0.1}
         return pointsGroups.sorted { $0.0 > $1.0 }
     }
     

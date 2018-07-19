@@ -270,7 +270,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     
     var trickBackgroundCards : [PlayingCard]
     {
-        return Game.settings.rules.backgroundCards
+        return Game.rules.backgroundCards
     }
     var threeWorstBackgroundCards : [PlayingCard]
     {
@@ -379,7 +379,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             /// play button
             case "Random" :
                 touchedNode.texture = SKTexture(imageNamed: "Random2")
-                Game.settings.random()
+                Game.moreSettings.random()
                 resetSceneWithInteractiveTable()
                 return true
             default : break

@@ -57,7 +57,7 @@ public enum GameEvent : Equatable
                 let start = "%@ won %d %@"
                     .with
                     .sayTo(name)
-                    .pluralize(noOfSpades,arguements: Game.settings.rules.shortDescription)
+                    .pluralize(noOfSpades,arguements: Game.moreSettings.rules.shortDescription)
                     .localize
                 return  start + "\n" + "Bad Luck".localize + "."
             case .turnOverYourCards :
@@ -76,13 +76,13 @@ public enum GameEvent : Equatable
             case .somethingHasGoneWrong :
                 return nil
             case .newGame :
-                return "%@ Game On".localizeWith(Game.settings.gameType)
+                return "%@ Game On".localizeWith(Game.moreSettings.gameType)
             case .startHand :
                 return nil
             case .cardPlayed :
                 return nil
             case .trumpsHaveNotBeenBroken :
-                return "Can not Lead with a %@".localizeWith(Game.settings.rules.trumpSuiteSingular)
+                return "Can not Lead with a %@".localizeWith(Game.moreSettings.rules.trumpSuiteSingular)
             case .cardDoesNotFollowSuite( let suite )  :
                 return "Card Does Not Follow Suite".localize + "\n" + "Play a %@".localizeWith(suite.singular)
             case .waitYourTurn :
@@ -92,7 +92,7 @@ public enum GameEvent : Equatable
                 {
                 case 3 :
                   //  return "Discard Your".localize + "\n" + "Three Worst Cards".localize
-                    return Game.settings.gameType + "\n" + "Discard 3 cards".localize
+                    return Game.moreSettings.gameType + "\n" + "Discard 3 cards".localize
                 case 1 :
                     return "Discard one more card".localize + "\n" + "Your worst card".localize
                 default :

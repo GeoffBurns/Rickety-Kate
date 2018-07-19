@@ -62,7 +62,7 @@ open class RandomStrategy : TrickPlayingStrategy
         
         if !gameState.canLeadTrumps && gameState.leadingSuite == nil
         {
-            let cards = hand.cardsNotIn(Game.settings.rules.trumpSuite)
+            let cards = hand.cardsNotIn(Game.rules.trumpSuite)
             
             if let card = cards.randomItem {
                 return card
@@ -91,7 +91,7 @@ open class EarlyGameLeadingStrategy : TrickPlayingStrategy
             return nil
         }
         let suites = Game.deck.setOfSuitesInDeck
-        let earlyLeadSuites = Array(suites.subtracting([PlayingCard.Suite.jokers,Game.settings.rules.trumpSuite]))
+        let earlyLeadSuites = Array(suites.subtracting([PlayingCard.Suite.jokers,Game.rules.trumpSuite]))
         
         
         var maxCard : PlayingCard? = nil
@@ -199,7 +199,7 @@ open class EarlyGameFollowingStrategy : TrickPlayingStrategy
         {
             
             // you don't want to win if its spades go to late game strategy
-            if gameState.leadingSuite == Game.settings.rules.trumpSuite
+            if gameState.leadingSuite == Game.rules.trumpSuite
             {
                 return nil
             }
@@ -235,7 +235,7 @@ open class LateGameLeadingStrategy : TrickPlayingStrategy
             {
                 $0.suite != PlayingCard.Suite.jokers &&
                     ( gameState.canLeadTrumps ||
-                        $0.suite != Game.settings.rules.trumpSuite)
+                        $0.suite != Game.rules.trumpSuite)
             }
             .sorted {$0.value < $1.value}
         
@@ -270,7 +270,7 @@ open class PerfectKnowledgeStrategy : TrickPlayingStrategy
             
             let bonus = Array(gameState.bonusCardFor(suite).filter { $0.value > highcard.value })
             if let card = bonus.first,
-                let bonusScore =  Game.settings.rules.cardScores[card], gameState.scoreOfPile + bonusScore < 0
+                let bonusScore =  Game.rules.cardScores[card], gameState.scoreOfPile + bonusScore < 0
             {
                 return card
             }
@@ -346,7 +346,7 @@ open class LateGameFollowingStrategy : TrickPlayingStrategy
                 }
                 else
                 {
-                    if suite == Game.settings.rules.trumpSuite
+                    if suite == Game.rules.trumpSuite
                     {
                         // don't give yourself rickety kate
                         let notRicketyKate = cardsInSuite.filter { $0.isntRicketyKate }
@@ -452,8 +452,8 @@ open class NonFollowingStrategy : TrickPlayingStrategy
             // if not following suit get rid of your highest scoring card
             let orderedSpades = penaltyCardsInHand
                     .sorted {
-                        let score0 = Game.settings.rules.cardScores[$0]
-                        let score1 = Game.settings.rules.cardScores[$1]
+                        let score0 = Game.moreSettings.rules.cardScores[$0]
+                        let score1 = Game.moreSettings.rules.cardScores[$1]
                         
                         return score0 > score1 ||
                             ( score0 == score1 && $0.value > $1.value )
