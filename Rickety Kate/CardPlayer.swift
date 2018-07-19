@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import ReactiveCocoa
 import ReactiveSwift
 
 
@@ -95,7 +94,7 @@ open class CardPlayer :CardHolderBase , Equatable, Hashable
     
     static func gamePlayers(_ noOfPlayers:Int) -> [CardPlayer]
     {
-        var noOfHumanPlayers = GameSettings.sharedInstance.noOfHumanPlayers
+        var noOfHumanPlayers = Game.settings.noOfHumanPlayers
         noOfHumanPlayers = noOfHumanPlayers < 1 ? 1 : noOfHumanPlayers
         noOfHumanPlayers = noOfHumanPlayers > noOfPlayers ? noOfPlayers : noOfHumanPlayers
         
@@ -132,6 +131,8 @@ open class CardPlayer :CardHolderBase , Equatable, Hashable
             
             self.sideOfTable = sideOfTable
             _hand.sideOfTable = sideOfTable
+            _hand.direction = sideOfTable.direction
+            
             let isPortrait = size.width < size.height
             let isUp = sideOfTable == SideOfTable.bottom
             _hand.sizeOfCards = isUp ? (isPortrait ? CardSize.medium :CardSize.big) : CardSize.small
@@ -168,50 +169,7 @@ open class HumanPlayer :CardPlayer
     }
 }
 
-open class ComputerPlayer :CardPlayer
-{
-    //////////////////////////////////////
-    /// Variables
-    //////////////////////////////////////
-    var strategies = [TrickPlayingStrategy]()
-    var passingStrategy = HighestCardsPassingStrategy.sharedInstance
-    
-    /////////////////////////////////
-    /// Constructors and setup
-    /////////////////////////////////
-    public init(name s: String,margin:Int) {
-        super.init(name: s)
-        strategies  = [
-            PerfectKnowledgeStrategy.sharedInstance,
-            NonFollowingStrategy.sharedInstance,
-            EarlyGameLeadingStrategy(margin:margin),
-            EarlyGameFollowingStrategy(margin:margin),
-            LateGameLeadingStrategy.sharedInstance,
-            LateGameFollowingStrategy.sharedInstance]
-    }
-    
-    ///////////////////////////////////
-    /// Instance Methods
-    ///////////////////////////////////
-    open func playCard(_ gameState:GameState) -> PlayingCard?
-    {
-        for strategy in strategies
-        {
-            if let card : PlayingCard = strategy.chooseCard( self, gameState:gameState)
-            {
-                return card
-            }
-        }
-        return RandomStrategy.sharedInstance.chooseCard(self,gameState:gameState)
-    }
-    
-    open func passCards() -> [PlayingCard]
-    {
-        return passingStrategy.chooseWorstCards(self)
-    }
 
-    
-}
 
 open class FakeCardHolder : CardHolderBase
 {

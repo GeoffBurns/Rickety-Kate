@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import ReactiveCocoa
 import ReactiveSwift
 
 struct AssociationKey {

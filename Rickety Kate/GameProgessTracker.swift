@@ -18,7 +18,7 @@ open class GameProgressTracker
     var trumpsHaveBeenBroken = false
     var gameSettings:IGameSettings
     
-    public init(gameSettings:IGameSettings = GameSettings.sharedInstance)
+    public init(gameSettings:IGameSettings = Game.settings)
     {
         self.gameSettings = gameSettings
         for _ in cardCount
@@ -53,7 +53,7 @@ open class GameProgressTracker
     func trackProgress(_ first:TrickPlay?,player:CardPlayer, playedCard:PlayingCard)
     {
         
-        if playedCard.suite == GameSettings.sharedInstance.rules.trumpSuite
+        if playedCard.suite == Game.settings.rules.trumpSuite
         {
             trumpsHaveBeenBroken = true
         }

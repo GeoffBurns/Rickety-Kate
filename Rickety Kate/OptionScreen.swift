@@ -44,21 +44,21 @@ class OptionScreen: MultiPagePopup {
      var tabNewPage = [ displayOptions, gameCentre ]
     
     override func onEnter() {
-        self.noOfSuites.current = GameSettings.sharedInstance.noOfSuitesInDeck
-        self.noOfPlayers.current = GameSettings.sharedInstance.noOfPlayersAtTable
-        self.noOfHumanPlayers.current = GameSettings.sharedInstance.noOfHumanPlayers
-        self.noOfCardsInASuite.current = GameSettings.sharedInstance.noOfCardsInASuite
-        self.hasTrumps.current = GameSettings.sharedInstance.hasTrumps
-        self.hasJokers.current = GameSettings.sharedInstance.hasJokers
-        self.willPassCards.current = GameSettings.sharedInstance.willPassCards
-        self.speedOfToss.current = GameSettings.sharedInstance.speedOfToss
-        self.gameWinningScore.current = GameSettings.sharedInstance.gameWinningScoreIndex
-        self.ruleSet.current = GameSettings.sharedInstance.ruleSet
-        self.allowBreakingTrumps.current = GameSettings.sharedInstance.allowBreakingTrumps
-        self.includeHooligan.current = GameSettings.sharedInstance.includeHooligan
-        self.includeOmnibus.current = GameSettings.sharedInstance.includeOmnibus
-        self.useNumbersForCourtCards.current = GameSettings.sharedInstance.useNumbersForCourtCards
-        self.showTips.current = GameSettings.sharedInstance.showTips
+        self.noOfSuites.current = Game.settings.noOfSuitesInDeck
+        self.noOfPlayers.current = Game.settings.noOfPlayersAtTable
+        self.noOfHumanPlayers.current = Game.settings.noOfHumanPlayers
+        self.noOfCardsInASuite.current = Game.settings.noOfCardsInASuite
+        self.hasTrumps.current = Game.settings.hasTrumps
+        self.hasJokers.current = Game.settings.hasJokers
+        self.willPassCards.current = Game.settings.willPassCards
+        self.speedOfToss.current = Game.settings.speedOfToss
+        self.gameWinningScore.current = Game.settings.gameWinningScoreIndex
+        self.ruleSet.current = Game.settings.ruleSet
+        self.allowBreakingTrumps.current = Game.settings.allowBreakingTrumps
+        self.includeHooligan.current = Game.settings.includeHooligan
+        self.includeOmnibus.current = Game.settings.includeOmnibus
+        self.useNumbersForCourtCards.current = Game.settings.useNumbersForCourtCards
+        self.showTips.current = Game.settings.showTips
         }
     
     override func exit()
@@ -69,7 +69,7 @@ class OptionScreen: MultiPagePopup {
     
     override func onExit()
     {
-        if GameSettings.sharedInstance.changeSettings(
+        if Game.settings.changeSettings(
             noOfSuites.current,
             noOfPlayersAtTable: noOfPlayers.current,
             noOfCardsInASuite: noOfCardsInASuite.current,

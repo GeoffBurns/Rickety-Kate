@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import ReactiveCocoa
 import ReactiveSwift
 
 
@@ -28,12 +27,12 @@ class ScoreDisplay
     static func scorePosition(_ side:SideOfTable, size: CGSize, bannerHeight:CGFloat) -> CGPoint
     {
     let top : CGFloat =  DeviceSettings.isPortrait ? 0.90 : 0.87
-        let bottom : CGFloat =  DeviceSettings.isPortrait ? 0.12 :
+    let bottom : CGFloat =  DeviceSettings.isPortrait ? 0.12 :
                                     (DeviceSettings.isPhone
-                                        ? (DeviceSettings.isPhoneX ? 0.25 : 0.19)
+                                        ? (DeviceSettings.isPhoneX || DeviceSettings.isPhone55inch ? 0.25 : 0.19)
                                         : 0.22)
         
-    let noOfPlayers = GameSettings.sharedInstance.noOfPlayersAtTable
+    let noOfPlayers = Game.settings.noOfPlayersAtTable
     switch side
       {
       case .right:

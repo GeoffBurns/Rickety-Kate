@@ -28,7 +28,7 @@ class CardStack : CardPile
 
     static func nextLowerCard(_ lastCard:PlayingCard) ->[PlayingCard]
     {
-            let prevcards = GameSettings.sharedInstance.deck!.orderedDeck
+            let prevcards = Game.deck.orderedDeck
                 .filter { $0.suite == lastCard.suite && $0.value < lastCard.value }
                 .sorted {$0.value > $1.value}
             
@@ -38,7 +38,7 @@ class CardStack : CardPile
     static func nextHigherCard(_ lastCard:PlayingCard) ->[PlayingCard]
     {
         
-    let nextcards = GameSettings.sharedInstance.deck!.orderedDeck
+    let nextcards = Game.deck.orderedDeck
         .filter { $0.suite == lastCard.suite && $0.value > lastCard.value }
         .sorted {$0.value < $1.value}
         
@@ -137,7 +137,7 @@ class CardStack : CardPile
         {
             if let lower = lowerStack, lower.baseCard == nil
             {
-            lower.baseCard = GameSettings.sharedInstance.deck!.lowerMiddleCardIn(self.baseCard!.suite)
+            lower.baseCard = Game.deck.lowerMiddleCardIn(self.baseCard!.suite)
             }
         }
         /// if its a pile instead of a fan you don't need to rearrange the pile for every change

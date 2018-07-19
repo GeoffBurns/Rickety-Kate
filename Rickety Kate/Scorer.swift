@@ -65,7 +65,7 @@ class Scorer
     for player in self.players
       {
       /// Did player get all the points avalilable in his hand
-      if player.scoreForCurrentHand >= GameSettings.sharedInstance.rules.allPoints
+      if player.scoreForCurrentHand >= Game.settings.rules.allPoints
          {
          player.currentTotalScore.value = 0
          hasShotMoon = true
@@ -93,7 +93,7 @@ class Scorer
                     . map { $0.1.currentTotalScore.value }
                     . filter { $0 > human.1.currentTotalScore.value}
                 let  beatenScore : Int = beaten.reduce(0) { $0 + $1 }
-                return Int64(GameSettings.sharedInstance.gameWinningScore -  human.1.currentTotalScore.value/2) * Int64(100) / Int64(human.0+1) + Int64(beatenScore)
+                return Int64(Game.settings.gameWinningScore -  human.1.currentTotalScore.value/2) * Int64(100) / Int64(human.0+1) + Int64(beatenScore)
             }
             return 1
     }
@@ -120,7 +120,7 @@ class Scorer
         isDraw = true
         }
     
-      if player.currentTotalScore.value >= GameSettings.sharedInstance.gameWinningScore
+      if player.currentTotalScore.value >= Game.settings.gameWinningScore
         {
         hasWonGame = true
         }
@@ -132,11 +132,11 @@ class Scorer
       recordTheScoresForAGameWin(winner!)
         
 
-      GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard:  GameSettings.sharedInstance.rules.leaderboard)
+      GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard:  Game.settings.rules.leaderboard)
         
       if winner?.playerNo == 0
       {
-        GameKitHelper.sharedInstance.reportAchievement(GameSettings.sharedInstance.achievementForWin)
+        GameKitHelper.sharedInstance.reportAchievement(Game.settings.achievementForWin)
        
        
       }
@@ -163,7 +163,7 @@ class Scorer
         if let winner = Scorer.playerThatWon(gameState)
         {
          
-                let score = GameSettings.sharedInstance.rules.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
+                let score = Game.settings.rules.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
                 if(score != 0)
                 {
                     winner.currentTotalScore.value += score

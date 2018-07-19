@@ -6,7 +6,7 @@
 //  Copyright © 2015 Geoff Burns. All rights reserved.
 //
 
-import ReactiveCocoa
+
 import ReactiveSwift
 import enum Result.NoError
 

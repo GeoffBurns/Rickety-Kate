@@ -9,26 +9,6 @@
 import Foundation
 
 
-public protocol IAwarder
-{
-    var allPoints : Int { get }
-    var ricketyKatePoints : Int { get }
-    var trumpSuite : PlayingCard.Suite { get }
-    var trumpSuiteSingular : String { get }
-    var trumpSuitePlural : String  { get }
-    var description : String { get }    
-    var shortDescription : String { get }
-    var cardScores : Dictionary<PlayingCard,Int> { get }
-    var bonusCards : Set<PlayingCard> { get }
-    var penaltyCards : Set<PlayingCard> { get }
-    var omnibus : PlayingCard? { get }
-    var hooligan : PlayingCard? { get }
-    var backgroundCards : [PlayingCard] { get }
-    var leaderboard : LearderBoard { get }
-    func scoreFor(_ cards: [PlayingCard], winnersName: String) ->Int
-    func AchievementForWin(_ gameFlavor:GameFlavor) ->  Achievement
-   
-}
 
 class AwarderBase
 {
@@ -136,12 +116,12 @@ class SpadesAwarder : AwarderBase, IAwarder
     var leaderboard = LearderBoard.Spades
     
     var backgroundCards : [PlayingCard] {
-    let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
+    let cards : Array = Game.deck.orderedDeck
         .filter { $0.suite == trumpSuite }
         .sorted()
         .reversed()
     
-    return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
+    return Array(cards[0..<Game.settings.noOfPlayersAtTable])
     }
     
     var ricketyKatePoints = 10
@@ -165,7 +145,7 @@ class SpadesAwarder : AwarderBase, IAwarder
     override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
         var result =  Dictionary<PlayingCard,Int>()
-        let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
+        let trumps = Game.deck.orderedDeck.filter { $0.suite == trumpSuite }
         var trumpsSet = Set(trumps)
         
         result[CardName.queen.of(PlayingCard.Suite.spades)!] = ricketyKatePoints
@@ -207,7 +187,7 @@ class HeartsAwarder : AwarderBase, IAwarder
             override func createBaseCardScores() -> Dictionary<PlayingCard,Int>
     {
         var result =  Dictionary<PlayingCard,Int>()
-        let trumps = gameSettings!.deck!.orderedDeck.filter { $0.suite == trumpSuite }
+        let trumps = Game.deck.orderedDeck.filter { $0.suite == trumpSuite }
 
         for card in trumps
         {
@@ -224,12 +204,12 @@ class HeartsAwarder : AwarderBase, IAwarder
     }
 
     var backgroundCards : [PlayingCard] {
-        let cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
+        let cards : Array = Game.deck.orderedDeck
             .filter { $0.suite == trumpSuite }
             .sorted()
             .reversed()
         
-        return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
+        return Array(cards[0..<Game.settings.noOfPlayersAtTable])
     }
     var ricketyKatePoints = 13
     var trumpSuite : PlayingCard.Suite { return PlayingCard.Suite.hearts }
@@ -270,7 +250,7 @@ class JacksAwarder : AwarderBase, IAwarder
         var result =  Dictionary<PlayingCard,Int>()
         result[CardName.queen.of(PlayingCard.Suite.spades)!] = ricketyKatePoints
         
-        for suite in gameSettings!.deck!.normalSuitesInDeck
+        for suite in Game.deck.normalSuitesInDeck
         {
             result[CardName.jack.of(suite)!] = 2
         }
@@ -284,13 +264,13 @@ class JacksAwarder : AwarderBase, IAwarder
     var trumpSuitePlural : String  { return "Jacks".localize }
 
     var backgroundCards : [PlayingCard] {
-        var cards : Array = GameSettings.sharedInstance.deck!.orderedDeck
+        var cards : Array = Game.deck.orderedDeck
             .filter { $0.suite == PlayingCard.Suite.clubs }
             .sorted()
             .reversed()
         
         
-        return Array(cards[0..<GameSettings.sharedInstance.noOfPlayersAtTable])
+        return Array(cards[0..<Game.settings.noOfPlayersAtTable])
     }
 
     override func countTrumps(_ cards: [PlayingCard]) -> Int

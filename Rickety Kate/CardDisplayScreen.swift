@@ -30,7 +30,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     // var orderedGroups : [(Int,ScorePairCollection)] { // swift 2.2
     var orderedGroups : [(key: Int, value:ScorePairCollection)] {
         
-        let pointsGroups = GameSettings.sharedInstance.rules.cardScores.categorise {$0.1}
+        let pointsGroups = Game.settings.rules.cardScores.categorise {$0.1}
         return pointsGroups.sorted { $0.0 > $1.0 }
     }
     
@@ -78,7 +78,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     {
         pageNo = 0
         tabNo = -1
-        cards = GameSettings.sharedInstance.deck!.orderedDeck
+        cards = Game.deck.orderedDeck
         
         if !isSetup
         {
@@ -86,7 +86,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
             self.tabNames = ["Rules","Deck","Scores"]
             setupDiscardArea()
             discardPile.isUp = true
-            discardPile.speed = GameSettings.sharedInstance.tossDuration*0.5
+            discardPile.speed = Game.settings.tossDuration*0.5
             color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
             size = scene.frame.size
             position = CGPoint.zero
@@ -102,7 +102,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
         var layoutSize = size
         pageNo = 0
         tabNo = -1
-        cards = GameSettings.sharedInstance.deck!.orderedDeck
+        cards = Game.deck.orderedDeck
         
         if !isSetup
           {
@@ -110,7 +110,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
           self.tabNames = ["Rules","Deck","Scores"]
           setupDiscardArea()
           discardPile.isUp = true
-          discardPile.speed = GameSettings.sharedInstance.tossDuration*0.5
+          discardPile.speed = Game.settings.tossDuration*0.5
           color = UIColor(red: 0.0, green: 0.3, blue: 0.1, alpha: 0.9)
           size = scene.frame.size
           position = CGPoint.zero
@@ -207,7 +207,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
             }
              return 1
         case 1 :
-           return GameSettings.sharedInstance.deck!.suitesInDeck.numOfPagesOf(noOfSlides)
+           return Game.deck.suitesInDeck.numOfPagesOf(noOfSlides)
         case 2 :
            return self.orderedGroups.numOfPagesOf(noOfSlides)
          
@@ -244,7 +244,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     
     var cardsInSuitesDisplayed : [[PlayingCard]]
     {
-            return GameSettings.sharedInstance.deck!
+            return Game.deck
                 .suitesInDeck
                 .from(self.noOfSlides*self.pageNo, forLength: self.noOfSlides)
                 .map { suite in  self.cards.filter { $0.suite == suite} }
@@ -266,7 +266,7 @@ class CardDisplayScreen: MultiPagePopup, HasDiscardArea{
     {
         for slide in slides { slide.discardAll() }
         self.clearLabels()
-        self.schedule(delay: GameSettings.sharedInstance.tossDuration*0.3)
+        self.schedule(delay: Game.settings.tossDuration*0.3)
             {
                 self.refillSlides()
                 self.displaySlideLabels(self.layoutSize,bannerHeight: self.adHeight)

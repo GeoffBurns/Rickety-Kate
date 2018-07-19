@@ -20,7 +20,7 @@ class GivenALateLeadingStrategy: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         player.addCardsToHand(["QS","QD","5D","2C","KC","10C"])
-        GameSettings.sharedInstance = FakeGameSettings()
+        Game.settings = FakeGameSettings()
         
         
     }

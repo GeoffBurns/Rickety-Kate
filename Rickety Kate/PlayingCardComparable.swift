@@ -66,8 +66,8 @@ public func <=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
 {
     switch (lhs, rhs) {
     case (.ace, .ace): return true
-    case (.ace, _): return !GameSettings.sharedInstance.isAceHigh
-    case (_, .ace): return GameSettings.sharedInstance.isAceHigh
+    case (.ace, _): return !Game.settings.isAceHigh
+    case (_, .ace): return Game.settings.isAceHigh
     case let (.courtCard(la), .courtCard(ra)): return pictureLetterToRank(la) <= pictureLetterToRank(ra)
     case (.courtCard, _): return false
     case let (.pip(la), .pip(ra)): return la <= ra
@@ -79,8 +79,8 @@ public func >=(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
 {
     switch (lhs, rhs) {
     case (.ace, .ace): return true
-    case (.ace, _): return GameSettings.sharedInstance.isAceHigh
-    case (_, .ace): return !GameSettings.sharedInstance.isAceHigh
+    case (.ace, _): return Game.settings.isAceHigh
+    case (_, .ace): return !Game.settings.isAceHigh
     case let (.courtCard(la), .courtCard(ra)): return pictureLetterToRank(la) >= pictureLetterToRank(ra)
     case (.courtCard, _): return true
     case let (.pip(la), .pip(ra)): return la >= ra
@@ -91,8 +91,8 @@ public func >(lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
 {
     switch (lhs, rhs) {
     case (.ace, .ace): return false
-    case (.ace, _): return GameSettings.sharedInstance.isAceHigh
-    case (_, .ace): return !GameSettings.sharedInstance.isAceHigh
+    case (.ace, _): return Game.settings.isAceHigh
+    case (_, .ace): return !Game.settings.isAceHigh
     case let (.courtCard(la), .courtCard(ra)): return pictureLetterToRank(la) > pictureLetterToRank(ra)
     case (.courtCard, _): return true
     case let (.pip(la), .pip(ra)): return la > ra
@@ -103,8 +103,8 @@ public func < (lhs: PlayingCard.CardValue, rhs: PlayingCard.CardValue) -> Bool
 {
     switch (lhs, rhs) {
     case (.ace, .ace): return false
-    case (.ace, _): return !GameSettings.sharedInstance.isAceHigh
-    case (_, .ace): return GameSettings.sharedInstance.isAceHigh
+    case (.ace, _): return !Game.settings.isAceHigh
+    case (_, .ace): return Game.settings.isAceHigh
     case let (.courtCard(la), .courtCard(ra)): return pictureLetterToRank(la) < pictureLetterToRank(ra)
     case (.courtCard, _): return false
     case let (.pip(la), .pip(ra)): return la < ra

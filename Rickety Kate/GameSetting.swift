@@ -41,19 +41,21 @@ public protocol ICardGameSettings
     var hasTrumps  : Bool { get }
     var hasJokers : Bool { get }
     var hasFool : Bool { get }
+    var isFoolATrump : Bool { get }
     var showTips : Bool { get }
     var willPassCards  : Bool { get }
     var useNumbersForCourtCards : Bool { get }
     var isAceHigh  : Bool { get }
     var makeDeckEvenlyDevidable  : Bool { get }
-    var deck  : PlayingCard.BuiltCardDeck? { get  }
     var speedOfToss  : Int { get }
     var tossDuration : TimeInterval { get  }
     var memoryWarning : Bool { get set }
-    
-    func newDeck()
+    var noOfTrumps : Int { get }
+    var noOfStandardTrumps : Int { get }
+    var noOfJokers : Int { get }
+    var specialSuite : PlayingCard.Suite { get }
 }
-    public protocol IGameSettings : ICardGameSettings
+public protocol IGameSettings : ICardGameSettings
 {
     var allowBreakingTrumps  : Bool { get }
     var includeHooligan  : Bool { get }
@@ -124,10 +126,15 @@ open class DeviceSettings
     {
         return UIScreen.main.nativeBounds.height == 2436
     }
+    static var isPhone55inch : Bool
+    {
+        return UIScreen.main.nativeBounds.height == 2208
+    }
+    
     static var isPadPro : Bool
     {
         let size = UIScreen.main.applicationFrame
-        return size.width > 1200 || size.height > 1200
+        return size.width > 1250 || size.height > 1250
     }
     static var isBigPhone : Bool
     {
@@ -179,22 +186,23 @@ open class DeviceSettings
         return .phone
     }
 }
-
-/// User controlled options for the game
-open class GameSettings
+public class Game
 {
-    static var instance : IGameSettings? = nil
-    open static var sharedInstance : IGameSettings {
-        get{
-            if instance == nil
-            {
-                instance = LiveGameSettings()
-            }
-            return instance!
-        }
-        set {
-                instance = newValue
-        }
+    public static var settings : IGameSettings = LiveGameSettings()
+    static var _deck  : PlayingCard.BuiltCardDeck? = nil
+
+    static var deck  : PlayingCard.BuiltCardDeck {
+     
+        if _deck == nil { newDeck() }
+        return _deck!
+      
+    }
+    
+    static func newDeck() {
+        _deck = PlayingCard.BuiltCardDeck(gameSettings: settings)
+    }
+    public static func newDeck(with: IGameSettings) {
+        _deck = PlayingCard.BuiltCardDeck(gameSettings: with)
     }
     static var backgroundColor = UIColor(red: 0.0, green: 0.5, blue: 0.2, alpha: 1.0)
 }
@@ -202,11 +210,28 @@ open class GameSettings
 /// User controlled options for the game
 class LiveGameSettings : IGameSettings
 {
-    var deck : PlayingCard.BuiltCardDeck? = nil
+    var specialSuite: PlayingCard.Suite {
+       return rules.trumpSuite
+    }
+    
+    var isFoolATrump = false
+    var noOfJokers = 2
+    var noOfStandardTrumps = 21
+    var noOfTrumps: Int { return hasFool ? noOfStandardTrumps + 1 : noOfStandardTrumps }
     var isAceHigh =  true
     internal var hasFool =  true
     internal var noOfHumanPlayers : Int  = 1
     internal var makeDeckEvenlyDevidable  =  true
+    internal var noOfSuitesDefault : Int  = 5
+    
+    var memoryWarning : Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: GameProperties.memoryWarning.rawValue)
+        }
+        set (newValue) {
+            UserDefaults.standard.set(newValue, forKey: GameProperties.memoryWarning.rawValue)
+        }
+    }
     
   var noOfSuitesInDeck : Int {
         
@@ -214,14 +239,12 @@ class LiveGameSettings : IGameSettings
             let result = UserDefaults.standard.integer(forKey: GameProperties.NoOfSuitesInDeck.rawValue)
             if result == 0
             {
-                return 5
+                return noOfSuitesDefault
             }
             return result
     }
     set (newValue) {
     UserDefaults.standard.set(newValue, forKey: GameProperties.NoOfSuitesInDeck.rawValue)
-
-   
     }
   }
     
@@ -252,16 +275,6 @@ class LiveGameSettings : IGameSettings
         }
         set (newValue) {
             UserDefaults.standard.set(newValue, forKey: GameProperties.NoOfCardsInASuite.rawValue)
-        }
-    }
-    
-    var memoryWarning : Bool {
-        
-        get {
-            return UserDefaults.standard.bool(forKey: GameProperties.memoryWarning.rawValue)
-        }
-        set (newValue) {
-            UserDefaults.standard.set(newValue, forKey: GameProperties.memoryWarning.rawValue)
         }
     }
     
@@ -316,9 +329,7 @@ class LiveGameSettings : IGameSettings
         
         get {
             let result = UserDefaults.standard.bool(forKey: GameProperties.includeOmnibus.rawValue)
-            if let deck1 = self.deck {  return result && deck1.setOfSuitesInDeck.contains(PlayingCard.Suite.diamonds) }
-            
-            return result
+            return result && Game.deck.setOfSuitesInDeck.contains(PlayingCard.Suite.diamonds)
         }
         set (newValue) {
             UserDefaults.standard.set(newValue, forKey: GameProperties.includeOmnibus.rawValue)
@@ -400,7 +411,8 @@ class LiveGameSettings : IGameSettings
         case .hooligan : return "Hooligan %@".localizeWith( gameType )
         case .bussing : return "Bussing %@".localizeWith( gameType )
         case .straight :
-               if let no = self.deck?.normalSuitesInDeck.count, self.rules.trumpSuite == PlayingCard.Suite.none
+            let no = Game.deck.normalSuitesInDeck.count
+            if self.rules.trumpSuite == PlayingCard.Suite.none
                             {
                                 return no.letterDescription + " " + gameType
                             }
@@ -431,7 +443,7 @@ class LiveGameSettings : IGameSettings
             noOfSuitesInDeck = 5 + 4.random
         }
         
-        newDeck()
+        Game.newDeck()
     }
     var awarder : IAwarder? = nil
     var rules : IAwarder {
@@ -488,12 +500,6 @@ class LiveGameSettings : IGameSettings
     }
  
     
-    func newDeck() {
-         deck = PlayingCard.BuiltCardDeck(gameSettings: self)
-    }
-    
-    init() {  newDeck() }
-    
     func changeSettings(
         _ noOfSuitesInDeck:Int = 4,
         noOfPlayersAtTable:Int  = 4,
@@ -545,7 +551,7 @@ class LiveGameSettings : IGameSettings
             self.showTips = showTips
             
             
-            self.deck = PlayingCard.BuiltCardDeck(gameSettings: self)
+            Game.newDeck(with: self)
             return true
         }
         return false
@@ -556,6 +562,11 @@ class LiveGameSettings : IGameSettings
 /// For testing
 open class FakeGameSettings : IGameSettings
 {
+    public var specialSuite = PlayingCard.Suite.none
+    public var isFoolATrump = false
+    public var noOfTrumps = 22
+    public var noOfStandardTrumps = 21
+    public var noOfJokers = 2
     open var hasFool =  true
     open var noOfHumanPlayers : Int  = 1
     open var noOfSuitesInDeck = 6

@@ -8,13 +8,17 @@
 
 import UIKit
 import SpriteKit
-import iAd
+//import iAd
 
 
-class GameViewController: UIViewController , ADBannerViewDelegate {
+class GameViewController: UIViewController //, ADBannerViewDelegate
+{
 
-    var adBannerView: ADBannerView = ADBannerView(frame: CGRect.zero)
+    //var adBannerView: ADBannerView = ADBannerView(frame: CGRect.zero)
 
+    // iAds Depreciated
+    /*
+     
     func loadAds(){
   
         adBannerView.center = CGPoint(x: adBannerView.center.x, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
@@ -30,6 +34,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         // self.canDisplayBannerAds = true
         
     }
+   */
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +76,9 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
             
         skView.presentScene(scene)
         
-     //   loadAds()
+        
+        // iAds Depreciated
+        //loadAds()
      
     }
     
@@ -103,7 +110,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        GameSettings.sharedInstance.memoryWarning = true
+        Game.settings.memoryWarning = true
     }
 
     override var prefersStatusBarHidden : Bool {
@@ -115,19 +122,23 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
         with coordinator: UIViewControllerTransitionCoordinator)
     
     {
-     resize(adBannerView,size: size);
+     resize(
+        //adBannerView,
+        size: size);
   
     }
 
 
-   func resize(_ banner: ADBannerView?, size:CGSize = UIScreen.main.applicationFrame.size) {
+   func resize(
+  //  _ banner: ADBannerView?,
+    size:CGSize = UIScreen.main.applicationFrame.size) {
         
-        var adHeight = CGFloat()
+        let adHeight = CGFloat()
     
-       if let b = banner, b.isHidden == false
+   /*    if let b = banner, b.isHidden == false
         {
             adHeight = b.frame.size.height
-       }
+       }*/
     if let uiView = self.view,
         let skView = uiView as? SKView,
         let scene = skView.scene as? RicketyKateGameScene
@@ -148,9 +159,10 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
     }
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
 
-        resize(adBannerView);
+     //   resize(adBannerView);
     }
  //iAd
+    /*
     func bannerViewWillLoadAd(_ banner: ADBannerView) {
          NSLog("banner will load");
     }
@@ -185,6 +197,7 @@ class GameViewController: UIViewController , ADBannerViewDelegate {
          let errorString = oldError.debugDescription
          NSLog(errorString);
         }
-    
+ 
 }
+ */
 }

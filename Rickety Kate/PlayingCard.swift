@@ -82,7 +82,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case .picks : return "Pick".localize
                 case .trumps : return "Trump".localize
                 case .jokers : return "Joker".localize
-                case .noOfSuites : return "Not_Applicable".localize
+                case .noOfSuites : return "Not Applicable".localize
                 case .none : return "None".localize
                 }
         }
@@ -101,7 +101,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case .picks : return "Picks".localize
                 case .trumps : return "Trumps".localize
                 case .jokers : return "Jokers".localize
-                case .noOfSuites : return "Not_Applicable".localize
+                case .noOfSuites : return "Not Applicable".localize
                 case .none : return "None".localize
                 }
         }
@@ -125,15 +125,15 @@ public struct PlayingCard : Equatable, Comparable, Hashable
         }
         static var standardSuites : [Suite]
         {
-            return [spades,hearts,clubs,diamonds]
+            return [spades,diamonds,clubs,hearts]
         }
         static var normalSuites : [Suite]
         {
-            return [spades,hearts,clubs,diamonds,suns,anchors,stars,picks]
+            return [spades,diamonds,clubs,hearts,suns,anchors,stars,picks]
         }
         static var allSuites : [Suite]
         {
-            return [spades,hearts,clubs,diamonds,suns,anchors,stars,picks,trumps,jokers]
+            return [spades,diamonds,clubs,hearts,suns,anchors,stars,picks,trumps,jokers]
         }
     }
     public enum CardValue : Equatable, Comparable
@@ -279,9 +279,9 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             
             return  cardsUpTo(9) + ["J","Q","K"].map { courtCard($0) }
         }
-     /*   static var values14CardInASuite : [CardValue] {
-            return [Ace] + (2...11).map { Pip($0) } + ["J","Q","K"].map { CourtCard($0) }
-        }*/
+        static var values14CardInASuiteAlt : [CardValue] {
+            return cardsUpTo(11) +  ["J","Q","K"].map { courtCard($0) }
+        }
         static var values14CardInASuite : [CardValue] {
             
             return  cardsUpTo(10) + ["J","KN","Q","K"].map { courtCard($0) }
@@ -307,13 +307,15 @@ public struct PlayingCard : Equatable, Comparable, Hashable
     
     public var imageName : String
         // create imagename for a card
-        {
-            return value.imageCode +  suite.imageCode
+    {
+        let result = value.imageCode +  suite.imageCode
+        if result == "0T" { return "0J"}
+        return result
     }
     public var whiteImageName : String
-        // create imagename for a card
-        {
-            return imageName +  "_"
+    // create imagename for a card
+    {
+        return imageName +  "_"
     }
     public var description : String
         // create description for a card
@@ -332,6 +334,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             case PlayingCard.Suite.trumps:
                 switch value.rank
                 {
+                case 0 : return "Fool".localize
                 case 1 : return "Magician".localize
                 case 2 : return "Priestess".localize
                 case 3 : return "Empress".localize
@@ -343,7 +346,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 case 9 : return "Hermit".localize
                 case 10 : return "Fortune".localize
                 case 11 : return "Justice".localize
-                case 12 : return "Hanged_Man".localize
+                case 12 : return "Hanged Man".localize
                 case 13 : return "Death".localize
                 case 14 : return "Temperance".localize
                 case 15 : return "Devil".localize
@@ -450,11 +453,11 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             var result = (gameSettings!.noOfSuitesInDeck * gameSettings!.noOfCardsInASuite)
              if gameSettings!.hasTrumps
                 {
-                result += 22
+                result += Game.settings.noOfTrumps
                 }
              if gameSettings!.hasJokers
                  {
-                 result += 2
+                 result += Game.settings.noOfJokers
                  }
             return result
         }
@@ -487,12 +490,18 @@ public struct PlayingCard : Equatable, Comparable, Hashable
             noInSuites[PlayingCard.Suite.jokers.rawValue] = 0
             if gameSettings!.hasTrumps
             {
-                noInSuites[PlayingCard.Suite.trumps.rawValue] = 21
-                noInSuites[PlayingCard.Suite.jokers.rawValue] = 1
+                noInSuites[PlayingCard.Suite.trumps.rawValue] = Game.settings.noOfStandardTrumps
+                if Game.settings.hasFool
+                {
+                  if Game.settings.isFoolATrump
+                  { noInSuites[PlayingCard.Suite.trumps.rawValue] += 1 }
+                  else
+                  {   noInSuites[PlayingCard.Suite.jokers.rawValue] = 1 }
+                  }
             }
             if gameSettings!.hasJokers
             {
-                noInSuites[PlayingCard.Suite.jokers.rawValue]  += 2
+                noInSuites[PlayingCard.Suite.jokers.rawValue]  += Game.settings.noOfJokers
             }
         }
         
@@ -529,7 +538,7 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                     {
                         break
                     }
-                    if s == gameSettings!.rules.trumpSuite
+                    if s == gameSettings!.specialSuite
                     {
                         continue
                     }
@@ -557,15 +566,22 @@ public struct PlayingCard : Equatable, Comparable, Hashable
                 
                 if gameSettings!.hasTrumps
                 {
-                    deck.append(PlayingCard(suite: PlayingCard.Suite.jokers, value : PlayingCard.CardValue.pip(0)))
-                    for v in 1...21
+                    if gameSettings!.hasFool
+                    {
+                       if gameSettings!.isFoolATrump
+                       {deck.append(PlayingCard(suite: PlayingCard.Suite.trumps, value : PlayingCard.CardValue.pip(0)))}
+                       else
+                       {deck.append(PlayingCard(suite: PlayingCard.Suite.jokers, value : PlayingCard.CardValue.pip(0)))}
+                        
+                    }
+                    for v in 1...gameSettings!.noOfStandardTrumps
                     {
                         deck.append(PlayingCard(suite: PlayingCard.Suite.trumps, value : PlayingCard.CardValue.pip(v)))
                     }
                 }
                 if gameSettings!.hasJokers
                 {
-                    for v in 1...2
+                    for v in 1...gameSettings!.noOfJokers
                     {
                         deck.append(PlayingCard(suite: PlayingCard.Suite.jokers, value : PlayingCard.CardValue.pip(v)))
                     }

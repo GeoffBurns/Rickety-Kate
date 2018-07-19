@@ -96,7 +96,7 @@ extension Sequence where Iterator.Element == TrickPlay {
 
 extension Sequence where Iterator.Element == PlayingCard {
     public var score : Int {
-        return self.reduce(0) { $0 + ( GameSettings.sharedInstance.rules.cardScores[$1] ?? 0) }
+        return self.reduce(0) { $0 + ( Game.settings.rules.cardScores[$1] ?? 0) }
     }
     var cardsFollowingSuite : [PlayingCard]
         {
@@ -144,7 +144,7 @@ open class GameStateBase
     var gameTracker : GameProgressTracker
     var gameSettings:IGameSettings
     
-    public init(gameSettings:IGameSettings = GameSettings.sharedInstance)
+    public init(gameSettings:IGameSettings = Game.settings)
     {
         self.gameSettings = gameSettings
         self.gameTracker = GameProgressTracker(gameSettings: gameSettings)
@@ -153,7 +153,7 @@ open class GameStateBase
         return tricksPile.count
     }
     open var highestCardInTrick : PlayingCard { return cardsFollowingSuite.max()! }
-    open var canLeadTrumps :Bool { return gameTracker.trumpsHaveBeenBroken || GameSettings.sharedInstance.allowBreakingTrumps }
+    open var canLeadTrumps :Bool { return gameTracker.trumpsHaveBeenBroken || Game.settings.allowBreakingTrumps }
     open func arePlayerWithoutCardsIn(_ suite:PlayingCard.Suite) -> Bool
     {
         return !gameTracker.notFollowing[suite.rawValue].isEmpty
@@ -197,12 +197,12 @@ open class GameStateBase
 
     open var penaltyCards : Set<PlayingCard> {
         return Set<PlayingCard>(gameTracker.unplayedScoringCards.filter {
-            (GameSettings.sharedInstance.rules.cardScores[$0] ?? 0) > 0
+            (Game.settings.rules.cardScores[$0] ?? 0) > 0
         })}
     
     open var bonusCards : Set<PlayingCard> {
         return Set<PlayingCard>(gameTracker.unplayedScoringCards.filter {
-            (GameSettings.sharedInstance.rules.cardScores[$0] ?? 0) < 0
+            (Game.settings.rules.cardScores[$0] ?? 0) < 0
         })}
 
 }
@@ -229,7 +229,7 @@ open var isLastPlayer : Bool {
     //////////
     // constructor
     //////////
-    public init(noPlayers:Int,gameSettings:IGameSettings = GameSettings.sharedInstance)
+    public init(noPlayers:Int,gameSettings:IGameSettings = Game.settings)
     {
     noOfPlayers = noPlayers
     super.init(gameSettings: gameSettings)

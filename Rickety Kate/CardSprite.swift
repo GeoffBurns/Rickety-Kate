@@ -188,18 +188,14 @@ class CardSprite : SKSpriteNode
         switch card.value
         {
         case .courtCard :
-            if let deck = GameSettings.sharedInstance.deck
-            {
-                return deck.rankFor(card)
-            }
-            return 0
+            return Game.deck.rankFor(card)
         default : return 0
         }
     }
 
     var needsNumber : Bool
     {
-            return GameSettings.sharedInstance.useNumbersForCourtCards &&
+            return Game.settings.useNumbersForCourtCards &&
               rankOfCourtCard >= 8
     }
     var hasIndexAlready : Bool
@@ -429,7 +425,7 @@ class WhiteCardSprite : CardSprite
     }
     override var backgroundColor : UIColor
     {
-            return GameSettings.backgroundColor
+            return Game.backgroundColor
     }
     
     override var indexMaskingImageName : String { return "letterwhite" }
@@ -450,7 +446,7 @@ class WhiteCardSprite : CardSprite
         
       if let b = blank
         {
-            b.color =  GameSettings.backgroundColor
+            b.color =  Game.backgroundColor
             b.colorBlendFactor = 1.0
             b.zPosition = 0.0
             self.addChild(b)

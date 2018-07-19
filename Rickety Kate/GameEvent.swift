@@ -37,7 +37,7 @@ public enum GameEvent : Equatable
             case .playerKnocked( let player ) :
                 return player.isYou
                     ? "You can not Play You have to Knock".localize
-                    : "_ Knocked".localizeWith(player.name )
+                    : "%@ Knocked".localizeWith(player.name )
             case .youNeedToPlayThisFirst(let card) :
                 return "You Need to Play %@ First".localizeWith(card.description)
             case .suiteFinished(let suite) :
@@ -57,7 +57,7 @@ public enum GameEvent : Equatable
                 let start = "%@ won %d %@"
                     .with
                     .sayTo(name)
-                    .pluralize(noOfSpades,arguements: GameSettings.sharedInstance.rules.shortDescription)
+                    .pluralize(noOfSpades,arguements: Game.settings.rules.shortDescription)
                     .localize
                 return  start + "\n" + "Bad Luck".localize + "."
             case .turnOverYourCards :
@@ -76,13 +76,13 @@ public enum GameEvent : Equatable
             case .somethingHasGoneWrong :
                 return nil
             case .newGame :
-                return "%@ Game On".localizeWith(GameSettings.sharedInstance.gameType)
+                return "%@ Game On".localizeWith(Game.settings.gameType)
             case .startHand :
                 return nil
             case .cardPlayed :
                 return nil
             case .trumpsHaveNotBeenBroken :
-                return "Can not Lead with a %@".localizeWith(GameSettings.sharedInstance.rules.trumpSuiteSingular)
+                return "Can not Lead with a %@".localizeWith(Game.settings.rules.trumpSuiteSingular)
             case .cardDoesNotFollowSuite( let suite )  :
                 return "Card Does Not Follow Suite".localize + "\n" + "Play a %@".localizeWith(suite.singular)
             case .waitYourTurn :
@@ -92,7 +92,7 @@ public enum GameEvent : Equatable
                 {
                 case 3 :
                   //  return "Discard Your".localize + "\n" + "Three Worst Cards".localize
-                    return GameSettings.sharedInstance.gameType + "\n" + "Discard 3 cards".localize
+                    return Game.settings.gameType + "\n" + "Discard 3 cards".localize
                 case 1 :
                     return "Discard one more card".localize + "\n" + "Your worst card".localize
                 default :

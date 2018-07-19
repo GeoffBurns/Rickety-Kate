@@ -29,10 +29,10 @@ open class CardTable: GameStateBase
         super.init()
         //  setPassedCards()
     }
-    var cardTossDuration = GameSettings.sharedInstance.tossDuration*1.8
+    var cardTossDuration = Game.settings.tossDuration*1.8
     
     func dealHands()->[[PlayingCard]] {
-        return GameSettings.sharedInstance.deck!.dealFor(players.count)
+        return Game.deck.dealFor(players.count)
     }
     
     func redealHands()->[[PlayingCard]] {
@@ -49,11 +49,11 @@ open class RicketyKateCardTable : CardTable, GameState
 
     var startPlayerNo = 1
 
-    static open func makeTable(_ scene:CardScene, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> RicketyKateCardTable {
+    static open func makeTable(_ scene:CardScene, gameSettings: IGameSettings = Game.settings ) -> RicketyKateCardTable {
      return RicketyKateCardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
 }
 
-    static open func makeDemo(_ scene:CardScene, gameSettings: IGameSettings = GameSettings.sharedInstance ) -> RicketyKateCardTable  {
+    static open func makeDemo(_ scene:CardScene, gameSettings: IGameSettings = Game.settings ) -> RicketyKateCardTable  {
      return RicketyKateCardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable), scene:scene )
     }
     fileprivate override init(players: [CardPlayer],  scene:CardScene) {
@@ -114,8 +114,8 @@ open class RicketyKateCardTable : CardTable, GameState
         {
             
             if !gameTracker.trumpsHaveBeenBroken &&
-               !GameSettings.sharedInstance.allowBreakingTrumps &&
-               card.suite == GameSettings.sharedInstance.rules.trumpSuite
+               !Game.settings.allowBreakingTrumps &&
+               card.suite == Game.settings.rules.trumpSuite
             
             {
                 return GameEvent.trumpsHaveNotBeenBroken
@@ -299,13 +299,13 @@ func endPlayersTurn(_ playerWithTurn:CardPlayer)
 
         for (i,(player,pile)) in zip(players,dealtPiles).enumerated()
         {
-            scene?.schedule(delay: TimeInterval(i) * GameSettings.sharedInstance.tossDuration*1.2 + 0.1) {
+            scene?.schedule(delay: TimeInterval(i) * Game.settings.tossDuration*1.2 + 0.1) {
             let sortedHand = pile.cards.sorted()
             pile.clear()
             player.newHand( Array(sortedHand.reversed()))
             }
      
         }
-        scene?.schedule(delay: TimeInterval(players.count-1) * GameSettings.sharedInstance.tossDuration*1.2, handler: whenDone)
+        scene?.schedule(delay: TimeInterval(players.count-1) * Game.settings.tossDuration*1.2, handler: whenDone)
     }
 }

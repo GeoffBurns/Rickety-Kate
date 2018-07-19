@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import ReactiveCocoa
 import ReactiveSwift
 
 protocol Resizable : class
@@ -57,11 +56,11 @@ class StatusDisplay : Resizable
     }
     func setupStatusArea(_ scene: SKNode)
     {
-    noticeLabel2 = GameSettings.sharedInstance.showTips
+    noticeLabel2 = Game.settings.showTips
             ? Label(fontNamed:"Chalkduster").withShadow().withFadeOut()
             : Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
         
-    noticeLabel = GameSettings.sharedInstance.showTips
+    noticeLabel = Game.settings.showTips
             ? Label(fontNamed:"Chalkduster").withShadow().withFadeOutAndAction
                 {  Bus.sharedInstance.send(GameEvent.showTip(Tip.dispenceTip())) }
             : Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()

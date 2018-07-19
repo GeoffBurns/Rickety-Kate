@@ -34,7 +34,7 @@ open class CardPile : PositionedOnTable
     var position = CGPoint.zero
     var zPositon = CGFloat(0)
     static let straightAnchorPoint = CGPoint(x: 0.5,y: 0.5)
-    var speed = GameSettings.sharedInstance.tossDuration
+    var speed = Game.settings.tossDuration
     var bannerHeight = CGFloat(0)
     var cardAnchorPoint : CGPoint { get { return CardPile.straightAnchorPoint }}
     var sprites : [SKNode] { return cards.map { createSprite($0,scene!)! } }

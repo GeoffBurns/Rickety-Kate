@@ -22,7 +22,7 @@ class GivenATrickPile: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         player.addCardsToHand(["QS","QD","5D","2C","KC","10C"])
-         GameSettings.sharedInstance = settings
+         Game.settings = settings
         self.gameState = FakeGameState(noPlayers: 4, gameSettings:settings)
      
         

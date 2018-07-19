@@ -22,7 +22,7 @@ class GivenAPerfectKnowledgeStrategy: XCTestCase {
         player.addCardsToHand(["QS","QD","JD","5D","2C","KC","10C"])
      
         self.gameState = FakeGameState(noPlayers: 4, gameSettings:settings)
-        GameSettings.sharedInstance = settings
+        Game.settings = settings
         
     }
     

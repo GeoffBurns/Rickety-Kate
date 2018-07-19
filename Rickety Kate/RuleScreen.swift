@@ -39,7 +39,7 @@ class RuleScreen: MultiPagePopup {
         else
         {
         rulesText  = SKMultilineLabel(
-            text: GameSettings.sharedInstance.rules.description,
+            text: Game.settings.rules.description,
             labelWidth: Int(layoutSize.width * 0.88),
             maxHeight:layoutSize.height * 0.75,
             pageBreak:layoutSize.height * 0.35,
