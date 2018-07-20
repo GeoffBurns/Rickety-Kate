@@ -17,20 +17,31 @@ enum CardSize
     case huge    // e.g. being dragged
 
     
+    static var hugeScale = DeviceSettings.isPhone ?
+        (DeviceSettings.isBigPhone ? CGFloat(0.9) : CGFloat(0.6))
+        : CGFloat(1.2)
+    static var bigScale = DeviceSettings.isPhone ?
+        (DeviceSettings.isBigPhone ? CGFloat(0.6) : CGFloat(0.45))
+        : CGFloat(0.9)
+    static var mediumScale = DeviceSettings.isPhone ? CGFloat(0.3) : CGFloat(0.6)
+    static var smallScale = DeviceSettings.isPhone ? CGFloat(0.22) : CGFloat(0.45)
+    
+    /*
+     static var hugeScale = DeviceSettings.isPhone ? CGFloat(0.6) : CGFloat(1.2)
+     static var bigScale = DeviceSettings.isPhone ? CGFloat(0.45) :CGFloat(0.9)
+     static var mediumScale = DeviceSettings.isPhone ? CGFloat(0.3) : CGFloat(0.6)
+     static var smallScale = DeviceSettings.isPhone ? CGFloat(0.20) : ( DeviceSettings.isPortrait ? CGFloat(0.37) : CGFloat(0.45))
+     */
+    
     var scale : CGFloat
+    {
+        switch self
         {
-            switch self
-            {
-            case .huge : return DeviceSettings.isPhone ?
-            (DeviceSettings.isBigPhone ? CGFloat(0.9) : CGFloat(0.6))
-            : CGFloat(1.2)
-         
-            case .big :    return DeviceSettings.isPhone ?
-                (DeviceSettings.isBigPhone ? CGFloat(0.6) : CGFloat(0.45))
-                : CGFloat(0.9)
-            case .medium : return DeviceSettings.isPhone ? CGFloat(0.3) : CGFloat(0.6)
-            case .small : return DeviceSettings.isPhone ? CGFloat(0.22) : CGFloat(0.45)
-            }
+        case .huge : return CardSize.hugeScale
+        case .big : return CardSize.bigScale
+        case .medium : return CardSize.mediumScale
+        case .small : return CardSize.smallScale
+        }
     }
     var zOrder : CGFloat
         {
