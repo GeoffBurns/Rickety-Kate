@@ -84,22 +84,7 @@ open class CardPlayer :CardHolderBase , Equatable, Hashable
     var playerNo = 0
     var wonCards : CardPile = CardPile(name: CardPileType.won.description)
  
-    ///////////////////////////////////////////
-    /// Static Functions
-    ///////////////////////////////////////////
-    static func demoPlayers(_ noOfPlayers:Int) -> [CardPlayer]
-    {
-        return Usher.players(noOfPlayers,noOfHumans: 0)
-    }
-    
-    static func gamePlayers(_ noOfPlayers:Int) -> [CardPlayer]
-    {
-        var noOfHumanPlayers = Game.settings.noOfHumanPlayers
-        noOfHumanPlayers = noOfHumanPlayers < 1 ? 1 : noOfHumanPlayers
-        noOfHumanPlayers = noOfHumanPlayers > noOfPlayers ? noOfPlayers : noOfHumanPlayers
-        
-        return Usher.players(noOfPlayers,noOfHumans: noOfHumanPlayers)
-    }
+
     
     ///////////////////////////////////////
     /// Hashable Protocol
