@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Cards
 
 /// Tips on how to play the game
 public enum Tip 

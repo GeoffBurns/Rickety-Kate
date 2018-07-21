@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Cards
 
 /// organize list of players for game
 class Usher {

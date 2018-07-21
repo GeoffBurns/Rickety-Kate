@@ -8,12 +8,8 @@
 
 import SpriteKit
 import ReactiveSwift
+import Cards
 
-protocol Resizable : class
-{
-     var adHeight : CGFloat { get }
-     func arrangeLayoutFor(_ size:CGSize, bannerHeight:CGFloat)
-}
 // Tells the game player what is going on
 class StatusDisplay : Resizable
 {

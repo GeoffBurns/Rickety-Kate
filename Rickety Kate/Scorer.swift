@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import Cards
 
 
 /// Calculate the Result of the trick

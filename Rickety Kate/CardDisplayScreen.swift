@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import Cards
 
 enum CardDisplayTab : Int
 {

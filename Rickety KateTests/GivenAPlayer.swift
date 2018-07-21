@@ -9,6 +9,7 @@
 import UIKit
 import XCTest
 import Rickety_Kate
+import Cards
 
 class GivenAPlayer: XCTestCase {
     var player : CardPlayer = ComputerPlayer(name:"Ken",margin:2)

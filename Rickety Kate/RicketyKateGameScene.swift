@@ -8,6 +8,7 @@
 
 import SpriteKit
 import ReactiveSwift
+import Cards
 
 /// How game play is displayed
 class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCards, Resizable{

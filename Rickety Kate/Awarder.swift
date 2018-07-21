@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Cards
 
 
 class AwarderBase

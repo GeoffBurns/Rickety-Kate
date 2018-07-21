@@ -8,7 +8,7 @@
 
 import SpriteKit
 import ReactiveSwift
-
+import Cards
 
 // Display the score for each player
 class ScoreDisplay

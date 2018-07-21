@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import Cards
 
 class Navigate {
     

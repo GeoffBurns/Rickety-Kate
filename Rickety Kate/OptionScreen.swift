@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import Cards
 
 /// Game Option Setting Screen
 class OptionScreen: MultiPagePopup {

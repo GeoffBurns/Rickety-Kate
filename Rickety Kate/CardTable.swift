@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import Cards
 
 /// controls the flow of the game
 open class CardTable: GameStateBase

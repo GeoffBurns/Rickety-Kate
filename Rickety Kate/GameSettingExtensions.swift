@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cards
 
 public enum GameFlavor
 {
@@ -72,7 +73,7 @@ extension LiveGameSettings : IGameSettings
 {
 
 
-    var allowBreakingTrumps : Bool {
+    public var allowBreakingTrumps : Bool {
         
         get {
             return !UserDefaults.standard.bool(forKey: MoreProperties.dontBreakTrumps.rawValue)
@@ -81,7 +82,7 @@ extension LiveGameSettings : IGameSettings
             UserDefaults.standard.set(!newValue, forKey: MoreProperties.dontBreakTrumps.rawValue)
         }
     }
-    var includeHooligan : Bool {
+    public var includeHooligan : Bool {
         
         get {
             return UserDefaults.standard.bool(forKey: MoreProperties.includeHooligan.rawValue)
@@ -90,7 +91,7 @@ extension LiveGameSettings : IGameSettings
             UserDefaults.standard.set(newValue, forKey: MoreProperties.includeHooligan.rawValue)
         }
     }
-    var includeOmnibus : Bool {
+    public var includeOmnibus : Bool {
         
         get {
             let result = UserDefaults.standard.bool(forKey: MoreProperties.includeOmnibus.rawValue)
@@ -101,7 +102,7 @@ extension LiveGameSettings : IGameSettings
         }
     }
     
-    var ruleSet : Int {
+    public var ruleSet : Int {
         get {
             let result = UserDefaults.standard.integer(forKey: MoreProperties.ruleSet.rawValue)
             if result == 0
@@ -116,7 +117,7 @@ extension LiveGameSettings : IGameSettings
         }
     }
     
-    var achievementForWin : Achievement
+    public var achievementForWin : Achievement
     {
         return self.rules.AchievementForWin(gameFlavor)
     }
@@ -132,7 +133,7 @@ extension LiveGameSettings : IGameSettings
         return .straight
     }
     
-    var gameType : String {
+    public var gameType : String {
         
         let gameType = self.rules.trumpSuitePlural
         
@@ -152,7 +153,7 @@ extension LiveGameSettings : IGameSettings
         
     }
 
-    func random()
+    public func random()
     {
         ruleSet = 1 + 3.random
         includeOmnibus = coin
@@ -174,7 +175,7 @@ extension LiveGameSettings : IGameSettings
         Game.newDeck()
     }
    
-    var rules : IAwarder {
+    public var rules : IAwarder {
         if data == nil {
             switch ruleSet
             {
@@ -190,8 +191,8 @@ extension LiveGameSettings : IGameSettings
         return data as! IAwarder
     }
     
-    var gameWinningScore : Int { return Game.winningScores[gameWinningScoreIndex] }
-    var gameWinningScoreIndex: Int {
+    public var gameWinningScore : Int { return Game.winningScores[gameWinningScoreIndex] }
+    public var gameWinningScoreIndex: Int {
         
         get {
             let result = UserDefaults.standard.integer(forKey: MoreProperties.gameWinningScore.rawValue)
@@ -206,7 +207,7 @@ extension LiveGameSettings : IGameSettings
             
         }
     }
-    func changeSettings(
+    public func changeSettings(
         _ noOfSuitesInDeck:Int = 4,
         noOfPlayersAtTable:Int  = 4,
         noOfCardsInASuite:Int  = 13,

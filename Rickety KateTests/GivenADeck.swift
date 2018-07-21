@@ -9,6 +9,7 @@
 import UIKit
 import XCTest
 import Rickety_Kate
+import Cards
 
 open class GivenADeck: XCTestCase {
 

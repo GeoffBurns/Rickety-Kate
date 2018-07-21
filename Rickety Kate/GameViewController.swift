@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 //import iAd
+import Cards
 
 
 class GameViewController: UIViewController //, ADBannerViewDelegate

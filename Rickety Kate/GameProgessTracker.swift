@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cards
 
 
 // Used by Computer Player to calculate strategy

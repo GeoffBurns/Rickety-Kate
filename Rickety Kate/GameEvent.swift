@@ -1,4 +1,5 @@
 import SpriteKit
+import Cards
 
 public enum GameEvent : Equatable
 {

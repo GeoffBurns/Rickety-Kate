@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import Cards
 
 /// Are you sure screen
 class ExitScreen: Popup //, Resizable

@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import Cards
 
 // makes visible the state of play to computer player and tests
 public protocol GameState

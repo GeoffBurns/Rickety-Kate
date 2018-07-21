@@ -6,7 +6,7 @@
 //  Copyright © 2015 Geoff Burns. All rights reserved.
 //
 import SpriteKit
-
+import Cards
 
 // Where are the players seated
 class Seater

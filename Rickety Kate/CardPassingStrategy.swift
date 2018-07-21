@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Cards
 
 // What Strategy does a computer player use when passing the 3 worst cards.
 protocol CardPassingStrategy

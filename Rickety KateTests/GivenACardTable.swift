@@ -10,6 +10,7 @@ import UIKit
 import XCTest
 import Rickety_Kate
 import SpriteKit
+import Cards
 
 class GivenACardTable: XCTestCase {
    var table : RicketyKateCardTable = RicketyKateCardTable.makeTable(CardScene(), gameSettings:FakeGameSettings(noOfSuitesInDeck: 4 ,

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Cards
 
 class RicketyKateNavigationController: UINavigationController {
     override func viewDidLoad() {
