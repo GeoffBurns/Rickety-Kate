@@ -11,7 +11,7 @@ import ReactiveSwift
 import Cards
 
 /// How game play is displayed
-class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCards, Resizable{
+class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCards, HasDemoMode, Resizable{
     
     
     override var table : RicketyKateCardTable! {  didSet { setupPassYourThreeWorstCardsPhase() } }

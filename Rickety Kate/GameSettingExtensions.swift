@@ -31,24 +31,7 @@ public protocol IGameSettings : ICardGameSettings
     var gameType : String { get }
     var achievementForWin : Achievement  { get }
     func random()
-    
-    func changeSettings(
-        _ noOfSuitesInDeck:Int,
-        noOfPlayersAtTable:Int,
-        noOfCardsInASuite:Int,
-        hasTrumps:Bool,
-        hasJokers:Bool,
-        willPassCards:Bool,
-        speedOfToss:Int,
-        gameWinningScoreIndex:Int,
-        ruleSet:Int,
-        allowBreakingTrumps:Bool,
-        includeHooligan:Bool,
-        includeOmnibus:Bool,
-        useNumbersForCourtCards:Bool,
-        noOfHumanPlayers: Int,
-        showTips:Bool
-        ) -> Bool
+
 }
 enum MoreProperties : String
 {
@@ -60,6 +43,30 @@ enum MoreProperties : String
 
 }
 
+extension  YesNoOption
+{
+    convenience init(inverted:Bool, prompt: String, key: MoreProperties)
+    {
+        self.init(inverted:inverted, prompt: prompt, key: key.rawValue)
+    }
+}
+
+extension  RangeOption
+{
+    convenience init(min:Int, max:Int, defaultValue:Int, prompt: String, key: MoreProperties)
+    {
+        self.init(min:min, max:max, defaultValue:defaultValue, prompt: prompt, key: key.rawValue)
+    }
+}
+
+extension  SelectOption
+{
+    convenience init(selections:[String], defaultValue:Int,  prompt: String, key: MoreProperties)
+    {
+        self.init(selections:selections, defaultValue:defaultValue,  prompt: prompt, key: key.rawValue)
+    }
+}
+
 extension Game
 {
     public static var moreSettings : IGameSettings { return settings as! IGameSettings}
@@ -67,56 +74,76 @@ extension Game
     public static let winningScores : [Int] = [ 20 , 50, 100, 150, 200, 250, 300, 500, 600]
 }
 
+public class MoreOptions
+{
+    
+    static var allowBreaking = YesNoOption(inverted: true, prompt: "Allow Breaking Trumps", key: MoreProperties.dontBreakTrumps)
 
+    
+    static var hooligan = YesNoOption(inverted: false, prompt: "Include Hooligan", key: MoreProperties.includeHooligan)
+
+    
+    static var omnibus = YesNoOption(inverted: false, prompt: "Include Omnibus", key: MoreProperties.includeOmnibus)
+
+    
+    static var winningScore = SelectOption( selections: ["50", "100", "150", "200", "250", "300", "500"], defaultValue: 2, prompt: "Game Finishing Score", key: MoreProperties.gameWinningScore)
+    
+    static var ruleSet = SelectOption( selections: ["Spades","Hearts","Jacks"], defaultValue: 1, prompt: "Rule Set", key: MoreProperties.ruleSet)
+ 
+
+    
+}
 
 extension LiveGameSettings : IGameSettings
 {
 
-
     public var allowBreakingTrumps : Bool {
         
-        get {
-            return !UserDefaults.standard.bool(forKey: MoreProperties.dontBreakTrumps.rawValue)
-        }
-        set (newValue) {
-            UserDefaults.standard.set(!newValue, forKey: MoreProperties.dontBreakTrumps.rawValue)
-        }
+        get { return MoreOptions.allowBreaking.value }
+        set (newValue) { MoreOptions.allowBreaking.value = newValue }
     }
+    
     public var includeHooligan : Bool {
         
-        get {
-            return UserDefaults.standard.bool(forKey: MoreProperties.includeHooligan.rawValue)
-        }
-        set (newValue) {
-            UserDefaults.standard.set(newValue, forKey: MoreProperties.includeHooligan.rawValue)
-        }
+        get { return MoreOptions.hooligan.value && Game.deck.setOfSuitesInDeck.contains(PlayingCard.Suite.clubs) }
+        set (newValue) { MoreOptions.hooligan.value = newValue }
     }
+    
+  
     public var includeOmnibus : Bool {
         
-        get {
-            let result = UserDefaults.standard.bool(forKey: MoreProperties.includeOmnibus.rawValue)
-            return result && Game.deck.setOfSuitesInDeck.contains(PlayingCard.Suite.diamonds)
-        }
-        set (newValue) {
-            UserDefaults.standard.set(newValue, forKey: MoreProperties.includeOmnibus.rawValue)
-        }
+        get { return MoreOptions.omnibus.value  && Game.deck.setOfSuitesInDeck.contains(PlayingCard.Suite.diamonds) }
+        set (newValue) { MoreOptions.omnibus.value = newValue }
     }
+    
+    public var gameWinningScoreIndex:  Int {
+        get { return MoreOptions.winningScore.value }
+        set (newValue) { MoreOptions.winningScore.value = newValue }
+    }
+    public var gameWinningScore : Int { return Game.winningScores[gameWinningScoreIndex] }
     
     public var ruleSet : Int {
-        get {
-            let result = UserDefaults.standard.integer(forKey: MoreProperties.ruleSet.rawValue)
-            if result == 0
-            {
-                return 1
-            }
-            return result
-        }
-        set (newValue) {
-            UserDefaults.standard.set(newValue, forKey: MoreProperties.ruleSet.rawValue)
-            data = nil
-        }
+        get { return MoreOptions.ruleSet.value }
+        set (newValue) { MoreOptions.ruleSet.value = newValue ; data = nil }
+    
     }
     
+    public var rules : IAwarder {
+        if data == nil {
+            
+            switch ruleSet
+            {
+            case 2 :
+                data = HeartsAwarder(gameSettings: self)
+            case 3 :
+                data = JacksAwarder(gameSettings: self)
+            default :
+                data = SpadesAwarder(gameSettings: self)
+            }
+            specialSuite = (data as! IAwarder).trumpSuite
+        }
+        return data as! IAwarder
+    }
     public var achievementForWin : Achievement
     {
         return self.rules.AchievementForWin(gameFlavor)
@@ -150,7 +177,6 @@ extension LiveGameSettings : IGameSettings
             }
             return gameType
         }
-        
     }
 
     public func random()
@@ -174,100 +200,18 @@ extension LiveGameSettings : IGameSettings
         
         Game.newDeck()
     }
-   
-    public var rules : IAwarder {
-        if data == nil {
-            switch ruleSet
-            {
-            case 2 :
-                data = HeartsAwarder(gameSettings: self)
-            case 3 :
-                data = JacksAwarder(gameSettings: self)
-            default :
-                data = SpadesAwarder(gameSettings: self)
-            }
-            specialSuite = (data as! IAwarder).trumpSuite
-        }
-        return data as! IAwarder
-    }
-    
-    public var gameWinningScore : Int { return Game.winningScores[gameWinningScoreIndex] }
-    public var gameWinningScoreIndex: Int {
-        
-        get {
-            let result = UserDefaults.standard.integer(forKey: MoreProperties.gameWinningScore.rawValue)
-            if result == 0
-            {
-                return 2
-            }
-            return result
-        }
-        set (newValue) {
-            UserDefaults.standard.set(newValue, forKey: MoreProperties.gameWinningScore.rawValue)
-            
-        }
-    }
-    public func changeSettings(
-        _ noOfSuitesInDeck:Int = 4,
-        noOfPlayersAtTable:Int  = 4,
-        noOfCardsInASuite:Int  = 13,
-        hasTrumps:Bool = false,
-        hasJokers:Bool = false,
-        willPassCards:Bool = true,
-        speedOfToss:Int = 3,
-        gameWinningScoreIndex:Int = 2,
-        ruleSet:Int = 1,
-        allowBreakingTrumps:Bool = true,
-        includeHooligan:Bool  = false,
-        includeOmnibus:Bool  = false,
-        useNumbersForCourtCards:Bool  = false,
-        noOfHumanPlayers: Int = 1,
-        showTips:Bool = true
-        ) -> Bool
-    {
-        if self.noOfSuitesInDeck != noOfSuitesInDeck ||
-            self.noOfPlayersAtTable != noOfPlayersAtTable ||
-            self.noOfCardsInASuite != noOfCardsInASuite ||
-            self.hasTrumps != hasTrumps ||
-            self.hasJokers != hasJokers ||
-            self.willPassCards != willPassCards ||
-            self.gameWinningScoreIndex != gameWinningScoreIndex ||
-            self.speedOfToss != speedOfToss ||
-            self.ruleSet != ruleSet ||
-            self.allowBreakingTrumps != allowBreakingTrumps ||
-            self.includeHooligan != includeHooligan ||
-            self.includeOmnibus != includeOmnibus ||
-            self.useNumbersForCourtCards != useNumbersForCourtCards ||
-            self.showTips != showTips
-            
-        {
-            self.noOfSuitesInDeck = noOfSuitesInDeck
-            self.noOfPlayersAtTable = noOfPlayersAtTable
-            self.noOfCardsInASuite = noOfCardsInASuite
-            self.hasTrumps = hasTrumps
-            self.hasJokers = hasJokers
-            self.willPassCards = willPassCards
-            self.speedOfToss = speedOfToss
-            self.gameWinningScoreIndex = gameWinningScoreIndex
-            self.ruleSet = ruleSet
-            self.allowBreakingTrumps = allowBreakingTrumps
-            self.includeHooligan = includeHooligan
-            self.includeOmnibus = includeOmnibus
-            self.useNumbersForCourtCards = useNumbersForCourtCards
-            self.noOfHumanPlayers = noOfHumanPlayers
-            self.showTips = showTips
-            
-            
-            Game.newDeck(with: self)
-            return true
-        }
-        return false
-    }
+
+  
+
+
 }
 
 /// For testing
 open class FakeGameSettings : IGameSettings
 {
+    public func clearData(_: Int) { }
+    public func cacheSpeed(_: Int) { }
+    public var options: [SaveableOption] = []
     public var noOfSuitesDefault: Int = 5
     public var specialSuite = PlayingCard.Suite.none
     public var isFoolATrump = false
@@ -318,23 +262,7 @@ open class FakeGameSettings : IGameSettings
     open func random() {}
     open func newDeck() {}
     
-    open func changeSettings(
-        _ noOfSuitesInDeck:Int,
-        noOfPlayersAtTable:Int,
-        noOfCardsInASuite:Int,
-        hasTrumps:Bool,
-        hasJokers:Bool,
-        willPassCards:Bool,
-        speedOfToss:Int,
-        gameWinningScoreIndex:Int,
-        ruleSet:Int,
-        allowBreakingTrumps:Bool,
-        includeHooligan:Bool,
-        includeOmnibus:Bool,
-        useNumbersForCourtCards:Bool,
-        noOfHumanPlayers: Int = 1,
-        showTips:Bool = true
-        ) -> Bool
+    open func changed() -> Bool
     {
         return false
     }

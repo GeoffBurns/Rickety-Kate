@@ -57,7 +57,6 @@
 		ACAE53801C269840003F0BB4 /* RicketyKateNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */; };
 		ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
 		ACB33B9E1BC210240019DC7C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
-		ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */; };
 		ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13351BAB1D5700196393 /* Scorer.swift */; };
 		ACCB13381BAD16E600196393 /* Awarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13371BAD16E600196393 /* Awarder.swift */; };
 		ACE6DFB11BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE6DFB01BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift */; };
@@ -75,7 +74,6 @@
 		ACF315801BDB129400F203E3 /* cards_diamonds_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315781BDB129400F203E3 /* cards_diamonds_white.atlas */; };
 		ACF315811BDB129400F203E3 /* cards_anchors_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */; };
 		ACF315821BDB129400F203E3 /* cards_clubs_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF3157A1BDB129400F203E3 /* cards_clubs_white.atlas */; };
-		ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF58BD51BAEE652009C255A /* OptionScreen.swift */; };
 		ACF739FB1BE87C9D003BA7F4 /* cards_picks_white.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF739F91BE87C9C003BA7F4 /* cards_picks_white.atlas */; };
 		ACF739FC1BE87C9D003BA7F4 /* cards_picks.atlas in Resources */ = {isa = PBXBuildFile; fileRef = ACF739FA1BE87C9D003BA7F4 /* cards_picks.atlas */; };
 /* End PBXBuildFile section */
@@ -182,7 +180,6 @@
 		ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RicketyKateNavigationController.swift; sourceTree = "<group>"; };
 		ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		ACB33B9D1BC210240019DC7C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitScreen.swift; sourceTree = "<group>"; };
 		ACCB13351BAB1D5700196393 /* Scorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scorer.swift; sourceTree = "<group>"; };
 		ACCB13371BAD16E600196393 /* Awarder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Awarder.swift; sourceTree = "<group>"; };
 		ACDCA6BA1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -206,7 +203,6 @@
 		ACF315781BDB129400F203E3 /* cards_diamonds_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_diamonds_white.atlas; sourceTree = "<group>"; };
 		ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_anchors_white.atlas; sourceTree = "<group>"; };
 		ACF3157A1BDB129400F203E3 /* cards_clubs_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs_white.atlas; sourceTree = "<group>"; };
-		ACF58BD51BAEE652009C255A /* OptionScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionScreen.swift; sourceTree = "<group>"; };
 		ACF68F9320DFCFD90002FB5D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		ACF68F9420DFCFD90002FB5D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
 		ACF68F9520DFCFD90002FB5D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -309,7 +305,6 @@
 				ACF315741BDB129400F203E3 /* cards_tarot_white.atlas */,
 				AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */,
 				AC9E82BE1BA686C40064870C /* CardTable.swift */,
-				ACBF9A941BAE1A5800837EEB /* ExitScreen.swift */,
 				AC2AB4CF1BC4E6ED0042BCBC /* GameEvent.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
 				AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */,
@@ -321,7 +316,6 @@
 				AC5CB3B01BFE8445007C5AFD /* Localizable.strings */,
 				AC62B6A01BA1564800B0EDAE /* Main.storyboard */,
 				AC74F0431BBEBA550051DF03 /* Navigator.swift */,
-				ACF58BD51BAEE652009C255A /* OptionScreen.swift */,
 				AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */,
 				ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */,
 				AC0304031BAEDE7C005263C7 /* RuleScreen.swift */,
@@ -592,11 +586,9 @@
 				AC5ECDFE1C3506030072903C /* TIp.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
 				ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */,
-				ACBF9A951BAE1A5800837EEB /* ExitScreen.swift in Sources */,
 				AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */,
 				AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */,
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
-				ACF58BD61BAEE652009C255A /* OptionScreen.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
 				AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */,
 				ACE6DFC71BAA5563005B5424 /* StatusArea.swift in Sources */,
