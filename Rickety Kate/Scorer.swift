@@ -79,7 +79,6 @@ class Scorer
     
     var leaderboardScore : Int64
         {
-            
             let ranked  = players
                 . sorted {$0.currentTotalScore.value < $1.currentTotalScore.value}
                 . enumerated()
@@ -93,7 +92,10 @@ class Scorer
                     . map { $0.1.currentTotalScore.value }
                     . filter { $0 > human.1.currentTotalScore.value}
                 let  beatenScore : Int = beaten.reduce(0) { $0 + $1 }
-                return Int64(Game.moreSettings.gameWinningScore -  human.1.currentTotalScore.value/2) * Int64(100) / Int64(human.0+1) + Int64(beatenScore)
+                let  ahead = Game.moreSettings.gameWinningScore -  human.1.currentTotalScore.value/2
+                let  rank = Int64(human.0+1)
+                let  winnings = Int64(ahead) * Int64(1000) / rank
+                return winnings + Int64(beatenScore)
             }
             return 1
     }
@@ -129,10 +131,13 @@ class Scorer
     let isGameWon = hasWonGame && !isDraw
     if isGameWon
       {
+        if self.players[0] is HumanPlayer {
+          GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard:  Game.rules.leaderboard)
+            
+        }
       recordTheScoresForAGameWin(winner!)
         
 
-      GameKitHelper.sharedInstance.reportScore(self.leaderboardScore, forLeaderBoard:  Game.rules.leaderboard)
         
       if winner?.playerNo == 0
       {

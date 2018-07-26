@@ -55,7 +55,7 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
                 NSNotification.Name(rawValue: PresentAuthenticationViewController), object: nil)
         
         GameKitHelper.sharedInstance.authenticateLocalPlayer()
-        
+        GameKitHelper.sharedInstance.gameView = self.view as? SKView
         Game.settings.isFoolATrump = false
         Game.settings.isAceHigh =  true
         Game.settings.noOfSuitesDefault = 5

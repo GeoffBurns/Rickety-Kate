@@ -116,6 +116,7 @@ Fast="Ayunar";
 "%@ Knocked"="%@ Pasado";
 player="jugador";
 "Having trouble connecting to Game Center"="Estamos teniendo problemas\npara conectarse a la Game Center";
+"Connecting to Game Center"="Conectando al centro de juegos";
 "Show Tips"="Mostrar sugerencias";
 Try_to_block_other_players_by_holding_back_cards="Trate de bloquear a otros\njugadores al retener tarjetas";
 Try_not_to_block_yourself="Trate de no bloquear a ti mismo\nal retener tarjetas que necesitará";

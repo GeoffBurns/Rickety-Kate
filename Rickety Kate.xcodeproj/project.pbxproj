@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0304031BAEDE7C005263C7 /* RuleScreen.swift */; };
 		AC100BCB2102C04F00F951E5 /* Cards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC100BC82102BFF300F951E5 /* Cards.framework */; };
 		AC100BCC2102C04F00F951E5 /* Cards.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC100BC82102BFF300F951E5 /* Cards.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AC147CDE1EF7DEB400A4E417 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */; };
@@ -46,7 +45,6 @@
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; };
 		AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */; };
 		AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0431BBEBA550051DF03 /* Navigator.swift */; };
-		AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */; };
 		AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC71BB380A00086AC02 /* Seater.swift */; };
 		AC8BD3DA2102BBE400CBA15A /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */; };
 		AC8F592F1C12BA7A0067C02A /* GivenAString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F592E1C12BA7A0067C02A /* GivenAString.swift */; };
@@ -124,7 +122,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AC0304031BAEDE7C005263C7 /* RuleScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuleScreen.swift; sourceTree = "<group>"; };
 		AC0E20581C0AE430004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		AC0E20591C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Main.strings"; sourceTree = "<group>"; };
 		AC0E205A1C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -170,7 +167,6 @@
 		AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot.atlas; sourceTree = "<group>"; };
 		AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassYourThreeWorstCardsPhase.swift; sourceTree = "<group>"; };
 		AC74F0431BBEBA550051DF03 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
-		AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDisplayScreen.swift; sourceTree = "<group>"; };
 		AC7C9FC71BB380A00086AC02 /* Seater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seater.swift; sourceTree = "<group>"; };
 		AC8F592E1C12BA7A0067C02A /* GivenAString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAString.swift; sourceTree = "<group>"; };
 		AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAPerfectKnowledgeStrategy.swift; sourceTree = "<group>"; };
@@ -283,7 +279,6 @@
 				AC2AB4D31BC4EC4D0042BCBC /* Bus.swift */,
 				AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */,
 				AC1CF69C1BB4238300001024 /* buttons.atlas */,
-				AC74F0451BBEC34E0051DF03 /* CardDisplayScreen.swift */,
 				AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */,
 				ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */,
 				AC73DDA31BB8252E00FF6114 /* cards_anchors.atlas */,
@@ -318,7 +313,6 @@
 				AC74F0431BBEBA550051DF03 /* Navigator.swift */,
 				AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */,
 				ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */,
-				AC0304031BAEDE7C005263C7 /* RuleScreen.swift */,
 				AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */,
 				ACCB13351BAB1D5700196393 /* Scorer.swift */,
 				AC7C9FC71BB380A00086AC02 /* Seater.swift */,
@@ -580,14 +574,12 @@
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
 				AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */,
 				AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */,
-				AC74F0461BBEC34E0051DF03 /* CardDisplayScreen.swift in Sources */,
 				ACAE53801C269840003F0BB4 /* RicketyKateNavigationController.swift in Sources */,
 				AC2AB4D41BC4EC4D0042BCBC /* Bus.swift in Sources */,
 				AC5ECDFE1C3506030072903C /* TIp.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
 				ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */,
 				AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */,
-				AC0304041BAEDE7C005263C7 /* RuleScreen.swift in Sources */,
 				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
 				AC2AB4D01BC4E6ED0042BCBC /* GameEvent.swift in Sources */,

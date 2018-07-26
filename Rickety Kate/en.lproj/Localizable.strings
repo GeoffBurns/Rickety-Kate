@@ -114,6 +114,7 @@ Fast="Fast";
 "%@ Knocked"="%@ Knocked";
 player="player";
 "Having trouble connecting to Game Center"="Having trouble connecting to Game Center";
+"Connecting to Game Center"="Connecting to Game Center";
 "Show Tips"="Show Tips";
 Try_to_block_other_players_by_holding_back_cards="Try to block other players\nby holding back cards";
 Try_not_to_block_yourself="Try not to block yourself by\nholding back cards you will need";

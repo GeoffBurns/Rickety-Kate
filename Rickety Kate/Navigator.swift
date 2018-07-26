@@ -16,7 +16,7 @@ class Navigate {
     static func setupRulesButton(_ scene:SKNode)
     {
  
-        let rulesButton = PopupButton(imageNamed:"Rules1", altNamed:"",popup:RuleScreen())
+        let rulesButton = PopupButton(imageNamed:"Rules1", altNamed:"",popup:RuleScreen(text:Game.moreSettings.rules.description, scores:Game.rules.cardScores))
         rulesButton.setScale(ButtonSize.small.scale)
         rulesButton.anchorPoint = CGPoint(x: 0.0, y: 1.0)
         scene.addChild(rulesButton)
