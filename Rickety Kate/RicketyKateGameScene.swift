@@ -134,11 +134,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
         if arePassingCards
         {
-            Bus.sharedInstance.send(GameEvent.discardWorstCards(3))
+            Bus.send(GameNotice.discardWorstCards(3))
         }
         else
         {
-            Bus.sharedInstance.send(GameEvent.newGame)
+            Bus.send(GameNotice.newGame)
         }
     }
     
@@ -194,7 +194,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         self.currentPlayer <~  Bus.sharedInstance.gameSignal
             . filter { switch $0 {case .turnFor: return true; default: return false } }
             . map { switch $0 {
-            case GameEvent.turnFor(let player) : return player
+            case GameEvent.turnFor(let player) : Bus.send(GameNotice.turnFor(player)) ; return player
             default : return CardPlayer(name: "None")
                 }
         }
@@ -210,7 +210,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                 if s.cardPassingPhase.isCurrentlyActive
                 {
                     s.fillBackgroundSpreadWith(s.threeWorstBackgroundCards)
-                    Bus.sharedInstance.send(GameEvent.newGame)
+                    Bus.send(GameNotice.newGame)
                 }
             }
         }
@@ -220,7 +220,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                 s.cardPassingPhase.isCurrentlyActive = s.arePassingCards
                 if s.cardPassingPhase.isCurrentlyActive
                 {
-                    Bus.sharedInstance.send(GameEvent.discardWorstCards(3))
+                    Bus.send(GameNotice.discardWorstCards(3))
                 } else {
                     s.startTrickPhase()
                 }
@@ -531,16 +531,16 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                             transferCardToTrickPile(cardsprite)
                             draggedNode = nil
                             return
-                            
-                        default:
+                        case .trumpsHaveNotBeenBroken :
                             cardsprite.tintRed()
-                            
-                            Bus.sharedInstance.send(gameEvent)
-                            
+                            Bus.send(GameNotice.trumpsHaveNotBeenBroken)
+                        case .cardDoesNotFollowSuite(let suite) :
+                            cardsprite.tintRed()
+                            Bus.send(GameNotice.cardDoesNotFollowSuite(suite))
                         }
                     }
                 } else {
-                    Bus.sharedInstance.send(GameEvent.waitYourTurn)
+                    Bus.send(GameNotice.waitYourTurn)
                 }
                 
                 restoreDraggedCard()

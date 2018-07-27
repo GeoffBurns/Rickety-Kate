@@ -69,7 +69,7 @@ class Scorer
          {
          player.currentTotalScore.value = 0
          hasShotMoon = true
-         Bus.sharedInstance.send(GameEvent.shotTheMoon(player.name))
+         Bus.send(GameNotice.shotTheMoon(player.name))
          GameKitHelper.sharedInstance.reportAchievement(Achievement.ShootingTheMoon)
         }
       }
@@ -146,7 +146,7 @@ class Scorer
        
       }
     
-      Bus.sharedInstance.send(GameEvent.winGame(winner!.name))
+      Bus.send(GameNotice.winGame(winner!.name))
       }
         
  

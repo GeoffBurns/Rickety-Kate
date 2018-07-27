@@ -107,7 +107,7 @@ open class RicketyKateCardTable : CardTable, GameState
         }
     }
     
-    func isMoveValid(_ player:CardPlayer,card:PlayingCard) -> GameEvent
+    func isMoveValid(_ player:CardPlayer,card:PlayingCard) -> GameMove
     {
      
         if self.tricksPile.isEmpty
@@ -118,10 +118,10 @@ open class RicketyKateCardTable : CardTable, GameState
                card.suite == Game.moreSettings.rules.trumpSuite
             
             {
-                return GameEvent.trumpsHaveNotBeenBroken
+                return GameMove.trumpsHaveNotBeenBroken
             }
             
-            return GameEvent.cardPlayed(player, card)
+            return GameMove.cardPlayed(player, card)
         }
         if let trick = self.tricksPile.first
         {
@@ -130,7 +130,7 @@ open class RicketyKateCardTable : CardTable, GameState
             
             /// If the player has no cards in the suite they do not need to follow
             if cardsInSuite.isEmpty || card.suite == leadingSuite  {
-                return GameEvent.cardPlayed(player, card)
+                return GameMove.cardPlayed(player, card)
             }
             if let cardScene = scene {
             
@@ -145,12 +145,12 @@ open class RicketyKateCardTable : CardTable, GameState
                 }
             }
             
-            return GameEvent.cardDoesNotFollowSuite(leadingSuite)
+            return GameMove.cardDoesNotFollowSuite(leadingSuite)
         }
         
         /// Shoold never get here
         print("trick pile is non empty and has on first")
-        return GameEvent.cardPlayed(player, card)
+        return GameMove.cardPlayed(player, card)
     }
     
     func playTrickCard(_ playerWithTurn:CardPlayer, trickcard:PlayingCard)

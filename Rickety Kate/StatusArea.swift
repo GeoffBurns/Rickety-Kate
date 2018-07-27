@@ -60,18 +60,18 @@ class StatusDisplay : Resizable
         
     noticeLabel = Game.settings.showTips
             ? Label(fontNamed:"Chalkduster").withShadow().withFadeOutAndAction
-                {  Bus.sharedInstance.send(GameEvent.showTip(Tip.dispenceTip())) }
+                {  Bus.send(GameNotice.showTip(Tip.dispenceTip())) }
             : Label(fontNamed:"Chalkduster").withShadow().withFadeInOut()
     noticeLabel.resetToScene(scene)
     noticeLabel2.resetToScene(scene)
     arrangeLayoutFor(scene.frame.size,bannerHeight: 0.0)
 
-    noticeLabel.rac_text <~ Bus.sharedInstance.gameSignal
+    noticeLabel.rac_text <~ Bus.sharedInstance.noteSignal
         . filter { $0.description != nil }
         . map { $0.line2! }
        
         
-    noticeLabel2.rac_text <~ Bus.sharedInstance.gameSignal
+    noticeLabel2.rac_text <~ Bus.sharedInstance.noteSignal
             . filter { $0.description != nil }
             . map { $0.line1! }
         

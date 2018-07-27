@@ -14,12 +14,26 @@ class Bus {
     
     let (gameSignal,gameSink) = Signal<GameEvent,Result.NoError>.pipe()
     
+    let (noteSignal,noteSink) = Signal<GameNotice,Result.NoError>.pipe()
     
     static let sharedInstance = Bus()
     fileprivate init() { }
     
+    static func send(_ gameEvent:GameEvent)
+    {
+        sharedInstance.gameSink.send( value: gameEvent)
+    }
+    static func send(_ gameNotice:GameNotice)
+    {
+        sharedInstance.noteSink.send( value: gameNotice)
+    }
+    
     func send(_ gameEvent:GameEvent)
     {
     gameSink.send( value: gameEvent)
+    }
+    func send(_ gameNotice:GameNotice)
+    {
+        noteSink.send( value: gameNotice)
     }
 }

@@ -169,7 +169,7 @@ var isCurrentlyActive = true
       
         if  count < 3
           {
-          Bus.sharedInstance.send(GameEvent.discardWorstCards(3-count))
+          Bus.send(GameNotice.discardWorstCards(3-count))
           return true
           }
         else

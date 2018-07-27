@@ -83,23 +83,23 @@ class AwarderBase
         
         if !ricketyKate.isEmpty
         {
-            Bus.sharedInstance.send(GameEvent.winRicketyKate(winnersName))
+            Bus.send(GameNotice.winRicketyKate(winnersName))
         }
         else if !omni.isEmpty
         {
-            Bus.sharedInstance.send(GameEvent.winOmnibus(winnersName))
+            Bus.send(GameNotice.winOmnibus(winnersName))
         }
         else if !hool.isEmpty
         {
-            Bus.sharedInstance.send(GameEvent.winHooligan(winnersName))
+            Bus.send(GameNotice.winHooligan(winnersName))
         }
         else if noTrumps > 0
         {
-            Bus.sharedInstance.send(GameEvent.winSpades(winnersName,noTrumps))
+            Bus.send(GameNotice.winSpades(winnersName,noTrumps))
         }
         else
         {
-            Bus.sharedInstance.send(GameEvent.winTrick(winnersName))
+            Bus.send(GameNotice.winTrick(winnersName))
         }
         
         return score
