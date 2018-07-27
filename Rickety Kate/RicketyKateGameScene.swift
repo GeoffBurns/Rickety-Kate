@@ -134,11 +134,11 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     {
         if arePassingCards
         {
-            Bus.send(GameNotice.discardWorstCards(3))
+            Bus.send(GameNotice.discardWorstCards2(Game.moreSettings.gameType,3))
         }
         else
         {
-            Bus.send(GameNotice.newGame)
+            Bus.send(GameNotice.newGame2(Game.moreSettings.gameType))
         }
     }
     
