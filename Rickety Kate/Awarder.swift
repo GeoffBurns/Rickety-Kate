@@ -83,19 +83,19 @@ class AwarderBase
         
         if !ricketyKate.isEmpty
         {
-            Bus.send(GameNotice.winRicketyKate(winnersName))
+            Bus.send(GameNotice.player(Scored.winRicketyKate(winnersName)))
         }
         else if !omni.isEmpty
         {
-            Bus.send(GameNotice.winOmnibus(winnersName))
+            Bus.send(GameNotice.player(Scored.winOmnibus(winnersName)))
         }
         else if !hool.isEmpty
         {
-            Bus.send(GameNotice.winHooligan(winnersName))
+            Bus.send(GameNotice.player(Scored.winHooligan(winnersName)))
         }
         else if noTrumps > 0
         {
-            Bus.send(GameNotice.winSpades(winnersName,noTrumps))
+            Bus.send(GameNotice.player(Scored.winSpades(winnersName,noTrumps)))
         }
         else
         {

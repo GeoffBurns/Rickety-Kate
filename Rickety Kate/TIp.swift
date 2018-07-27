@@ -6,11 +6,12 @@
 //  Copyright © 2015 Geoff Burns All rights reserved.
 //
 
-import Foundation
 import Cards
 
+
+
 /// Tips on how to play the game
-public enum Tip 
+public enum Tip : GameTip
 {
     case tap_question_mark_to_learn_rules
     case tap_cog_symbol_to_change_rules
@@ -29,7 +30,7 @@ public enum Tip
     case no_Tip
 
     /// display tip as string
-    var description : String
+    public var description : String
     {
             switch self
             {

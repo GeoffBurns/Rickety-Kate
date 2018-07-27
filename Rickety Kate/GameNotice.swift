@@ -7,21 +7,32 @@
 //
 import Cards
 
+public protocol GameMove {
+    
+    var description : String? {get}
+}
+
+public protocol GameTip {
+    
+    var description : String {get}
+}
+
+public protocol PlayerScored {
+    
+    var description : String? {get}
+}
+
 public enum GameNotice : Equatable
 {
     case winTrick(String)
     case winGame(String)
-    case shotTheMoon(String)
-    case winRicketyKate(String)
-    case winHooligan(String)
-    case winOmnibus(String)
-    case winSpades(String,Int)
-    case invalidMove(Move)
-    case validMove(Move)
+    case player(PlayerScored)
+    case invalidMove(GameMove)
+    case validMove(GameMove)
     case waitYourTurn
     case turnOverYourCards
     case turnFor(CardPlayer)
-    case showTip(Tip)
+    case showTip(GameTip)
     case newGame
     case discardWorstCards(Int)
     
@@ -34,25 +45,9 @@ public enum GameNotice : Equatable
         {
         case .winTrick( let name ) :
             return  "%@ just Won the Trick".sayTo(name)
-        case .shotTheMoon( let name ) :
-            return "%@ just Shot the Moon".sayCongratsTo(name)
         case .winGame( let name ) :
             return "%@ just Won the Game".sayCongratsTo(name)
-        case .winRicketyKate( let name ) :
-            return  "%@ was kissed by Rickety Kate Poor %@".sayTwiceTo(name)
-        case .winHooligan( let name ) :
-            return  "%@ was bashed by the Hooligan Poor %@".sayTwiceTo(name)
-        case .winOmnibus( let name ) :
-            return "%@ just Caught the Bus".sayCongratsTo(name)
-        case .winSpades( let name, let noOfSpades ) :
-            let spades = Game.moreSettings.rules.shortDescription
-            let start = "%@ won %d %@"
-                .with
-                .sayTo(name)
-                .pluralize(noOfSpades,arguements: spades)
-            
-            let local = start.localize
-            return  local + "\n" + "Bad Luck".localize + "."
+
         case .turnOverYourCards :
             return "Swipe to turn over your cards".localize
         case .turnFor( let player ) :
@@ -70,6 +65,8 @@ public enum GameNotice : Equatable
             return move.description
         case .validMove( let move )  :
             return move.description
+        case .player( let scored )  :
+            return scored.description
         case .waitYourTurn :
             return "Wait your turn".localize
         case .discardWorstCards(let noOfCardsLeft) :
@@ -124,13 +121,9 @@ public func ==(lhs: GameNotice, rhs: GameNotice) -> Bool {
     switch (lhs, rhs) {
         
     case let (.winTrick(la), .winTrick(ra)): return la == ra
-        
-    case let (.shotTheMoon(la), .shotTheMoon(ra)): return la == ra
+
     case let (.winGame(la), .winGame(ra)): return la == ra
-    case let (.winRicketyKate(la), .winRicketyKate(ra)): return la == ra
-    case let (.winHooligan(la), .winHooligan(ra)): return la == ra
-    case let (.winOmnibus(la), .winOmnibus(ra)): return la == ra
-    case let (.winSpades(la,li), .winSpades(ra,ri)): return la == ra && li == ri
+
     case let (.turnFor(la), .turnFor(ra)): return la == ra
     case let (.showTip(la), .showTip(ra)): return la == ra
     case let (.discardWorstCards(la), .discardWorstCards(ra)): return la == ra
@@ -141,4 +134,15 @@ public func ==(lhs: GameNotice, rhs: GameNotice) -> Bool {
         
     default: return false
     }
+}
+
+
+public func ==(lhs: GameMove, rhs:GameMove) -> Bool {
+    return lhs.description == rhs.description
+}
+public func ==(lhs: GameTip, rhs:GameTip) -> Bool {
+    return lhs.description == rhs.description
+}
+public func ==(lhs: PlayerScored, rhs: PlayerScored) -> Bool {
+    return lhs.description == rhs.description
 }

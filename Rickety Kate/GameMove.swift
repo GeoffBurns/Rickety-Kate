@@ -9,11 +9,7 @@
 
 import Cards
 
-public protocol Move {
-
-    var description : String? {get}
-}
-public enum GameMove : Move, Equatable
+public enum Move : GameMove, Equatable
 {
     case cardPlayed(CardHolderBase,PlayingCard)
     case cardDoesNotFollowSuite(PlayingCard.Suite)
@@ -37,16 +33,12 @@ public enum GameMove : Move, Equatable
 
 }
 
-
-public func ==(lhs: GameMove, rhs: GameMove) -> Bool {
+public func ==(lhs: Move, rhs: Move) -> Bool {
     switch (lhs, rhs) {
         
     case let (.cardDoesNotFollowSuite(la), .cardDoesNotFollowSuite(ra)): return la == ra
     default: return false
     }
 }
-   
-public func ==(lhs: Move, rhs: Move) -> Bool {
-         return lhs.description == rhs.description
-}
+
 
