@@ -9,7 +9,7 @@
 import Foundation
 import Cards
 
-open class ComputerPlayer :CardPlayer
+open class ComputerPlayer :CardPlayer, RobotPasser
 {
     //////////////////////////////////////
     /// Variables

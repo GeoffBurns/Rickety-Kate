@@ -14,7 +14,6 @@
 		AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */; };
 		AC1D447F210061D4008E80B3 /* GameSettingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */; };
 		AC1D44EC2100A981008E80B3 /* CardGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D44EB2100A981008E80B3 /* CardGameScene.swift */; };
-		AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */; };
 		AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
 		AC3309551BC3D51000A41706 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
 		AC3BB19020FA064A005B5B29 /* RicketyKateGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */; };
@@ -41,7 +40,6 @@
 		AC73DDA41BB8252E00FF6114 /* cards_anchors.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA31BB8252E00FF6114 /* cards_anchors.atlas */; };
 		AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */; };
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; };
-		AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */; };
 		AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0431BBEBA550051DF03 /* Navigator.swift */; };
 		AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7C9FC71BB380A00086AC02 /* Seater.swift */; };
 		AC8BD3DA2102BBE400CBA15A /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */; };
@@ -132,7 +130,6 @@
 		AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Extra.atlas; sourceTree = "<group>"; };
 		AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingExtensions.swift; sourceTree = "<group>"; };
 		AC1D44EB2100A981008E80B3 /* CardGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGameScene.swift; sourceTree = "<group>"; };
-		AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPassingStrategy.swift; sourceTree = "<group>"; };
 		AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RicketyKateGameScene.swift; sourceTree = "<group>"; };
 		AC3BB19B20FA1023005B5B29 /* IAwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAwarder.swift; sourceTree = "<group>"; };
 		AC3BB19D20FA1094005B5B29 /* computerplayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = computerplayer.swift; sourceTree = "<group>"; };
@@ -164,7 +161,6 @@
 		AC73DDA31BB8252E00FF6114 /* cards_anchors.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_anchors.atlas; sourceTree = "<group>"; };
 		AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs.atlas; sourceTree = "<group>"; };
 		AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot.atlas; sourceTree = "<group>"; };
-		AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassYourThreeWorstCardsPhase.swift; sourceTree = "<group>"; };
 		AC74F0431BBEBA550051DF03 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		AC7C9FC71BB380A00086AC02 /* Seater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seater.swift; sourceTree = "<group>"; };
 		AC8F592E1C12BA7A0067C02A /* GivenAString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAString.swift; sourceTree = "<group>"; };
@@ -298,7 +294,6 @@
 				AC62B6981BA1564800B0EDAE /* AppDelegate.swift */,
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
 				AC1D44EB2100A981008E80B3 /* CardGameScene.swift */,
-				AC252A4A1BA8E6B900C0121A /* CardPassingStrategy.swift */,
 				AC9E82BE1BA686C40064870C /* CardTable.swift */,
 				AC3BB19D20FA1094005B5B29 /* computerplayer.swift */,
 				ACD6964A210B40F800ECC62A /* GameMove.swift */,
@@ -308,7 +303,6 @@
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
 				AC3BB19B20FA1023005B5B29 /* IAwarder.swift */,
 				AC74F0431BBEBA550051DF03 /* Navigator.swift */,
-				AC73DDAB1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift */,
 				AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */,
 				ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */,
 				AC3E5D491BAB04B700B6A3A0 /* ScoreDisplay.swift */,
@@ -578,7 +572,6 @@
 				AC5ECE001C35091E0072903C /* Usher.swift in Sources */,
 				ACE6DFBA1BAA32AB005B5424 /* GameState.swift in Sources */,
 				AC7C9FCA1BB380A00086AC02 /* Seater.swift in Sources */,
-				AC73DDAC1BBC107100FF6114 /* PassYourThreeWorstCardsPhase.swift in Sources */,
 				ACAE53801C269840003F0BB4 /* RicketyKateNavigationController.swift in Sources */,
 				AC5ECDFE1C3506030072903C /* TIp.swift in Sources */,
 				ACCB13381BAD16E600196393 /* Awarder.swift in Sources */,
@@ -586,7 +579,6 @@
 				ACD69652210B45BE00ECC62A /* Notice.swift in Sources */,
 				ACD69656210B4E9C00ECC62A /* PlayerScored.swift in Sources */,
 				AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */,
-				AC252A4B1BA8E6B900C0121A /* CardPassingStrategy.swift in Sources */,
 				AC62B6991BA1564800B0EDAE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
