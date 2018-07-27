@@ -524,19 +524,16 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                     if let cardsprite = draggedNode, positionInScene.y > height * 0.3
                     {
                         
-                        let gameEvent = table.isMoveValid(self.table.playerOne,card: cardsprite.card)
-                        switch gameEvent
+                        let move = table.isMoveValid(self.table.playerOne,card: cardsprite.card)
+                        switch move
                         {
                         case .cardPlayed(_, _) :
                             transferCardToTrickPile(cardsprite)
                             draggedNode = nil
                             return
-                        case .trumpsHaveNotBeenBroken :
+                        default :
                             cardsprite.tintRed()
-                            Bus.send(GameNotice.trumpsHaveNotBeenBroken)
-                        case .cardDoesNotFollowSuite(let suite) :
-                            cardsprite.tintRed()
-                            Bus.send(GameNotice.cardDoesNotFollowSuite(suite))
+                            Bus.send(GameNotice.invalidMove(move))
                         }
                     }
                 } else {

@@ -7,16 +7,19 @@
 //
 
 
-import Foundation
 import Cards
 
-public enum GameMove : Equatable
+public protocol Move {
+
+    var description : String? {get}
+}
+public enum GameMove : Move, Equatable
 {
     case cardPlayed(CardHolderBase,PlayingCard)
     case cardDoesNotFollowSuite(PlayingCard.Suite)
     case trumpsHaveNotBeenBroken
     
-    var description : String?
+    public var description : String?
     {
         switch self
         {
@@ -31,6 +34,7 @@ public enum GameMove : Equatable
         }
     }
     
+
 }
 
 
@@ -41,3 +45,8 @@ public func ==(lhs: GameMove, rhs: GameMove) -> Bool {
     default: return false
     }
 }
+   
+public func ==(lhs: Move, rhs: Move) -> Bool {
+         return lhs.description == rhs.description
+}
+

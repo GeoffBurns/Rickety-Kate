@@ -16,8 +16,8 @@ public enum GameNotice : Equatable
     case winHooligan(String)
     case winOmnibus(String)
     case winSpades(String,Int)
-    case cardDoesNotFollowSuite(PlayingCard.Suite)
-    case trumpsHaveNotBeenBroken
+    case invalidMove(Move)
+    case validMove(Move)
     case waitYourTurn
     case turnOverYourCards
     case turnFor(CardPlayer)
@@ -66,10 +66,10 @@ public enum GameNotice : Equatable
             return tip.description
         case .newGame :
             return "%@ Game On".localizeWith(Game.moreSettings.gameType)
-        case .trumpsHaveNotBeenBroken :
-            return "Can not Lead with a %@".localizeWith(Game.moreSettings.rules.trumpSuiteSingular)
-        case .cardDoesNotFollowSuite( let suite )  :
-            return "Card Does Not Follow Suite".localize + "\n" + "Play a %@".localizeWith(suite.singular)
+        case .invalidMove( let move )  :
+            return move.description
+        case .validMove( let move )  :
+            return move.description
         case .waitYourTurn :
             return "Wait your turn".localize
         case .discardWorstCards(let noOfCardsLeft) :
@@ -134,7 +134,8 @@ public func ==(lhs: GameNotice, rhs: GameNotice) -> Bool {
     case let (.turnFor(la), .turnFor(ra)): return la == ra
     case let (.showTip(la), .showTip(ra)): return la == ra
     case let (.discardWorstCards(la), .discardWorstCards(ra)): return la == ra
-    case (.cardDoesNotFollowSuite, .cardDoesNotFollowSuite): return true
+    case let (.invalidMove(la), .invalidMove(ra)): return la == ra
+    case let (.validMove(la), .validMove(ra)): return la == ra
     case (.waitYourTurn, .waitYourTurn): return true
     case (.newGame, .newGame): return true
         
