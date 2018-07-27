@@ -41,10 +41,12 @@ class StatusDisplay : Resizable
     {
         let fontsize : CGFloat = FontSize.huge.scale
         adHeight = bannerHeight
-        noticeLabel.position = CGPoint(x:size.width * 0.5, y:size.height * 0.33 + bannerHeight);
+    /*    noticeLabel.position = CGPoint(x:size.width * 0.5, y:size.height * 0.33 + bannerHeight);
     
         noticeLabel2.position = CGPoint(x:size.width * 0.5, y:size.height * 0.68 + bannerHeight);
-        
+        */
+        noticeLabel.position = CGPoint(x:size.width * 0.5, y:size.height *  (DeviceSettings.isPhoneX ? 0.28 : (DeviceSettings.isPhone ? 0.28 :0.33)) + bannerHeight);
+        noticeLabel2.position = CGPoint(x:size.width * 0.5, y:size.height * (DeviceSettings.isPhoneX ? 0.72 : (DeviceSettings.isPhone ? 0.72 :0.68)) + bannerHeight);
         
         noticeLabel.fontSize = fontsize;
         

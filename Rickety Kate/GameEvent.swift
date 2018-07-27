@@ -54,13 +54,15 @@ public enum GameEvent : Equatable
                 return  "%@ was bashed by the Hooligan Poor %@".sayTwiceTo(name)
             case .winOmnibus( let name ) :
                 return "%@ just Caught the Bus".sayCongratsTo(name)
-            case .winSpades( let name, let noOfSpades ) : 
+            case .winSpades( let name, let noOfSpades ) :
+                let spades = Game.moreSettings.rules.shortDescription
                 let start = "%@ won %d %@"
                     .with
                     .sayTo(name)
-                    .pluralize(noOfSpades,arguements: Game.moreSettings.rules.shortDescription)
-                    .localize
-                return  start + "\n" + "Bad Luck".localize + "."
+                    .pluralize(noOfSpades,arguements: spades)
+                
+                let local = start.localize
+                return  local + "\n" + "Bad Luck".localize + "."
             case .turnOverYourCards :
                 return "Swipe to turn over your cards".localize
             case .turnFor( let player ) :
