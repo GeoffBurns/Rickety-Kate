@@ -77,7 +77,20 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
         ]
         Options.speed.valueWasSetTo = Game.settings.cacheSpeed
         MoreOptions.ruleSet.valueWasSetTo = Game.settings.clearData
-        
+        Tip.setup()
+        ScoreDisplay.scoreToString = {(name,wins,score) in
+            if wins==0
+            {
+                return  "%@ score is %d".with.sayTo(name).using(score).localize
+            }
+            return "%@ Score %d n %d %@".with.sayTo(name).using(score).pluralizeUnit(wins, unit: "Win").localize
+        }
+        ScoreDisplay.top =  DeviceSettings.isPortrait ? 0.90 : 0.87
+        ScoreDisplay.bottom =  DeviceSettings.isPortrait ? 0.12 :
+            (DeviceSettings.isPhone
+                ? (DeviceSettings.isPhoneX || DeviceSettings.isPhone55inch ? 0.25 : 0.19)
+                : 0.22)
+      
         // Scene should be shown in fullscreen mode
         let scene = RicketyKateGameScene(size: size)
         scene.tableSize = size

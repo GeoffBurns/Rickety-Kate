@@ -50,29 +50,15 @@ public enum Tip : GameTip
             }
     }
     
-    /// Tips shown in demo mode
-    static let demoTips = [tap_question_mark_to_learn_rules,tap_cog_symbol_to_change_rules,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_triangle_to_start_game,tap_dice_to_start_game_with_random_rules,tap_cog_symbol_to_build_your_own_deck_of_cards,tap_cog_symbol_to_change_the_number_of_players]
-    
-    /// Tips shown in game mode
-    static let gameTips = [tap_question_mark_to_learn_rules,drag_a_card_to_the_center_to_play,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_cross_to_end_game,try_to_avoid_winning_Rickety_Kate]
-    
-    /// current tips displayed
-    static var tips = demoTips
-    
-    /// last tip displayed
-    static var lastTip = no_Tip
 
-    /// next tip displayed
-    static func dispenceTip()->Tip
+    
+    static func setup()
     {
-        var result = no_Tip
+        /// Tips shown in demo mode
+        Game.demoTips = [tap_question_mark_to_learn_rules,tap_cog_symbol_to_change_rules,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_triangle_to_start_game,tap_dice_to_start_game_with_random_rules,tap_cog_symbol_to_build_your_own_deck_of_cards,tap_cog_symbol_to_change_the_number_of_players]
         
-        repeat {
-            result = tips.randomItem!
-        } while result==lastTip
         
-        lastTip = result
-        
-    return result
+        /// Tips shown in game mode
+        Game.gameTips = [tap_question_mark_to_learn_rules,drag_a_card_to_the_center_to_play,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_cross_to_end_game,try_to_avoid_winning_Rickety_Kate]
     }
 }
