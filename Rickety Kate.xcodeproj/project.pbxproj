@@ -19,6 +19,7 @@
 		AC3BB19020FA064A005B5B29 /* RicketyKateGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */; };
 		AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19B20FA1023005B5B29 /* IAwarder.swift */; };
 		AC3BB19E20FA1094005B5B29 /* computerplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19D20FA1094005B5B29 /* computerplayer.swift */; };
+		AC49896B210CB19B0048D6A1 /* GivenASequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC49896A210CB19B0048D6A1 /* GivenASequence.swift */; };
 		AC5CB3B21BFE8445007C5AFD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC5CB3B01BFE8445007C5AFD /* Localizable.strings */; };
 		AC5ECDFE1C3506030072903C /* TIp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5ECDFD1C3506030072903C /* TIp.swift */; };
 		AC5ECE001C35091E0072903C /* Usher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5ECDFF1C35091E0072903C /* Usher.swift */; };
@@ -130,6 +131,7 @@
 		AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RicketyKateGameScene.swift; sourceTree = "<group>"; };
 		AC3BB19B20FA1023005B5B29 /* IAwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAwarder.swift; sourceTree = "<group>"; };
 		AC3BB19D20FA1094005B5B29 /* computerplayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = computerplayer.swift; sourceTree = "<group>"; };
+		AC49896A210CB19B0048D6A1 /* GivenASequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GivenASequence.swift; sourceTree = "<group>"; };
 		AC5CB3B11BFE8445007C5AFD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AC5CB3B31BFE84A8007C5AFD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AC5CB3B41BFE84A8007C5AFD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
@@ -297,6 +299,8 @@
 				AC62B69E1BA1564800B0EDAE /* GameViewController.swift */,
 				AC3BB19B20FA1023005B5B29 /* IAwarder.swift */,
 				AC74F0431BBEBA550051DF03 /* Navigator.swift */,
+				ACD69651210B45BE00ECC62A /* Notice.swift */,
+				ACD69655210B4E9C00ECC62A /* PlayerScored.swift */,
 				AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */,
 				ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */,
 				ACCB13351BAB1D5700196393 /* Scorer.swift */,
@@ -308,8 +312,6 @@
 				AC5CB3B01BFE8445007C5AFD /* Localizable.strings */,
 				AC62B6A01BA1564800B0EDAE /* Main.storyboard */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
-				ACD69651210B45BE00ECC62A /* Notice.swift */,
-				ACD69655210B4E9C00ECC62A /* PlayerScored.swift */,
 			);
 			path = "Rickety Kate";
 			sourceTree = "<group>";
@@ -337,6 +339,7 @@
 				AC8F592E1C12BA7A0067C02A /* GivenAString.swift */,
 				AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */,
 				AC8F59321C138D2F0067C02A /* GivenATrickPile.swift */,
+				AC49896A210CB19B0048D6A1 /* GivenASequence.swift */,
 			);
 			path = "Rickety KateTests";
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				AC627E8B1BA30807003E9A8F /* GivenAPlayer.swift in Sources */,
 				ACE6DFC51BAA46F4005B5424 /* GivenALateGameFollowingStrategy.swift in Sources */,
 				ACE6DFB11BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift in Sources */,
+				AC49896B210CB19B0048D6A1 /* GivenASequence.swift in Sources */,
 				AC8F59311C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

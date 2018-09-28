@@ -1,1 +1,1 @@
-carthage update --platform iOS --no-use-binaries    
+carthage update --platform iOS --no-use-binaries --new-resolver

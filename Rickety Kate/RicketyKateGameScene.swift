@@ -26,21 +26,20 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
     
     var adHeight = CGFloat(0)
-    var currentPlayer = MutableProperty<CardPlayer>(CardPlayer(name: "None"))
+
     
     func setupPassYourThreeWorstCardsPhase()
     {
         cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
     }
     
+    func seatPlayers(_ isPortrait:Bool)
+    {
+        Seater.seatPlayers(self, isPortrait:isPortrait, players:table.players)
+    }
     func seatPlayers()
     {
-        
-        let seats = self.isPortrait ? Seater.portraitSeatsFor(table.players.count) : Seater.seatsFor(table.players.count)
-        for (i,(player,seat)) in zip(table.players,seats).enumerated()
-        {
-            player.setup(self, sideOfTable: seat, playerNo: i,isPortrait: self.isPortrait)
-        }
+        seatPlayers(self.isPortrait)
     }
     func arrangeLayoutFor(_ size:CGSize, bannerHeight:CGFloat)
     {
@@ -84,28 +83,6 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         self.cardPassingPhase.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
         StatusDisplay.sharedInstance.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
         
-        let seats = size.isPortrait ? Seater.portraitSeatsFor(table.players.count) : Seater.seatsFor(table.players.count)
-        for (player,seat) in zip(table.players,seats)
-        {
-            player.setPosition(newSize,sideOfTable: seat)
-        }
-        
-        for (player,score) in zip(table.players,ScoreDisplay.sharedInstance.scoreLabel)
-        {
-            score.position = ScoreDisplay.scorePosition(player.sideOfTable, size: newSize, bannerHeight:adHeight )
-            score.zRotation = ScoreDisplay.scoreRotation(player.sideOfTable)
-        }
-        
-        let nodeNeedingLayoutRearrangement = self
-            .children
-            .filter { $0 is Resizable }
-            .map { $0 as! Resizable }
-        
-        
-        for resizing in nodeNeedingLayoutRearrangement
-        {
-            resizing.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
-        }
         for (i,player) in table.players.enumerated()
         {
             self.schedule(delay: 0.4 * Double(i) )
@@ -118,6 +95,20 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                 player.wonCards.rearrange()
             }
         }
+        seatPlayers( size.isPortrait)
+        ScoreDisplay.sharedInstance.resetScoreLabels(table.players, size: newSize, bannerHeight:adHeight )
+    
+        let nodeNeedingLayoutRearrangement = self
+            .children
+            .filter { $0 is Resizable }
+            .map { $0 as! Resizable }
+        
+        
+        for resizing in nodeNeedingLayoutRearrangement
+        {
+            resizing.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
+        }
+ 
     }
     
     
@@ -180,28 +171,13 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         }
         
         
-        /*     let signal : Signal<CardPlayer,NoError> =  Bus.sharedInstance.gameSignal
-         . filter { switch $0 {case .TurnFor: return true; default: return false } }
-         . map { switch $0 {
-         case GameEvent.TurnFor(let player) : return player
-         default : return CardPlayer(name: "None")
-         }
-         }
-         
-         self.currentPlayer <~ signal
-         
-         */
-        self.currentPlayer <~  Bus.sharedInstance.gameSignal
-            . filter { switch $0 {case .turnFor: return true; default: return false } }
-            . map { switch $0 {
-            case GameEvent.turnFor(let player) : Bus.send(GameNotice.turnFor(player)) ; return player
-            default : return CardPlayer(name: "None")
-                }
-        }
+        setupCurrentPlayer()
     }
     
     func startHand()
     {
+   
+        
         self.schedule(delay: Game.settings.tossDuration*0.5) { [weak self]  in
             if let s = self
             {
@@ -220,6 +196,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                 s.cardPassingPhase.isCurrentlyActive = s.arePassingCards
                 if s.cardPassingPhase.isCurrentlyActive
                 {
+                    Bus.send(GameEvent.turnFor(s.table.players[0]))
                     Bus.send(GameNotice.discardWorstCards(3))
                 } else {
                     s.startTrickPhase()
@@ -519,7 +496,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                     checkPassingPhaseProgess()
                     return;
                 }
-                else if self.currentPlayer.value is HumanPlayer
+                else if self.currentPlayer is HumanPlayer
                 {
                     if let cardsprite = draggedNode, positionInScene.y > height * 0.3
                     {

@@ -1,4 +1,8 @@
 
+for i in /Users/geoffburns/Documents/projects/cards/Vector-Playing-Cards-master/letters/*.svg; do /Applications/Inkscape.app/Contents/Resources/bin/inkscape $i -w 32 -h  27 --export-png=`echo $i | sed -e 's/svg$/png/'`; done
+
+for i in /Users/geoffburns/Documents/projects/cards/Vector-Playing-Cards-master/letters/*.svg; do /Applications/Inkscape.app/Contents/Resources/bin/inkscape $i -w 64 -h  54 --export-png=`echo $i | sed -e 's/.svg$/@2x.png/'`; done
+
 for i in /Users/geoffburns/Documents/projects/cards/Vector-Playing-Cards-master/cards-svg/*.svg; do /Applications/Inkscape.app/Contents/Resources/bin/inkscape $i -w 167 -h  243 --export-png=`echo $i | sed -e 's/svg$/png/'`; done
 
 for i in /Users/geoffburns/Documents/projects/cards/Vector-Playing-Cards-master/cards-svg/*.svg; do /Applications/Inkscape.app/Contents/Resources/bin/inkscape $i -w 334 -h  486 --export-png=`echo $i | sed -e 's/.svg$/@2x.png/'`; done

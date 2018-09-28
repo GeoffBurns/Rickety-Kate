@@ -24,6 +24,8 @@ class Usher {
         
         let noOfComputerPlayers = noOfPlayers - noOfHumans
         
+        
+        
         let humans = (1...noOfHumans).map { HumanPlayer(name: "player".localize + $0.description) as CardPlayer }
         
         if let gameCenterName = GameKitHelper.sharedInstance.gameCenterName {
@@ -31,10 +33,9 @@ class Usher {
         } else if noOfHumans == 1 {
             humans[0].name = GameKitHelper.sharedInstance.displayName
         }
-        
+        if noOfComputerPlayers <= 0 { return humans }
         return humans + Array(computerPlayers[0..<noOfComputerPlayers])
     }
-    
 }
 
 extension CardPlayer

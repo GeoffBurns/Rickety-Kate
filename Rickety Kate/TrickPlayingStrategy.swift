@@ -217,7 +217,7 @@ open class EarlyGameFollowingStrategy : TrickPlayingStrategy
 // If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
 open class LateGameLeadingStrategy : TrickPlayingStrategy
 {
-    open static let sharedInstance = LateGameLeadingStrategy()
+    public static let sharedInstance = LateGameLeadingStrategy()
     fileprivate init() { }
     open func chooseCard(_ player:CardHolder,gameState:GameState) -> PlayingCard?
     {
@@ -256,7 +256,7 @@ open class LateGameLeadingStrategy : TrickPlayingStrategy
 // If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
 open class PerfectKnowledgeStrategy : TrickPlayingStrategy
 {
-    open static let sharedInstance = PerfectKnowledgeStrategy()
+    public static let sharedInstance = PerfectKnowledgeStrategy()
     fileprivate init() { }
     open func chooseCard(_ player:CardHolder,gameState:GameState) -> PlayingCard?
     {
@@ -304,7 +304,7 @@ open class PerfectKnowledgeStrategy : TrickPlayingStrategy
 // If its late in the hand might not be a good idea to win the trick you could be stuck with the lead
 open class LateGameFollowingStrategy : TrickPlayingStrategy
 {
-    open static let sharedInstance = LateGameFollowingStrategy()
+    public static let sharedInstance = LateGameFollowingStrategy()
     fileprivate init() { }
     open func chooseCard(_ player:CardHolder,gameState:GameState) -> PlayingCard?
     {
@@ -423,7 +423,7 @@ open class LateGameFollowingStrategy : TrickPlayingStrategy
 // If you can not follow suite you are free to get rid of bad cards
 open class NonFollowingStrategy : TrickPlayingStrategy
 {
-    open static let sharedInstance = NonFollowingStrategy()
+    public static let sharedInstance = NonFollowingStrategy()
     fileprivate init() { }
     
     open func chooseCard(_ player:CardHolder,gameState:GameState) -> PlayingCard?

@@ -49,11 +49,11 @@ open class RicketyKateCardTable : CardTable, GameState
 
     var startPlayerNo = 1
 
-    static open func makeTable(_ scene:CardScene, gameSettings: IGameSettings = Game.moreSettings ) -> RicketyKateCardTable {
+    static public func makeTable(_ scene:CardScene, gameSettings: IGameSettings = Game.moreSettings ) -> RicketyKateCardTable {
      return RicketyKateCardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
 }
 
-    static open func makeDemo(_ scene:CardScene, gameSettings: IGameSettings = Game.moreSettings ) -> RicketyKateCardTable  {
+    static public func makeDemo(_ scene:CardScene, gameSettings: IGameSettings = Game.moreSettings ) -> RicketyKateCardTable  {
      return RicketyKateCardTable(players: CardPlayer.demoPlayers(gameSettings.noOfPlayersAtTable), scene:scene )
     }
     fileprivate override init(players: [CardPlayer],  scene:CardScene) {
