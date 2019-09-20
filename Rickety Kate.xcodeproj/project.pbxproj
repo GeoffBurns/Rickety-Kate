@@ -15,7 +15,6 @@
 		AC1D447F210061D4008E80B3 /* GameSettingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */; };
 		AC1D44EC2100A981008E80B3 /* CardGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D44EB2100A981008E80B3 /* CardGameScene.swift */; };
 		AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
-		AC3309551BC3D51000A41706 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
 		AC3BB19020FA064A005B5B29 /* RicketyKateGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */; };
 		AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19B20FA1023005B5B29 /* IAwarder.swift */; };
 		AC3BB19E20FA1094005B5B29 /* computerplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19D20FA1094005B5B29 /* computerplayer.swift */; };
@@ -49,7 +48,6 @@
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		ACAE53801C269840003F0BB4 /* RicketyKateNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */; };
 		ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
-		ACB33B9E1BC210240019DC7C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9D1BC210240019DC7C /* Result.framework */; };
 		ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13351BAB1D5700196393 /* Scorer.swift */; };
 		ACCB13381BAD16E600196393 /* Awarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13371BAD16E600196393 /* Awarder.swift */; };
 		ACD6964B210B40F800ECC62A /* GameMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD6964A210B40F800ECC62A /* GameMove.swift */; };
@@ -167,7 +165,6 @@
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RicketyKateNavigationController.swift; sourceTree = "<group>"; };
 		ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
-		ACB33B9D1BC210240019DC7C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		ACCB13351BAB1D5700196393 /* Scorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scorer.swift; sourceTree = "<group>"; };
 		ACCB13371BAD16E600196393 /* Awarder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Awarder.swift; sourceTree = "<group>"; };
 		ACD6964A210B40F800ECC62A /* GameMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMove.swift; sourceTree = "<group>"; };
@@ -208,7 +205,6 @@
 				AC100BCB2102C04F00F951E5 /* Cards.framework in Frameworks */,
 				AC8BD3DA2102BBE400CBA15A /* ReactiveSwift.framework in Frameworks */,
 				ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */,
-				ACB33B9E1BC210240019DC7C /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,7 +214,6 @@
 			files = (
 				AC147CDE1EF7DEB400A4E417 /* ReactiveSwift.framework in Frameworks */,
 				AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */,
-				AC3309551BC3D51000A41706 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +234,6 @@
 			children = (
 				AC100BC22102BFF300F951E5 /* Cards.xcodeproj */,
 				ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */,
-				ACB33B9D1BC210240019DC7C /* Result.framework */,
 				AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */,
 			);
 			name = Frameworks;
@@ -408,7 +402,7 @@
 					AC62B6921BA1564800B0EDAE = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 5CUBLSA9G4;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1030;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -418,14 +412,14 @@
 					AC62B6AB1BA1564900B0EDAE = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 5CUBLSA9G4;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1030;
 						TestTargetID = AC62B6921BA1564800B0EDAE;
 					};
 				};
 			};
 			buildConfigurationList = AC62B68E1BA1564800B0EDAE /* Build configuration list for PBXProject "Rickety Kate" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -514,19 +508,18 @@
 /* Begin PBXShellScriptBuildPhase section */
 		AC3309561BC3D53300A41706 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks ";
+			shellScript = "/usr/local/bin/carthage copy-frameworks \n";
 		};
 		ACB33B9F1BC210610019DC7C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -534,7 +527,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 			);
@@ -542,7 +534,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks ";
+			shellScript = "/usr/local/bin/carthage copy-frameworks \n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -778,8 +770,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -801,8 +792,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -824,8 +814,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Rickety Kate.app/Rickety Kate";
 			};
 			name = Debug;
@@ -844,8 +833,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Rickety Kate.app/Rickety Kate";
 			};
 			name = Release;

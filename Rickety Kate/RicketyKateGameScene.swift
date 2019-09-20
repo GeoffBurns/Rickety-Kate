@@ -420,7 +420,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         {
             if let oldCard = draggedNode,
                 let fan = oldCard.fan,
-                let indexInFan = fan.cards.index(of: oldCard.card), isNodeAPlayerOneCardSpite(oldCard)
+                let indexInFan = fan.cards.firstIndex(of: oldCard.card), isNodeAPlayerOneCardSpite(oldCard)
             {
                 let newIndex = goingRight ? indexInFan+1 : indexInFan-1
                 
