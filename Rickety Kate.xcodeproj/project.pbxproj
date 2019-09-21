@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC100BCB2102C04F00F951E5 /* Cards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC100BC82102BFF300F951E5 /* Cards.framework */; };
-		AC100BCC2102C04F00F951E5 /* Cards.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC100BC82102BFF300F951E5 /* Cards.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AC147CDE1EF7DEB400A4E417 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */; };
 		AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF69C1BB4238300001024 /* buttons.atlas */; };
 		AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */; };
@@ -31,6 +29,7 @@
 		AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A01BA1564800B0EDAE /* Main.storyboard */; };
 		AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A31BA1564800B0EDAE /* Images.xcassets */; };
 		AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */; };
+		AC682E0B23354532006540D2 /* Cards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC100BC82102BFF300F951E5 /* Cards.framework */; };
 		AC701A8C1BDB98F4004FC5F8 /* cards_stars.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC701A8B1BDB98F4004FC5F8 /* cards_stars.atlas */; };
 		AC73DD9C1BB81A7300FF6114 /* cards_spades.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */; };
 		AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9D1BB81E9B00FF6114 /* cards_diamonds.atlas */; };
@@ -86,13 +85,6 @@
 			remoteGlobalIDString = AC1D449D21009EE9008E80B3;
 			remoteInfo = CardsTests;
 		};
-		AC100BCD2102C04F00F951E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC100BC22102BFF300F951E5 /* Cards.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AC1D449321009EE9008E80B3;
-			remoteInfo = Cards;
-		};
 		AC62B6AD1BA1564900B0EDAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AC62B68B1BA1564800B0EDAE /* Project object */;
@@ -101,20 +93,6 @@
 			remoteInfo = "Rickety Kate";
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		AC100BCF2102C04F00F951E5 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				AC100BCC2102C04F00F951E5 /* Cards.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AC0E20581C0AE430004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -202,7 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC100BCB2102C04F00F951E5 /* Cards.framework in Frameworks */,
+				AC682E0B23354532006540D2 /* Cards.framework in Frameworks */,
 				AC8BD3DA2102BBE400CBA15A /* ReactiveSwift.framework in Frameworks */,
 				ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */,
 			);
@@ -357,12 +335,10 @@
 				AC62B6901BA1564800B0EDAE /* Frameworks */,
 				AC62B6911BA1564800B0EDAE /* Resources */,
 				ACB33B9F1BC210610019DC7C /* ShellScript */,
-				AC100BCF2102C04F00F951E5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AC100BCE2102C04F00F951E5 /* PBXTargetDependency */,
 			);
 			name = "Rickety Kate";
 			productName = "Rickety Kate";
@@ -413,6 +389,7 @@
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 5CUBLSA9G4;
 						LastSwiftMigration = 1030;
+						ProvisioningStyle = Manual;
 						TestTargetID = AC62B6921BA1564800B0EDAE;
 					};
 				};
@@ -588,11 +565,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AC100BCE2102C04F00F951E5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Cards;
-			targetProxy = AC100BCD2102C04F00F951E5 /* PBXContainerItemProxy */;
-		};
 		AC62B6AE1BA1564900B0EDAE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AC62B6921BA1564800B0EDAE /* Rickety Kate */;
@@ -755,7 +727,6 @@
 		AC62B6B71BA1564900B0EDAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -777,7 +748,6 @@
 		AC62B6B81BA1564900B0EDAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -800,6 +770,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -814,6 +785,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Rickety Kate.app/Rickety Kate";
 			};
@@ -823,6 +795,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -833,6 +806,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Rickety Kate.app/Rickety Kate";
 			};
