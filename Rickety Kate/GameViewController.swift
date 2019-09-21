@@ -95,10 +95,15 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
                 ? 0.19 //(DeviceSettings.isPhoneX ? 0.19 : 0.19)
                 : 0.23) }
         */
-        ScoreDisplay._bottom  = { return DeviceSettings.isPortrait ? 0.115 :
-            (DeviceSettings.isPhone
-                ? (DeviceSettings.isPhoneX || DeviceSettings.isPhone55inch ? 0.25 : 0.19)
-                : 0.23)  }
+        ScoreDisplay._bottom  = {
+            let isBig = DeviceSettings.isBigPro
+            let bottom : CGFloat = DeviceSettings.isPortrait ? ( isBig ? 0.09 : 0.115) :
+                (DeviceSettings.isPhone
+                    ? (DeviceSettings.isPhoneX || DeviceSettings.isPhone55inch ? 0.235 : 0.19)
+                    : ( isBig ? 0.16 : 0.23))
+            return bottom
+            
+        }
     
         /* ScoreDisplay.bottom =  DeviceSettings.isPortrait ? 0.12 :
          (DeviceSettings.isPhone
