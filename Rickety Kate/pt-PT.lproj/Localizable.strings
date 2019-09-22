@@ -3,7 +3,7 @@
  Sevens
  
  Created by Geoff Burns on 18/11/2015.
- Copyright © 2015 Nereids Gold. All rights reserved.
+ Copyright © 2015 Geoff Burns. All rights reserved.
  */
 Rickety="Raquítico";
 Jack="Valete";
@@ -95,7 +95,7 @@ Thirteen="Treze";
 "Include Jokers"="Incluir Curingas?";
 "Include Hooligan"="Incluir Hooligan?";
 "Include Omnibus"="Incluir ônibus?";
-"Allow Breaking Trumps"="Permitir quebra Trumps?";
+"Allow Breaking Trumps"="Puede abrir el naipe de penalización?";
 "Game Finishing Score"= "Pontuação de acabamento";
 "Use Numbers For Court Cards"="Usar números para o índice??";
 "Rule Set"="Cartas Penalizadas";
@@ -137,7 +137,7 @@ The_lowest_score_wins="La puntuación más\nbaja gana el juego";
 "Swipe to turn over your cards"="Passe a entregar\nseus cartões";
 "Swipe to turn over %@ cards"="Deslize para virar as\ncartas de %@";
 "%@ Turn"="A vez de %@";
-"Card Does Not Follow Suite"="Karte funktioniert nicht Befolgen naipe";
+"Card Does Not Follow Suite"="Karte funktioniert\nnicht Befolgen naipe";
 "Play a %@"="Jogar uma pá %@";
 "Can not Lead with a %@"="Kann nicht mit\neinem %@ Blei";
 "You Need to Play %@ First"="Você precisa jogar\n%@ Primeira";
@@ -181,7 +181,7 @@ You="Você";
 "You won %d %@"="Você ganhou %d %@";
 "%@ won a %@"="%@ ganhou uma %@";
 "%@ won %d %@"="%@ ganhou %d %@";
-Seven_Rules="O jogador com o %@ começa. Jogadores abrir cada naipe com os %@ oque naipe. Após a suíte foi openned os jogadores colocar para fora os cartões da suíte acima e abaixo da %@ em ordem, adicionando placas em seqüência até o ace e até o rei. Se um jogador não pode estabelecer um cartão, em seguida, eles passam ea vez passa para o próximo jogador. O primeiro jogador a ficar sem cartas ganha a mão.";
+"Seven Rules"="O jogador com o %@ começa. Jogadores abrir cada naipe com os %@ oque naipe. Após a suíte foi openned os jogadores colocar para fora os cartões da suíte acima e abaixo da %@ em ordem, adicionando placas em seqüência até o ace e até o rei. Se um jogador não pode estabelecer um cartão, em seguida, eles passam ea vez passa para o próximo jogador. O primeiro jogador a ficar sem cartas ganha a mão.";
 "Rickety Kate Spades Rules"="Raquítico Kate é um jogo de truque tendo cartão. Isso significa que cada jogador lançamentos em um cartão eo jogador com a carta mais alta na mesma suíte como o primeiro cartão ganha o truque e os cartões. Mas espera! a pessoa com a menor pontuação ganha corrida. Portanto, vencer um truque não é necessariamente bom. A Dama de Espadas (Raquítico Kate) vale 10 pontos contra você e na variação das pás do jogo os outros espadas valem 1 ponto contra você. Quando você correr para fora de cartões que você é negociado outra mão. Se você obter todas as pás em uma mão ele é chamado de 'Disparado a Lua' e sua pontuação cai para zero. No início de cada mão o jogador passar as suas três piores cartas para seu vizinho. Ás e Rei são as piores cartas.";
 "Rickety Kate Jacks Rules"="Raquítico é um jogo de truque tendo cartão. Isso significa que cada jogador lançamentos em um cartão eo jogador com a carta mais alta na mesma suíte como o primeiro cartão ganha o truque e os cartões. Mas espera! a pessoa com a menor pontuação ganha corrida. Portanto, vencer um truque não é necessariamente bom. A Dama de Espadas (Raquítico Kate) vale 10 pontos contra você e na variação do Valetes do jogo, cada Valete vale dois pontos contra você. Quando você correr para fora de cartões que você é negociado outra mão. Se você obter todas as pás em uma mão ele é chamado de 'Disparado a Lua' e sua pontuação cai para zero. No início de cada mão o jogador passar as suas três piores cartas para seu vizinho. Ás e Rei são as piores cartas.";
 "Rickety Kate Hearts Rules"="Raquítico é um jogo de truque tendo cartão. Isso significa que cada jogador lançamentos em um cartão eo jogador com a carta mais alta na mesma suíte como o primeiro cartão ganha o truque e os cartões. Mas espera! a pessoa com a menor pontuação ganha corrida. Portanto, vencer um truque não é necessariamente bom. A Dama de Espadas (Raquítico Kate) vale 13 pontos contra você e na variação dos corações dos corações são também pontos valem contra você. Quando você correr para fora de cartões que você é negociado outra mão. Se você obter todas as pás em uma mão ele é chamado de 'Disparado a Lua' e sua pontuação cai para zero. No início de cada mão o jogador passar as suas três piores cartas para seu vizinho. Ás e Rei são as piores cartas.";

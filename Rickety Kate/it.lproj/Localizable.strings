@@ -3,7 +3,7 @@
  Sevens
  
  Created by Geoff Burns on 18/11/2015.
- Copyright © 2015 NGeoff Burns. All rights reserved.
+ Copyright © 2015 Geoff Burns. All rights reserved.
  */
 Spades="Picche";
 Hearts="Cuori";
@@ -89,7 +89,7 @@ Thirteen="Tredici";
 "Number of Human Players"="Numero di giocatori umani";
 "Pass Worst Cards"="Dare la pena alle tue peggiori carte?";
 "Include Tarot Trumps"="Includere i Trionfi dei Tarocchi?";
-"Speed Of Cards”=“Velocità del movimento della carta";
+"Speed Of Cards"="Velocità del movimento della carta";
 "Include the jesters"="Includere i giullari?";
 "Include Hooligan"="Includi il teppista?";
 "Include Omnibus"="Includere l'omnibus?";
