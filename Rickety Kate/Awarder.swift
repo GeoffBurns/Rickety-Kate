@@ -264,7 +264,7 @@ class JacksAwarder : AwarderBase, IAwarder
     var trumpSuitePlural : String  { return "Jacks".localize }
 
     var backgroundCards : [PlayingCard] {
-        var cards : Array = Game.deck.orderedDeck
+        let cards : Array = Game.deck.orderedDeck
             .filter { $0.suite == PlayingCard.Suite.clubs }
             .sorted()
             .reversed()

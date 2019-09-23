@@ -11,7 +11,6 @@
 		AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */; };
 		AC1D447F210061D4008E80B3 /* GameSettingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */; };
 		AC1D44EC2100A981008E80B3 /* CardGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D44EB2100A981008E80B3 /* CardGameScene.swift */; };
-		AC364FC723385FB200BCE2EF /* Cards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC100BC82102BFF300F951E5 /* Cards.framework */; };
 		AC364FCD2338623600BCE2EF /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AC364FCC2338623600BCE2EF /* ReactiveSwift */; };
 		AC3BB19020FA064A005B5B29 /* RicketyKateGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */; };
 		AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19B20FA1023005B5B29 /* IAwarder.swift */; };
@@ -38,6 +37,7 @@
 		AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */; };
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; };
 		AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0431BBEBA550051DF03 /* Navigator.swift */; };
+		AC8BF77A2338D32F00081333 /* Cards in Frameworks */ = {isa = PBXBuildFile; productRef = AC8BF7792338D32F00081333 /* Cards */; };
 		AC8F592F1C12BA7A0067C02A /* GivenAString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F592E1C12BA7A0067C02A /* GivenAString.swift */; };
 		AC8F59311C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */; };
 		AC8F59331C138D2F0067C02A /* GivenATrickPile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F59321C138D2F0067C02A /* GivenATrickPile.swift */; };
@@ -68,20 +68,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AC100BC72102BFF300F951E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC100BC22102BFF300F951E5 /* Cards.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AC1D449421009EE9008E80B3;
-			remoteInfo = Cards;
-		};
-		AC100BC92102BFF300F951E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC100BC22102BFF300F951E5 /* Cards.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AC1D449D21009EE9008E80B3;
-			remoteInfo = CardsTests;
-		};
 		AC62B6AD1BA1564900B0EDAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AC62B68B1BA1564800B0EDAE /* Project object */;
@@ -91,11 +77,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AC3650222338736100BCE2EF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		AC0E20581C0AE430004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		AC0E20591C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Main.strings"; sourceTree = "<group>"; };
 		AC0E205A1C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		AC100BC22102BFF300F951E5 /* Cards.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cards.xcodeproj; path = ../Cards/Cards.xcodeproj; sourceTree = "<group>"; };
 		AC1CF69C1BB4238300001024 /* buttons.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = buttons.atlas; sourceTree = "<group>"; };
 		AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Extra.atlas; sourceTree = "<group>"; };
 		AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingExtensions.swift; sourceTree = "<group>"; };
@@ -132,6 +130,7 @@
 		AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs.atlas; sourceTree = "<group>"; };
 		AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot.atlas; sourceTree = "<group>"; };
 		AC74F0431BBEBA550051DF03 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		AC8BF7782338D31400081333 /* Cards */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Cards; path = ../Cards; sourceTree = "<group>"; };
 		AC8F592E1C12BA7A0067C02A /* GivenAString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAString.swift; sourceTree = "<group>"; };
 		AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAPerfectKnowledgeStrategy.swift; sourceTree = "<group>"; };
 		AC8F59321C138D2F0067C02A /* GivenATrickPile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenATrickPile.swift; sourceTree = "<group>"; };
@@ -175,7 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC364FC723385FB200BCE2EF /* Cards.framework in Frameworks */,
+				AC8BF77A2338D32F00081333 /* Cards in Frameworks */,
 				AC364FCD2338623600BCE2EF /* ReactiveSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,19 +189,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AC100BC32102BFF300F951E5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AC100BC82102BFF300F951E5 /* Cards.framework */,
-				AC100BCA2102BFF300F951E5 /* CardsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AC147CDB1EF7DE2300A4E417 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AC100BC22102BFF300F951E5 /* Cards.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -210,6 +199,7 @@
 		AC62B68A1BA1564800B0EDAE = {
 			isa = PBXGroup;
 			children = (
+				AC8BF7782338D31400081333 /* Cards */,
 				AC62B6941BA1564800B0EDAE /* Products */,
 				AC62B6951BA1564800B0EDAE /* Rickety Kate */,
 				AC62B6AF1BA1564900B0EDAE /* Rickety KateTests */,
@@ -324,7 +314,7 @@
 				AC62B68F1BA1564800B0EDAE /* Sources */,
 				AC62B6901BA1564800B0EDAE /* Frameworks */,
 				AC62B6911BA1564800B0EDAE /* Resources */,
-				ACB33B9F1BC210610019DC7C /* ShellScript */,
+				AC3650222338736100BCE2EF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -333,6 +323,7 @@
 			name = "Rickety Kate";
 			packageProductDependencies = (
 				AC364FCC2338623600BCE2EF /* ReactiveSwift */,
+				AC8BF7792338D32F00081333 /* Cards */,
 			);
 			productName = "Rickety Kate";
 			productReference = AC62B6931BA1564800B0EDAE /* Rickety Kate.app */;
@@ -406,12 +397,6 @@
 			);
 			productRefGroup = AC62B6941BA1564800B0EDAE /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = AC100BC32102BFF300F951E5 /* Products */;
-					ProjectRef = AC100BC22102BFF300F951E5 /* Cards.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				AC62B6921BA1564800B0EDAE /* Rickety Kate */,
@@ -419,23 +404,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		AC100BC82102BFF300F951E5 /* Cards.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Cards.framework;
-			remoteRef = AC100BC72102BFF300F951E5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AC100BCA2102BFF300F951E5 /* CardsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = CardsTests.xctest;
-			remoteRef = AC100BC92102BFF300F951E5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AC62B6911BA1564800B0EDAE /* Resources */ = {
@@ -491,21 +459,6 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks \n";
-		};
-		ACB33B9F1BC210610019DC7C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks \n";
 		};
@@ -727,7 +680,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -753,7 +706,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -875,6 +828,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC364FCB2338623600BCE2EF /* XCRemoteSwiftPackageReference "ReactiveSwift" */;
 			productName = ReactiveSwift;
+		};
+		AC8BF7792338D32F00081333 /* Cards */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Cards;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
