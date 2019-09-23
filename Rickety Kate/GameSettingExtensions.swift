@@ -218,6 +218,10 @@ open class FakeGameSettings : IGameSettings
     public var noOfTrumps = 22
     public var noOfStandardTrumps = 21
     public var noOfJokers = 2
+    public var willPassThePhone = false
+    public var isServer = false
+    public var isClient = false
+    public var willRemoveLow = true
     open var hasFool =  true
     open var noOfHumanPlayers : Int  = 1
     open var noOfSuitesInDeck = 6

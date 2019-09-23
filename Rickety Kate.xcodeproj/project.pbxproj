@@ -3,16 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC147CDE1EF7DEB400A4E417 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */; };
 		AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF69C1BB4238300001024 /* buttons.atlas */; };
 		AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */; };
 		AC1D447F210061D4008E80B3 /* GameSettingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */; };
 		AC1D44EC2100A981008E80B3 /* CardGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D44EB2100A981008E80B3 /* CardGameScene.swift */; };
-		AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
+		AC364FC723385FB200BCE2EF /* Cards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC100BC82102BFF300F951E5 /* Cards.framework */; };
+		AC364FCD2338623600BCE2EF /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AC364FCC2338623600BCE2EF /* ReactiveSwift */; };
 		AC3BB19020FA064A005B5B29 /* RicketyKateGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */; };
 		AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19B20FA1023005B5B29 /* IAwarder.swift */; };
 		AC3BB19E20FA1094005B5B29 /* computerplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19D20FA1094005B5B29 /* computerplayer.swift */; };
@@ -29,7 +29,6 @@
 		AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A01BA1564800B0EDAE /* Main.storyboard */; };
 		AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A31BA1564800B0EDAE /* Images.xcassets */; };
 		AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */; };
-		AC682E0B23354532006540D2 /* Cards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC100BC82102BFF300F951E5 /* Cards.framework */; };
 		AC701A8C1BDB98F4004FC5F8 /* cards_stars.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC701A8B1BDB98F4004FC5F8 /* cards_stars.atlas */; };
 		AC73DD9C1BB81A7300FF6114 /* cards_spades.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */; };
 		AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9D1BB81E9B00FF6114 /* cards_diamonds.atlas */; };
@@ -39,14 +38,12 @@
 		AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */; };
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; };
 		AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0431BBEBA550051DF03 /* Navigator.swift */; };
-		AC8BD3DA2102BBE400CBA15A /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */; };
 		AC8F592F1C12BA7A0067C02A /* GivenAString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F592E1C12BA7A0067C02A /* GivenAString.swift */; };
 		AC8F59311C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */; };
 		AC8F59331C138D2F0067C02A /* GivenATrickPile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F59321C138D2F0067C02A /* GivenATrickPile.swift */; };
 		AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */; };
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		ACAE53801C269840003F0BB4 /* RicketyKateNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */; };
-		ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */; };
 		ACCB13361BAB1D5700196393 /* Scorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13351BAB1D5700196393 /* Scorer.swift */; };
 		ACCB13381BAD16E600196393 /* Awarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCB13371BAD16E600196393 /* Awarder.swift */; };
 		ACD6964B210B40F800ECC62A /* GameMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD6964A210B40F800ECC62A /* GameMove.swift */; };
@@ -99,7 +96,6 @@
 		AC0E20591C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Main.strings"; sourceTree = "<group>"; };
 		AC0E205A1C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		AC100BC22102BFF300F951E5 /* Cards.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Cards.xcodeproj; path = ../Cards/Cards.xcodeproj; sourceTree = "<group>"; };
-		AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		AC1CF69C1BB4238300001024 /* buttons.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = buttons.atlas; sourceTree = "<group>"; };
 		AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Extra.atlas; sourceTree = "<group>"; };
 		AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingExtensions.swift; sourceTree = "<group>"; };
@@ -142,7 +138,6 @@
 		AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgessTracker.swift; sourceTree = "<group>"; };
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RicketyKateNavigationController.swift; sourceTree = "<group>"; };
-		ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		ACCB13351BAB1D5700196393 /* Scorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scorer.swift; sourceTree = "<group>"; };
 		ACCB13371BAD16E600196393 /* Awarder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Awarder.swift; sourceTree = "<group>"; };
 		ACD6964A210B40F800ECC62A /* GameMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMove.swift; sourceTree = "<group>"; };
@@ -180,9 +175,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC682E0B23354532006540D2 /* Cards.framework in Frameworks */,
-				AC8BD3DA2102BBE400CBA15A /* ReactiveSwift.framework in Frameworks */,
-				ACB33B9C1BC2101B0019DC7C /* ReactiveCocoa.framework in Frameworks */,
+				AC364FC723385FB200BCE2EF /* Cards.framework in Frameworks */,
+				AC364FCD2338623600BCE2EF /* ReactiveSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,8 +184,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC147CDE1EF7DEB400A4E417 /* ReactiveSwift.framework in Frameworks */,
-				AC3309541BC3D50C00A41706 /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,8 +203,6 @@
 			isa = PBXGroup;
 			children = (
 				AC100BC22102BFF300F951E5 /* Cards.xcodeproj */,
-				ACB33B9B1BC2101B0019DC7C /* ReactiveCocoa.framework */,
-				AC147CDC1EF7DE2400A4E417 /* ReactiveSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -341,6 +331,9 @@
 			dependencies = (
 			);
 			name = "Rickety Kate";
+			packageProductDependencies = (
+				AC364FCC2338623600BCE2EF /* ReactiveSwift */,
+			);
 			productName = "Rickety Kate";
 			productReference = AC62B6931BA1564800B0EDAE /* Rickety Kate.app */;
 			productType = "com.apple.product-type.application";
@@ -408,6 +401,9 @@
 				it,
 			);
 			mainGroup = AC62B68A1BA1564800B0EDAE;
+			packageReferences = (
+				AC364FCB2338623600BCE2EF /* XCRemoteSwiftPackageReference "ReactiveSwift" */,
+			);
 			productRefGroup = AC62B6941BA1564800B0EDAE /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -718,7 +714,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -730,6 +727,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 71;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -737,7 +735,11 @@
 				);
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -751,6 +753,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 71;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -758,7 +761,11 @@
 				);
 				INFOPLIST_FILE = "Rickety Kate/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -782,7 +789,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Rickety KateTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -803,7 +814,11 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Rickety KateTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -843,6 +858,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AC364FCB2338623600BCE2EF /* XCRemoteSwiftPackageReference "ReactiveSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveCocoa/ReactiveSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AC364FCC2338623600BCE2EF /* ReactiveSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC364FCB2338623600BCE2EF /* XCRemoteSwiftPackageReference "ReactiveSwift" */;
+			productName = ReactiveSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AC62B68B1BA1564800B0EDAE /* Project object */;
 }

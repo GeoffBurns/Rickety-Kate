@@ -368,17 +368,10 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     
     func cardTouched(_ positionInScene:CGPoint) -> Bool
     {
-        let width = self.frame.size.width
-        var newX = positionInScene.x
-        if newX > width * 0.5
+        
+        if let selectedNode = self.atPoint(positionInScene) as? CardSprite, isNodeAPlayerOneCardSpite(selectedNode)
         {
-            newX = ((newX - width * 0.5) * 0.6) + width * 0.5
-        }
-        /// correct for rotation of card
-        let adjustedPosition = CGPoint(x: newX,y: positionInScene.y)
-        if let adjustedNode = self.atPoint(adjustedPosition) as? CardSprite, isNodeAPlayerOneCardSpite(adjustedNode)
-        {
-            startDraggingCard(adjustedNode,originalPosition:positionInScene)
+            startDraggingCard(selectedNode,originalPosition:positionInScene)
             originalTouch = positionInScene
             return true
         }
