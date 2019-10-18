@@ -411,6 +411,12 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         /// displaying each card in turn
         if deltaX > (2.2 * deltaY) && deltaX > 15
         {
+            
+        if (Game.settings.noOfHumanPlayers > 1 && !table.areCardsShowing)
+                {
+                    table.turnOverCards()
+                } else
+          {
             if let oldCard = draggedNode,
                 let fan = oldCard.fan,
                 let indexInFan = fan.cards.firstIndex(of: oldCard.card), isNodeAPlayerOneCardSpite(oldCard)
@@ -429,6 +435,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
                 }
                 return
             }
+          }
         }
         if let touchedNode = draggedNode
         {

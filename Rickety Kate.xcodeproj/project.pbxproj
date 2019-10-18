@@ -37,6 +37,7 @@
 		AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */; };
 		AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */; };
 		AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74F0431BBEBA550051DF03 /* Navigator.swift */; };
+		AC851A37235935030096044C /* RicketyKateCardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC851A36235935030096044C /* RicketyKateCardTable.swift */; };
 		AC8BF77A2338D32F00081333 /* Cards in Frameworks */ = {isa = PBXBuildFile; productRef = AC8BF7792338D32F00081333 /* Cards */; };
 		AC8F592F1C12BA7A0067C02A /* GivenAString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F592E1C12BA7A0067C02A /* GivenAString.swift */; };
 		AC8F59311C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */; };
@@ -130,6 +131,7 @@
 		AC73DDA51BB8280300FF6114 /* cards_clubs.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs.atlas; sourceTree = "<group>"; };
 		AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_tarot.atlas; sourceTree = "<group>"; };
 		AC74F0431BBEBA550051DF03 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		AC851A36235935030096044C /* RicketyKateCardTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RicketyKateCardTable.swift; sourceTree = "<group>"; };
 		AC8BF7782338D31400081333 /* Cards */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Cards; path = ../Cards; sourceTree = "<group>"; };
 		AC8F592E1C12BA7A0067C02A /* GivenAString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAString.swift; sourceTree = "<group>"; };
 		AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAPerfectKnowledgeStrategy.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
 				AC1D44EB2100A981008E80B3 /* CardGameScene.swift */,
 				AC9E82BE1BA686C40064870C /* CardTable.swift */,
+				AC851A36235935030096044C /* RicketyKateCardTable.swift */,
 				AC3BB19D20FA1094005B5B29 /* computerplayer.swift */,
 				ACD6964A210B40F800ECC62A /* GameMove.swift */,
 				AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */,
@@ -469,6 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC851A37235935030096044C /* RicketyKateCardTable.swift in Sources */,
 				AC62B69F1BA1564800B0EDAE /* GameViewController.swift in Sources */,
 				ACD6964B210B40F800ECC62A /* GameMove.swift in Sources */,
 				AC74F0441BBEBA550051DF03 /* Navigator.swift in Sources */,
@@ -680,7 +684,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -706,7 +710,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
