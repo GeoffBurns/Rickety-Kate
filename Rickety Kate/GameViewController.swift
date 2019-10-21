@@ -63,6 +63,7 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
             Options.noOfSuites,
             Options.noOfCards,
             Options.noOfPlayers,
+            Options.noOfHumans,
             Options.jokers,
             Options.trumps,
             Options.passCard,

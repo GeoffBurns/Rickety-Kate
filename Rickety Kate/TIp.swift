@@ -25,6 +25,11 @@ public enum Tip : GameTip
     case try_to_avoid_winning_Rickety_Kate
     case try_to_block_other_players_by_holding_back_cards
     case try_not_to_block_yourself
+    case swipe_across_cards_to_turn_them_over
+    case play_with_friends_using_pass_the_phone
+    case increase_human_players_for_multiplay
+    case build_custom_deck_using_settings
+    case you_can_turn_off_tips_in_settings
     case no_Tip
 
     /// display tip as string
@@ -46,6 +51,11 @@ public enum Tip : GameTip
             case .try_to_avoid_winning_Rickety_Kate : return "Try_to_avoid_winning_Rickety_Kate".localize
             case .try_to_block_other_players_by_holding_back_cards : return "Try_to_avoid_winning_Rickety_Kate".localize
             case .try_not_to_block_yourself : return "Try_not_to_block_yourself".localize
+            case .swipe_across_cards_to_turn_them_over : return "Swipe_across_cards_to_turn_them_over".localize
+            case .play_with_friends_using_pass_the_phone : return "Play_with_friends_using_pass_the_phone".localize
+            case .increase_human_players_for_multiplay : return "Increase_human_players_for_multiplay".localize
+            case .build_custom_deck_using_settings : return "Build_custom_deck_using_settings".localize
+            case .you_can_turn_off_tips_in_settings : return "You_can_turn_off_tips_in_settings".localize
             case .no_Tip : return ""
             }
     }
@@ -55,10 +65,14 @@ public enum Tip : GameTip
     static func setup()
     {
         /// Tips shown in demo mode
-        Game.demoTips = [tap_question_mark_to_learn_rules,tap_cog_symbol_to_change_rules,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_triangle_to_start_game,tap_dice_to_start_game_with_random_rules,tap_cog_symbol_to_build_your_own_deck_of_cards,tap_cog_symbol_to_change_the_number_of_players]
+        Game.demoTips = [tap_question_mark_to_learn_rules,tap_cog_symbol_to_change_rules,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_triangle_to_start_game,tap_dice_to_start_game_with_random_rules,tap_cog_symbol_to_build_your_own_deck_of_cards,tap_cog_symbol_to_change_the_number_of_players,play_with_friends_using_pass_the_phone,increase_human_players_for_multiplay,build_custom_deck_using_settings,you_can_turn_off_tips_in_settings]
         
         
         /// Tips shown in game mode
-        Game.gameTips = [tap_question_mark_to_learn_rules,drag_a_card_to_the_center_to_play,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_cross_to_end_game,try_to_avoid_winning_Rickety_Kate]
+        Game.gameTips = [tap_question_mark_to_learn_rules,drag_a_card_to_the_center_to_play,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_cross_to_end_game,try_to_avoid_winning_Rickety_Kate,play_with_friends_using_pass_the_phone]
+        
+        /// Tips shown in multiplayer mode
+        Game.multiplayerTips = [tap_question_mark_to_learn_rules,drag_a_card_to_the_center_to_play,you_need_to_follow_suite_if_you_can,try_to_avoid_winning_penalty_cards,the_lowest_score_win,tap_cross_to_end_game,try_to_avoid_winning_Rickety_Kate,swipe_across_cards_to_turn_them_over]
+        
     }
 }

@@ -29,11 +29,18 @@ class GivenASequence: XCTestCase {
         // This is an example of a functional test case.
         
         let s = [1,2,3,4,5]
-        let r = s.rotate(2)
+        var r = s.rotate(2)
         
-        XCTAssert(r.elementsEqual([3,4,5,1,2]), "rotate failed")
+        XCTAssert(r.elementsEqual([3,4,5,1,2]), "rotate 2 failed")
       
- 
+
+        r = s.rotate(1)
+        XCTAssert(r.elementsEqual([2,3,4,5,1]), "rotate 1 failed")
+        
+        
+        r = s.rotate(0)
+        XCTAssert(r.elementsEqual([1,2,3,4,5]), "rotate 0 failed")
+        
         let t = s.tail
         
         XCTAssert(t.elementsEqual([2,3,4,5]), "tail failed")

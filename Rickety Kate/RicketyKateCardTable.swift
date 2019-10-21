@@ -14,7 +14,7 @@ open class RicketyKateCardTable : CardTable, GameState
 
     let bus = Bus.sharedInstance
 
-    var startPlayerNo = 1
+
 
     static public func makeTable(_ scene:CardScene, gameSettings: IGameSettings = Game.moreSettings ) -> RicketyKateCardTable {
      return RicketyKateCardTable(players: CardPlayer.gamePlayers(gameSettings.noOfPlayersAtTable), scene:scene)
@@ -160,7 +160,7 @@ func endPlayersTurn(_ playerWithTurn:CardPlayer)
     func endOfHand()
     {
         self.startPlayerNo += 1
-        if self.startPlayerNo > 3
+        if self.startPlayerNo >= self.noOfPlayers
         {
             self.startPlayerNo = 0
         }
@@ -174,6 +174,7 @@ func endPlayersTurn(_ playerWithTurn:CardPlayer)
         
         if let cardscene = scene! as? CardGameScene
         {
+        hideCards()
         cardscene.redealThen(self.redealHands())
             {
               dealtPiles in
@@ -221,7 +222,7 @@ func endPlayersTurn(_ playerWithTurn:CardPlayer)
     
     func playTrick(_ playerWithTurn: CardPlayer)
     {
-          self.bus.send(GameEvent.turnFor(playerWithTurn))
+        self.bus.send(GameEvent.turnFor(playerWithTurn))
         if let computerPlayer = playerWithTurn as? ComputerPlayer
         {
             if let card = computerPlayer.playCard( self)
@@ -233,8 +234,14 @@ func endPlayersTurn(_ playerWithTurn:CardPlayer)
             print(playerWithTurn.name + " has run out of cards - this shouldn't happen")
             endPlayersTurn(playerWithTurn)
         }
-
+    if let human = playerWithTurn as? HumanPlayer
+    {
+        if gameSettings.noOfHumanPlayers > 1 && human.sideOfTable != SideOfTable.bottom
+        {
+           reseatPlayers(human.playerNo)
+        }
         
+    }
     }
 
 
