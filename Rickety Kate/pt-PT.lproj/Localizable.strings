@@ -141,6 +141,7 @@ Build_custom_deck_using_settings="Crie um baralho personalizado\nusando as confi
 You_can_turn_off_tips_in_settings="Você pode desativar as\ndicas nas configurações";
 "Swipe to turn over your cards"="Passe a entregar\nseus cartões";
 "Swipe to turn over %@ cards"="Deslize para virar as\ncartas de %@";
+"Music by Kevin MacLeod (creative commons 3.0 licience)"="Música de Kevin MacLeod (licença do creative commons 3.0)";
 "%@ Turn"="A vez de %@";
 "Card Does Not Follow Suite"="Karte funktioniert\nnicht Befolgen naipe";
 "Play a %@"="Jogar uma pá %@";

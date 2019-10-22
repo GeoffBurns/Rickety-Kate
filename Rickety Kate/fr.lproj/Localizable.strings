@@ -139,6 +139,7 @@ Build_custom_deck_using_settings="Construire un paquet personnalisé\nen utilisa
 You_can_turn_off_tips_in_settings="Vous pouvez désactiver les\nconseils dans les paramètres";
 "Swipe to turn over your cards"="Balayage de tourner\nsur vos cartes";
 "Swipe to turn over %@ cards"="Balayage de tourner\nsur les cartes de %@";
+"Music by Kevin MacLeod (creative commons 3.0 licience)"="Musique de Kevin MacLeod (creative commons 3.0 licence)";
 "%@ Turn"="Au tour de %@";
 "You Need to Play %@ First"="Vous devez jouer\nle premier %@";
 "Card Does Not Follow Suite"="Carte n'a pas suivez couleur";

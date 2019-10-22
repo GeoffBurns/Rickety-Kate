@@ -74,11 +74,15 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
             MoreOptions.omnibus,
             Options.showTips,
             MoreOptions.allowBreaking,
-            Options.useNumbers
+            Options.useNumbers,
+            Options.music,
+            Options.credit
+            //,Options.sound
         ]
         Options.speed.valueWasSetTo = Game.settings.cacheSpeed
         MoreOptions.ruleSet.valueWasSetTo = Game.settings.clearData
         Tip.setup()
+        SoundManager.sharedInstance.playlist = ["Monkeys","Happy","Dark","Kool", "Hitman", "Sneaky", "Amok", "Monkeys"]
         ScoreDisplay.scoreToString = {(name,wins,score) in
             if wins==0
             {

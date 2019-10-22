@@ -140,6 +140,7 @@ Build_custom_deck_using_settings="Erstellen Sie ein benutzerdefiniertes\Kartensp
 You_can_turn_off_tips_in_settings="Sie können Tipps in den\nEinstellungen deaktivierens";
 "Swipe to turn over your cards"="Swipe umdrehen\nIhre Karten";
 "Swipe to turn over %@ cards"="Swipe zu %@ Karten umdrehen";
+"Music by Kevin MacLeod (creative commons 3.0 licience)"="Musik von Kevin MacLeod (Creative Commons 3.0 Lizenz)";
 "%@ Turn"="%@ an der Reihe";
 "You Need to Play %@ First"="Sie müssen sich zuerst\nSpielen %@";
 "Card Does Not Follow Suite"="Karte nicht folgen farbe";

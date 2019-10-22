@@ -139,6 +139,7 @@ Build_custom_deck_using_settings="Costruisci un mazzo personalizzato\nusando le 
 You_can_turn_off_tips_in_settings="Puoi disattivare i\nsuggerimenti nelle impostazioni";
 "Swipe to turn over your cards"="Scorri per girare\nle tue carte";
 "Swipe to turn over _ cards"="Scorri per girare\nle carte di%@";
+"Music by Kevin MacLeod (creative commons 3.0 licience)"="Musica di Kevin MacLeod (licenza creative commons 3.0)";
 "%@ Turn"="Questo è il turno di %@";
 "You Need to Play %@ First"="Hai bisogno di suonare il\nprimo %@";
 "Card Does Not Follow Suite"="La carta non segue la semi";

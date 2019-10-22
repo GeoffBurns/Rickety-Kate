@@ -3,7 +3,7 @@
 //  Rickety Kate
 //
 //  Created by Geoff Burns on 19/7/18.
-//  Copyright © 2018 Nereids Gold. All rights reserved.
+//  Copyright © 2018 Geoff Burns. All rights reserved.
 //
 
 import Foundation
@@ -230,6 +230,8 @@ open class FakeGameSettings : IGameSettings
     open var hasTrumps = false
     open var hasJokers = false
     open var showTips = false
+    open var isPlayingMusic = false
+    open var isPlayingSound = false
     open var allowBreakingTrumps = true
     open var includeHooligan  = false { didSet { update() }}
     open var includeOmnibus  = false { didSet { update() }}

@@ -139,6 +139,7 @@ Build_custom_deck_using_settings="Build custom deck\nusing settings";
 You_can_turn_off_tips_in_settings="You can turn off\ntips in settings";
 "Swipe to turn over your cards"="Swipe to turn over\nyour cards";
 "Swipe to turn over _ cards"="Swipe to turn over\n%@'s cards";
+"Music by Kevin MacLeod (creative commons 3.0 licience)"="Music by Kevin MacLeod (creative commons 3.0 licience)";
 "%@ Turn"="%@'s Turn";
 "You Need to Play %@ First"="You Need to Play\n%@ First";
 "Card Does Not Follow Suite"="Card Does Not Follow Suite";

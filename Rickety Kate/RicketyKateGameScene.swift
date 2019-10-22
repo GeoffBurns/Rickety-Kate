@@ -11,7 +11,9 @@ import ReactiveSwift
 import Cards
 
 /// How game play is displayed
-class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCards, HasDemoMode, Resizable{
+class RicketyKateGameScene: CardGameScene,
+                            HasBackgroundSpread, HasDraggableCards, HasDemoMode, HasMusic,
+                            Resizable{
     
     
     override var table : RicketyKateCardTable! {  didSet { setupPassYourThreeWorstCardsPhase() } }
@@ -26,8 +28,8 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     var cardPassingPhase : PassYourThreeWorstCardsPhase! = nil
     var isInDemoMode : Bool { return table.isInDemoMode }
     var adHeight = CGFloat(0)
+ 
 
-    
     func setupPassYourThreeWorstCardsPhase()
     {
         cardPassingPhase =  PassYourThreeWorstCardsPhase(scene: self,players: table.players);
@@ -99,7 +101,6 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         {
             resizing.arrangeLayoutFor(newSize,bannerHeight: bannerHeight)
         }
- 
     }
     
     
@@ -136,9 +137,16 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             }
         }
     }
+    func stopMusic() {
+        SoundManager.sharedInstance.stopAllMusic()
+    }
+    func playMusic(_ n: Int = 0) {
+        SoundManager.sharedInstance.playMusic(n)
     
+    }
     func setupNewGameArrangement()
     {
+        
         Bus.sharedInstance.gameSignal
             .observe(on: UIScheduler())
             .filter { $0 == GameEvent.newHand }
@@ -167,6 +175,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     
     func startHand()
     {
+      playMusic()
       self.schedule(delay: Game.settings.tossDuration*0.5) { [weak self]  in
                  if let s = self
                  {
@@ -246,7 +255,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
         else
         {
             Navigate.setupExitButton(self)
-            if Game.moreSettings.noOfHumanPlayers > 1
+            if Game.settings.noOfHumanPlayers > 1
                 { StatusDisplay.sharedInstance.setMultiplayerMode() }
             else
                 { StatusDisplay.sharedInstance.setGameMode() }
@@ -305,9 +314,6 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
             self.setupNewGameArrangement()
             self.startHand()
         }
-        
-        
-        
     }
     
     func isNodeAPlayerOneCardSpite(_ cardsprite:CardSprite) -> Bool
@@ -328,6 +334,7 @@ class RicketyKateGameScene: CardGameScene, HasBackgroundSpread, HasDraggableCard
     
     func resetSceneWithNewTableThatIsInteractive(_ isInteractive:Bool)
     {
+        stopMusic()
         discard()
         
         self.schedule(delay: Game.settings.tossDuration) { [weak self] in

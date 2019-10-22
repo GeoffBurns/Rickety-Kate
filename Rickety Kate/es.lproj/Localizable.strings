@@ -141,6 +141,7 @@ Build_custom_deck_using_settings="Crea una mazo personalizada\nusando la configu
 You_can_turn_off_tips_in_settings="Puede desactivar las sugerencias\nen la configuración";
 "Swipe to turn over your cards"="Pase a entregar\nsus tarjetas";
 "Swipe to turn over %@ cards"="Pase a entregar\ntarjetas de %@";
+"Music by Kevin MacLeod (creative commons 3.0 licience)"="Música de Kevin MacLeod (creative commons 3.0 licence)";
 "%@ Turn"="Turno de %@";
 "You Need to Play %@ First"="Que necesitas para jugar\nlos %@ primero";
 "Card Does Not Follow Suite"="Tarjeta no sigue palo";

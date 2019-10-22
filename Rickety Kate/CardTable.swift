@@ -80,8 +80,7 @@ open class CardTable: GameStateBase
     }
     public func seatPlayers(_ isPortrait:Bool)
     {
-        seatRotation = 0
-        Game.currentOperator = 0
+        changeOperator(0)
         
         if let target = scene as? HasBackgroundSpread
         {
@@ -99,11 +98,19 @@ open class CardTable: GameStateBase
          reseatPlayers( rotate, isPortrait:scene!.isPortrait)
          
        }
+    func changeOperator(_ newValue:Int)
+    {
+        seatRotation = newValue
+        Game.currentOperator = newValue
+        if let audioPlayer = scene as? HasMusic
+                      {
+                        audioPlayer.playMusic(newValue)
+                      }
+    }
     public func reseatPlayers(_ rotate:Int, isPortrait:Bool)
         {
-           seatRotation = rotate
-           Game.currentOperator = rotate
-              if let target = scene as? HasBackgroundSpread
+          changeOperator(rotate)
+          if let target = scene as? HasBackgroundSpread
                 {
                 target.backgroundFan.updateBackgrounds()
                 }
@@ -112,9 +119,8 @@ open class CardTable: GameStateBase
         }
     public func reseatPlayers(_ rotate:Int, isPortrait:Bool, isCardsShown: Bool)
        {
-          seatRotation = rotate
-          Game.currentOperator = rotate
-             if let target = scene as? HasBackgroundSpread
+          changeOperator(rotate)
+        if let target = scene as? HasBackgroundSpread
                {
                target.backgroundFan.updateBackgrounds()
                }

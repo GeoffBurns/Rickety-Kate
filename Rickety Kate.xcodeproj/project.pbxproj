@@ -11,6 +11,13 @@
 		AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */; };
 		AC1D447F210061D4008E80B3 /* GameSettingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */; };
 		AC1D44EC2100A981008E80B3 /* CardGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D44EB2100A981008E80B3 /* CardGameScene.swift */; };
+		AC203690235DAA5000ABC15B /* Kool.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC203689235DAA4F00ABC15B /* Kool.mp3 */; };
+		AC203691235DAA5000ABC15B /* Happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC20368A235DAA5000ABC15B /* Happy.mp3 */; };
+		AC203692235DAA5000ABC15B /* Amok.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC20368B235DAA5000ABC15B /* Amok.mp3 */; };
+		AC203693235DAA5000ABC15B /* Sneaky.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC20368C235DAA5000ABC15B /* Sneaky.mp3 */; };
+		AC203694235DAA5000ABC15B /* Monkeys.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC20368D235DAA5000ABC15B /* Monkeys.mp3 */; };
+		AC203695235DAA5000ABC15B /* Hitman.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC20368E235DAA5000ABC15B /* Hitman.mp3 */; };
+		AC203696235DAA5000ABC15B /* Dark.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC20368F235DAA5000ABC15B /* Dark.mp3 */; };
 		AC364FCD2338623600BCE2EF /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AC364FCC2338623600BCE2EF /* ReactiveSwift */; };
 		AC3BB19020FA064A005B5B29 /* RicketyKateGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */; };
 		AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19B20FA1023005B5B29 /* IAwarder.swift */; };
@@ -99,6 +106,13 @@
 		AC1CF6A01BB4A03A00001024 /* cards_Extra.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_Extra.atlas; sourceTree = "<group>"; };
 		AC1D447E210061D3008E80B3 /* GameSettingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingExtensions.swift; sourceTree = "<group>"; };
 		AC1D44EB2100A981008E80B3 /* CardGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGameScene.swift; sourceTree = "<group>"; };
+		AC203689235DAA4F00ABC15B /* Kool.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Kool.mp3; sourceTree = "<group>"; };
+		AC20368A235DAA5000ABC15B /* Happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Happy.mp3; sourceTree = "<group>"; };
+		AC20368B235DAA5000ABC15B /* Amok.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Amok.mp3; sourceTree = "<group>"; };
+		AC20368C235DAA5000ABC15B /* Sneaky.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sneaky.mp3; sourceTree = "<group>"; };
+		AC20368D235DAA5000ABC15B /* Monkeys.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Monkeys.mp3; sourceTree = "<group>"; };
+		AC20368E235DAA5000ABC15B /* Hitman.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Hitman.mp3; sourceTree = "<group>"; };
+		AC20368F235DAA5000ABC15B /* Dark.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Dark.mp3; sourceTree = "<group>"; };
 		AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RicketyKateGameScene.swift; sourceTree = "<group>"; };
 		AC3BB19B20FA1023005B5B29 /* IAwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAwarder.swift; sourceTree = "<group>"; };
 		AC3BB19D20FA1094005B5B29 /* computerplayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = computerplayer.swift; sourceTree = "<group>"; };
@@ -198,6 +212,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AC203688235DA93100ABC15B /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				AC20368B235DAA5000ABC15B /* Amok.mp3 */,
+				AC20368F235DAA5000ABC15B /* Dark.mp3 */,
+				AC20368A235DAA5000ABC15B /* Happy.mp3 */,
+				AC20368E235DAA5000ABC15B /* Hitman.mp3 */,
+				AC203689235DAA4F00ABC15B /* Kool.mp3 */,
+				AC20368D235DAA5000ABC15B /* Monkeys.mp3 */,
+				AC20368C235DAA5000ABC15B /* Sneaky.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		AC62B68A1BA1564800B0EDAE = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +270,7 @@
 				ACF315741BDB129400F203E3 /* cards_tarot_white.atlas */,
 				AC73DDA71BB89E5300FF6114 /* cards_tarot.atlas */,
 				AC62B6981BA1564800B0EDAE /* AppDelegate.swift */,
+				AC203688235DA93100ABC15B /* Music */,
 				ACCB13371BAD16E600196393 /* Awarder.swift */,
 				AC1D44EB2100A981008E80B3 /* CardGameScene.swift */,
 				AC9E82BE1BA686C40064870C /* CardTable.swift */,
@@ -415,13 +444,17 @@
 			files = (
 				ACF315811BDB129400F203E3 /* cards_anchors_white.atlas in Resources */,
 				AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */,
+				AC203690235DAA5000ABC15B /* Kool.mp3 in Resources */,
+				AC203691235DAA5000ABC15B /* Happy.mp3 in Resources */,
 				AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */,
 				ACF315821BDB129400F203E3 /* cards_clubs_white.atlas in Resources */,
 				AC73DD9C1BB81A7300FF6114 /* cards_spades.atlas in Resources */,
+				AC203694235DAA5000ABC15B /* Monkeys.mp3 in Resources */,
 				AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */,
 				AC73DDA01BB8218E00FF6114 /* cards_hearts.atlas in Resources */,
 				AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */,
 				ACF739FB1BE87C9D003BA7F4 /* cards_picks_white.atlas in Resources */,
+				AC203696235DAA5000ABC15B /* Dark.mp3 in Resources */,
 				ACF3157C1BDB129400F203E3 /* cards_tarot_white.atlas in Resources */,
 				ACF3157E1BDB129400F203E3 /* cards_spades_white.atlas in Resources */,
 				AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */,
@@ -429,6 +462,8 @@
 				AC5CB3B21BFE8445007C5AFD /* Localizable.strings in Resources */,
 				ACF739FC1BE87C9D003BA7F4 /* cards_picks.atlas in Resources */,
 				ACF315801BDB129400F203E3 /* cards_diamonds_white.atlas in Resources */,
+				AC203692235DAA5000ABC15B /* Amok.mp3 in Resources */,
+				AC203693235DAA5000ABC15B /* Sneaky.mp3 in Resources */,
 				AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */,
 				AC701A8C1BDB98F4004FC5F8 /* cards_stars.atlas in Resources */,
 				AC73DDA41BB8252E00FF6114 /* cards_anchors.atlas in Resources */,
@@ -437,6 +472,7 @@
 				ACF3157B1BDB129400F203E3 /* cards_stars_white.atlas in Resources */,
 				ACF3157D1BDB129400F203E3 /* cards_suns_white.atlas in Resources */,
 				AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */,
+				AC203695235DAA5000ABC15B /* Hitman.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,7 +720,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -696,7 +732,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -710,7 +746,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 76;
+				CURRENT_PROJECT_VERSION = 77;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -722,7 +758,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
