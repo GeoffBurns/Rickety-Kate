@@ -26,7 +26,8 @@ class Usher {
         
         
         
-        let humans = (1...noOfHumans).map { HumanPlayer(name: "player".localize + $0.description) as CardPlayer }
+        let humans = (1...noOfHumans).map { HumanPlayer(name: "player".localize + $0.description,
+                                                        sound: "player"+String($0)) as CardPlayer }
         
         if let gameCenterName = GameKitHelper.sharedInstance.gameCenterName {
             humans[0].name = gameCenterName

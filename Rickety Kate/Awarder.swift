@@ -70,7 +70,7 @@ class AwarderBase
         return Dictionary<PlayingCard,Int>()
     }
    
-    func scoreFor(_ cards: [PlayingCard], winnersName: String) ->Int
+    func scoreFor(_ cards: [PlayingCard], winner: CardPlayer) ->Int
     {
         let ricketyKate = cards.filter{$0 == CardName.queen.of(PlayingCard.Suite.spades)}
         
@@ -83,23 +83,23 @@ class AwarderBase
         
         if !ricketyKate.isEmpty
         {
-            Bus.send(GameNotice.player(Scored.winRicketyKate(winnersName)))
+            Bus.send(GameNotice.player(Scored.winRicketyKate(winner)))
         }
         else if !omni.isEmpty
         {
-            Bus.send(GameNotice.player(Scored.winOmnibus(winnersName)))
+            Bus.send(GameNotice.player(Scored.winOmnibus(winner)))
         }
         else if !hool.isEmpty
         {
-            Bus.send(GameNotice.player(Scored.winHooligan(winnersName)))
+            Bus.send(GameNotice.player(Scored.winHooligan(winner)))
         }
         else if noTrumps > 0
         {
-            Bus.send(GameNotice.player(Scored.winSpades(winnersName,noTrumps)))
+            Bus.send(GameNotice.player(Scored.winSpades(winner,noTrumps)))
         }
         else
         {
-            Bus.send(GameNotice.winTrick(winnersName))
+            Bus.send(GameNotice.winTrick(winner))
         }
         
         return score

@@ -69,7 +69,7 @@ class Scorer
          {
          player.currentTotalScore.value = 0
          hasShotMoon = true
-         Bus.send(GameNotice.player(Scored.shotTheMoon(player.name)))
+         Bus.send(GameNotice.player(Scored.shotTheMoon(player)))
          GameKitHelper.sharedInstance.reportAchievement(Achievement.ShootingTheMoon)
         }
       }
@@ -142,11 +142,9 @@ class Scorer
       if winner?.playerNo == 0
       {
         GameKitHelper.sharedInstance.reportAchievement(Game.moreSettings.achievementForWin)
-       
-       
       }
     
-      Bus.send(GameNotice.winGame(winner!.name))
+      Bus.send(GameNotice.winGame(winner!))
       }
         
  
@@ -168,7 +166,7 @@ class Scorer
         if let winner = Scorer.playerThatWon(gameState)
         {
          
-                let score = Game.rules.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winnersName: winner.name)
+                let score = Game.rules.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winner: winner)
                 if(score != 0)
                 {
                     winner.currentTotalScore.value += score

@@ -15,6 +15,9 @@ public enum Move : GameMove, Equatable
     case cardDoesNotFollowSuite(PlayingCard.Suite)
     case trumpsHaveNotBeenBroken
     
+  
+    public var sound : [String] {  return []  }
+    
     public var description : String?
     {
         switch self

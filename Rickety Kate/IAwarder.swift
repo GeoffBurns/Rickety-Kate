@@ -26,7 +26,7 @@ public protocol IAwarder
     var hooligan : PlayingCard? { get }
     var backgroundCards : [PlayingCard] { get }
     var leaderboard : LearderBoard { get }
-    func scoreFor(_ cards: [PlayingCard], winnersName: String) ->Int
+    func scoreFor(_ cards: [PlayingCard], winner: CardPlayer) ->Int
     func AchievementForWin(_ gameFlavor:GameFlavor) ->  Achievement
     
 }

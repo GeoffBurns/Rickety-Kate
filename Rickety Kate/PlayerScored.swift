@@ -13,29 +13,48 @@ import Cards
 
 public enum Scored  : PlayerScored , Equatable
 {
-    case shotTheMoon(String)
-    case winRicketyKate(String)
-    case winHooligan(String)
-    case winOmnibus(String)
-    case winSpades(String,Int)
+    case shotTheMoon(CardPlayer)
+    case winRicketyKate(CardPlayer)
+    case winHooligan(CardPlayer)
+    case winOmnibus(CardPlayer)
+    case winSpades(CardPlayer,Int)
     
+    
+    public var sound : [String]
+    {
+        switch self
+          {
+          case .shotTheMoon( let player ) :
+            return player.isYou ? ["YouShot"] :[player.sound,"Shot"]
+          case .winRicketyKate( let player ) :
+            return player.isYou ? ["YouKissed"] :[player.sound,"Kissed"]
+          case .winHooligan( let player ) :
+            return  player.isYou ? ["YouBashed"] :[player.sound,"Bashed"]
+          case .winOmnibus( let player ) :
+            return player.isYou ? ["YouBus"] :[player.sound,"Bus"]
+          case .winSpades( let player, _ ) :
+            return player.isYou ?
+                   [ "YouWon",Game.moreSettings.rules.shortDescription] : [player.sound,"Won",Game.moreSettings.rules.shortDescription]
+             
+          }
+    }
     public var description : String?
     {
         switch self
         {
-        case .shotTheMoon( let name ) :
-            return "%@ just Shot the Moon".sayCongratsTo(name)
-        case .winRicketyKate( let name ) :
-            return  "%@ was kissed by Rickety Kate Poor %@".sayTwiceTo(name)
-        case .winHooligan( let name ) :
-            return  "%@ was bashed by the Hooligan Poor %@".sayTwiceTo(name)
-        case .winOmnibus( let name ) :
-            return "%@ just Caught the Bus".sayCongratsTo(name)
-        case .winSpades( let name, let noOfSpades ) :
+        case .shotTheMoon( let player ) :
+            return "%@ just Shot the Moon".sayCongratsTo(player.name)
+        case .winRicketyKate( let player ) :
+            return  "%@ was kissed by Rickety Kate Poor %@".sayTwiceTo(player.name)
+        case .winHooligan( let player ) :
+            return  "%@ was bashed by the Hooligan Poor %@".sayTwiceTo(player.name)
+        case .winOmnibus( let player ) :
+            return "%@ just Caught the Bus".sayCongratsTo(player.name)
+        case .winSpades( let player, let noOfSpades ) :
             let spades = Game.moreSettings.rules.shortDescription
             let start = "%@ won %d %@"
                 .with
-                .sayTo(name)
+                .sayTo(player.name)
                 .pluralize(noOfSpades,arguements: spades)
             
             let local = start.localize

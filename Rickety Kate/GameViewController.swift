@@ -76,8 +76,8 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
             MoreOptions.allowBreaking,
             Options.useNumbers,
             Options.music,
-            Options.credit
-            //,Options.sound
+            Options.credit,
+            Options.sound
         ]
         Options.speed.valueWasSetTo = Game.settings.cacheSpeed
         MoreOptions.ruleSet.valueWasSetTo = Game.settings.clearData
