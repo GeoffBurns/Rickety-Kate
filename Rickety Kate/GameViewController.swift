@@ -76,6 +76,7 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
             MoreOptions.allowBreaking,
             Options.useNumbers
             //,
+            //Options.music,
             //Options.credit,
             //Options.sound
         ]
