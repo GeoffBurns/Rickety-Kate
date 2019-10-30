@@ -47,7 +47,7 @@ extension  YesNoOption
 {
     convenience init(inverted:Bool, prompt: String, key: MoreProperties)
     {
-        self.init(inverted:inverted, prompt: prompt, key: key.rawValue)
+        self.init(inverted:inverted, prompt: prompt, key: key.rawValue, isImmediate: false)
     }
 }
 
@@ -209,9 +209,12 @@ extension LiveGameSettings : IGameSettings
 /// For testing
 open class FakeGameSettings : IGameSettings
 {
+    public var musicVolume: Float = 0.3
+    public var soundVolume: Float = 1.0
     public func clearData(_: Int) { }
     public func cacheSpeed(_: Int) { }
     public var options: [SaveableOption] = []
+    public var audioOptions: [SaveableOption] = []
     public var noOfSuitesDefault: Int = 5
     public var specialSuite = PlayingCard.Suite.none
     public var isFoolATrump = false

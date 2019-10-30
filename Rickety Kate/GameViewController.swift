@@ -74,13 +74,20 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
             MoreOptions.omnibus,
             Options.showTips,
             MoreOptions.allowBreaking,
-            Options.useNumbers,
-            Options.music,
-            Options.credit,
-            Options.sound
+            Options.useNumbers
+            //,
+            //Options.credit,
+            //Options.sound
         ]
-        Options.speed.valueWasSetTo = Game.settings.cacheSpeed
-        MoreOptions.ruleSet.valueWasSetTo = Game.settings.clearData
+        Game.settings.audioOptions = [
+                Options.music,
+                Options.musicVolume,
+                Options.credit,
+                Options.sound,
+                Options.soundVolume
+            ]
+        Options.speed.onValueChanged = Game.settings.cacheSpeed
+        MoreOptions.ruleSet.onValueChanged = Game.settings.clearData
         Tip.setup()
         SoundManager.sharedInstance.playlist = ["Monkeys","Happy","Dark","Kool", "Hitman", "Sneaky", "Amok", "Monkeys"]
         ScoreDisplay.scoreToString = {(name,wins,score) in

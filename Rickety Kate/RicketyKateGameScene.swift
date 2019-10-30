@@ -171,6 +171,7 @@ class RicketyKateGameScene: CardGameScene,
         
         
         setupCurrentPlayer()
+        setupSounds()
     }
     
     func startHand()

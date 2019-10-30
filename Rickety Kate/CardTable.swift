@@ -102,10 +102,7 @@ open class CardTable: GameStateBase
     {
         seatRotation = newValue
         Game.currentOperator = newValue
-        if let audioPlayer = scene as? HasMusic
-                      {
-                        audioPlayer.playMusic(newValue)
-                      }
+   
     }
     public func reseatPlayers(_ rotate:Int, isPortrait:Bool)
         {
