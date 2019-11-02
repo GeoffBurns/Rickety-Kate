@@ -207,6 +207,78 @@
 		AC2F3E3323601B7C007596A8 /* player1-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC2F3DD623601B7B007596A8 /* player1-es.m4a */; };
 		AC2F3E3423601B7C007596A8 /* youbus-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC2F3DD723601B7C007596A8 /* youbus-es.m4a */; };
 		AC2F3E3523601B7C007596A8 /* molly-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC2F3DD823601B7C007596A8 /* molly-de.m4a */; };
+		AC30C4F8236AE23D00E30314 /* youwonheart-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4EC236AE23B00E30314 /* youwonheart-en.m4a */; };
+		AC30C4F9236AE23D00E30314 /* youwonjacks-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4ED236AE23B00E30314 /* youwonjacks-en.m4a */; };
+		AC30C4FA236AE23D00E30314 /* youwonspade-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4EE236AE23C00E30314 /* youwonspade-en.m4a */; };
+		AC30C4FB236AE23D00E30314 /* wonjacks-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4EF236AE23C00E30314 /* wonjacks-en.m4a */; };
+		AC30C4FC236AE23D00E30314 /* wonheart-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4F0236AE23C00E30314 /* wonheart-en.m4a */; };
+		AC30C4FD236AE23D00E30314 /* wonjack-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4F1236AE23C00E30314 /* wonjack-en.m4a */; };
+		AC30C4FE236AE23D00E30314 /* wonspade-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4F2236AE23C00E30314 /* wonspade-en.m4a */; };
+		AC30C4FF236AE23D00E30314 /* wonspades-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4F3236AE23C00E30314 /* wonspades-en.m4a */; };
+		AC30C500236AE23D00E30314 /* youwonhearts-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4F4236AE23C00E30314 /* youwonhearts-en.m4a */; };
+		AC30C501236AE23D00E30314 /* youwonspades-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4F5236AE23C00E30314 /* youwonspades-en.m4a */; };
+		AC30C502236AE23D00E30314 /* wonhearts-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4F6236AE23D00E30314 /* wonhearts-en.m4a */; };
+		AC30C503236AE23D00E30314 /* youwonjack-en.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C4F7236AE23D00E30314 /* youwonjack-en.m4a */; };
+		AC30C51C236AF6B100E30314 /* wonspade-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C504236AF6A700E30314 /* wonspade-fr.m4a */; };
+		AC30C51D236AF6B100E30314 /* youwonjack-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C505236AF6A800E30314 /* youwonjack-de.m4a */; };
+		AC30C51E236AF6B100E30314 /* wonjack-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C506236AF6A900E30314 /* wonjack-fr.m4a */; };
+		AC30C51F236AF6B100E30314 /* wonspades-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C507236AF6AA00E30314 /* wonspades-fr.m4a */; };
+		AC30C520236AF6B100E30314 /* youwonspade-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C508236AF6AA00E30314 /* youwonspade-fr.m4a */; };
+		AC30C521236AF6B100E30314 /* wonhearts-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C509236AF6AB00E30314 /* wonhearts-de.m4a */; };
+		AC30C522236AF6B100E30314 /* youwonspades-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C50A236AF6AB00E30314 /* youwonspades-fr.m4a */; };
+		AC30C523236AF6B100E30314 /* wonhearts-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C50B236AF6AC00E30314 /* wonhearts-fr.m4a */; };
+		AC30C524236AF6B100E30314 /* wonjack-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C50C236AF6AC00E30314 /* wonjack-de.m4a */; };
+		AC30C525236AF6B100E30314 /* wonjacks-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C50D236AF6AD00E30314 /* wonjacks-fr.m4a */; };
+		AC30C526236AF6B100E30314 /* youwonjack-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C50E236AF6AD00E30314 /* youwonjack-fr.m4a */; };
+		AC30C527236AF6B100E30314 /* youwonspades-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C50F236AF6AD00E30314 /* youwonspades-de.m4a */; };
+		AC30C528236AF6B100E30314 /* wonspade-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C510236AF6AE00E30314 /* wonspade-de.m4a */; };
+		AC30C529236AF6B100E30314 /* wonjacks-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C511236AF6AE00E30314 /* wonjacks-de.m4a */; };
+		AC30C52A236AF6B100E30314 /* wonheart-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C512236AF6AE00E30314 /* wonheart-de.m4a */; };
+		AC30C52B236AF6B100E30314 /* youwonhearts-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C513236AF6AF00E30314 /* youwonhearts-de.m4a */; };
+		AC30C52C236AF6B100E30314 /* wonheart-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C514236AF6AF00E30314 /* wonheart-fr.m4a */; };
+		AC30C52D236AF6B100E30314 /* youwonspade-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C515236AF6B000E30314 /* youwonspade-de.m4a */; };
+		AC30C52E236AF6B100E30314 /* wonspades-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C516236AF6B000E30314 /* wonspades-de.m4a */; };
+		AC30C52F236AF6B100E30314 /* youwonheart-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C517236AF6B000E30314 /* youwonheart-de.m4a */; };
+		AC30C530236AF6B100E30314 /* youwonhearts-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C518236AF6B000E30314 /* youwonhearts-fr.m4a */; };
+		AC30C531236AF6B100E30314 /* youwonjacks-de.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C519236AF6B000E30314 /* youwonjacks-de.m4a */; };
+		AC30C532236AF6B100E30314 /* youwonjacks-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C51A236AF6B100E30314 /* youwonjacks-fr.m4a */; };
+		AC30C533236AF6B100E30314 /* youwonheart-fr.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C51B236AF6B100E30314 /* youwonheart-fr.m4a */; };
+		AC30C538236B02E400E30314 /* youwonhearts-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C534236B02E300E30314 /* youwonhearts-it.m4a */; };
+		AC30C539236B02E400E30314 /* youwonspades-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C535236B02E300E30314 /* youwonspades-it.m4a */; };
+		AC30C53A236B02E400E30314 /* youwonheart-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C536236B02E300E30314 /* youwonheart-it.m4a */; };
+		AC30C53B236B02E400E30314 /* youwonspade-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C537236B02E400E30314 /* youwonspade-it.m4a */; };
+		AC30C550236B7CCB00E30314 /* wonjack-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C53C236B7CC800E30314 /* wonjack-pt.m4a */; };
+		AC30C551236B7CCB00E30314 /* wonhearts-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C53D236B7CC800E30314 /* wonhearts-it.m4a */; };
+		AC30C552236B7CCB00E30314 /* youwonhearts-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C53E236B7CC800E30314 /* youwonhearts-pt.m4a */; };
+		AC30C553236B7CCB00E30314 /* youwonjack-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C53F236B7CC900E30314 /* youwonjack-pt.m4a */; };
+		AC30C554236B7CCB00E30314 /* wonspades-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C540236B7CC900E30314 /* wonspades-pt.m4a */; };
+		AC30C555236B7CCB00E30314 /* youwonspades-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C541236B7CC900E30314 /* youwonspades-pt.m4a */; };
+		AC30C556236B7CCB00E30314 /* wonjacks-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C542236B7CC900E30314 /* wonjacks-pt.m4a */; };
+		AC30C557236B7CCB00E30314 /* wonjacks-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C543236B7CC900E30314 /* wonjacks-it.m4a */; };
+		AC30C558236B7CCB00E30314 /* youwonjacks-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C544236B7CC900E30314 /* youwonjacks-it.m4a */; };
+		AC30C559236B7CCB00E30314 /* wonhearts-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C545236B7CCA00E30314 /* wonhearts-pt.m4a */; };
+		AC30C55A236B7CCB00E30314 /* wonheart-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C546236B7CCA00E30314 /* wonheart-it.m4a */; };
+		AC30C55B236B7CCB00E30314 /* wonspades-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C547236B7CCA00E30314 /* wonspades-it.m4a */; };
+		AC30C55C236B7CCB00E30314 /* youwonjacks-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C548236B7CCA00E30314 /* youwonjacks-pt.m4a */; };
+		AC30C55D236B7CCB00E30314 /* youwonheart-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C549236B7CCA00E30314 /* youwonheart-pt.m4a */; };
+		AC30C55E236B7CCB00E30314 /* youwonjack-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C54A236B7CCA00E30314 /* youwonjack-it.m4a */; };
+		AC30C55F236B7CCB00E30314 /* youwonspade-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C54B236B7CCB00E30314 /* youwonspade-pt.m4a */; };
+		AC30C560236B7CCB00E30314 /* wonjack-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C54C236B7CCB00E30314 /* wonjack-it.m4a */; };
+		AC30C561236B7CCB00E30314 /* wonspade-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C54D236B7CCB00E30314 /* wonspade-pt.m4a */; };
+		AC30C562236B7CCB00E30314 /* wonheart-pt.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C54E236B7CCB00E30314 /* wonheart-pt.m4a */; };
+		AC30C563236B7CCB00E30314 /* wonspade-it.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C54F236B7CCB00E30314 /* wonspade-it.m4a */; };
+		AC30C570236B80E100E30314 /* wonspades-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C564236B80DF00E30314 /* wonspades-es.m4a */; };
+		AC30C571236B80E100E30314 /* youwonjacks-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C565236B80DF00E30314 /* youwonjacks-es.m4a */; };
+		AC30C572236B80E100E30314 /* wonjack-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C566236B80E000E30314 /* wonjack-es.m4a */; };
+		AC30C573236B80E100E30314 /* youwonspade-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C567236B80E000E30314 /* youwonspade-es.m4a */; };
+		AC30C574236B80E100E30314 /* youwonspades-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C568236B80E000E30314 /* youwonspades-es.m4a */; };
+		AC30C575236B80E100E30314 /* wonhearts-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C569236B80E000E30314 /* wonhearts-es.m4a */; };
+		AC30C576236B80E100E30314 /* wonspade-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C56A236B80E000E30314 /* wonspade-es.m4a */; };
+		AC30C577236B80E100E30314 /* youwonheart-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C56B236B80E100E30314 /* youwonheart-es.m4a */; };
+		AC30C578236B80E100E30314 /* wonjacks-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C56C236B80E100E30314 /* wonjacks-es.m4a */; };
+		AC30C579236B80E100E30314 /* wonheart-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C56D236B80E100E30314 /* wonheart-es.m4a */; };
+		AC30C57A236B80E100E30314 /* youwonhearts.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C56E236B80E100E30314 /* youwonhearts.m4a */; };
+		AC30C57B236B80E100E30314 /* youwonjack-es.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC30C56F236B80E100E30314 /* youwonjack-es.m4a */; };
 		AC364FCD2338623600BCE2EF /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AC364FCC2338623600BCE2EF /* ReactiveSwift */; };
 		AC3BB19020FA064A005B5B29 /* RicketyKateGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */; };
 		AC3BB19C20FA1023005B5B29 /* IAwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3BB19B20FA1023005B5B29 /* IAwarder.swift */; };
@@ -491,6 +563,78 @@
 		AC2F3DD623601B7B007596A8 /* player1-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "player1-es.m4a"; sourceTree = "<group>"; };
 		AC2F3DD723601B7C007596A8 /* youbus-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youbus-es.m4a"; sourceTree = "<group>"; };
 		AC2F3DD823601B7C007596A8 /* molly-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "molly-de.m4a"; sourceTree = "<group>"; };
+		AC30C4EC236AE23B00E30314 /* youwonheart-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonheart-en.m4a"; sourceTree = "<group>"; };
+		AC30C4ED236AE23B00E30314 /* youwonjacks-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjacks-en.m4a"; sourceTree = "<group>"; };
+		AC30C4EE236AE23C00E30314 /* youwonspade-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspade-en.m4a"; sourceTree = "<group>"; };
+		AC30C4EF236AE23C00E30314 /* wonjacks-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjacks-en.m4a"; sourceTree = "<group>"; };
+		AC30C4F0236AE23C00E30314 /* wonheart-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonheart-en.m4a"; sourceTree = "<group>"; };
+		AC30C4F1236AE23C00E30314 /* wonjack-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjack-en.m4a"; sourceTree = "<group>"; };
+		AC30C4F2236AE23C00E30314 /* wonspade-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspade-en.m4a"; sourceTree = "<group>"; };
+		AC30C4F3236AE23C00E30314 /* wonspades-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspades-en.m4a"; sourceTree = "<group>"; };
+		AC30C4F4236AE23C00E30314 /* youwonhearts-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonhearts-en.m4a"; sourceTree = "<group>"; };
+		AC30C4F5236AE23C00E30314 /* youwonspades-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspades-en.m4a"; sourceTree = "<group>"; };
+		AC30C4F6236AE23D00E30314 /* wonhearts-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonhearts-en.m4a"; sourceTree = "<group>"; };
+		AC30C4F7236AE23D00E30314 /* youwonjack-en.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjack-en.m4a"; sourceTree = "<group>"; };
+		AC30C504236AF6A700E30314 /* wonspade-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspade-fr.m4a"; sourceTree = "<group>"; };
+		AC30C505236AF6A800E30314 /* youwonjack-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjack-de.m4a"; sourceTree = "<group>"; };
+		AC30C506236AF6A900E30314 /* wonjack-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjack-fr.m4a"; sourceTree = "<group>"; };
+		AC30C507236AF6AA00E30314 /* wonspades-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspades-fr.m4a"; sourceTree = "<group>"; };
+		AC30C508236AF6AA00E30314 /* youwonspade-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspade-fr.m4a"; sourceTree = "<group>"; };
+		AC30C509236AF6AB00E30314 /* wonhearts-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonhearts-de.m4a"; sourceTree = "<group>"; };
+		AC30C50A236AF6AB00E30314 /* youwonspades-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspades-fr.m4a"; sourceTree = "<group>"; };
+		AC30C50B236AF6AC00E30314 /* wonhearts-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonhearts-fr.m4a"; sourceTree = "<group>"; };
+		AC30C50C236AF6AC00E30314 /* wonjack-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjack-de.m4a"; sourceTree = "<group>"; };
+		AC30C50D236AF6AD00E30314 /* wonjacks-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjacks-fr.m4a"; sourceTree = "<group>"; };
+		AC30C50E236AF6AD00E30314 /* youwonjack-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjack-fr.m4a"; sourceTree = "<group>"; };
+		AC30C50F236AF6AD00E30314 /* youwonspades-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspades-de.m4a"; sourceTree = "<group>"; };
+		AC30C510236AF6AE00E30314 /* wonspade-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspade-de.m4a"; sourceTree = "<group>"; };
+		AC30C511236AF6AE00E30314 /* wonjacks-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjacks-de.m4a"; sourceTree = "<group>"; };
+		AC30C512236AF6AE00E30314 /* wonheart-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonheart-de.m4a"; sourceTree = "<group>"; };
+		AC30C513236AF6AF00E30314 /* youwonhearts-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonhearts-de.m4a"; sourceTree = "<group>"; };
+		AC30C514236AF6AF00E30314 /* wonheart-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonheart-fr.m4a"; sourceTree = "<group>"; };
+		AC30C515236AF6B000E30314 /* youwonspade-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspade-de.m4a"; sourceTree = "<group>"; };
+		AC30C516236AF6B000E30314 /* wonspades-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspades-de.m4a"; sourceTree = "<group>"; };
+		AC30C517236AF6B000E30314 /* youwonheart-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonheart-de.m4a"; sourceTree = "<group>"; };
+		AC30C518236AF6B000E30314 /* youwonhearts-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonhearts-fr.m4a"; sourceTree = "<group>"; };
+		AC30C519236AF6B000E30314 /* youwonjacks-de.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjacks-de.m4a"; sourceTree = "<group>"; };
+		AC30C51A236AF6B100E30314 /* youwonjacks-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjacks-fr.m4a"; sourceTree = "<group>"; };
+		AC30C51B236AF6B100E30314 /* youwonheart-fr.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonheart-fr.m4a"; sourceTree = "<group>"; };
+		AC30C534236B02E300E30314 /* youwonhearts-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonhearts-it.m4a"; sourceTree = "<group>"; };
+		AC30C535236B02E300E30314 /* youwonspades-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspades-it.m4a"; sourceTree = "<group>"; };
+		AC30C536236B02E300E30314 /* youwonheart-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonheart-it.m4a"; sourceTree = "<group>"; };
+		AC30C537236B02E400E30314 /* youwonspade-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspade-it.m4a"; sourceTree = "<group>"; };
+		AC30C53C236B7CC800E30314 /* wonjack-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjack-pt.m4a"; sourceTree = "<group>"; };
+		AC30C53D236B7CC800E30314 /* wonhearts-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonhearts-it.m4a"; sourceTree = "<group>"; };
+		AC30C53E236B7CC800E30314 /* youwonhearts-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonhearts-pt.m4a"; sourceTree = "<group>"; };
+		AC30C53F236B7CC900E30314 /* youwonjack-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjack-pt.m4a"; sourceTree = "<group>"; };
+		AC30C540236B7CC900E30314 /* wonspades-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspades-pt.m4a"; sourceTree = "<group>"; };
+		AC30C541236B7CC900E30314 /* youwonspades-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspades-pt.m4a"; sourceTree = "<group>"; };
+		AC30C542236B7CC900E30314 /* wonjacks-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjacks-pt.m4a"; sourceTree = "<group>"; };
+		AC30C543236B7CC900E30314 /* wonjacks-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjacks-it.m4a"; sourceTree = "<group>"; };
+		AC30C544236B7CC900E30314 /* youwonjacks-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjacks-it.m4a"; sourceTree = "<group>"; };
+		AC30C545236B7CCA00E30314 /* wonhearts-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonhearts-pt.m4a"; sourceTree = "<group>"; };
+		AC30C546236B7CCA00E30314 /* wonheart-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonheart-it.m4a"; sourceTree = "<group>"; };
+		AC30C547236B7CCA00E30314 /* wonspades-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspades-it.m4a"; sourceTree = "<group>"; };
+		AC30C548236B7CCA00E30314 /* youwonjacks-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjacks-pt.m4a"; sourceTree = "<group>"; };
+		AC30C549236B7CCA00E30314 /* youwonheart-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonheart-pt.m4a"; sourceTree = "<group>"; };
+		AC30C54A236B7CCA00E30314 /* youwonjack-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjack-it.m4a"; sourceTree = "<group>"; };
+		AC30C54B236B7CCB00E30314 /* youwonspade-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspade-pt.m4a"; sourceTree = "<group>"; };
+		AC30C54C236B7CCB00E30314 /* wonjack-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjack-it.m4a"; sourceTree = "<group>"; };
+		AC30C54D236B7CCB00E30314 /* wonspade-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspade-pt.m4a"; sourceTree = "<group>"; };
+		AC30C54E236B7CCB00E30314 /* wonheart-pt.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonheart-pt.m4a"; sourceTree = "<group>"; };
+		AC30C54F236B7CCB00E30314 /* wonspade-it.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspade-it.m4a"; sourceTree = "<group>"; };
+		AC30C564236B80DF00E30314 /* wonspades-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspades-es.m4a"; sourceTree = "<group>"; };
+		AC30C565236B80DF00E30314 /* youwonjacks-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjacks-es.m4a"; sourceTree = "<group>"; };
+		AC30C566236B80E000E30314 /* wonjack-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjack-es.m4a"; sourceTree = "<group>"; };
+		AC30C567236B80E000E30314 /* youwonspade-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspade-es.m4a"; sourceTree = "<group>"; };
+		AC30C568236B80E000E30314 /* youwonspades-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonspades-es.m4a"; sourceTree = "<group>"; };
+		AC30C569236B80E000E30314 /* wonhearts-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonhearts-es.m4a"; sourceTree = "<group>"; };
+		AC30C56A236B80E000E30314 /* wonspade-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonspade-es.m4a"; sourceTree = "<group>"; };
+		AC30C56B236B80E100E30314 /* youwonheart-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonheart-es.m4a"; sourceTree = "<group>"; };
+		AC30C56C236B80E100E30314 /* wonjacks-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonjacks-es.m4a"; sourceTree = "<group>"; };
+		AC30C56D236B80E100E30314 /* wonheart-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wonheart-es.m4a"; sourceTree = "<group>"; };
+		AC30C56E236B80E100E30314 /* youwonhearts.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = youwonhearts.m4a; sourceTree = "<group>"; };
+		AC30C56F236B80E100E30314 /* youwonjack-es.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "youwonjack-es.m4a"; sourceTree = "<group>"; };
 		AC3BB18F20FA064A005B5B29 /* RicketyKateGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RicketyKateGameScene.swift; sourceTree = "<group>"; };
 		AC3BB19B20FA1023005B5B29 /* IAwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAwarder.swift; sourceTree = "<group>"; };
 		AC3BB19D20FA1094005B5B29 /* computerplayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = computerplayer.swift; sourceTree = "<group>"; };
@@ -607,6 +751,78 @@
 		AC2036A6235F0F6C00ABC15B /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				AC30C56D236B80E100E30314 /* wonheart-es.m4a */,
+				AC30C569236B80E000E30314 /* wonhearts-es.m4a */,
+				AC30C566236B80E000E30314 /* wonjack-es.m4a */,
+				AC30C56C236B80E100E30314 /* wonjacks-es.m4a */,
+				AC30C56A236B80E000E30314 /* wonspade-es.m4a */,
+				AC30C564236B80DF00E30314 /* wonspades-es.m4a */,
+				AC30C56B236B80E100E30314 /* youwonheart-es.m4a */,
+				AC30C56E236B80E100E30314 /* youwonhearts.m4a */,
+				AC30C56F236B80E100E30314 /* youwonjack-es.m4a */,
+				AC30C565236B80DF00E30314 /* youwonjacks-es.m4a */,
+				AC30C567236B80E000E30314 /* youwonspade-es.m4a */,
+				AC30C568236B80E000E30314 /* youwonspades-es.m4a */,
+				AC30C546236B7CCA00E30314 /* wonheart-it.m4a */,
+				AC30C54E236B7CCB00E30314 /* wonheart-pt.m4a */,
+				AC30C53D236B7CC800E30314 /* wonhearts-it.m4a */,
+				AC30C545236B7CCA00E30314 /* wonhearts-pt.m4a */,
+				AC30C54C236B7CCB00E30314 /* wonjack-it.m4a */,
+				AC30C53C236B7CC800E30314 /* wonjack-pt.m4a */,
+				AC30C543236B7CC900E30314 /* wonjacks-it.m4a */,
+				AC30C542236B7CC900E30314 /* wonjacks-pt.m4a */,
+				AC30C54F236B7CCB00E30314 /* wonspade-it.m4a */,
+				AC30C54D236B7CCB00E30314 /* wonspade-pt.m4a */,
+				AC30C547236B7CCA00E30314 /* wonspades-it.m4a */,
+				AC30C540236B7CC900E30314 /* wonspades-pt.m4a */,
+				AC30C549236B7CCA00E30314 /* youwonheart-pt.m4a */,
+				AC30C53E236B7CC800E30314 /* youwonhearts-pt.m4a */,
+				AC30C54A236B7CCA00E30314 /* youwonjack-it.m4a */,
+				AC30C53F236B7CC900E30314 /* youwonjack-pt.m4a */,
+				AC30C544236B7CC900E30314 /* youwonjacks-it.m4a */,
+				AC30C548236B7CCA00E30314 /* youwonjacks-pt.m4a */,
+				AC30C54B236B7CCB00E30314 /* youwonspade-pt.m4a */,
+				AC30C541236B7CC900E30314 /* youwonspades-pt.m4a */,
+				AC30C536236B02E300E30314 /* youwonheart-it.m4a */,
+				AC30C534236B02E300E30314 /* youwonhearts-it.m4a */,
+				AC30C537236B02E400E30314 /* youwonspade-it.m4a */,
+				AC30C535236B02E300E30314 /* youwonspades-it.m4a */,
+				AC30C512236AF6AE00E30314 /* wonheart-de.m4a */,
+				AC30C514236AF6AF00E30314 /* wonheart-fr.m4a */,
+				AC30C509236AF6AB00E30314 /* wonhearts-de.m4a */,
+				AC30C50B236AF6AC00E30314 /* wonhearts-fr.m4a */,
+				AC30C50C236AF6AC00E30314 /* wonjack-de.m4a */,
+				AC30C506236AF6A900E30314 /* wonjack-fr.m4a */,
+				AC30C511236AF6AE00E30314 /* wonjacks-de.m4a */,
+				AC30C50D236AF6AD00E30314 /* wonjacks-fr.m4a */,
+				AC30C510236AF6AE00E30314 /* wonspade-de.m4a */,
+				AC30C504236AF6A700E30314 /* wonspade-fr.m4a */,
+				AC30C516236AF6B000E30314 /* wonspades-de.m4a */,
+				AC30C507236AF6AA00E30314 /* wonspades-fr.m4a */,
+				AC30C517236AF6B000E30314 /* youwonheart-de.m4a */,
+				AC30C51B236AF6B100E30314 /* youwonheart-fr.m4a */,
+				AC30C513236AF6AF00E30314 /* youwonhearts-de.m4a */,
+				AC30C518236AF6B000E30314 /* youwonhearts-fr.m4a */,
+				AC30C505236AF6A800E30314 /* youwonjack-de.m4a */,
+				AC30C50E236AF6AD00E30314 /* youwonjack-fr.m4a */,
+				AC30C519236AF6B000E30314 /* youwonjacks-de.m4a */,
+				AC30C51A236AF6B100E30314 /* youwonjacks-fr.m4a */,
+				AC30C515236AF6B000E30314 /* youwonspade-de.m4a */,
+				AC30C508236AF6AA00E30314 /* youwonspade-fr.m4a */,
+				AC30C50F236AF6AD00E30314 /* youwonspades-de.m4a */,
+				AC30C50A236AF6AB00E30314 /* youwonspades-fr.m4a */,
+				AC30C4F0236AE23C00E30314 /* wonheart-en.m4a */,
+				AC30C4F6236AE23D00E30314 /* wonhearts-en.m4a */,
+				AC30C4F1236AE23C00E30314 /* wonjack-en.m4a */,
+				AC30C4EF236AE23C00E30314 /* wonjacks-en.m4a */,
+				AC30C4F2236AE23C00E30314 /* wonspade-en.m4a */,
+				AC30C4F3236AE23C00E30314 /* wonspades-en.m4a */,
+				AC30C4EC236AE23B00E30314 /* youwonheart-en.m4a */,
+				AC30C4F4236AE23C00E30314 /* youwonhearts-en.m4a */,
+				AC30C4F7236AE23D00E30314 /* youwonjack-en.m4a */,
+				AC30C4ED236AE23B00E30314 /* youwonjacks-en.m4a */,
+				AC30C4EE236AE23C00E30314 /* youwonspade-en.m4a */,
+				AC30C4F5236AE23C00E30314 /* youwonspades-en.m4a */,
 				AC2F3D8423601B73007596A8 /* bashed-de.m4a */,
 				AC2F3DCD23601B7B007596A8 /* bashed-es.m4a */,
 				AC2F3D8123601B73007596A8 /* bashed-it.m4a */,
@@ -1021,15 +1237,21 @@
 				AC20376A235FCA9700ABC15B /* player6-pt.m4a in Resources */,
 				AC2F3E0723601B7C007596A8 /* player6-es.m4a in Resources */,
 				AC2F3E1523601B7C007596A8 /* player7-es.m4a in Resources */,
+				AC30C550236B7CCB00E30314 /* wonjack-pt.m4a in Resources */,
 				AC203753235FCA9700ABC15B /* player5-pt.m4a in Resources */,
 				AC2F3E0023601B7C007596A8 /* youknock-de.m4a in Resources */,
 				AC203715235FAE6000ABC15B /* fred-fr.m4a in Resources */,
+				AC30C554236B7CCB00E30314 /* wonspades-pt.m4a in Resources */,
 				AC2F3E2823601B7C007596A8 /* spade-es.m4a in Resources */,
+				AC30C501236AE23D00E30314 /* youwonspades-en.m4a in Resources */,
 				AC2036CC235F108C00ABC15B /* player6-en.m4a in Resources */,
 				AC2036C8235F108C00ABC15B /* player5-en.m4a in Resources */,
 				AC2F3DF523601B7C007596A8 /* jack-de.m4a in Resources */,
+				AC30C533236AF6B100E30314 /* youwonheart-fr.m4a in Resources */,
 				AC2036C7235F108C00ABC15B /* molly-en.m4a in Resources */,
 				AC2036C0235F108C00ABC15B /* warren-en.m4a in Resources */,
+				AC30C552236B7CCB00E30314 /* youwonhearts-pt.m4a in Resources */,
+				AC30C563236B7CCB00E30314 /* wonspade-it.m4a in Resources */,
 				AC2F3E2523601B7C007596A8 /* youwon-de.m4a in Resources */,
 				AC2F3E3023601B7C007596A8 /* heart-es.m4a in Resources */,
 				AC203712235FAE6000ABC15B /* player4-fr.m4a in Resources */,
@@ -1040,12 +1262,15 @@
 				AC2F3DEE23601B7C007596A8 /* youwon-it.m4a in Resources */,
 				AC2F3E2E23601B7C007596A8 /* youwongame-es.m4a in Resources */,
 				AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */,
+				AC30C573236B80E100E30314 /* youwonspade-es.m4a in Resources */,
 				AC2F3DDC23601B7C007596A8 /* wongame-de.m4a in Resources */,
 				AC203731235FB97C00ABC15B /* spade-pt.m4a in Resources */,
 				AC203690235DAA5000ABC15B /* Kool.mp3 in Resources */,
 				AC2F3E2423601B7C007596A8 /* heart-it.m4a in Resources */,
+				AC30C51C236AF6B100E30314 /* wonspade-fr.m4a in Resources */,
 				AC2F3DFA23601B7C007596A8 /* player2-es.m4a in Resources */,
 				AC203691235DAA5000ABC15B /* Happy.mp3 in Resources */,
+				AC30C572236B80E100E30314 /* wonjack-es.m4a in Resources */,
 				AC2F3DF123601B7C007596A8 /* youwon-es.m4a in Resources */,
 				AC203734235FB97C00ABC15B /* youbus-pt.m4a in Resources */,
 				AC203708235FAE6000ABC15B /* spade-fr.m4a in Resources */,
@@ -1054,6 +1279,7 @@
 				AC73DDA61BB8280300FF6114 /* cards_clubs.atlas in Resources */,
 				AC2F3E3523601B7C007596A8 /* molly-de.m4a in Resources */,
 				AC20372F235FB97C00ABC15B /* bashed-pt.m4a in Resources */,
+				AC30C576236B80E100E30314 /* wonspade-es.m4a in Resources */,
 				AC203730235FB97C00ABC15B /* jack-pt.m4a in Resources */,
 				AC2F3E0123601B7C007596A8 /* youshot-es.m4a in Resources */,
 				AC2F3E1423601B7C007596A8 /* greg-es.m4a in Resources */,
@@ -1072,17 +1298,24 @@
 				AC20370D235FAE6000ABC15B /* rita-fr.m4a in Resources */,
 				AC203764235FCA9700ABC15B /* kissed-pt.m4a in Resources */,
 				AC203694235DAA5000ABC15B /* Monkeys.mp3 in Resources */,
+				AC30C571236B80E100E30314 /* youwonjacks-es.m4a in Resources */,
+				AC30C553236B7CCB00E30314 /* youwonjack-pt.m4a in Resources */,
 				AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */,
 				AC2F3DF423601B7C007596A8 /* won-es.m4a in Resources */,
 				AC203714235FAE6000ABC15B /* player5-fr.m4a in Resources */,
 				AC2F3E2F23601B7C007596A8 /* greg-it.m4a in Resources */,
+				AC30C53B236B02E400E30314 /* youwonspade-it.m4a in Resources */,
 				AC2F3E3423601B7C007596A8 /* youbus-es.m4a in Resources */,
 				AC2F3DE223601B7C007596A8 /* player5-it.m4a in Resources */,
+				AC30C4F9236AE23D00E30314 /* youwonjacks-en.m4a in Resources */,
 				AC203710235FAE6000ABC15B /* youshot-fr.m4a in Resources */,
+				AC30C577236B80E100E30314 /* youwonheart-es.m4a in Resources */,
 				AC203752235FCA9700ABC15B /* knock-pt.m4a in Resources */,
 				AC2F3DFF23601B7C007596A8 /* rita-it.m4a in Resources */,
 				AC2F3DFC23601B7C007596A8 /* linda-es.m4a in Resources */,
 				AC203765235FCA9700ABC15B /* player7-pt.m4a in Resources */,
+				AC30C529236AF6B100E30314 /* wonjacks-de.m4a in Resources */,
+				AC30C53A236B02E400E30314 /* youwonheart-it.m4a in Resources */,
 				AC2F3E2C23601B7C007596A8 /* youwongame-de.m4a in Resources */,
 				AC2F3E2A23601B7C007596A8 /* bashed-es.m4a in Resources */,
 				AC2F3DE023601B7C007596A8 /* youkissed-es.m4a in Resources */,
@@ -1094,9 +1327,13 @@
 				AC2F3E0B23601B7C007596A8 /* player7-de.m4a in Resources */,
 				AC2F3E0423601B7C007596A8 /* knock-es.m4a in Resources */,
 				AC20371B235FAE6000ABC15B /* won-fr.m4a in Resources */,
+				AC30C52A236AF6B100E30314 /* wonheart-de.m4a in Resources */,
+				AC30C52D236AF6B100E30314 /* youwonspade-de.m4a in Resources */,
 				AC203732235FB97C00ABC15B /* won-pt.m4a in Resources */,
 				AC20370C235FAE6000ABC15B /* youbus-en.m4a in Resources */,
 				AC2036C6235F108C00ABC15B /* player2-en.m4a in Resources */,
+				AC30C4FE236AE23D00E30314 /* wonspade-en.m4a in Resources */,
+				AC30C55D236B7CCB00E30314 /* youwonheart-pt.m4a in Resources */,
 				AC73DDA01BB8218E00FF6114 /* cards_hearts.atlas in Resources */,
 				AC203701235FAE6000ABC15B /* player3-fr.m4a in Resources */,
 				AC2F3DDE23601B7C007596A8 /* bashed-it.m4a in Resources */,
@@ -1104,21 +1341,33 @@
 				AC2F3E1723601B7C007596A8 /* player4-de.m4a in Resources */,
 				AC2F3E1923601B7C007596A8 /* kissed-it.m4a in Resources */,
 				AC2036CB235F108C00ABC15B /* bashed-en.m4a in Resources */,
+				AC30C557236B7CCB00E30314 /* wonjacks-it.m4a in Resources */,
 				AC2F3DF723601B7C007596A8 /* youknock-es.m4a in Resources */,
 				AC2F3DE323601B7C007596A8 /* fred-es.m4a in Resources */,
+				AC30C555236B7CCB00E30314 /* youwonspades-pt.m4a in Resources */,
 				AC203761235FCA9700ABC15B /* rita-pt.m4a in Resources */,
 				AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */,
 				AC20370B235FAE6000ABC15B /* youbus-fr.m4a in Resources */,
+				AC30C562236B7CCB00E30314 /* wonheart-pt.m4a in Resources */,
+				AC30C525236AF6B100E30314 /* wonjacks-fr.m4a in Resources */,
 				AC203769235FCA9700ABC15B /* youknock-en.m4a in Resources */,
+				AC30C55B236B7CCB00E30314 /* wonspades-it.m4a in Resources */,
 				AC2F3E0623601B7C007596A8 /* youkissed-it.m4a in Resources */,
+				AC30C579236B80E100E30314 /* wonheart-es.m4a in Resources */,
+				AC30C502236AE23D00E30314 /* wonhearts-en.m4a in Resources */,
+				AC30C556236B7CCB00E30314 /* wonjacks-pt.m4a in Resources */,
+				AC30C4FF236AE23D00E30314 /* wonspades-en.m4a in Resources */,
 				AC2F3DEF23601B7C007596A8 /* youwongame-it.m4a in Resources */,
 				AC2F3DE723601B7C007596A8 /* youshot-de.m4a in Resources */,
 				AC203767235FCA9700ABC15B /* youshot-pt.m4a in Resources */,
+				AC30C57A236B80E100E30314 /* youwonhearts.m4a in Resources */,
 				AC2F3E0D23601B7C007596A8 /* bus-es.m4a in Resources */,
 				AC2F3E2223601B7C007596A8 /* player5-es.m4a in Resources */,
+				AC30C4FC236AE23D00E30314 /* wonheart-en.m4a in Resources */,
 				AC203758235FCA9700ABC15B /* knock-fr.m4a in Resources */,
 				ACF739FB1BE87C9D003BA7F4 /* cards_picks_white.atlas in Resources */,
 				AC2036D6235F14E900ABC15B /* spade-en.m4a in Resources */,
+				AC30C531236AF6B100E30314 /* youwonjacks-de.m4a in Resources */,
 				AC20370E235FAE6000ABC15B /* jack-fr.m4a in Resources */,
 				AC2F3DE623601B7C007596A8 /* spade-de.m4a in Resources */,
 				AC2F3DFB23601B7C007596A8 /* linda-de.m4a in Resources */,
@@ -1126,10 +1375,13 @@
 				AC2036D4235F14E900ABC15B /* jack-en.m4a in Resources */,
 				AC2036C4235F108C00ABC15B /* player3-en.m4a in Resources */,
 				AC2F3E2D23601B7C007596A8 /* player2-de.m4a in Resources */,
+				AC30C574236B80E100E30314 /* youwonspades-es.m4a in Resources */,
 				AC203696235DAA5000ABC15B /* Dark.mp3 in Resources */,
 				AC2F3E1623601B7C007596A8 /* rita-de.m4a in Resources */,
+				AC30C524236AF6B100E30314 /* wonjack-de.m4a in Resources */,
 				AC203768235FCA9700ABC15B /* sarah-pt.m4a in Resources */,
 				AC2F3E1323601B7C007596A8 /* player2-it.m4a in Resources */,
+				AC30C538236B02E400E30314 /* youwonhearts-it.m4a in Resources */,
 				ACF3157C1BDB129400F203E3 /* cards_tarot_white.atlas in Resources */,
 				AC2F3E2023601B7C007596A8 /* won-it.m4a in Resources */,
 				AC2F3E0F23601B7C007596A8 /* player6-it.m4a in Resources */,
@@ -1137,39 +1389,57 @@
 				AC2F3DED23601B7C007596A8 /* wongame-it.m4a in Resources */,
 				AC203716235FAE6000ABC15B /* youkissed-fr.m4a in Resources */,
 				AC203723235FB12C00ABC15B /* youwongame-en.m4a in Resources */,
+				AC30C500236AE23D00E30314 /* youwonhearts-en.m4a in Resources */,
 				AC203766235FCA9700ABC15B /* molly-pt.m4a in Resources */,
 				AC20375C235FCA9700ABC15B /* youkissed-pt.m4a in Resources */,
+				AC30C526236AF6B100E30314 /* youwonjack-fr.m4a in Resources */,
 				AC2036FC235FAE6000ABC15B /* linda-fr.m4a in Resources */,
 				AC2F3DDB23601B7C007596A8 /* fred-it.m4a in Resources */,
 				AC203703235FAE6000ABC15B /* linda-en.m4a in Resources */,
 				AC2F3DE123601B7C007596A8 /* bashed-de.m4a in Resources */,
+				AC30C4FB236AE23D00E30314 /* wonjacks-en.m4a in Resources */,
 				ACF3157E1BDB129400F203E3 /* cards_spades_white.atlas in Resources */,
 				AC2036C3235F108C00ABC15B /* won-en.m4a in Resources */,
 				AC2036BD235F108C00ABC15B /* player4-en.m4a in Resources */,
 				AC73DDA81BB89E5300FF6114 /* cards_tarot.atlas in Resources */,
+				AC30C4FD236AE23D00E30314 /* wonjack-en.m4a in Resources */,
+				AC30C558236B7CCB00E30314 /* youwonjacks-it.m4a in Resources */,
 				ACF3157F1BDB129400F203E3 /* cards_hearts_white.atlas in Resources */,
 				AC2F3DDA23601B7C007596A8 /* youbashed-de.m4a in Resources */,
+				AC30C4F8236AE23D00E30314 /* youwonheart-en.m4a in Resources */,
+				AC30C52F236AF6B100E30314 /* youwonheart-de.m4a in Resources */,
 				AC2F3E0223601B7C007596A8 /* warren-es.m4a in Resources */,
 				AC2F3E0C23601B7C007596A8 /* kissed-es.m4a in Resources */,
 				AC2F3E1F23601B7C007596A8 /* youbashed-es.m4a in Resources */,
+				AC30C578236B80E100E30314 /* wonjacks-es.m4a in Resources */,
+				AC30C52C236AF6B100E30314 /* wonheart-fr.m4a in Resources */,
 				AC203707235FAE6000ABC15B /* youwon-en.m4a in Resources */,
 				AC2036CE235F108C00ABC15B /* player7-en.m4a in Resources */,
+				AC30C570236B80E100E30314 /* wonspades-es.m4a in Resources */,
+				AC30C52B236AF6B100E30314 /* youwonhearts-de.m4a in Resources */,
 				AC2036CF235F108C00ABC15B /* sarah-en.m4a in Resources */,
 				AC5CB3B21BFE8445007C5AFD /* Localizable.strings in Resources */,
 				AC2F3E3323601B7C007596A8 /* player1-es.m4a in Resources */,
 				AC20375B235FCA9700ABC15B /* player4-pt.m4a in Resources */,
+				AC30C4FA236AE23D00E30314 /* youwonspade-en.m4a in Resources */,
+				AC30C560236B7CCB00E30314 /* wonjack-it.m4a in Resources */,
+				AC30C521236AF6B100E30314 /* wonhearts-de.m4a in Resources */,
 				AC2F3DDD23601B7C007596A8 /* shot-es.m4a in Resources */,
 				ACF739FC1BE87C9D003BA7F4 /* cards_picks.atlas in Resources */,
 				AC2F3E1A23601B7C007596A8 /* jack-it.m4a in Resources */,
+				AC30C55F236B7CCB00E30314 /* youwonspade-pt.m4a in Resources */,
 				AC20371A235FAE6000ABC15B /* youkissed-en.m4a in Resources */,
 				AC203756235FCA9700ABC15B /* player3-pt.m4a in Resources */,
 				AC20376B235FCA9700ABC15B /* player2-pt.m4a in Resources */,
+				AC30C523236AF6B100E30314 /* wonhearts-fr.m4a in Resources */,
 				AC2F3DF223601B7C007596A8 /* youshot-it.m4a in Resources */,
 				AC2F3E1023601B7C007596A8 /* jack-es.m4a in Resources */,
+				AC30C520236AF6B100E30314 /* youwonspade-fr.m4a in Resources */,
 				AC2F3DD923601B7C007596A8 /* spade-it.m4a in Resources */,
 				AC2F3E2323601B7C007596A8 /* player4-es.m4a in Resources */,
 				ACF315801BDB129400F203E3 /* cards_diamonds_white.atlas in Resources */,
 				AC203735235FB97C00ABC15B /* youwon-pt.m4a in Resources */,
+				AC30C522236AF6B100E30314 /* youwonspades-fr.m4a in Resources */,
 				AC2F3E1823601B7C007596A8 /* fred-de.m4a in Resources */,
 				AC203711235FAE6000ABC15B /* kissed-fr.m4a in Resources */,
 				AC2F3DF323601B7C007596A8 /* sarah-it.m4a in Resources */,
@@ -1178,14 +1448,18 @@
 				AC2F3DEC23601B7C007596A8 /* player3-es.m4a in Resources */,
 				AC203693235DAA5000ABC15B /* Sneaky.mp3 in Resources */,
 				AC2F3DE423601B7C007596A8 /* wongame-es.m4a in Resources */,
+				AC30C561236B7CCB00E30314 /* wonspade-pt.m4a in Resources */,
+				AC30C57B236B80E100E30314 /* youwonjack-es.m4a in Resources */,
 				AC203759235FCA9700ABC15B /* fred-pt.m4a in Resources */,
 				AC2036FB235FAE6000ABC15B /* warren-fr.m4a in Resources */,
 				AC2036FD235FAE6000ABC15B /* youbashed-fr.m4a in Resources */,
 				AC203718235FAE6000ABC15B /* player2-fr.m4a in Resources */,
 				AC2F3E0823601B7C007596A8 /* warren-it.m4a in Resources */,
 				AC2F3E0E23601B7C007596A8 /* molly-it.m4a in Resources */,
+				AC30C527236AF6B100E30314 /* youwonspades-de.m4a in Resources */,
 				AC1CF69D1BB4238300001024 /* buttons.atlas in Resources */,
 				AC2F3E2923601B7C007596A8 /* youbashed-it.m4a in Resources */,
+				AC30C530236AF6B100E30314 /* youwonhearts-fr.m4a in Resources */,
 				AC2F3E3223601B7C007596A8 /* linda-it.m4a in Resources */,
 				AC2F3E3123601B7C007596A8 /* molly-es.m4a in Resources */,
 				AC203706235FAE6000ABC15B /* sarah-fr.m4a in Resources */,
@@ -1194,8 +1468,10 @@
 				AC2F3E0323601B7C007596A8 /* player4-it.m4a in Resources */,
 				AC203722235FB12C00ABC15B /* youwongame-fr.m4a in Resources */,
 				AC203763235FCA9700ABC15B /* greg-pt.m4a in Resources */,
+				AC30C532236AF6B100E30314 /* youwonjacks-fr.m4a in Resources */,
 				AC2F3DF823601B7C007596A8 /* player6-de.m4a in Resources */,
 				AC2F3E0523601B7C007596A8 /* bus-de.m4a in Resources */,
+				AC30C559236B7CCB00E30314 /* wonhearts-pt.m4a in Resources */,
 				AC2F3E1C23601B7C007596A8 /* sarah-de.m4a in Resources */,
 				AC203760235FCA9700ABC15B /* linda-pt.m4a in Resources */,
 				AC2F3E1B23601B7C007596A8 /* rita-es.m4a in Resources */,
@@ -1208,17 +1484,23 @@
 				AC2F3E0A23601B7C007596A8 /* player1-it.m4a in Resources */,
 				AC2F3DE823601B7C007596A8 /* shot-de.m4a in Resources */,
 				AC203709235FAE6000ABC15B /* player1-fr.m4a in Resources */,
+				AC30C551236B7CCB00E30314 /* wonhearts-it.m4a in Resources */,
 				AC20375A235FCA9700ABC15B /* youwongame-pt.m4a in Resources */,
+				AC30C55A236B7CCB00E30314 /* wonheart-it.m4a in Resources */,
+				AC30C503236AE23D00E30314 /* youwonjack-en.m4a in Resources */,
 				AC203757235FCA9700ABC15B /* wongame-pt.m4a in Resources */,
 				AC73DDA21BB823DE00FF6114 /* cards_suns.atlas in Resources */,
 				AC203705235FAE6000ABC15B /* youwon-fr.m4a in Resources */,
 				AC2036D0235F108C00ABC15B /* shot-en.m4a in Resources */,
+				AC30C539236B02E400E30314 /* youwonspades-it.m4a in Resources */,
 				AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */,
 				AC203755235FCA9700ABC15B /* knock-en.m4a in Resources */,
+				AC30C575236B80E100E30314 /* wonhearts-es.m4a in Resources */,
 				AC2036BF235F108C00ABC15B /* you-en.m4a in Resources */,
 				AC203700235FAE6000ABC15B /* heart-fr.m4a in Resources */,
 				ACF3157B1BDB129400F203E3 /* cards_stars_white.atlas in Resources */,
 				ACF3157D1BDB129400F203E3 /* cards_suns_white.atlas in Resources */,
+				AC30C55C236B7CCB00E30314 /* youwonjacks-pt.m4a in Resources */,
 				AC20370A235FAE6000ABC15B /* youbashed-en.m4a in Resources */,
 				AC203713235FAE6000ABC15B /* greg-fr.m4a in Resources */,
 				AC203702235FAE6000ABC15B /* youshot-en.m4a in Resources */,
@@ -1227,15 +1509,21 @@
 				AC2F3E1D23601B7C007596A8 /* won-de.m4a in Resources */,
 				AC2F3DF923601B7C007596A8 /* greg-de.m4a in Resources */,
 				AC2036BE235F108C00ABC15B /* kissed-en.m4a in Resources */,
+				AC30C52E236AF6B100E30314 /* wonspades-de.m4a in Resources */,
 				AC20375E235FCA9700ABC15B /* shot-pt.m4a in Resources */,
 				AC2F3E1223601B7C007596A8 /* player5-de.m4a in Resources */,
+				AC30C55E236B7CCB00E30314 /* youwonjack-it.m4a in Resources */,
+				AC30C51D236AF6B100E30314 /* youwonjack-de.m4a in Resources */,
 				AC203724235FB12C00ABC15B /* wongame-en.m4a in Resources */,
 				AC2036C1235F108C00ABC15B /* greg-en.m4a in Resources */,
+				AC30C51E236AF6B100E30314 /* wonjack-fr.m4a in Resources */,
+				AC30C51F236AF6B100E30314 /* wonspades-fr.m4a in Resources */,
 				AC2F3DF023601B7C007596A8 /* bus-it.m4a in Resources */,
 				AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */,
 				AC2F3E2623601B7C007596A8 /* player1-de.m4a in Resources */,
 				AC203695235DAA5000ABC15B /* Hitman.mp3 in Resources */,
 				AC20376C235FCA9700ABC15B /* youknock-pt.m4a in Resources */,
+				AC30C528236AF6B100E30314 /* wonspade-de.m4a in Resources */,
 				AC20375F235FCA9700ABC15B /* player1-pt.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1484,7 +1772,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 82;
+				CURRENT_PROJECT_VERSION = 85;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1496,7 +1784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.8;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1510,7 +1798,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 82;
+				CURRENT_PROJECT_VERSION = 85;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1522,7 +1810,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.8;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

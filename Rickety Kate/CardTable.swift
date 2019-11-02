@@ -68,12 +68,7 @@ open class CardTable: GameStateBase
         dealtHands = self.dealHands()
         return dealtHands
     }
-    // everyone except PlayerOne
-/*    var otherPlayers : [CardPlayer]
-    {
-        return players.filter {$0 != self.playerOne}
-    }
-   */
+
     open var noOfPlayers : Int
     {
             return players.count

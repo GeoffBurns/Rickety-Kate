@@ -32,10 +32,15 @@ public enum Scored  : PlayerScored , Equatable
             return  player.isYou ? ["YouBashed"] :[player.sound,"Bashed"]
           case .winOmnibus( let player ) :
             return player.isYou ? ["YouBus"] :[player.sound,"Bus"]
-          case .winSpades( let player, _ ) :
-            return player.isYou ?
-                   [ "YouWon",Game.moreSettings.rules.shortDescription] : [player.sound,"Won",Game.moreSettings.rules.shortDescription]
-             
+          case .winSpades( let player,  let noOfSpades ) :
+            var talk = player.isYou ? "YouWon" : "Won"
+            talk += Game.moreSettings.rules.shortDescription
+            if noOfSpades > 1 { talk += "s"}
+            return player.isYou ?  [talk] : [player.sound,talk]
+         /*    case .winSpades( let player, _ ) :
+                     return player.isYou ?
+                            [ "YouWon",Game.moreSettings.rules.shortDescription] : [player.sound,"Won",Game.moreSettings.rules.shortDescription]
+           */
           }
     }
     public var description : String?

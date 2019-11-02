@@ -177,6 +177,7 @@ class RicketyKateGameScene: CardGameScene,
     func startHand()
     {
       playMusic()
+      Game.nextCardback()
       self.schedule(delay: Game.settings.tossDuration*0.5) { [weak self]  in
                  if let s = self
                  {
