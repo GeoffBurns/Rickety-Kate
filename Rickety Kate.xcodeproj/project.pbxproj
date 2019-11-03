@@ -295,7 +295,6 @@
 		AC62B69F1BA1564800B0EDAE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC62B69E1BA1564800B0EDAE /* GameViewController.swift */; };
 		AC62B6A21BA1564800B0EDAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A01BA1564800B0EDAE /* Main.storyboard */; };
 		AC62B6A41BA1564800B0EDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A31BA1564800B0EDAE /* Images.xcassets */; };
-		AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */; };
 		AC701A8C1BDB98F4004FC5F8 /* cards_stars.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC701A8B1BDB98F4004FC5F8 /* cards_stars.atlas */; };
 		AC73DD9C1BB81A7300FF6114 /* cards_spades.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9B1BB81A7300FF6114 /* cards_spades.atlas */; };
 		AC73DD9E1BB81E9B00FF6114 /* cards_diamonds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = AC73DD9D1BB81E9B00FF6114 /* cards_diamonds.atlas */; };
@@ -310,6 +309,8 @@
 		AC8F592F1C12BA7A0067C02A /* GivenAString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F592E1C12BA7A0067C02A /* GivenAString.swift */; };
 		AC8F59311C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */; };
 		AC8F59331C138D2F0067C02A /* GivenATrickPile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8F59321C138D2F0067C02A /* GivenATrickPile.swift */; };
+		AC96683B236EB4ED00281670 /* LaunchScreen.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC966832236EB4EC00281670 /* LaunchScreen.strings */; };
+		AC96683C236EB4ED00281670 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC966836236EB4EC00281670 /* LaunchScreen.xib */; };
 		AC9E82BC1BA4DE7E0064870C /* GameProgessTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */; };
 		AC9E82C41BA686C40064870C /* CardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9E82BE1BA686C40064870C /* CardTable.swift */; };
 		ACAE53801C269840003F0BB4 /* RicketyKateNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */; };
@@ -360,7 +361,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AC0E20581C0AE430004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		AC0E20591C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Main.strings"; sourceTree = "<group>"; };
 		AC0E205A1C0AE431004D74AA /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		AC1CF69C1BB4238300001024 /* buttons.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = buttons.atlas; sourceTree = "<group>"; };
@@ -640,7 +640,6 @@
 		AC3BB19D20FA1094005B5B29 /* computerplayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = computerplayer.swift; sourceTree = "<group>"; };
 		AC49896A210CB19B0048D6A1 /* GivenASequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GivenASequence.swift; sourceTree = "<group>"; };
 		AC5CB3B11BFE8445007C5AFD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		AC5CB3B31BFE84A8007C5AFD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AC5CB3B41BFE84A8007C5AFD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		AC5CB3B51BFE84A9007C5AFD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AC5ECDFD1C3506030072903C /* TIp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TIp.swift; sourceTree = "<group>"; };
@@ -655,7 +654,6 @@
 		AC62B69E1BA1564800B0EDAE /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		AC62B6A11BA1564800B0EDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AC62B6A31BA1564800B0EDAE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		AC62B6A61BA1564800B0EDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		AC62B6AC1BA1564900B0EDAE /* Rickety KateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rickety KateTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC62B6B11BA1564900B0EDAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC701A8B1BDB98F4004FC5F8 /* cards_stars.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_stars.atlas; sourceTree = "<group>"; };
@@ -672,6 +670,19 @@
 		AC8F592E1C12BA7A0067C02A /* GivenAString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAString.swift; sourceTree = "<group>"; };
 		AC8F59301C12DDA60067C02A /* GivenAPerfectKnowledgeStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenAPerfectKnowledgeStrategy.swift; sourceTree = "<group>"; };
 		AC8F59321C138D2F0067C02A /* GivenATrickPile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivenATrickPile.swift; sourceTree = "<group>"; };
+		AC966833236EB4EC00281670 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC966834236EB4EC00281670 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC966835236EB4EC00281670 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC966837236EB4ED00281670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		AC966838236EB4ED00281670 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		AC966839236EB4ED00281670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AC96683A236EB4ED00281670 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC96683E236EB97D00281670 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC96683F236EB98900281670 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC966840236EB98D00281670 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC966841236EB99100281670 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC966842236EB99400281670 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		AC966843236EB99800281670 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AC9E82BB1BA4DE7E0064870C /* GameProgessTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProgessTracker.swift; sourceTree = "<group>"; };
 		AC9E82BE1BA686C40064870C /* CardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTable.swift; sourceTree = "<group>"; };
 		ACAE537F1C269840003F0BB4 /* RicketyKateNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RicketyKateNavigationController.swift; sourceTree = "<group>"; };
@@ -680,10 +691,8 @@
 		ACD6964A210B40F800ECC62A /* GameMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMove.swift; sourceTree = "<group>"; };
 		ACD69651210B45BE00ECC62A /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
 		ACD69655210B4E9C00ECC62A /* PlayerScored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerScored.swift; sourceTree = "<group>"; };
-		ACDCA6BA1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		ACDCA6BB1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		ACDCA6BC1C01F18C00ABA366 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		ACDCA6C01C029C2900ABA366 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		ACDCA6C11C029C2900ABA366 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		ACDCA6C21C029C2900ABA366 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ACE6DFB01BAA230F005B5424 /* GIvenAEarlyLeadingStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIvenAEarlyLeadingStrategy.swift; sourceTree = "<group>"; };
@@ -700,7 +709,6 @@
 		ACF315781BDB129400F203E3 /* cards_diamonds_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_diamonds_white.atlas; sourceTree = "<group>"; };
 		ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_anchors_white.atlas; sourceTree = "<group>"; };
 		ACF3157A1BDB129400F203E3 /* cards_clubs_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_clubs_white.atlas; sourceTree = "<group>"; };
-		ACF68F9320DFCFD90002FB5D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		ACF68F9420DFCFD90002FB5D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
 		ACF68F9520DFCFD90002FB5D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ACF739F91BE87C9C003BA7F4 /* cards_picks_white.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = cards_picks_white.atlas; sourceTree = "<group>"; };
@@ -1039,6 +1047,8 @@
 		AC62B6951BA1564800B0EDAE /* Rickety Kate */ = {
 			isa = PBXGroup;
 			children = (
+				AC966832236EB4EC00281670 /* LaunchScreen.strings */,
+				AC966836236EB4EC00281670 /* LaunchScreen.xib */,
 				AC1CF69C1BB4238300001024 /* buttons.atlas */,
 				ACF315791BDB129400F203E3 /* cards_anchors_white.atlas */,
 				AC73DDA31BB8252E00FF6114 /* cards_anchors.atlas */,
@@ -1083,7 +1093,6 @@
 				ACE6DFB61BAA32AB005B5424 /* TrickPlayingStrategy.swift */,
 				AC5ECDFF1C35091E0072903C /* Usher.swift */,
 				AC62B6A31BA1564800B0EDAE /* Images.xcassets */,
-				AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */,
 				AC5CB3B01BFE8445007C5AFD /* Localizable.strings */,
 				AC62B6A01BA1564800B0EDAE /* Main.storyboard */,
 				AC62B6961BA1564800B0EDAE /* Supporting Files */,
@@ -1261,7 +1270,6 @@
 				AC2036FE235FAE6000ABC15B /* molly-fr.m4a in Resources */,
 				AC2F3DEE23601B7C007596A8 /* youwon-it.m4a in Resources */,
 				AC2F3E2E23601B7C007596A8 /* youwongame-es.m4a in Resources */,
-				AC62B6A71BA1564800B0EDAE /* LaunchScreen.xib in Resources */,
 				AC30C573236B80E100E30314 /* youwonspade-es.m4a in Resources */,
 				AC2F3DDC23601B7C007596A8 /* wongame-de.m4a in Resources */,
 				AC203731235FB97C00ABC15B /* spade-pt.m4a in Resources */,
@@ -1357,6 +1365,7 @@
 				AC30C502236AE23D00E30314 /* wonhearts-en.m4a in Resources */,
 				AC30C556236B7CCB00E30314 /* wonjacks-pt.m4a in Resources */,
 				AC30C4FF236AE23D00E30314 /* wonspades-en.m4a in Resources */,
+				AC96683C236EB4ED00281670 /* LaunchScreen.xib in Resources */,
 				AC2F3DEF23601B7C007596A8 /* youwongame-it.m4a in Resources */,
 				AC2F3DE723601B7C007596A8 /* youshot-de.m4a in Resources */,
 				AC203767235FCA9700ABC15B /* youshot-pt.m4a in Resources */,
@@ -1493,6 +1502,7 @@
 				AC203705235FAE6000ABC15B /* youwon-fr.m4a in Resources */,
 				AC2036D0235F108C00ABC15B /* shot-en.m4a in Resources */,
 				AC30C539236B02E400E30314 /* youwonspades-it.m4a in Resources */,
+				AC96683B236EB4ED00281670 /* LaunchScreen.strings in Resources */,
 				AC1CF6A21BB4A03A00001024 /* cards_Extra.atlas in Resources */,
 				AC203755235FCA9700ABC15B /* knock-en.m4a in Resources */,
 				AC30C575236B80E100E30314 /* wonhearts-es.m4a in Resources */,
@@ -1623,6 +1633,7 @@
 				ACDCA6C21C029C2900ABA366 /* es */,
 				AC0E205A1C0AE431004D74AA /* pt-PT */,
 				ACF68F9520DFCFD90002FB5D /* it */,
+				AC966839236EB4ED00281670 /* Base */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1640,15 +1651,28 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		AC62B6A51BA1564800B0EDAE /* LaunchScreen.xib */ = {
+		AC966832236EB4EC00281670 /* LaunchScreen.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				AC62B6A61BA1564800B0EDAE /* Base */,
-				AC5CB3B31BFE84A8007C5AFD /* fr */,
-				ACDCA6BA1C01F18C00ABA366 /* de */,
-				ACDCA6C01C029C2900ABA366 /* es */,
-				AC0E20581C0AE430004D74AA /* pt-PT */,
-				ACF68F9320DFCFD90002FB5D /* it */,
+				AC966833236EB4EC00281670 /* it */,
+				AC966834236EB4EC00281670 /* fr */,
+				AC966835236EB4EC00281670 /* de */,
+				AC966838236EB4ED00281670 /* pt-PT */,
+				AC96683A236EB4ED00281670 /* es */,
+			);
+			name = LaunchScreen.strings;
+			sourceTree = "<group>";
+		};
+		AC966836236EB4EC00281670 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AC966837236EB4ED00281670 /* Base */,
+				AC96683E236EB97D00281670 /* en */,
+				AC96683F236EB98900281670 /* fr */,
+				AC966840236EB98D00281670 /* de */,
+				AC966841236EB99100281670 /* it */,
+				AC966842236EB99400281670 /* pt-PT */,
+				AC966843236EB99800281670 /* es */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -1772,7 +1796,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 85;
+				CURRENT_PROJECT_VERSION = 86;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1784,7 +1808,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1798,7 +1822,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 85;
+				CURRENT_PROJECT_VERSION = 86;
 				DEVELOPMENT_TEAM = 5CUBLSA9G4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1810,7 +1834,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.NereidsGold.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
