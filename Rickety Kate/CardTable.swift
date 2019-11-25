@@ -31,7 +31,8 @@ open class CardTable: GameStateBase
         startPlayerNo = players.reduce(0) { $1 is HumanPlayer ? $0 + 1 : $0 }
         if startPlayerNo >= players.count { startPlayerNo = 1 }
         super.init()
-        //  setPassedCards()
+        if Game.settings.noOfHumanPlayers < 2 ||
+        isInDemoMode { changeOperator(0) }
     }
     var cardTossDuration = Game.settings.tossDuration*1.8
     

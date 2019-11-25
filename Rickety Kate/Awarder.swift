@@ -113,7 +113,7 @@ class SpadesAwarder : AwarderBase, IAwarder
 {
     var shortDescription = "Spade"
     
-    var leaderboard = LearderBoard.Spades
+    var leaderboard = LeaderBoard.Spades
     
     var backgroundCards : [PlayingCard] {
     let cards : Array = Game.deck.orderedDeck
@@ -172,7 +172,7 @@ class HeartsAwarder : AwarderBase, IAwarder
 {
     var description = "Rickety Kate Hearts Rules".localize
     var shortDescription = "Heart"
-    var leaderboard = LearderBoard.Hearts
+    var leaderboard = LeaderBoard.Hearts
     
     func AchievementForWin(_ gameFlavor:GameFlavor) ->  Achievement
     {
@@ -231,7 +231,7 @@ class JacksAwarder : AwarderBase, IAwarder
     var description = "Rickety Kate Jacks Rules".localize
     override var omnibus_ : PlayingCard { return CardName.queen.of(PlayingCard.Suite.diamonds)! }
     var shortDescription = "Jack"
-    var leaderboard = LearderBoard.Jacks
+    var leaderboard = LeaderBoard.Jacks
     
     
     func AchievementForWin(_ gameFlavor:GameFlavor) ->  Achievement

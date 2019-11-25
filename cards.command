@@ -23,3 +23,8 @@ for i in /Users/geoffburns/Documents/projects/cards/Vector-Playing-Cards-master/
 
 
 
+for i in /Volumes/reddrive/PROJECT/ais4ant/card/*.svg; do /Volumes/reddrive/utilities/Inkscape.app/Contents/Resources/bin/inkscape $i -w 300 -h  300 --export-png=`echo $i | sed -e 's/.svg$/@x1.png/'`; done
+
+for i in /Volumes/reddrive/PROJECT/ais4ant/card/*.svg; do /Volumes/reddrive/utilities/Inkscape.app/Contents/Resources/bin/inkscape $i -w 600 -h  600 --export-png=`echo $i | sed -e 's/.svg$/@x2.png/'`; done
+
+for i in /Volumes/reddrive/PROJECT/ais4ant/card/*.svg; do /Volumes/reddrive/utilities/Inkscape.app/Contents/Resources/bin/inkscape $i -w 900 -h  900 --export-png=`echo $i | sed -e 's/.svg$/@x3.png/'`; done

@@ -30,7 +30,109 @@ open class GivenAString : XCTestCase {
             .localize
 
     }
+    func staggeredPos(_ i:Int, _ j:Int, _ noCol:Int) -> Int {
+       return noCol*i+j-noCol-1 - (i>2 ? 1 : 0)
+       }
     
+    func staggeredPos2(_ i:Int, _ j:Int, _ noCol:Int) -> Int {
+         return  noCol*j+i-noCol-1 - (((i>1 && j>1) || j>2) ? 1 : 0) + (i==2 && j>1 ? noCol : 0)
+            
+         
+         }
+    
+        
+    func staggeredPos3(_ i:Int, _ j:Int, _ noCol:Int) -> Int {
+                           return  noCol*j-i - (((i<3 && j>1) || j>2) ? 1 : 0) + (i==2 && j>1 ? noCol : 0)
+               
+               }
+            open func testExample() {
+                 
+                 XCTAssert(staggeredPos(1,1,3) == 0, "Pass")
+                 
+                 XCTAssert(staggeredPos(1,2,3) == 1, "Pass")
+                 XCTAssert(staggeredPos(1,3,3) == 2, "Pass")
+                 XCTAssert(staggeredPos(2,1,3) == 3, "Expected 3 gave \(staggeredPos(2,1,3))")
+                 XCTAssert(staggeredPos(2,2,3) == 4, "Expected 4 gave \(staggeredPos(2,2,3))")
+                 XCTAssert(staggeredPos(3,1,3) == 5, "Pass")
+                 XCTAssert(staggeredPos(3,2,3) == 6, "Pass")
+                 XCTAssert(staggeredPos(3,3,3) == 7, "Pass")
+              
+
+              XCTAssert(staggeredPos2(1,1,3) == 0, "Pass")
+              XCTAssert(staggeredPos2(2,1,3) == 1, "Pass")
+                        XCTAssert(staggeredPos2(3,1,3) == 2, "Pass")
+                        XCTAssert(staggeredPos2(1,2,3) == 3, "Expected 3 gave \(staggeredPos2(1,2,3))")
+                        XCTAssert(staggeredPos2(2,2,3) == 6, "Expected 4 gave \(staggeredPos2(2,2,3))")
+                        XCTAssert(staggeredPos2(3,2,3) == 4, "Pass")
+                        XCTAssert(staggeredPos2(1,3,3) == 5, "Pass")
+                        XCTAssert(staggeredPos2(3,3,3) == 7, "Pass")
+              
+              
+              XCTAssert(staggeredPos(1,1,5) == 0, "Pass")
+               
+               XCTAssert(staggeredPos(1,2,5) == 1, "Pass")
+               XCTAssert(staggeredPos(1,3,5) == 2, "Pass")
+               XCTAssert(staggeredPos(1,4,5) == 3, "Pass")
+               XCTAssert(staggeredPos(1,5,5) == 4, "Pass")
+               XCTAssert(staggeredPos(2,1,5) == 5, "Expected 5 gave \(staggeredPos(2,1,3))")
+               XCTAssert(staggeredPos(2,2,5) == 6, "Expected 6 gave \(staggeredPos(2,2,3))")
+               XCTAssert(staggeredPos(2,3,5) == 7, "Expected 7 gave \(staggeredPos(2,3,3))")
+               XCTAssert(staggeredPos(2,4,5) == 8, "Expected 8 gave \(staggeredPos(2,4,3)))")
+               XCTAssert(staggeredPos(3,1,5) == 9, "Pass")
+               XCTAssert(staggeredPos(3,2,5) == 10, "Pass")
+               XCTAssert(staggeredPos(3,3,5) == 11, "Pass")
+               XCTAssert(staggeredPos(3,4,5) == 12, "Pass")
+               XCTAssert(staggeredPos(3,5,5) == 13, "Pass")
+              
+              
+              XCTAssert(staggeredPos2(1,1,5) == 0, "Pass")
+               
+               XCTAssert(staggeredPos2(2,1,5) == 1, "Pass")
+               XCTAssert(staggeredPos2(3,1,5) == 2, "Pass")
+               XCTAssert(staggeredPos2(4,1,5) == 3, "Expected 3 gave \(staggeredPos2(4,1,5))")
+               XCTAssert(staggeredPos2(5,1,5) == 4, "Expected 6 gave \(staggeredPos2(5,1,5))")
+               XCTAssert(staggeredPos2(1,2,5) == 5, "Expected 4 gave \(staggeredPos2(1,2,5))")
+               XCTAssert(staggeredPos2(2,2,5) == 10, "Expected 5 gave \(staggeredPos2(1,3,3))")
+               XCTAssert(staggeredPos2(3,2,5) == 6, "Expected 9 gave \(staggeredPos2(1,4,3))")
+               XCTAssert(staggeredPos2(4,2,5) == 7, "Expected 7 gave \(staggeredPos2(3,3,3))")
+               XCTAssert(staggeredPos2(5,2,5) == 8, "Pass")
+               XCTAssert(staggeredPos2(1,3,5) == 9, "Pass")
+               XCTAssert(staggeredPos2(3,3,5) == 11, "Pass")
+               XCTAssert(staggeredPos2(4,3,5) == 12, "Pass")
+               XCTAssert(staggeredPos2(5,3,5) == 13, "Pass")
+             
+             
+             
+                      XCTAssert(staggeredPos3(1,1,3) == 2, "Pass")
+                       XCTAssert(staggeredPos3(2,1,3) == 1, "Pass")
+                                 XCTAssert(staggeredPos3(3,1,3) == 0, "Pass")
+                                 XCTAssert(staggeredPos3(1,2,3) == 4, "Expected 4 gave \(staggeredPos3(1,2,3))")
+                                 XCTAssert(staggeredPos3(2,2,3) == 6, "Expected 6 gave \(staggeredPos3(2,2,3))")
+                                 XCTAssert(staggeredPos3(3,2,3) == 3, "Expected 3 gave \(staggeredPos3(3,2,3))")
+                                 XCTAssert(staggeredPos3(1,3,3) == 7, "Pass")
+                                 XCTAssert(staggeredPos3(3,3,3) == 5, "Pass")
+             
+             
+             
+                 XCTAssert(staggeredPos3(1,1,5) == 4, "Pass")
+             
+                  XCTAssert(staggeredPos3(2,1,5) == 3, "Pass")
+                  XCTAssert(staggeredPos3(3,1,5) == 2, "Pass")
+                  XCTAssert(staggeredPos3(4,1,5) == 1, "Expected 3 gave \(staggeredPos3(4,1,5))")
+                  XCTAssert(staggeredPos3(5,1,5) == 0, "Expected 6 gave \(staggeredPos3(5,1,5))")
+                  XCTAssert(staggeredPos3(1,2,5) == 8, "Expected 8 gave \(staggeredPos3(1,2,5))")
+                  XCTAssert(staggeredPos3(2,2,5) == 12, "Expected 5 gave \(staggeredPos3(2,2,5))")
+                  XCTAssert(staggeredPos3(3,2,5) == 7, "Expected 7 gave \(staggeredPos3(3,2,5))")
+                  XCTAssert(staggeredPos3(4,2,5) == 6, "Expected 6 gave \(staggeredPos3(4,2,5))")
+                  XCTAssert(staggeredPos3(5,2,5) == 5, "Expected 5 gave \(staggeredPos3(5,2,5))")
+                  XCTAssert(staggeredPos3(1,3,5) == 13, "Pass")
+                  XCTAssert(staggeredPos3(3,3,5) == 11, "Pass")
+                  XCTAssert(staggeredPos3(4,3,5) == 10, "Pass")
+                  XCTAssert(staggeredPos3(5,3,5) == 9, "Pass")
+                    
+                 // This is an example of a functional test case.
+                 // Use XCTAssert and related functions to verify your tests produce the correct results.
+             }
     open func testParameterizedStrings() {
         
         let molly_won_a_jack = getStringForWinning("Molly",n: 1, pluralizable: "Jack")

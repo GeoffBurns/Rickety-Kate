@@ -127,6 +127,9 @@ class Scorer
         hasWonGame = true
         }
       }
+//let score = self.leaderboardScore
+//        GameKitHelper.sharedInstance.reportScore(score, forLeaderBoard:  Game.rules.leaderboard)
+ //          GameKitHelper.sharedInstance.reportAchievement(Game.moreSettings.achievementForWin)
     // If there is a draw then do another hand
     let isGameWon = hasWonGame && !isDraw
     if isGameWon
