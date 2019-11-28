@@ -43,7 +43,7 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
         UIDevice.current.setValue(value, forKey: "orientation")
         
         // Detect the screensize
-        let sizeRect = UIScreen.main.applicationFrame
+        let sizeRect = Game.screen
         let scale = UIScreen.main.scale
         let width = sizeRect.size.width * scale
         let height = sizeRect.size.height * scale
@@ -194,7 +194,7 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
 
    func resize(
   //  _ banner: ADBannerView?,
-    size:CGSize = UIScreen.main.applicationFrame.size) {
+    size:CGSize = Game.screen.size) {
         
         let adHeight = CGFloat()
     

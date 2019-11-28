@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-import ReactiveSwift
+import RxSwift
 import Cards
 
 /// How game play is displayed
@@ -20,7 +20,7 @@ class RicketyKateGameScene: CardGameScene,
     var originalTouch = CGPoint()
     var draggedNode: CardSprite? = nil;
     var cardScaleForSelected = CGFloat(1.05)
-    
+    let disposeBag = DisposeBag()
     var backgroundFan = CardFan(name: CardPileType.background.description)
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Random1")
@@ -146,30 +146,29 @@ class RicketyKateGameScene: CardGameScene,
     }
     func setupNewGameArrangement()
     {
-        
-        Bus.sharedInstance.gameSignal
-            .observe(on: UIScheduler())
-            .filter { $0 == GameEvent.newHand }
-            .observeValues { [weak self] _ in
-                if let s = self
-                {
-                    for player in s.table.players
-                    {
-                        player.wonCards.clear()
-                        for card in player.hand
-                        {
-                            if let sprite = s.cardSprite(card)
+            let _ = Bus.sharedInstance.events
+              .asObservable()
+              .filter { $0 == GameEvent.newHand }
+              .subscribe(onNext: { [weak self] cardType in
+                    if let s = self
                             {
-                                sprite .player = player
+                                for player in s.table.players
+                                {
+                                    player.wonCards.clear()
+                                    for card in player.hand
+                                    {
+                                        if let sprite = s.cardSprite(card)
+                                        {
+                                            sprite .player = player
+                                        }
+                                    }
+                                }
+                                
+                                s.startHand()
                             }
-                        }
-                    }
-                    
-                    s.startHand()
-                }
-        }
-        
-        
+              })
+              .disposed(by: disposeBag)
+          
         setupCurrentPlayer()
         setupSounds()
     }
@@ -308,7 +307,7 @@ class RicketyKateGameScene: CardGameScene,
         cardPassingPhase.setupCardPilesSoPlayersCanPassTheir3WorstCards()
         table.setupCardPilesSoPlayersCanPlayTricks()
         
-        let s = UIScreen.main.bounds.size
+        let s = Game.screen.size
         createCardPilesToProvideStartPointForCardAnimation(s)
         ScoreDisplay.sharedInstance.setupScoreArea(self, players: table.players)
         arrangeLayoutFor(s,bannerHeight: self.adHeight)

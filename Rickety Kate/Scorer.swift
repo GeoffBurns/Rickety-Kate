@@ -24,9 +24,9 @@ class Scorer
         
         for player in players
         {
-            player.currentTotalScore.value = 0
+            player.currentTotalScore.accept(0)
             player.scoreForCurrentHand = 0
-            player.noOfWins.value = 0
+            player.noOfWins.accept(0)
         }
     }
     
@@ -50,11 +50,11 @@ class Scorer
     // Update the score of the players
     func recordTheScoresForAGameWin(_ winner: CardPlayer)
     {
-    winner.noOfWins.value = winner.noOfWins.value + 1
+        winner.noOfWins.accept(winner.noOfWins.value + 1)
     
     for player in self.players
       {
-      player.currentTotalScore.value = 0
+        player.currentTotalScore.accept(0)
       }
     }
     
@@ -67,7 +67,7 @@ class Scorer
       /// Did player get all the points avalilable in his hand
       if player.scoreForCurrentHand >= Game.rules.allPoints
          {
-         player.currentTotalScore.value = 0
+         player.currentTotalScore.accept(0)
          hasShotMoon = true
          Bus.send(GameNotice.player(Scored.shotTheMoon(player)))
          GameKitHelper.sharedInstance.reportAchievement(Achievement.ShootingTheMoon)
@@ -159,7 +159,7 @@ class Scorer
             
             if player.scoreForCurrentHand  < 0
             {
-                player.currentTotalScore.value  -= player.scoreForCurrentHand
+              player.currentTotalScore.accept(player.currentTotalScore.value - player.scoreForCurrentHand)
             }
             player.scoreForCurrentHand = 0
         }
@@ -172,7 +172,8 @@ class Scorer
                 let score = Game.rules.scoreFor(gameState.tricksPile.map { return $0.playedCard} , winner: winner)
                 if(score != 0)
                 {
-                    winner.currentTotalScore.value += score
+                    
+                    winner.currentTotalScore.accept(winner.currentTotalScore.value + score)
                     winner.scoreForCurrentHand += score
                   
                 }
