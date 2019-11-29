@@ -79,7 +79,7 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
         Game.settings.audioOptions = [
                 Options.music,
                 Options.musicVolume,
-          //      Options.credit,
+                Options.credit,
                 Options.sound,
                 Options.soundVolume
             ]
