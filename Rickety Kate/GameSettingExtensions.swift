@@ -215,6 +215,9 @@ open class FakeGameSettings : IGameSettings
     public func cacheSpeed(_: Int) { }
     public var options: [SaveableOption] = []
     public var audioOptions: [SaveableOption] = []
+    public var deckOptions: [SaveableOption] = []
+    public var scoreOptions: [SaveableOption] = []
+    public var multiOptions: [SaveableOption] = []
     public var noOfSuitesDefault: Int = 5
     public var specialSuite = PlayingCard.Suite.none
     public var isFoolATrump = false

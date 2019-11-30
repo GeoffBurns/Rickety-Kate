@@ -60,29 +60,40 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
         Game.settings.isAceHigh =  true
         Game.settings.noOfSuitesDefault = 5
         Game.settings.options = [
+            Options.noOfPlayers,
+            Options.passCard,
+            Options.speed,
+            Options.showTips,
+            MoreOptions.allowBreaking
+        ]
+        Game.settings.deckOptions = [
+            Options.buildDeck,
             Options.noOfSuites,
             Options.noOfCards,
-            Options.noOfPlayers,
-            Options.noOfHumans,
             Options.jokers,
             Options.trumps,
-            Options.passCard,
-            MoreOptions.winningScore,
-            Options.speed,
-            MoreOptions.ruleSet,
-            MoreOptions.hooligan,
-            MoreOptions.omnibus,
-            Options.showTips,
-            MoreOptions.allowBreaking,
             Options.useNumbers
         ]
-        Game.settings.audioOptions = [
-                Options.music,
-                Options.musicVolume,
-                Options.credit,
-                Options.sound,
-                Options.soundVolume
+        Game.settings.multiOptions = [
+            Options.multiplay,
+            Options.noOfHumans
             ]
+        Game.settings.scoreOptions = [
+            Options.scoring,
+            MoreOptions.ruleSet,
+            MoreOptions.hooligan,
+            Options.hooligan,
+            MoreOptions.omnibus,
+            Options.omnibus,
+            MoreOptions.winningScore
+        ]
+        Game.settings.audioOptions = [
+                        Options.music,
+                        Options.musicVolume,
+                        Options.credit,
+                        Options.sound,
+                        Options.soundVolume
+                    ]
         Options.speed.onValueChanged = Game.settings.cacheSpeed
         MoreOptions.ruleSet.onValueChanged = Game.settings.clearData
         Tip.setup()

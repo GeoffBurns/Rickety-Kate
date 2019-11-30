@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,23 +14,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="slo-t7-X0k">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
+                    <rect key="frame" x="90" y="0.0" width="300" height="480"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rickety Kate" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulg-AT-v2P">
-                    <rect key="frame" x="0.0" y="414" width="480" height="36"/>
-                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="30"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.063318607343392938" green="0.48615056818181823" blue="0.16158887848099773" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="slo-t7-X0k" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="K2a-Me-R4y"/>
-                <constraint firstItem="slo-t7-X0k" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LnW-dE-qAg"/>
-                <constraint firstAttribute="trailing" secondItem="ulg-AT-v2P" secondAttribute="trailing" id="SKK-da-OPw"/>
-                <constraint firstItem="ulg-AT-v2P" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gCS-4I-LVj"/>
-                <constraint firstAttribute="bottom" secondItem="ulg-AT-v2P" secondAttribute="bottom" constant="30" id="kXP-7X-zCj"/>
-                <constraint firstAttribute="trailing" secondItem="slo-t7-X0k" secondAttribute="trailing" id="nTJ-bi-JVP"/>
+                <constraint firstItem="slo-t7-X0k" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Bld-8r-B67"/>
+                <constraint firstItem="slo-t7-X0k" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="hA9-Pz-bPQ"/>
+                <constraint firstAttribute="bottom" secondItem="slo-t7-X0k" secondAttribute="bottom" id="zGC-gG-cGk"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
