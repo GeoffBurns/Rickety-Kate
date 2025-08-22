@@ -10,7 +10,7 @@ import Foundation
 import Cards
 
 
-public protocol IAwarder
+public protocol Awarderable
 {
     var allPoints : Int { get }
     var ricketyKatePoints : Int { get }

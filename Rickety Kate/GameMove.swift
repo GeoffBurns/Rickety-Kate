@@ -16,7 +16,7 @@ public enum Move : GameMove, Equatable
     case trumpsHaveNotBeenBroken
     
   
-    public var sound : [String] {  return []  }
+    public var sound : [String]? {  return nil }
     
     public var description : String?
     {

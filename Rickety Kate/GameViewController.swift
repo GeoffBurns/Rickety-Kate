@@ -10,6 +10,20 @@ import UIKit
 import SpriteKit
 //import iAd
 import Cards
+import SwiftUI
+
+struct GameViewControllerWrapper: UIViewControllerRepresentable {
+    
+    func makeUIViewController(context: Context) -> GameViewController {
+        // Instantiate and configure your UIViewController here
+        let viewController = GameViewController()
+        return viewController
+    }
+    
+    func updateUIViewController(_ uiViewController: GameViewController, context: Context) {
+        // Update the UIViewController based on SwiftUI state changes
+    }
+}
 
 
 class GameViewController: UIViewController //, ADBannerViewDelegate
@@ -133,8 +147,10 @@ class GameViewController: UIViewController //, ADBannerViewDelegate
         let scene = RicketyKateGameScene(size: size)
         scene.tableSize = size
 
+        let skView = SKView(frame: self.view.bounds)
+        self.view.addSubview(skView)
         // Configure the view.
-        let skView = self.view as! SKView
+       // let skView = self.view as! SKView
             
 
         skView.showsFPS = false

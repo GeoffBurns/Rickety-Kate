@@ -26,7 +26,7 @@ public protocol IGameSettings : ICardGameSettings
     var includeOmnibus  : Bool { get }
     var ruleSet  : Int { get }
     var gameWinningScore  : Int { get  }
-    var rules : IAwarder { get  }
+    var rules : Awarderable { get  }
     var gameWinningScoreIndex : Int { get }
     var gameType : String { get }
     var achievementForWin : Achievement  { get }
@@ -70,7 +70,7 @@ extension  SelectOption
 extension Game
 {
     public static var moreSettings : IGameSettings { return settings as! IGameSettings}
-    public static var rules : IAwarder { return moreSettings.rules }
+    public static var rules : Awarderable { return moreSettings.rules }
     public static let winningScores : [Int] = [ 20 , 50, 100, 150, 200, 250, 300, 500, 600]
 }
 
@@ -128,7 +128,7 @@ extension LiveGameSettings : IGameSettings
     
     }
     
-    public var rules : IAwarder {
+    public var rules : Awarderable {
         if data == nil {
             
             switch ruleSet
@@ -140,9 +140,9 @@ extension LiveGameSettings : IGameSettings
             default :
                 data = SpadesAwarder(gameSettings: self)
             }
-            specialSuite = (data as! IAwarder).trumpSuite
+            specialSuite = (data as! Awarderable).trumpSuite
         }
-        return data as! IAwarder
+        return data as! Awarderable
     }
     public var achievementForWin : Achievement
     {
@@ -254,8 +254,8 @@ open class FakeGameSettings : IGameSettings
     open var gameType = "Spades"
     open var achievementForWin = Achievement.StraightSpades
     
-    var awarder : IAwarder? = nil
-    open lazy var rules : IAwarder  = SpadesAwarder(gameSettings: self)
+    var awarder : Awarderable? = nil
+    open lazy var rules : Awarderable  = SpadesAwarder(gameSettings: self)
     
     open var tossDuration : TimeInterval = 0.4
     public init(noOfSuitesInDeck:Int = 4,noOfPlayersAtTable:Int  = 4,noOfCardsInASuite:Int  = 13,  hasTrumps:Bool = false,  hasJokers:Bool = false)

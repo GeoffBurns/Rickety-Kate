@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import RxSwift
 import Cards
 
 /// How game play is displayed
@@ -20,7 +19,6 @@ class RicketyKateGameScene: CardGameScene,
     var originalTouch = CGPoint()
     var draggedNode: CardSprite? = nil;
     var cardScaleForSelected = CGFloat(1.05)
-    let disposeBag = DisposeBag()
     var backgroundFan = CardFan(name: CardPileType.background.description)
     var playButton1 =  SKSpriteNode(imageNamed:"Play1")
     var playButton2 =  SKSpriteNode(imageNamed:"Random1")
@@ -146,28 +144,31 @@ class RicketyKateGameScene: CardGameScene,
     }
     func setupNewGameArrangement()
     {
-            let _ = Bus.sharedInstance.events
-              .asObservable()
-              .filter { $0 == GameEvent.newHand }
-              .subscribe(onNext: { [weak self] cardType in
-                    if let s = self
-                            {
-                                for player in s.table.players
-                                {
-                                    player.wonCards.clear()
-                                    for card in player.hand
-                                    {
-                                        if let sprite = s.cardSprite(card)
-                                        {
-                                            sprite .player = player
-                                        }
-                                    }
-                                }
-                                
-                                s.startHand()
-                            }
-              })
-              .disposed(by: disposeBag)
+        
+        Task {
+               for await _ in Bus.sharedInstance.events
+                   .asStream()
+                   .compactMap(\.hand) {
+                   await MainActor.run { [weak self] in
+                       if let s = self
+                               {
+                                   for player in s.table.players
+                                   {
+                                       player.wonCards.clear()
+                                       for card in player.hand
+                                       {
+                                           if let sprite = s.cardSprite(card)
+                                           {
+                                               sprite .player = player
+                                           }
+                                       }
+                                   }
+                                   
+                                   s.startHand()
+                               }
+                 }
+               }
+           }
           
         setupCurrentPlayer()
         setupSounds()
