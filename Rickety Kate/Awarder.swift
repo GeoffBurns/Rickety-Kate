@@ -109,7 +109,7 @@ class AwarderBase
 /// Calculate the score value of the cards
 /// For the Spades Variant of Rickety Kate
 /// Used by the Scorer
-class SpadesAwarder : AwarderBase, IAwarder
+class SpadesAwarder : AwarderBase, Awarderable
 {
     var shortDescription = "Spade"
     
@@ -168,7 +168,7 @@ class SpadesAwarder : AwarderBase, IAwarder
 }
 /// Calculate the score value of the cards
 /// Used by the Scorer
-class HeartsAwarder : AwarderBase, IAwarder
+class HeartsAwarder : AwarderBase, Awarderable
 {
     var description = "Rickety Kate Hearts Rules".localize
     var shortDescription = "Heart"
@@ -226,7 +226,7 @@ class HeartsAwarder : AwarderBase, IAwarder
 
 /// Calculate the score value of the cards
 /// Used by the Scorer
-class JacksAwarder : AwarderBase, IAwarder
+class JacksAwarder : AwarderBase, Awarderable
 {
     var description = "Rickety Kate Jacks Rules".localize
     override var omnibus_ : PlayingCard { return CardName.queen.of(PlayingCard.Suite.diamonds)! }
